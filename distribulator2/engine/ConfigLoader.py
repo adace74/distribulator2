@@ -43,7 +43,7 @@ class ConfigLoader:
         """
 
         # Load GNU Readline history.
-        if (self._globalConfig.isBatchMode() == False):
+        if ( self._globalConfig.isConsoleMode() ):
             print('Loading configuration...')
 
         thisLinesLoaded = PassedCommLine.initHistory()
@@ -51,7 +51,7 @@ class ConfigLoader:
         # Try to print status -after- actions so as to be
         # more accurate.
         #
-        if (self._globalConfig.isBatchMode() == False):
+        if ( self._globalConfig.isConsoleMode() ):
             print("- GNU Readline history:        %d lines loaded." % \
                   (thisLinesLoaded))
         #
@@ -78,7 +78,7 @@ class ConfigLoader:
         self._globalConfig.setPassThruList(thisPassThruList)
 
         # Status.
-        if (self._globalConfig.isBatchMode() == False):
+        if ( self._globalConfig.isConsoleMode() ):
             print( "- Unix pass-through commands:  %d lines loaded." \
                    % (len(thisPassThruList)) )
 
@@ -89,7 +89,7 @@ class ConfigLoader:
         self._globalConfig.setCurrentServerGroup(False)
         self._globalConfig = thisParser.parse(self._globalConfig)
 
-        if (self._globalConfig.isBatchMode() == False):
+        if ( self._globalConfig.isConsoleMode() ):
             print( "- Global options and settings: %d lines loaded." %
                    (self._globalConfig.getConfigLines()) )
 
@@ -114,7 +114,7 @@ class ConfigLoader:
                 thisColumnCount = 0
                 thisServerGroupStr = thisServerGroupStr + '\n- '
 
-        if (self._globalConfig.isBatchMode() == False):
+        if ( self._globalConfig.isConsoleMode() ):
             print("- Available Server Groups:")
             print("-")
             print(thisServerGroupStr)        

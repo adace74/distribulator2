@@ -5,6 +5,7 @@
 ######################################################################
 
 Legend For Changes Below:
+"?" Indicates a change that is being considered.
 "-" Indicates a change that hasn't even been started on.
 "+" Indicates a change that is currently being developed.
 "*" Indicates a change that is at least 80%(if not 100%) complete.
@@ -165,13 +166,21 @@ Change List For v0.6.3 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * SourceForge bug #845634 fixed.
 * SourecForge bug #853052 fixed.
-- Replacing the HostPinger's functionality with a better,
-  timeout-capable socket conneciton test.
+* Ability to simply echo any given set of hosts or server groups to STDOUT
+  in a space-delimited format acceptable to other languages(i.e. shell/Perl)
+  that is also easily passable to SSH.
+* Removed redundant / silly code in CommandRunner.py,
+  resulting in reduced complexity.
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
-- Implementing the run command parallel keyword,
-  run in background threads, to multiple output files?
+? Replacing the HostPinger's functionality with a better,
+  timeout-capable socket conneciton test.  Good idea?  Hmm...
+- Renaming instance variables with a naming convention less lame than
+  thisThing, thisOtherThing, etc.  s/this/my/g ?
+- Ability to use a new run command keyword: "parallel".
+  This will run the given command in background threads in parallel.
+  Output will be spooled to one file per server in a standard output directory.
 - Single remote server file to single remote server file copy.
 (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.

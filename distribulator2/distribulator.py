@@ -21,7 +21,7 @@
 # File version tag
 __version__ = '$Revision$'[11:-2]
 # Application version tag
-__appversion__ = 'The Distribulator v0.6.2'
+__appversion__ = 'The Distribulator v0.6.3'
 
 # Standard modules
 import commands
@@ -37,6 +37,7 @@ import engine.BatchRunner
 import engine.CommandLine
 import engine.ConfigLoader
 import engine.MultiLogger
+import engine.ServerLister
 import engine.data.GlobalConfig
 import generic.SysLogger
 
@@ -76,6 +77,7 @@ def main(argv):
                     'directory=',
                     'env=',
                     'help',
+                    'list=',
                     'quiet',
                     'var1=',
                     'var2=',
@@ -98,6 +100,8 @@ The available options are:
 
     --directory=install_dir
     Allows the wrapper script to pass in the install location.
+    This is a simple workaround to avoid installing our application
+    into the Python system class path.
     REQUIRED
 
     --env=env_name
@@ -106,6 +110,11 @@ The available options are:
 
     --help
     This usage statement.
+    OPTIONAL
+
+    --list=[host1,host2,...] | [servergroup1,servergroup2,...]
+    Enables serer "listing", outputs all given username@hostname pairs
+    for a given set of hosts or server groups.
     OPTIONAL
 
     --quiet
@@ -128,6 +137,7 @@ The available options are:
     thisConfigFile = ''
     thisInstallDir = '/tmp'
     thisQuietMode = False
+    thisRequestedList = ''
     thisServerEnv = 'demo'
     thisVar1 = ''
     thisVar2 = ''
@@ -157,6 +167,8 @@ The available options are:
                 elif (opt[0] == '--?'):
                     print(usage)
                     sys.exit(False)
+                elif (opt[0] == '--list'):
+                    thisRequestedList = opt[1]
                 elif (opt[0] == '--quiet'):
                     thisQuietMode = True
                 elif (opt[0] == '--var1'):
@@ -196,6 +208,18 @@ The available options are:
         else:
             thisGlobalConfig.setBatchMode(False)
 
+        if ( len(thisRequestedList) > 0 ):
+            thisGlobalConfig.setListMode(True)
+            thisGlobalConfig.setRequestedList(thisRequestedList)
+        else:
+            thisGlobalConfig.setListMode(False)
+
+        if ( (len(thisBatchFile) == 0) & \
+             (len(thisRequestedList) == 0) ):
+            thisGlobalConfig.setConsoleMode(True)
+        else:
+            thisGlobalConfig.setConsoleMode(False)
+
         if ( len(thisConfigFile) > 0 ):
             thisGlobalConfig.setConfigFile(thisConfigFile)
         else:
@@ -216,12 +240,15 @@ The available options are:
         thisGlobalConfig.setVar2(thisVar2)
         thisGlobalConfig.setVar3(thisVar3)
     
-        if ( thisGlobalConfig.isBatchMode() == False ):
+        if ( thisGlobalConfig.isConsoleMode() ):
             printTitleHeader()
             printInfoHeader(thisServerEnv, thisGlobalConfig.getConfigFile())
 
+        # These three really should be pinned to an interface.
         thisBatchRunner = engine.BatchRunner.BatchRunner(thisGlobalConfig)
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
+        thisServerLister = engine.ServerLister.ServerLister(thisGlobalConfig)
+
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
         thisGlobalConfig = thisLoader.load(thisCommLine)
 
@@ -256,6 +283,8 @@ The available options are:
             thisInfo = "INFO:  " + __appversion__ + " (batch mode) START"
             if (thisVerboseMode):
                 print(thisInfo)
+        elif (thisGlobalConfig.isListMode()):
+            thisInfo = "INFO:  " + __appversion__ + " (list mode) START"
         else:
             thisInfo = "INFO:  " + __appversion__ + " (console mode) START"
         thisSysLogger.LogMsgInfo(thisInfo)
@@ -290,6 +319,12 @@ The available options are:
         thisSysLogger.LogMsgInfo(thisSeperator)
         if (thisVerboseMode):
             print(thisSeperator)
+    # List mode.
+    elif ( thisGlobalConfig.isListMode() ):
+        thisServerLister.invoke()
+
+        thisInfo = "INFO:  " + __appversion__ + " (list mode) EXIT"
+        thisSysLogger.LogMsgInfo(thisInfo)
     # Console mode.
     else:
         thisCommLine.invoke()

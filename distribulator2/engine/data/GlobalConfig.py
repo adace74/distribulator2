@@ -46,6 +46,38 @@ class GlobalConfig:
         self._isbatchflag = PassedBatchMode
 
 ######################################################################
+# Which mode we're operating in.
+######################################################################
+
+    def isConsoleMode(self):
+        """This is a typical accessor method."""
+
+        return self._isconsoleflag
+
+######################################################################
+
+    def setConsoleMode(self, PassedConsoleMode):
+        """This is a typical accessor method."""
+
+        self._isconsoleflag = PassedConsoleMode
+
+######################################################################
+# Which mode we're operating in.
+######################################################################
+
+    def isListMode(self):
+        """This is a typical accessor method."""
+
+        return self._islistflag
+
+######################################################################
+
+    def setListMode(self, PassedListMode):
+        """This is a typical accessor method."""
+
+        self._islistflag = PassedListMode
+
+######################################################################
 # Batch file name, if applicable.
 ######################################################################
 
@@ -140,6 +172,22 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._quietMode = PassedQuietMode
+
+######################################################################
+# Requested server or server group list, if applicable.
+######################################################################
+
+    def getRequestedList(self):
+        """This is a typical accessor method."""
+
+        return self._requestedlist
+
+######################################################################
+
+    def setRequestedList(self, PassedRequestedList):
+        """This is a typical accessor method."""
+
+        self._requestedlist = PassedRequestedList
 
 ######################################################################
 # User-defined substitution variables.
