@@ -406,6 +406,7 @@ class CommandRunner:
         # Assuming no error up until this point we can now
         # throw out the " on " part of our command.
         thisGroupStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
+        thisGroupStr = thisGroupStr.strip()
 
         #
         # Step 3: Assemble two lists based on command syntax.
@@ -434,13 +435,13 @@ class CommandRunner:
                     self.handleError(thisError)
                     return False
                 else:
-                    thisServerGroupList.append(thisGroupStr.strip())
+                    thisServerGroupList.append(thisGroupStr)
         #
         elif (thisRunTarget == 'multiple_server_group'):
             thisGroupList = thisGroupStr.split(',')
 
             for thisLoopStr in thisGroupList:
-                print ("LoopStr: " + thisLoopStr)
+                thisLoopStr = thisLoopStr.strip()
                 # Check for server name match.
                 thisServer = self._globalConfig.getServerByName(thisLoopStr)
 
@@ -451,10 +452,10 @@ class CommandRunner:
                 # Check for server group match.
                 thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
                 if (thisServerGroup):
-                    thisServerGroupList.append(thisLoopStr.strip())
+                    thisServerGroupList.append(thisLoopStr)
                 else:
                     thisError = "ERROR: No matching server name or group '" + \
-                                thisLoopStr.strip() + "'."
+                                thisLoopStr + "'."
                     self.handleError(thisError)
                     return False
         #
