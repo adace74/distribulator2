@@ -1,0 +1,15 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+TODO List
+---------
+* Testing / stabilization -- Leave it be for a while, find bugs,
+  and fix them!
+* Run command  -- Add the ability to run a single command on a single host.
+* Copy command -- Add the ability to copy from a single host to a single
+  server group.
+* Copy command -- Other permutations.
+
