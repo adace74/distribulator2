@@ -53,9 +53,12 @@ my($TRUE) = 1;
 #
 # Runtime Arg/Temp Variables
 #
-my($env_arg, $help_arg, $shell_arg, $version_arg) = '';
+my($env_arg, $help_arg, $noping_arg, $shell_arg, $version_arg) = '';
 my($counter);
+my($command);
 my(@command_tokens);
+my($input);
+my($prompt);
 my($remote_command);
 my($server);
 my($temp_str);
@@ -75,6 +78,7 @@ my(@valid_commands) = ( 'cat', 'cd', 'copy', 'exit', 'group',
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
+           "noping" => \$noping_arg,
            "shell=s" => \$shell_arg,
            "version" => \$version_arg) ||
 	pod2usage(-exitstatus => 0, -verbose => 2);
@@ -117,16 +121,15 @@ LoadConfig();
 #
 # Should I use Text::ParseWords to parse?  On maybe just split?
 #
-# Auto-detection Magic.
+# Preparing to launch the shell.
 #
 my($user) = getlogin() || getpwuid($<);
 my($hostname) = Sys::Hostname::hostname();
 #
-# Variable Definitions
+# Setup signal handler for SIGQUIT, aka CTRL-D.
+# This doesn't appear compatible with ReadLine.
 #
-my($command);
-my($input);
-my($prompt);
+$SIG{QUIT} = \&catchSigQuit;
 #
 # Setup ReadLine for input...
 #
@@ -207,7 +210,9 @@ while ($TRUE)
     # Copy
     if ($command eq 'copy')
     {
-        print("ERROR: This command is not yet implemented.\n");
+        ParseCopy();
+
+        #print("ERROR: This command is not yet implemented.\n");
     }
 
     # Exit
@@ -364,6 +369,16 @@ sub AreYouSure
 
 		return $FALSE;
 	}
+}
+
+#
+# Catch SIGQUIT signal, and cleanly exit the program.
+#
+sub catchSigQuit
+{
+    print "Caught SIGQUIT signal(probably CTRL-D).  Dying...\n\n";
+
+    exit(0);
 }
 
 #
@@ -559,9 +574,9 @@ sub isValidCommand
 #
 # Parse & execute the "copy" command.
 #
-#sub ParseCopy
-#{
-#}
+sub ParseCopy
+{
+}
 
 #
 # Parse & execute the "run" command.
@@ -640,17 +655,24 @@ sub PingServer
     my($host) = @_;
     my($pinger);
 
-    $pinger = Net::Ping->new("tcp", 22);
-
-    if ($pinger->ping($host))
+    if ($noping_arg)
     {
         return $TRUE;
     }
     else
     {
-        print("ERROR: Host $host appears to be down.\n");
+        $pinger = Net::Ping->new("tcp", 22);
 
-        return $FALSE;
+        if ($pinger->ping($host))
+        {
+            return $TRUE;
+        }
+        else
+        {
+            print("ERROR: Host $host appears to be down.\n");
+
+            return $FALSE;
+        }
     }
 }
 
@@ -801,11 +823,13 @@ NOTE: This is a required option.
 
 =item *
 
-B<--help>
+B<--noping>
 
 =over 3
 
-Displays this manual page and exits.
+Indicates that we do not wish to "Ping" servers before talking
+to them via our remote shell.  This is handy when the local version
+of Net::Ping is broken, or firewalls are blocking us, etc.
 
 =back
 

@@ -67,6 +67,8 @@ Feature List For v0.3 (Shipped!):
 Feature List For v0.4 (Coming Soon!):
 * Addition of the "login" command.  Basically allows the user to specify
   a server to login to without having to exit the distribulator.
+* Addition of --noping for environments where either a ServerPing is
+  undesirable or the installed version of Net::Ping is out-of-date.
 
 Feature List For v0.5 (Coming Soon!):
 
