@@ -52,7 +52,6 @@ def printTitleHeader():
     print(__appversion__ + " (Python v" + \
           sys.version.split()[0] + " / " + sys.platform + ")")
     print("---------------------------------------------------")
-    print
 
 ######################################################################
 
