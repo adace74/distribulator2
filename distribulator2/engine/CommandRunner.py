@@ -333,11 +333,11 @@ class CommandRunner:
                             thisExternalCommand.runAtomic()
                         else:
                             thisExternalCommand.run(True)
-                else:
-                    thisError = "ERROR: Server '" + \
-                                thisServer.getName() + \
-                                "' appears to be down.  Continuing..."
-                    self.handleError(thisError)
+                    else:
+                        thisError = "ERROR: Server '" + \
+                                    thisServer.getName() + \
+                                    "' appears to be down.  Continuing..."
+                        self.handleError(thisError)
 
             except EOFError:
                 pass
