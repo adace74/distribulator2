@@ -11,4 +11,8 @@ $Id$
         <scp>/usr/bin/scp -c blowfish</scp>
         <ssh>/usr/bin/ssh -c blowfish</ssh>
     </binary>
+
+    <logging>
+        <facility>LOCAL0</facility>
+    </logging>
 </config>

@@ -48,6 +48,14 @@ class GlobalConfig:
     def setSshBinary(self, PassedSshBinary):
         self.thisSshBinary = PassedSshBinary
     #
+    # Syslog Facility.
+    #
+    def getSyslogFacility(self):
+        return self.thisSyslogFacility
+
+    def setSyslogFacility(self, PassedSyslogFacility):
+        self.thisSyslogFacility = PassedSyslogFacility
+    #
     # Unix command "pass through" list.
     #
     def getPassThruList(self):

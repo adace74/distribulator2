@@ -55,7 +55,9 @@ class XMLFileParser:
 
     def handleConfig(self, PassedConfig):
         self.handleBinary(PassedConfig.getElementsByTagName("binary")[0])
+        self.handleLogging(PassedConfig.getElementsByTagName("logging")[0])
 
+    # Binary locations.
     def handleBinary(self, PassedBinary):
         self.handleScp(PassedBinary.getElementsByTagName("scp")[0])
         self.handleSsh(PassedBinary.getElementsByTagName("ssh")[0])
@@ -65,5 +67,12 @@ class XMLFileParser:
 
     def handleSsh(self, PassedSsh):
         self.thisGlobalConfig.setSshBinary( self.getText(PassedSsh.childNodes) )
+
+    # Logging options.
+    def handleLogging(self, PassedLogging):
+        self.handleFacility(PassedLogging.getElementsByTagName("facility")[0])
+
+    def handleFacility(self, PassedFacility):
+        self.thisGlobalConfig.setSyslogFacility( self.getText(PassedFacility.childNodes) )
 
 ######################################################################
