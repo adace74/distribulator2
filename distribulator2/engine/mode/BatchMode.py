@@ -233,8 +233,9 @@ class BatchMode(Mode.Mode):
                     del myDispatcher
 
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Exiting batch file..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                    break
 
             myFile.close()
 
