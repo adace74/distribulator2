@@ -60,8 +60,7 @@ class ConfigLoader:
         thisPassThruList = []
         
         try:
-            thisFilename = os.path.join(self._globalConfig.getConfigDir(), \
-                                        'pass_through_cmds.txt')
+            thisFilename = self._globalConfig.getPassThruFile()
             thisFile = open(thisFilename, 'r')
             
             for thisLine in thisFile:

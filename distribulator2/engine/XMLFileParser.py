@@ -45,8 +45,7 @@ class XMLFileParser:
         self._isEnvFound = False
         self._serverGroupList = []
 
-        thisFilename = os.path.join(self._globalConfig.getConfigDir(), \
-                                    'config.xml')
+        thisFilename = self._globalConfig.getConfigFile()
 
         try:
             thisConfigLines = 0
@@ -181,8 +180,13 @@ class XMLFileParser:
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
         thisServerGroup.setName(
             PassedServerGroup.getAttribute('name').strip() )
-        thisServerGroup.setUsername(
-            PassedServerGroup.getAttribute('username').strip() )
+
+        if ( len(PassedServerGroup.getAttribute('username').strip()) > 0 ):
+            thisServerGroup.setUsername(
+                PassedServerGroup.getAttribute('username').strip() )
+        else:
+            thisServerGroup.setUsername( self._globalConfig.getUsername() )
+
         thisServerGroup = self.handleServers( thisServerGroup,
                                               PassedServerGroup.getElementsByTagName('server') )
 

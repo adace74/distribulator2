@@ -65,17 +65,17 @@ class GlobalConfig:
 # Our configuration directory path.
 ######################################################################
 
-    def getConfigDir(self):
+    def getConfigFile(self):
         """This is a typical accessor method."""
 
-        return self._configDir
+        return self._configFile
 
 ######################################################################
 
-    def setConfigDir(self, PassedConfigDir):
+    def setConfigFile(self, PassedConfigFile):
         """This is a typical accessor method."""
 
-        self._configDir = PassedConfigDir
+        self._configFile = PassedConfigFile
 
 ######################################################################
 # Our exit code.
@@ -108,6 +108,22 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._helpDir = PassedHelpDir
+
+######################################################################
+# Our pass-through file path.
+######################################################################
+
+    def getPassThruFile(self):
+        """This is a typical accessor method."""
+
+        return self._passThruFile
+
+######################################################################
+
+    def setPassThruFile(self, PassedPassThruFile):
+        """This is a typical accessor method."""
+
+        self._passThruFile = PassedPassThruFile
 
 ######################################################################
 # Should we be quiet?

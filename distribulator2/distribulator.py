@@ -55,12 +55,12 @@ def printTitleHeader():
 
 ######################################################################
 
-def printInfoHeader(PassedServerEnv, PassedConfigDir):
+def printInfoHeader(PassedServerEnv, PassedConfigFile):
     """Print the informational header."""
 
     print("Local Hostname:      " + socket.gethostname())
     print("Current Environment: " + PassedServerEnv)
-    print("Config Directory:    " + PassedConfigDir)
+    print("Config File:         " + PassedConfigFile)
     print
 
 ######################################################################
@@ -71,6 +71,7 @@ def main(argv):
     """Good old main."""
 
     long_options = ['batch=',
+                    'config=',
                     'directory=',
                     'env=',
                     'help',
@@ -88,6 +89,9 @@ The available options are:
     --batch=filename
     Enables batch mode processing, requires a readable input file.
     OPTIONAL
+
+    --config=filename
+    Specifies the location of the global XML-based configuraiton file.
 
     --directory=start_dir
     Allows the wrapper script to pass in the user's real cwd.
@@ -116,6 +120,7 @@ The available options are:
 """ % argv[0]
 
     thisBatchFile = ''
+    thisConfigFile = ''
     thisQuietMode = False
     thisServerEnv = 'demo'
     thisStartDir = '/tmp'
@@ -135,6 +140,8 @@ The available options are:
             for opt in optlist:
                 if (opt[0] == '--batch'):
                     thisBatchFile = opt[1]
+                elif (opt[0] == '--config'):
+                    thisConfigFile = opt[1]
                 elif (opt[0] == '--directory'):
                     thisStartDir = opt[1]
                 elif (opt[0] == '--env'):
@@ -169,7 +176,6 @@ The available options are:
         sys.exit(True)
 
     try:
-        thisConfigDir = os.path.join(os.getcwd(), 'conf')
         thisHelpDir = os.path.join(os.getcwd(), 'doc')
 
         # Load up our GlobalConfig object.
@@ -181,18 +187,24 @@ The available options are:
         else:
             thisGlobalConfig.setBatchMode(False)
 
-        thisGlobalConfig.setConfigDir(thisConfigDir)
+        if ( len(thisConfigFile) > 0 ):
+            thisGlobalConfig.setConfigFile(thisConfigFile)
+        else:
+            thisGlobalConfig.setConfigFile( os.path.join(os.getcwd(), 'conf/config.xml') )
+
         thisGlobalConfig.setExitSuccess(True)
         thisGlobalConfig.setHelpDir(thisHelpDir)
+        thisGlobalConfig.setPassThruFile(os.path.join( os.getcwd(), 'conf/pass_through_cmds.txt') )
         thisGlobalConfig.setQuietMode(thisQuietMode)
         thisGlobalConfig.setServerEnv(thisServerEnv)
+        thisGlobalConfig.setUsername( getpass.getuser() )
         thisGlobalConfig.setVar1(thisVar1)
         thisGlobalConfig.setVar2(thisVar2)
         thisGlobalConfig.setVar3(thisVar3)
     
         if ( thisGlobalConfig.isBatchMode() == False ):
             printTitleHeader()
-            printInfoHeader(thisServerEnv, thisConfigDir)
+            printInfoHeader(thisServerEnv, thisGlobalConfig.getConfigFile())
 
         thisBatchRunner = engine.BatchRunner.BatchRunner(thisGlobalConfig)
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
@@ -217,10 +229,8 @@ The available options are:
 
         if ( thisStatus == 0 ):
             thisGlobalConfig.setRealUsername(thisOutput)
-            thisGlobalConfig.setUsername( getpass.getuser() )
         else:
             thisGlobalConfig.setRealUsername( getpass.getuser() )
-            thisGlobalConfig.setUsername( getpass.getuser() )
 
         # Define a pretty seperator.
         thisSeperator = '----------------------------------------------------------------------'
