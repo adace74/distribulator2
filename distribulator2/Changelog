@@ -214,7 +214,7 @@ Change List For v0.7.4 (Language: Python / Status: Shipped)
 * Cleanup: Added code to batch mode to close STDIN, should help with backgrounding.
 * Cleanup: Made the batch mode header and footer output more concise.
 
-Change List For v0.7.5 (Language: Python / Status: In Progress)
+Change List For v0.7.5 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * Cleanup: Changed exception handling for socket timeout to avoid stack trace dump.
 * Cleanup: Changed readline code to filename-only tab completion.
@@ -227,7 +227,14 @@ Change List For v0.7.5 (Language: Python / Status: In Progress)
 * Ability to have two permutations of list mode.
   The first returns only hostnames, the second returns username@hostname pairs.
 
-Change List For v0.8.0 (Language: Python / Status: Planning)
+Change List For v0.8.0 (Language: Python / Status: In Progress)
+---------------------------------------------------------------
+- Ability to override the are-you-sure questions via the "now" keyword.
+- Ability to ignore username information in config.xml via --nouser command-line flag. 
+- Ability to use logging module's configuration file for dynamic logging setup.
+- Ability to load, save, and use server name regular expression patterns.
+
+Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background processes in parallel.
@@ -236,14 +243,14 @@ Change List For v0.8.0 (Language: Python / Status: Planning)
   for parallel run.  Also XML config directives for global defaults.
 - Cleanup: Provide a larger set of example files.  Double-check doc.  Test like crazy.
 
-Idea List For v0.8.1 (Language: Python / Status: Not Started)
+Idea List For v0.9.1 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
 - Testing: Completion of a comprehensive batch file test suite.
   (Yes, this has been delayed often.  So far sheer simplicity has been enough.)
 - Ability to give a small summary report of which servers appeared to be down
   during a given run.
 
-Idea List For v0.8.5 (Language: Python / Status: Not Started)
+Idea List For v0.9.5 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
 - Ability to use regular expressions to match server names.
 - Single remote server file to single remote server file copy.
