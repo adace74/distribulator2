@@ -79,11 +79,11 @@ class ExternalCommand:
         for thisLine in thisOutput.split('\n'):
             if ( self._globalConfig.isBatchMode() ):
                 self._globalConfig.getSysLogger().LogMsgInfo(
-                    "EXECO: " + thisLine )
+                    "OUTPUT:" + thisLine )
             else:
                 print(thisLine)
                 self._globalConfig.getSysLogger().LogMsgInfo(
-                    "EXECO: " + thisLine )
+                    "OUTPUT:" + thisLine )
 
         if (thisStatus != 0):
             thisError = "ERROR: Local shell returned error state."
