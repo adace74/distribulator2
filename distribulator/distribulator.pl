@@ -36,7 +36,7 @@ use Term::ReadLine;
 # Where distribulator is installed, required for help files.
 my($HOME_DIR) = '/usr/local/novo/distribulator';
 # Where the configuration files are located.
-my($CONF_DIR) = "/usr/local/ops/environ/";
+my($CONFIG_DIR) = "/usr/local/ops/environ/";
 #
 ######################################################################
 
@@ -53,7 +53,7 @@ my($TRUE) = 1;
 #
 # Runtime Arg/Temp Variables
 #
-my($config_arg, $env_arg, $help_arg, $shell_arg, $version_arg) = '';
+my($env_arg, $help_arg, $shell_arg, $version_arg) = '';
 my(@command_tokens);
 my($remote_command);
 my($server);
@@ -70,8 +70,7 @@ my(%users_groups_hash);
 my(%servers_groups_hash);
 my(@valid_commands) = ( 'copy', 'exit', 'group', 'help', 'run', 'shell' );
 
-GetOptions("config=s" => \$config_arg,
-           "env=s" => \$env_arg,
+GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
            "shell=s" => \$shell_arg,
            "version" => \$version_arg) ||
@@ -137,10 +136,14 @@ $term->ornaments(0,0,0,0);
 #
 # Print a little intro.
 #
-print("Your Client Host:         $hostname\n");
-print("Your Current Environment: $environment\n");
+print("Local Install Dir:       $HOME_DIR\n");
+print("Local Config Dir:        $CONFIG_DIR\n");
+print("Local Host:              $hostname\n");
+print("Current Environment:     $environment\n");
 print("\n");
-print("Prompt Description -- <user\@environment[current_server_group]:local_dir>\n");
+print("Available Server Groups: @server_groups\n");
+print("\n");
+print("Prompt Description:      <user\@environment[current_server_group]:local_dir>\n");
 print("\n");
 #
 # The Never Ending Loop...
@@ -294,8 +297,8 @@ sub LoadConfig
 
     # The idea here is to go into the environment directory,
     # and pull in -all- files within that directory.
-    opendir(MYDIR, "$CONF_DIR/$environment")
-        || die("Failed to open directory $CONF_DIR/$environment for reading.");
+    opendir(MYDIR, "$CONFIG_DIR/$environment")
+        || die("Failed to open directory $CONFIG_DIR/$environment for reading.");
 
     while( $filename = readdir(MYDIR) )
     {
@@ -303,8 +306,8 @@ sub LoadConfig
         if ( !($filename =~ /\./) && !($filename eq 'user') )
         {
             # Load the file in.
-            open(MYFILE, "<$CONF_DIR/$environment/$filename")
-                || die("Failed to open file $CONF_DIR/$environment/$filename for reading.");
+            open(MYFILE, "<$CONFIG_DIR/$environment/$filename")
+                || die("Failed to open file $CONFIG_DIR/$environment/$filename for reading.");
 
             while(<MYFILE>)
             {
@@ -326,8 +329,8 @@ sub LoadConfig
 
     # The idea here is to go into the environment/user directory,
     # and pull in -all- files within that directory.
-    opendir(MYDIR, "$CONF_DIR/$environment/user")
-        || die("Failed to open directory $CONF_DIR/$environment/user for reading.");
+    opendir(MYDIR, "$CONFIG_DIR/$environment/user")
+        || die("Failed to open directory $CONFIG_DIR/$environment/user for reading.");
 
     while( $filename = readdir(MYDIR) )
     {
@@ -335,8 +338,8 @@ sub LoadConfig
         if ( !($filename =~ /\./) )
         {
             # Load the file in.
-            open(MYFILE, "<$CONF_DIR/$environment/user/$filename")
-                || die("Failed to open file $CONF_DIR/$environment/user/$filename for reading.");
+            open(MYFILE, "<$CONFIG_DIR/$environment/user/$filename")
+                || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
 
             while(<MYFILE>)
             {
@@ -351,8 +354,6 @@ sub LoadConfig
     }
 
     closedir(MYDIR);
-
-    print("Loaded Server Groups:     @server_groups\n");
 
 ######################################################################
 #    foreach my $group (sort keys(%servers_groups_hash) )
@@ -542,7 +543,7 @@ sub ValidateArgs
     if ($env_arg)
     {
         # Validate arguments.
-        if ( !stat("$CONF_DIR/$env_arg") )
+        if ( !stat("$CONFIG_DIR/$env_arg") )
         {
             die("Directory for environment $env_arg doesn't exist!");
         }
@@ -576,11 +577,6 @@ tool written in Perl. If you have command execution priviledges on more than
 =head1 OPTIONS
 
 =over 3
-
-=item *
-
-B<--config>
-Allows people to manually specify where our configuration lives.
 
 =item *
 
