@@ -22,23 +22,22 @@ FYI, the author currently tests on both FreeBSD 4.x and Linux(RedHat) environmen
 
 Nothing special here, readline just Makes Life Easier.
 
-- Python v2.2.2 or later (http://www.python.org/) accessible via /usr/local/bin/python
+- Python v2.2.X (http://www.python.org/) accessible via /usr/local/bin/python
 
-In theory the distribulator might work on earlier(i.e. v1.5.2) versions
-of Python, but I wouldn't bet on it.  Also if you don't have a symlink for python
-in /usr/local/bin/, either put on there or hack the distribulator.py first line.
+I've yet to test this with Python v2.3.X, so I'm not entirely sure how the changes
+to implement timeoutsocket within the language itself will affect the code.
 
-- PyXML v0.8.2 or later (http://pyxml.sourceforge.net/)
+Also, if you don't have a symlink for python in /usr/local/bin/,
+either put on there or hack the distribulator.py first line.
 
-Oddly enough, some installations seem to load the XML parser
-without this package, but in other cases this simply doesn't work.
+- PyXML v0.8.X (http://pyxml.sourceforge.net/)
 
-I personally install this always, as a just-in-case measure.
+Due to a bug in Python v2.2.X, the built-in XML parser is not always found.
+The simple workaround is to install PyXML as a just-in-case measure.
 
 Installation
 ------------
-1) Pick a place you'd like to install the program.
-   The default is /usr/local/distribulator2
+1) Pick a place you'd like to install the program.  The default is /usr/local/distribulator2
 
    For example, let's say you'd like to install into /apps/distribulator2.
 
@@ -77,8 +76,9 @@ server and server group settings, etc.  Most likely this will be the file
 of most interest to you.
 
 Settings of interest:
-- Binary locations for logname, ping, scp, and ssh.
+- Binary locations for logname, scp, and ssh.
 - Syslog logging facility.
+- Host Pinger options.
 - Server environment(s) and group(s) settings.
 
 config/pass_through_cmds.txt -- Simple list of Unix common commands for

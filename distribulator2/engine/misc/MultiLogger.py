@@ -32,10 +32,8 @@ class MultiLogger:
     def LogMsgInfoSeperator(self):
         """Logs and possibly prints a seperator with the syslog level INFO."""
 
-        # Define a pretty seperator.
-        mySeperator = '----------------------------------------------------------------------'
-
-        self._globalConfig.getSysLogger().LogMsgInfo(mySeperator)
+        self._globalConfig.getSysLogger().LogMsgInfo( \
+            self._globalConfig.getSeperator() )
 
         if (self._globalConfig.isQuietMode() == False):
             print(mySeperator)

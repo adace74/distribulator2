@@ -28,7 +28,6 @@ class ExternalCommand:
         """Constructor."""
 
         self._globalConfig = PassedGlobalConfig
-        self._seperator = '----------------------------------------------------------------------'
 
 ######################################################################
 # Unix command line string.
@@ -66,7 +65,7 @@ class ExternalCommand:
         print("EXEC:  " + self._command)
 
         myStatus = os.system(self._command)
-        print(self._seperator)
+        print( self._globalConfig.getSeperator() )
 
         if (myStatus != 0):
             print("ERROR: Local shell returned error state.")
@@ -99,7 +98,7 @@ class ExternalCommand:
             self._globalConfig.setExitSuccess(False)
 
         if (self._globalConfig.isQuietMode() == False):
-            print(self._seperator)
+            print( self._globalConfig.getSeperator() )
 
         # Sleep just a -little- bit to allow for catching CTRL-C's
         time.sleep(0.05)

@@ -258,11 +258,11 @@ class CopyCommand(Command.Command):
                             myExternalCommand.runConsole(True)
                         myCommandCount = myCommandCount + 1
                     else:
-                        myError = "ERROR: Server '" + \
-                                    myServer.getName() + \
+                        myError = "ERROR: Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+                        if (self._globalConfig.isQuietMode() == False):
+                            print( self._globalConfig.getSeperator() )
 
             except EOFError:
                 pass
@@ -297,11 +297,11 @@ class CopyCommand(Command.Command):
                                 myExternalCommand.runConsole(True)
                             myCommandCount = myCommandCount + 1
                         else:
-                            myError = "ERROR: Server '" + \
-                                        myServer.getName() + \
+                            myError = "ERROR: Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
-                            self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+                            if (self._globalConfig.isQuietMode() == False):
+                                print( self._globalConfig.getSeperator() )
 
                 except EOFError:
                     pass

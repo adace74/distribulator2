@@ -257,11 +257,11 @@ class RunCommand(Command.Command):
                         if (isSingle):
                             break
                     else:
-                        myError = "ERROR: Server '" + \
-                                    myServer.getName() + \
+                        myError = "ERROR: Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+                        if (self._globalConfig.isQuietMode() == False):
+                            print( self._globalConfig.getSeperator() )
 
             except EOFError:
                 pass
@@ -311,11 +311,11 @@ class RunCommand(Command.Command):
                             if (isSingle):
                                 break
                         else:
-                            myError = "ERROR: Server '" + \
-                                        myServer.getName() + \
+                            myError = "ERROR: Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
-                            self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+                            if (self._globalConfig.isQuietMode() == False):
+                                print( self._globalConfig.getSeperator() )
 
                 except EOFError:
                     pass
