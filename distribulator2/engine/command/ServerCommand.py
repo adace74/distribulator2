@@ -127,8 +127,9 @@ class ServerCommand(Command.Command):
 
         if ( len(myTempStr) > 0 ):
             for myLine in myTempStr.split('\n'):
-                self._globalConfig.getMultiLogger().LogMsgInfo(
-                    "OUT:  " + myLine )
+                if ( len(myLine) > 0 ):
+                    self._globalConfig.getMultiLogger().LogMsgInfo(
+                        "OUT:  " + myLine )
 
         return True
 
