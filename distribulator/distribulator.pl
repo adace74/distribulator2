@@ -210,9 +210,9 @@ while ($TRUE)
     # Copy
     if ($command eq 'copy')
     {
-        ParseCopy();
+        #ParseCopy();
 
-        #print("ERROR: This command is not yet implemented.\n");
+        print("ERROR: This command is not yet implemented.\n");
     }
 
     # Exit
@@ -580,9 +580,9 @@ sub isValidCommand
 #
 # Parse & execute the "copy" command.
 #
-sub ParseCopy
-{
-}
+#sub ParseCopy
+#{
+#}
 
 #
 # Parse & execute the "run" command.
