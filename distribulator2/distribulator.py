@@ -84,6 +84,7 @@ def main(argv):
                     'var1=',
                     'var2=',
                     'var3=',
+                    'verbose=',
                     'version',
                     '?']
 
@@ -144,14 +145,14 @@ The available options are:
     OPTIONAL
 
     --verbose=log_level
-    Enables on-the-fly customized stdout level setting.  Valid options include DEBUG,INFO, and ERROR.
+    Enables on-the-fly customized STDOUT output level setting.  Supported levels are: DEBUG, INFO, or ERROR.
     OPTIONAL
 
     --version
     Print version information.
 """ % argv[0]
 
-    myBatchFile = 'None'
+    myBatchFile = ''
     myAppConfigFile = ''
     myInstallDir = '/tmp'
     myLoadUsername = True
@@ -161,6 +162,7 @@ The available options are:
     myVar1 = ''
     myVar2 = ''
     myVar3 = ''
+    myVerboseLevel = ''
 
     try:
         if len(argv) < 2:
@@ -198,6 +200,8 @@ The available options are:
                     myVar2 = opt[1]
                 elif (opt[0] == '--var3'):
                     myVar3 = opt[1]
+                elif (opt[0] == '--verbose'):
+                    myVerboseLevel = opt[1]
                 elif (opt[0] == '--version'):
                     print(__appversion__)
                     print("(c) Copyright 2004 Adam W. Dace <adam@turing.com>  All Rights Reserved.")
@@ -223,7 +227,8 @@ The available options are:
         # Load up our GlobalConfig object.
         myGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
-        if ( myBatchFile.find('None') == -1 ):
+        # Batch mode.
+        if ( len(myBatchFile) > 0 ):
             myGlobalConfig.setBatchMode(True)
             myGlobalConfig.setBatchFile(myBatchFile)
 
@@ -232,6 +237,7 @@ The available options are:
         else:
             myGlobalConfig.setBatchMode(False)
 
+        # List mode.
         if ( len(myRequestedList) > 0 ):
             myGlobalConfig.setListMode(True)
             myGlobalConfig.setPrintUsername(myPrintUsername)
@@ -239,18 +245,24 @@ The available options are:
         else:
             myGlobalConfig.setListMode(False)
 
-        if ( (myBatchFile.find('None') != -1) & \
-             (len(myRequestedList) == 0) ):
+        # Console mode.
+        if ( (len(myBatchFile) == 0) & (len(myRequestedList) == 0) ):
             myGlobalConfig.setConsoleMode(True)
         else:
             myGlobalConfig.setConsoleMode(False)
 
+        # Config file locations.
         if ( len(myAppConfigFile) > 0 ):
             myGlobalConfig.setAppConfigFile(myAppConfigFile)
         else:
             myGlobalConfig.setAppConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
 
         myGlobalConfig.setLoggingConfigFile( os.path.join(myInstallDir, 'conf/logging.conf') )
+
+        if ( len(myVerboseLevel) > 0):
+            myGlobalConfig.setVerboseLevel(myVerboseLevel)
+        else:
+            myGlobalConfig.setVerboseLevel(None)
 
         # More with the loading of the GlobalConfig object.
         myGlobalConfig.setBreakState(False)
@@ -274,12 +286,11 @@ The available options are:
         myCommLine = engine.mode.ConsoleMode.ConsoleMode(myGlobalConfig)
         myListModeer = engine.mode.ListMode.ListMode(myGlobalConfig)
 
+        # Load up app-level config, logging config, and readline history.
         myLoader = engine.conf.ConfigLoader.ConfigLoader(myGlobalConfig)
         myGlobalConfig = myLoader.load(myCommLine)
 
-        # Setup console and logging output handles.
-        myLogger = myGlobalConfig.getStdoutLogger()
-
+        # Setup the MultiLogger.
         myMultiLogger = engine.misc.MultiLogger.MultiLogger(myGlobalConfig)
         myGlobalConfig.setMultiLogger(myMultiLogger)
 

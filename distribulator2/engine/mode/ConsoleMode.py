@@ -94,6 +94,7 @@ class ConsoleMode(Mode.Mode):
 
             except EOFError:
                 myInfo = "Caught CTRL-D keystroke.  Wrote history.  Dying..."
+                self._globalConfig.getMultiLogger().LogMsgInfo('')
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 return

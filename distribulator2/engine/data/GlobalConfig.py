@@ -380,6 +380,20 @@ class GlobalConfig:
         self._stdoutLogger = PassedStdoutLogger
 
 ######################################################################
+
+    def getVerboseLevel(self):
+        """This is a typical accessor method."""
+   
+        return self._verboseLevel
+
+######################################################################
+    
+    def setVerboseLevel(self, PassedVerboseLevel):
+        """This is a typical accessor method."""
+        
+        self._verboseLevel = PassedVerboseLevel
+
+######################################################################
 # Ping Options.
 ######################################################################
 

@@ -116,6 +116,20 @@ class ConfigLoader:
         self._globalConfig.setAuditLogger( logging.getLogger('audit') )
         self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
 
+        # Override the logging.conf loglevel for STDOUT if specified.
+        if ( self._globalConfig.getVerboseLevel() != None ):
+            if (self._globalConfig.getVerboseLevel() == 'DEBUG'):
+                self._globalConfig.getStdoutLogger().setLevel(logging.DEBUG)
+            elif (self._globalConfig.getVerboseLevel() == 'INFO'):
+                self._globalConfig.getStdoutLogger().setLevel(logging.INFO)
+            elif (self._globalConfig.getVerboseLevel() == 'ERROR'):
+                self._globalConfig.getStdoutLogger().setLevel(logging.ERROR)
+            else:
+                myError = "Standard output level setting '" + self._globalConfig.getVerboseLevel() + "' not supported.  Exiting..."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                self._globalConfig.setExitSuccess(False)
+                return
+
         if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getStdoutLogger.setLevel(logging.DEBUG)
 

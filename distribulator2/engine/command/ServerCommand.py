@@ -60,7 +60,7 @@ class ServerCommand(Command.Command):
                 return False
             else:
                 self._globalConfig.setCurrentServerGroup(myServerGroup)
-                myInfo = "INFO:  Current server group is now '" + self._commTokens[2] + "'."
+                myInfo = "Current server group is now '" + self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                 return True
         else:

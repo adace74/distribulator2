@@ -39,7 +39,7 @@ class Command:
         """This method simply asks the never-ending question: Are You Sure?"""
 
         try:
-            sys.stdout.write("Yes / No> ")
+            sys.stdout.write("INPUT|Yes / No> ")
             myInput = sys.stdin.readline()
             myInput = myInput.strip()
 
