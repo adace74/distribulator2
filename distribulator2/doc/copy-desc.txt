@@ -1,18 +1,23 @@
 Copy Command Syntax & Examples
 -----------------------------
 
-Syntax: copy source_path [dest_server|dest_server_group,dest_server|dest_server_group...]:dest_path
+Syntax: copy source_path [dest_server|dest_server_group,dest_server|dest_server_group...]:dest_path [now]
 
-Description: Copies files to/from various servers within our
-             working environment.
+Description: Copies files to/from various servers within our working environment.
 
 Examples:
     copy /tmp/blah.txt /tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/ 
       on the current server group.
+    copy /tmp/blah.txt /tmp/ now
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on the current server group, skipping the are-you-sure question.
     copy /tmp/blah.txt app:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
       on the 'app' server group.
+    copy /tmp/blah.txt app:/tmp/ now
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on the 'app' server group, skipping the are-you-sure question.
     copy /tmp/blah.txt app,www:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
       on the app and www server groups.

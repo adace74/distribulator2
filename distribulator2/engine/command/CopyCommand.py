@@ -53,6 +53,7 @@ class CopyCommand(Command.Command):
 
         myCommandCount = 0
         myCopyTarget = '';
+        myIsNow = False
         myServerGroupList = []
         myServerNameList = []
 
@@ -68,30 +69,19 @@ class CopyCommand(Command.Command):
             myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False            
-        if (self._commString.find(' reverse') > 0):
-            myError = "Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
-            return False
         else:
             myLocalPath = self._commTokens[1]
             myRemotePath = self._commTokens[2]
 
-        # Validate local file.
-        #try:
-        #    if ( stat.S_ISREG(os.stat(
-        #        myLocalPath)[stat.ST_MODE]) == False):
-        #        myError = "File '" + myLocalPath + \
-        #                    "' is accessible, but not regular."
-        #        self._globalConfig.getMultiLogger().LogMsgError(myError)
-        #        return False
-        #except OSError, (errno, strerror):
-        #    myError = "[Errno %s] %s: %s" % (errno, strerror, \
-        #                                              myLocalPath)
-        #    self._globalConfig.getMultiLogger().LogMsgError(myError)
-        #    return False
+        #
+        # Step 2: Check for the "now" keyword.
+        #
+        if (len(self._commTokens) == 4):
+            if (self._commTokens[3].find('now') != -1):
+                myIsNow = True
 
         #
-        # Step 2: Try to determine what the target of the command is,
+        # Step 3: Try to determine what the target of the command is,
         #         and set a state-tracking variable accordingly.
         # 
         if (self._commString.find(':') == -1):
@@ -110,7 +100,7 @@ class CopyCommand(Command.Command):
             myCopyTarget = 'multiple_server_group'
 
         #
-        # Step 3: Assemble two lists based on command syntax.
+        # Step 4: Assemble two lists based on command syntax.
         #
         # myServerNameList will contain a list of server names.
         # -or-
@@ -188,7 +178,7 @@ class CopyCommand(Command.Command):
                     return False
 
         #
-        # Step 4: Make sure noone's trying to mix
+        # Step 5: Make sure noone's trying to mix
         #         server hostnames and server group names together.
         #
         if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
@@ -197,9 +187,9 @@ class CopyCommand(Command.Command):
             return False
 
         #
-        # Step 5: Must make sure...are you sure you're sure?
+        # Step 6: Must make sure...are you sure you're sure?
         #
-        if (self._globalConfig.isBatchMode() == False):
+        if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
             myDisplayStr = ''
 
             if ( len(myServerNameList) > 0):
@@ -234,7 +224,7 @@ class CopyCommand(Command.Command):
                     return False
 
         #
-        # Step 6: If we found server name(s), then run with that.
+        # Step 7: If we found server name(s), then run with that.
         #         Otherwise, do the same with the server group(s) given.
         #
         if ( len(myServerNameList) > 0 ):

@@ -1,14 +1,15 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run [ssh_flags] "command" on [server|server_group,server|server_group...] [reverse|single]
+Syntax: run [ssh_flags] "command" on [server|server_group,server|server_group...] [now|reverse|single]
 
-Description: Runs a given command across multiple servers,
-             in either normal or reverse sort order.
+Description: Runs a given command across multiple servers, in either normal or reverse sort order.
 
 Examples:
     run "uptime"            -- Runs uptime on current server group
                                in forward sort order.
+    run "uptime" now        -- Runs uptime on current server group
+                               in forward sort order, skipping the are-you-sure question.
     run "uptime" reverse    -- Runs uptime on current server group
                                in reverse sort order.
     run "uptime" single     -- Runs uptime on a single server
@@ -20,6 +21,9 @@ Examples:
                                with the app server group.
     run "uptime" on app,www -- Runs uptime on app and www server groups
                                in forward sort order.
+    run "uptime" on app,www now
+                            -- Runs uptime on app and www server groups
+                               in forward sort order, skipping the are-you-sure question.
     run "uptime" on app,www reverse
                             -- Runs uptime on app and www server groups
                                in reverse sort order.
