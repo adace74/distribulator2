@@ -48,8 +48,8 @@ Examples:
 
 Notes:
     The hostname search algorithm has been tweaked in such a way that
-    matches will be based on DNS hostname.  For instance, "login app0"
-    will -not- match app01.somewhere.com while "login app01" will.
+    matches will be based on DNS hostname.  For instance, 'login app0'
+    will -not- match app01.somewhere.com while 'login app01' will.
 
 ----------------------------------------------------------------------
 $Id$

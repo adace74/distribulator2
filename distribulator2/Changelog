@@ -241,7 +241,7 @@ Change List For v0.8.5 (Language: Python / Bloat Factor: 3983 lines / Status: Sh
 * Transfer of all copyright notices from personal to Orbitz corporate.
 * Ability to use regular expressions in the "run" command.
 
-Change List For v0.8.6 (Language: Python / Status: In Progress / Codename: Final Run)
+Change List For v0.9.0 (Language: Python / Status: In Progress / Codename: Final Run)
 -------------------------------------------------------------------------------------
 * Cleanup: Added an autoconf script such that no matter where the package is installed
   or where Python is, we'll run with it.

@@ -7,11 +7,13 @@ Description: Sets a given attirbute to a given value.
 
 Examples:
     set delay 5          -- Sets the sleep() delay between remote commands to 5 seconds.
-    set server-group app -- Sets the current server group to "app".
-    set server-group www -- Sets the current server group as "www".
+    set environment qa   -- Sets the current environment to 'qa'.
+    set environment prod -- Sets the current environment to 'prod'.
+    set server-group app -- Sets the current server group to 'app'.
+    set server-group www -- Sets the current server group as 'www'.
 
 Notes:
-    The "current working server group" defaults to the first server group
+    The current working server group defaults to the first server group
     specified in XML configuration.
 
 ----------------------------------------------------------------------

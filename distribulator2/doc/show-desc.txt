@@ -7,6 +7,8 @@ Description: Shows a given attribute.
 
 Examples:
     show delay                -- Displays current sleep() delay between remote commands.
+    show environment          -- Displays server groups in the current environment.
+    show environment prod     -- Displays server groups in the 'prod' environment.
     show server-group         -- Displays server groups in the current environment.
     show server-group www     -- Displays servers in the 'www' group.
 
