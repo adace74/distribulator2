@@ -188,7 +188,7 @@ class BatchMode(Mode.Mode):
                 #
                 # Step 4: Handle CTRL-C and "exit" from this chunk of code.
                 #
-                if (self._globalConfig.getBreakState()):
+                if (self._globalConfig.isBreakState()):
                      break
 
                 if (myTokens[0] == 'exit'):
