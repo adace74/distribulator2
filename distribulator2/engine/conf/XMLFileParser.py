@@ -137,7 +137,7 @@ class XMLFileParser:
         if (PassedLogging.getAttribute('filename')):
             self._globalConfig.setLogFilename(PassedLogging.getAttribute('filename'))
         else:
-            self._globalConfig.setLogFilename("/var/log/commands")
+            self._globalConfig.setLogFilename("/var/log/command.log")
 
         if (PassedLogging.getAttribute('level')):
             self._globalConfig.setLogLevel(
