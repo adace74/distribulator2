@@ -95,9 +95,7 @@ class CommandLine:
             except EOFError:
                 thisInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
                 print
-                print
                 print(thisInfo)
-                print
                 self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
                 return True
@@ -109,19 +107,7 @@ class CommandLine:
                 thisTokens = thisInput.split()
 
                 #
-                # Step 1 - Handle "exit" from this chunk of code.
-                # Should probably be moved into the parser proper.
-                #
-                if (thisTokens[0] == 'exit'):
-                    thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
-                    print
-                    print(thisInfo)
-                    print
-                    self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
-
-                    return True
-                #
-                # Step 2 - Check for Unix "pass through" commands.
+                # Step 1 - Check for Unix "pass through" commands.
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
@@ -142,14 +128,20 @@ class CommandLine:
                 if (thisFoundIt):
                     continue
                 #
-                # Step 3 - Create InternalCommand object and fire up
-                #          the parser.
+                # Step 2 - Create InternalCommand object and
+                #          fire up the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisInput)
                 thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
                 thisCommandRunner.run(thisInternalCommand)
+
+                # Free up some memory.
                 del thisInternalCommand
                 del thisCommandRunner
+
+                # Icky flow-control hack.
+                if (thisTokens[0] == 'exit'):
+                    return True
 
 ######################################################################

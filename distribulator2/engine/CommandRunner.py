@@ -56,17 +56,17 @@ class CommandRunner:
         self._commTokens = self._commString.split()
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
-                                                     self._commString)
-
-        #for thisToken in self._commTokens:
-        #    print("DEBUG: Token |" + thisToken + "|")
+        if (self._commTokens[0] != 'cd'):
+            self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
+                                                         self._commString)
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
             thisStatus = self.doChdir()
         elif (self._commTokens[0] == 'copy'):
             thisStatus = self.doCopy()
+        elif (self._commTokens[0] == 'exit'):
+            thisStatus = self.doExit()
         elif (self._commTokens[0] == 'help'):
             thisStatus = self.doHelp()
         elif (self._commTokens[0] == 'login'):
@@ -255,6 +255,15 @@ class CommandRunner:
             except KeyboardInterrupt:
                 thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
+
+        return True
+
+######################################################################
+
+    def doExit(self):
+        thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+
+        self.handleInfo(thisInfo)
 
         return True
 

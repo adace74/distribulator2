@@ -9,7 +9,8 @@ Legend For Changes Below:
 "+" Indicates a change that is currently being developed.
 "*" Indicates a change that is at least 80%(if not 100%) complete.
 
-Change List For v0.3 (Shipped):
+Change List For v0.3 (Language: Perl / Status: Shipped)
+-------------------------------------------------------
 * Some semblance of a shell, include a useful prompt.
   Now includes 'cat', 'cd', and 'ls' for local server browsing.
 * Ability to load in text-based lists of servers, representing
@@ -28,7 +29,7 @@ Change List For v0.3 (Shipped):
 * Pattern-based group and server name matching for the lazy sysadmin
   in all of us.
 
-Change List For v0.4-v0.45 (Shipped):
+Change List For v0.4-v0.45 (Language: Perl / Status: Shipped)
 * Addition of the "login" command.  Basically allows the user to specify
   a server to login to without having to exit the distribulator.
 * Addition of --noping for environments where either a ServerPing is
@@ -39,7 +40,7 @@ Change List For v0.4-v0.45 (Shipped):
 * Addition of the ability to distinguish those commands as external and
   simply pass them through to the underlying shell via the system() call.
 
-Change List For v0.47 (Shipped):
+Change List For v0.47 (Language: Perl / Status: Shipped)
 * Modularized codebase.  Still not all that generic, but at least
   broken out by functionality.  There's still way too many
   inter-dependancies, but it's at least more manageable.
@@ -56,7 +57,7 @@ Change List For v0.47 (Shipped):
   (Hold down CTRL-C, or just hit it a number of times)
 * Improved testing process, thus improved stability.
 
-Change List For v0.48 (Shipped):
+Change List For v0.48 (Language: Perl / Status: Shipped)
 * Fixed a silly bug where the command-line prompt wasn't being updated with
   the current server group.
 * Added a -t flag to the run command.  This will allow one to specify
@@ -69,36 +70,44 @@ Change List For v0.48 (Shipped):
   the module directory magic going is transparent.
 * Fixed code to ignore 'CVS' directories.
 
-Change List For v0.5 (Shipped):
+Change List For v0.5 (Language: Python / Status: Shipped):
 * First 100% Python release.  Enjoying the benefits of a more
   natively object-oriented language than Perl.
+* All previous Perl features implemeneted, some better than before.
 * Auditing implemented.
 * Batch mode implemented.
-* Single local server file to single remote server file copy.
-(i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
-* Single local server file to many remote serveres file copy.
-(i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
+* XML config implemented.
+* Single local server file to single group server file copy.
+(i.e. scp awd@localhost:/tmp/blah awd@app:/some/other/path)
 
-Change List For v0.51 (Shipped):
-* Documentation updates, aiming for the normal INSTALL/README
-  paradigm.
+Change List For v0.51 (Language: Python / Status: Shipped)
+* Lots of documentation updates,
+  aiming for the normal INSTALL/README paradigm.
 
-Change List For v0.6 (Coming as soon as it's ready):
-* Bug fixes / OO design sanity fixes / stabilization work.
-* More documentation updates.
+Change List For v0.52 (Language: Python / Status: In Progress):
+* On a bug-hunt for this minor release.
+* Fixed inaccuracies found in this Changelog.
+* SourceForge bug #744225 fixed.
+* SourceForge bug #744226 fixed.
+* SourceForge bug #749953 fixed.
 
-Change List For v0.7 (A little farther out):
+Change List For v0.6 (Language: Python / Status: Planning):
+- A CVS branch will be created for any future v0.5x bug-fixes.
+- OO design sanity fixes / stabilization work.
+- More documentation updates.
+
+Idea List For v0.7 (A little farther out):
 - Ability to run commands on a remote single server.
-(i.e. ssh adace@remote01 "uptime")
+(i.e. ssh awd@www01 "uptime")
+- Single local server file to single remote server file copy.
+(i.e. scp /tmp/blah awd@www01:/some/other/path/)
 - Single remote server file to single remote server file copy.
-(i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)
-- Single remote server file to many remote serveres file copy.
-(i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
+(i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 
-Change List For v1.0 (Will we ever get here?  Who knows!):
-- Sudo-based remote permissions checking.
-- Other random pie-in-the-sky dreamsicle features.
+Idea List For v1.0 (Will we ever get here?  Who knows!):
+- Sudo-based remote permissions checking?
 - A decent install / setup system!  Perhaps a quick autoconf thingie?
 - Integration with ncurses such that one could run a command on 4 servers
   in parallel, and see the output from each of them?
-- Other random pie-in-the-sky dreamsicle features.
+- What more could one want?
+
