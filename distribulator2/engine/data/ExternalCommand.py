@@ -59,11 +59,11 @@ class ExternalCommand:
 
         # This could be a pass-through command, no need to log that.
         if (isLoggable):
-            self._globalConfig.getMultiLogger().LogDebugInfo(
+            self._globalConfig.getMultiLogger().LogMsgDebug(
                 "EXEC: " + self._command )
 
         myStatus = os.system(self._command)
-        self._globalConfig.getMultiLogger().LogDebugSeperator()
+        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         if (myStatus != 0):
             self._globalConfig.getMultiLogger().LogMsgWarn("Local shell returned error state.")
@@ -96,7 +96,7 @@ class ExternalCommand:
 
             self._globalConfig.setExitSuccess(False)
 
-        self._globalConfig.getMultiLogger().LogDebugSeperator()
+        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
