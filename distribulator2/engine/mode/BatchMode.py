@@ -74,6 +74,7 @@ class BatchMode(Mode.Mode):
         myInfo = "INFO:  Batch File: " + \
             self._globalConfig.getBatchFile()
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
 
         myCommandCount = 0
         myError = ''
@@ -251,9 +252,6 @@ class BatchMode(Mode.Mode):
         #
         # Output our "footer" for batch mode.
         #
-        # Define a pretty seperator.
-        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
-
         myInfo = "INFO:  Commands Run:      %d commands" % \
               myCommandCount
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
