@@ -3,34 +3,33 @@ Copy Command Syntax & Examples
 
 Syntax: copy [[source [server]]:filepath1 [[destination [server]]:filepath2
 
-Description:  Copies files to/from various servers within our
-working environment.
+Description: Copies files to/from various servers within our
+             working environment.
 
 Examples:
-	copy patch20020822.tar.gz /usr/local/tmp/
-	- Copies local file patch20020822.tar.gz to directory
-	  /usr/local/tmp/ on current server group.
-	copy patch20020822.tar.gz www:/usr/local/tmp/
-	- Copies local file patch20020822.tar.gz to directory
-	  /usr/local/tmp/ on the 'www' server group.
-	copy patch20020822.tar.gz www01:/usr/local/tmp/
-	- Copies local file patch20020822.tar.gz to directory
-	  /usr/local/tmp/ on the server 'www01'.
+    copy patch20020822.tar.gz /tmp/
+    - Copies local file patch20020822.tar.gz to directory
+      /tmp/ on current server group.
+    copy patch20020822.tar.gz www:/tmp/
+    - Copies local file patch20020822.tar.gz to directory
+      /usr/local/tmp/ on the 'www' server group.
+    copy patch20020822.tar.gz www01:/tmp/
+    - Copies local file patch20020822.tar.gz to directory
+      /tmp/ on the server 'www01'.
 
 TODO:
-
-	copy www01:/tmp/patch20020822.tar.gz /usr/local/weblogic/
-	- Copies file patch20020822.tar.gz on server www01
-	  to directory /usr/local/weblogic/ on current server group.
-	copy www01:/tmp/patch20020822.tar.gz www
-	- Copies file /tmp/patch20020822.tar.gz on server www01
-	  to the same directory on 'www' server group.
-	copy www01:/tmp/patch20020822.tar.gz www02:/var/tmp/
-	- Copies file /tmp/patch20020822.tar.gz on server www01
-	  to directory /var/tmp/ on server www02.
-	copy www01:/tmp/patch20020822.tar.gz /var/tmp/
-	- Copies file /tmp/patch20020822.tar.gz on server www01
-	  to local directory /var/tmp/.
+    copy www01:/tmp/patch20020822.tar.gz /usr/local/weblogic/
+    - Copies file patch20020822.tar.gz on server www01
+      to directory /usr/local/weblogic/ on current server group.
+    copy www01:/tmp/patch20020822.tar.gz www
+    - Copies file /tmp/patch20020822.tar.gz on server www01
+      to the same directory on 'www' server group.
+    copy www01:/tmp/patch20020822.tar.gz www02:/var/tmp/
+    - Copies file /tmp/patch20020822.tar.gz on server www01
+      to directory /var/tmp/ on server www02.
+    copy www01:/tmp/patch20020822.tar.gz /var/tmp/
+    - Copies file /tmp/patch20020822.tar.gz on server www01
+      to local directory /var/tmp/.
 
 ----------------------------------------------------------------------
 $Id$

@@ -3,11 +3,11 @@ Login Command Syntax & Examples
 
 Syntax: login server_name
 
-Description:  Logs in to the specified server remotely.
+Description: Logs in to the specified server remotely.
 
 Examples:
-	login www01	-- Logs in to a server whose hostname starts
-			   with www01.
+    login www01 -- Logs in to a server whose hostname starts
+                   with www01.
 
 ----------------------------------------------------------------------
 $Id$

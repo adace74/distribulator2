@@ -3,10 +3,10 @@ Exit Command Syntax & Examples
 
 Syntax: exit
 
-Description:  Exits The Distribulator.
+Description: Exits The Distribulator.
 
 Examples:
-	exit
+    exit
 
 ----------------------------------------------------------------------
 $Id$

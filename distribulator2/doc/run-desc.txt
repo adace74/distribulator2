@@ -4,16 +4,11 @@ Run Command Syntax & Examples
 Syntax: run "command" on [server_group,server_group...]
 
 Description: Runs a given command across multiple servers,
-or on a particular server.
+             or on a particular server.
 
 Examples:
-	run "uptime"        	-- Runs uptime on current server group.
-	run "uptime" on app,www	-- Runs uptime on app and www server groups.
-	run "uptime" on www01	-- Runs uptime on www01 string-matched server.
-
-Notes:
-    Running commands on a particular server hostname will only work
-    for one server.
+    run "uptime"            -- Runs uptime on current server group.
+    run "uptime" on app,www -- Runs uptime on app and www server groups.
 
 ----------------------------------------------------------------------
 $Id$

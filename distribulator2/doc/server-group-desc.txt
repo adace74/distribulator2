@@ -3,13 +3,13 @@ Group Command Syntax & Examples
 
 Syntax: server-group server_group
 
-Description:  Sets the current working server group.
+Description: Sets the current working server group.
 
 Examples:
-	server-group www -- Sets the current server group as "www".
+    server-group www -- Sets the current server group as "www".
 
 Notes:
-	Defaults to first server group specified in configuration.
+    Defaults to first server group specified in configuration.
 
 ----------------------------------------------------------------------
 $Id$

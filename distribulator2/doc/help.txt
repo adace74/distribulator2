@@ -2,22 +2,22 @@ The Distribulator Help Screen
 -----------------------------
 
 Valid Commands:
-	* cd           -- Unix-style change directory.
-	* copy         -- Copies files among servers.
-	* exit         -- Exits the Distribulator.
-	* help         -- This command.
-	* login        -- Remotely logs into a given server.
-	* run          -- Run remote commands.
-    * server-group -- Sets current server group.
-    * server-list  -- List servers in a given or current working server group.
+    cd           -- Unix-style change directory.
+    copy         -- Copies files among servers.
+    exit         -- Exits the Distribulator.
+    help         -- This command.
+    login        -- Remotely logs into a given server.
+    run          -- Run remote commands.
+    server-group -- Sets current server group.
+    server-list  -- List servers in a given or current working server group.
 
 For more detailed help, try "help <command>".
 
 Notes:
-	Other valid commands include "standard" Unix commands, which are listed
-	for parsing purposes in ./conf/pass-through.conf.
-	If you need, feel free to add more, and please let the author know as well
-	(making that list wasn't easy!).
+    Other valid commands include "standard" Unix commands, which are listed
+    for parsing purposes in ./conf/pass-through.conf.
+    If you need, feel free to add more, and please let the author know as well
+    (making that list wasn't easy!).
 
 ----------------------------------------------------------------------
 $Id$
