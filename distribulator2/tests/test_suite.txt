@@ -127,7 +127,7 @@ Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server 
                  in reverse sort order.
 
 Test Case:       run "uptime" on app,db,www single
-Expected Result: Runs the "uptime" command on a single server in the 'app', 'db', and 'www' server groups.
+Expected Result: Runs the "uptime" command on a single server in each of the 'app', 'db', and 'www' server groups.
 
 Test Case:       run "uptime" on www01
 Expected Result: Runs the "uptime" command on a server matching 'www01'.
