@@ -267,7 +267,7 @@ sub ParseCopy
                         }
                         else
                         {
-                            print("NOTE:  CTRL-C detected, aborting command.\n");
+                            print("\nNOTE:  CTRL-C detected, aborting command.\n");
                             setUserAborting($FALSE);
                             last;
                         }
@@ -330,7 +330,7 @@ sub ParseCopy
                     }
                     else
                     {
-                        print("NOTE:  CTRL-C detected, aborting command.\n");
+                        print("\nNOTE:  CTRL-C detected, aborting command.\n");
                         setUserAborting($FALSE);
                         last;
                     }
@@ -414,7 +414,7 @@ sub ParseRun
                 }
                 else
                 {
-                    print("NOTE:  CTRL-C detected, aborting command.\n");
+                    print("\nNOTE:  CTRL-C detected, aborting command.\n");
                     setUserAborting($FALSE);
                     last;
                 }
@@ -447,7 +447,7 @@ sub ParseRun
                     }
                     else
                     {
-                        print("NOTE:  CTRL-C detected, aborting command.\n");
+                        print("\nNOTE:  CTRL-C detected, aborting command.\n");
                         setUserAborting($FALSE);
                         last;
                     }
