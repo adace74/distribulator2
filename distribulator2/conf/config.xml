@@ -110,6 +110,12 @@ $Id$
             <server>partwlx02st.eg.orbitz.com</server>
         </servergroup>
         <servergroup>
+            <name>part_www</name>
+            <username>orbitz</username>
+            <server>partgw01st.eg.orbitz.com</server>
+            <server>partgw02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
             <name>wlx</name>
             <username>orbitz</username>
             <server>wlx01st.eg.orbitz.com</server>
