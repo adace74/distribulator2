@@ -14,6 +14,7 @@ import os
 import os.path
 import string
 import sys
+import time
 
 ######################################################################
 
@@ -44,6 +45,9 @@ class ExternalCommand:
 
         if (thisStatus != 0):
             print("ERROR: Local shell returned error state.")
+
+        # Sleep 1/4 second to allow for CTRL-C's
+        time.sleep(0.25)
 
         return thisStatus
 

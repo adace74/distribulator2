@@ -162,18 +162,21 @@ class CommandRunner:
             thisServerGroup = self._globalConfig.getCurrentServerGroup()
 
             # Just Do It.
-            for thisServer in thisServerGroup.getServerList():
-                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
-                thisExternalCommand.setCommand( \
+            try:
+                for thisServer in thisServerGroup.getServerList():
+                    thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                    thisExternalCommand.setCommand( \
                     self._globalConfig.getSshBinary() + thisFlagStr + \
                     " -l " + thisServer.getUsername() + " " + \
                     thisServer.getName() + " " + \
                     thisBodyStr )
-                # Log It.
-                self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
-                                                             thisExternalCommand.getCommand())
-                # Run It.
-                thisExternalCommand.run()
+                    # Log It.
+                    self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                                 thisExternalCommand.getCommand())
+                    # Run It.
+                    thisExternalCommand.run()
+            except KeyboardInterrupt:
+                print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
 
             return True
 
@@ -206,18 +209,23 @@ class CommandRunner:
             return False
 
         # Just Do It.
-        for thisServer in thisServerGroup.getServerList():
-            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
-            thisExternalCommand.setCommand( \
+        try:
+            for thisServer in thisServerGroup.getServerList():
+                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                thisExternalCommand.setCommand( \
                     self._globalConfig.getSshBinary() + thisFlagStr + \
                     " -l " + thisServer.getUsername() + " " + \
                     thisServer.getName() + " " + \
                     thisBodyStr )
-            # Log It.
-            self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
-                                                         thisExternalCommand.getCommand())
-            # Run It.
-            thisExternalCommand.run()
+                # Log It.
+                self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                             thisExternalCommand.getCommand())
+                # Run It.
+                thisExternalCommand.run()
+        except KeyboardInterrupt:
+            print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+
+        return True
 
     def doServerGroup(self):
         if ( len(self._commTokens) > 1 ):
