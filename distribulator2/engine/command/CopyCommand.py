@@ -281,7 +281,7 @@ class CopyCommand(Command.Command):
             except KeyboardInterrupt:
                 myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-                break
+                return myCommandCount
         else:
             #
             # Server group version of the above.
@@ -333,7 +333,7 @@ class CopyCommand(Command.Command):
                 except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-                    break
+                    return myCommandCount
 
         return myCommandCount
 
