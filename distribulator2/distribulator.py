@@ -37,6 +37,7 @@ except ImportError:
 # Define global variables(how global are they?)
 install_dir = os.getcwd()
 install_conf = os.path.join(os.getcwd(), 'conf')
+
 server_shell = 'ssh'
 
 # Display a nice pretty header.
@@ -46,12 +47,11 @@ def title_header():
     print "-----------------------"
     print
 
-def info_header(server_env):
+def info_header(server_env, start_dir):
     print "Python Version:      " + sys.version.split()[0]
-    print "Local Install Dir:   " + install_dir
-    print "Local Config Dir:    " + install_conf
     print "Local Hostname:      " + socket.gethostname()
     print "Current Environment: " + server_env
+    print "Current Directory:   " + start_dir
     print
     print "Internal Commands: 0"
     print "External Commands: 0"
@@ -59,8 +59,10 @@ def info_header(server_env):
 
 # Good old main...
 def main(argv):
-    short_options = ':e:s:'
-    long_options = ['env=',
+    short_options = ':b:d:e:s:'
+    long_options = ['batch=',
+                    'directory=',
+                    'env=',
                     'shell=']
 
     usage = """Usage: %s [options] --env=environment
@@ -69,14 +71,21 @@ The available options are:
 
     -b / --batch=filename
     Enables batch mode processing, requires a readable input file.
-    Not yet implemented.  OPTIONAL
+    Not yet implemented.
+    OPTIONAL
+
+    -d / --directory=start_dir
+    Allows the wrapper script to pass in the user's real cwd.
+    OPTIONAL
 
     -e / --env=
     Set the server environment we wish to operate in.
+    REQUIRED
 
     -s / --shell=
     Sets the remote shell type we wish to use.  Defaults to ssh.
-    Not yet implemented.  OPTIONAL
+    Not yet implemented.
+    OPTIONAL
 
 """ % argv[0]
 
@@ -92,7 +101,11 @@ The available options are:
 
         if len(optlist) > 0:
             for opt in optlist:
-                if (opt[0] == '-e') or (opt[0] == '--env'):
+                if (opt[0] == '-b') or (opt[0] == '--batch'):
+                    batch_file = opt[1]
+                elif (opt[0] == '-d') or (opt[0] == '--directory'):
+                    start_dir = opt[1]
+                elif (opt[0] == '-e') or (opt[0] == '--env'):
                     server_env = opt[1]
                 elif (opt[0] == '-s') or (opt[0] == '--shell'):
                     server_shell = opt[1]
@@ -112,7 +125,7 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
-    info_header(server_env)
+    info_header(server_env, start_dir)
 #
 # If called from the command line, invoke thyself!
 #
