@@ -30,7 +30,7 @@
     <!-- Logging Options -->
     <logging name="filename" value="/var/log/command.log"/>
     <logging name="level" value="DEBUG"/>
-    <logging name="date_mask" value="%m-%d-%Y %H:%M:%S"/>
+    <logging name="date_mask" value="%m-%d-%Y|%H:%M:%S"/>
     <logging name="log_mask" value="%(asctime)s|%(process)s|%(levelname)s|%(message)s"/>
 
     <!-- Ping Options -->
