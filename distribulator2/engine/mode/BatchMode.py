@@ -257,10 +257,10 @@ class BatchMode(Mode.Mode):
         myTimeFinished = time.time()
         myTimeDuration = myTimeFinished - myTimeStarted
 
-        myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
+        myInfo = myInfo + "%.2f" % myTimeDuration + "s total time / "
 
         if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
-            myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s per command"
+            myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
         else:
             myInfo = myInfo + "0s per command"
 
