@@ -243,8 +243,8 @@ Change List For v0.8.5 (Language: Python / Bloat Factor: 3983 lines / Status: Sh
 
 Change List For v0.8.6 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
-- Ability to run a "setup" script that will change appropriate files to run this software
-  from any filesystem location.
+- Cleanup: Added an autoconf script such that no matter where the package is installed
+  or where Python is, we'll run with it.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
