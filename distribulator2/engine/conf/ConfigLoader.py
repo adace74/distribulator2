@@ -131,7 +131,7 @@ class ConfigLoader:
                 return
 
         if ( self._globalConfig.isBatchMode() ):
-            self._globalConfig.getStdoutLogger.setLevel(logging.DEBUG)
+            self._globalConfig.getStdoutLogger().setLevel(logging.DEBUG)
 
         if ( self._globalConfig.isConsoleMode() ):
             print( "- Logging configuration:       %d lines loaded." % myConfigLines )
