@@ -157,7 +157,7 @@ class CommandRunner:
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
+                print("INFO:  Caught CTRL-C keystroke.  Returning to command prompt...")
                 return False
 
         return True
@@ -330,7 +330,7 @@ class CommandRunner:
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
+                print("INFO:  Caught CTRL-C keystroke.  Returning to command prompt...")
 
         return True
 
