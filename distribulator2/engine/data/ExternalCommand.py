@@ -60,9 +60,9 @@ class ExternalCommand:
         # This could be a pass-through command, no need to log that.
         if (isLoggable):
             self._globalConfig.getLogger().info(
-                "EXEC:  " + self._command )
+                "EXEC: " + self._command )
 
-        print("EXEC:  " + self._command)
+        print("EXEC: " + self._command)
 
         myStatus = os.system(self._command)
         print( self._globalConfig.getSeperator() )
@@ -87,7 +87,7 @@ class ExternalCommand:
         """This method is responsible for running a given command in batch mode."""
 
         self._globalConfig.getMultiLogger().LogMsgInfo(
-            "EXEC:  " + self._command )
+            "EXEC: " + self._command )
 
         myStatus, myOutput = commands.getstatusoutput(self._command)
 
