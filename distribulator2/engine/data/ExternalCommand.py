@@ -87,7 +87,7 @@ class ExternalCommand:
         myStatus, myOutput = commands.getstatusoutput(self._command)
 
         for myLine in myOutput.split('\n'):
-            self._globalConfig.getMultiLogger().LogMsgDebug(
+            self._globalConfig.getMultiLogger().LogMsgInfo(
                 "OUT:  " + myLine )
 
         if (myStatus != 0):
