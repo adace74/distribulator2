@@ -73,9 +73,8 @@ class ConfigLoader:
         except IOError, (errno, strerror):
             thisError = "ERROR: [Errno %s] %s: %s" % \
                         (errno, strerror, thisFilename)
-            print(thisError)
-            self._globalConfig.getSysLogger().LogMsgError(thisError)
-            sys.exit(1)
+            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            sys.exit(True)
 
         self._globalConfig.setPassThruList(thisPassThruList)
 

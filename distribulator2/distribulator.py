@@ -36,6 +36,7 @@ import sys
 import engine.BatchRunner
 import engine.CommandLine
 import engine.ConfigLoader
+import engine.MultiLogger
 import engine.data.GlobalConfig
 import generic.SysLogger
 
@@ -198,14 +199,17 @@ The available options are:
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
         thisGlobalConfig = thisLoader.load(thisCommLine)
 
-        # Set our silly output flag
+        # Currently not using the MultiLogger here as we log based on a different set of criteria
+        # than it is aware of.
         if ( thisGlobalConfig.isBatchMode() & \
              (thisGlobalConfig.isQuietMode() == False) ):
             thisVerboseMode = True
 
-        # Setup syslog.
-        thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility(), 'distribulator.py')
-        thisGlobalConfig.setSysLogger(thisLogger)
+        # Setup syslog and console output handle.
+        thisSysLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility(), 'distribulator.py')
+        thisGlobalConfig.setSysLogger(thisSysLogger)
+        thisMultiLogger = engine.MultiLogger.MultiLogger(thisGlobalConfig)
+        thisGlobalConfig.setMultiLogger(thisMultiLogger)
 
         # Log our startup.
         thisStatus, thisOutput = commands.getstatusoutput( \
@@ -220,7 +224,7 @@ The available options are:
 
         # Define a pretty seperator.
         thisSeperator = '----------------------------------------------------------------------'
-        thisLogger.LogMsgInfo(thisSeperator)
+        thisSysLogger.LogMsgInfo(thisSeperator)
         if (thisVerboseMode):
             print(thisSeperator)
 
@@ -230,7 +234,7 @@ The available options are:
                 print(thisInfo)
         else:
             thisInfo = "INFO:  " + __appversion__ + " (console mode) START"
-        thisLogger.LogMsgInfo(thisInfo)
+        thisSysLogger.LogMsgInfo(thisInfo)
 
         thisInfo = "INFO:  Real UID: " + thisGlobalConfig.getRealUsername() + \
                    " | " + \
@@ -238,13 +242,13 @@ The available options are:
                    " | " + \
                    "Environment: " + thisServerEnv
 
-        thisLogger.LogMsgInfo(thisInfo)
+        thisSysLogger.LogMsgInfo(thisInfo)
         if (thisVerboseMode):
             print(thisInfo)
 
     except (EOFError, KeyboardInterrupt):
             thisError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            thisLogger.LogMsgError(thisError)
+            thisSysLogger.LogMsgError(thisError)
             if (thisVerboseMode):
                 print(thisError)
 
@@ -257,18 +261,18 @@ The available options are:
     except OSError, (errno, strerror):
         thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
         print(thisError)
-        thisLogger.LogMsgError(thisError)
+        thisSysLogger.LogMsgError(thisError)
 
     # Batch mode.
     if ( thisGlobalConfig.isBatchMode() ):
         thisBatchRunner.invoke()
 
         thisInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
-        thisLogger.LogMsgInfo(thisInfo)
+        thisSysLogger.LogMsgInfo(thisInfo)
         if (thisVerboseMode):
             print(thisInfo)
 
-        thisLogger.LogMsgInfo(thisSeperator)
+        thisSysLogger.LogMsgInfo(thisSeperator)
         if (thisVerboseMode):
             print(thisSeperator)
     # Console mode.
@@ -276,11 +280,11 @@ The available options are:
         thisCommLine.invoke()
 
         thisInfo = "INFO:  " + __appversion__ + " (console mode) EXIT"
-        thisLogger.LogMsgInfo(thisInfo)
+        thisSysLogger.LogMsgInfo(thisInfo)
         if (thisVerboseMode):
             print(thisInfo)
 
-        thisLogger.LogMsgInfo(thisSeperator)
+        thisSysLogger.LogMsgInfo(thisSeperator)
         if (thisVerboseMode):
             print(thisSeperator)
 

@@ -132,6 +132,7 @@ stty
 su
 sum
 sync
+tail
 tar
 top
 touch

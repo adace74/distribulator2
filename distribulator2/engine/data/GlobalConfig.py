@@ -260,7 +260,7 @@ class GlobalConfig:
         self._syslogFacility = PassedSyslogFacility
 
 ######################################################################
-# Syslogger Object.
+# SysLogger Object.
 ######################################################################
 
     def getSysLogger(self):
@@ -274,6 +274,22 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._sysLogger = PassedSysLogger
+
+######################################################################
+# MultiLogger Object.
+######################################################################
+
+    def getMultiLogger(self):
+        """This is a typical accessor method."""
+
+        return self._multiLogger
+
+######################################################################
+
+    def setMultiLogger(self, PassedMultiLogger):
+        """This is a typical accessor method."""
+
+        self._multiLogger = PassedMultiLogger
 
 ######################################################################
 # Server Environment.

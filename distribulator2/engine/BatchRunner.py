@@ -44,38 +44,6 @@ class BatchRunner:
 
 ######################################################################
 
-    def outputError(self, PassedError):
-        """
-        This method is responsible for logging error messages
-        in a manner consistent with a quite mode, if applicable.
-        """
-
-        if ( self._globalConfig.isQuietMode() ):
-            self._globalConfig.getSysLogger().LogMsgError(
-                PassedError)
-        else:
-            print(PassedError)
-            self._globalConfig.getSysLogger().LogMsgError(
-                PassedError)
-
-######################################################################
-
-    def outputInfo(self, PassedInfo):
-        """
-        This method is responsible for logging info messages 
-        in a manner consistent with a quite mode, if applicable.
-        """
-
-        if ( self._globalConfig.isQuietMode() ):
-            self._globalConfig.getSysLogger().LogMsgInfo(
-                PassedInfo)
-        else:
-            print(PassedInfo)
-            self._globalConfig.getSysLogger().LogMsgInfo(
-                PassedInfo)
-
-######################################################################
-
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
 
@@ -87,7 +55,7 @@ class BatchRunner:
                 thisError = "ERROR: File '" + \
                             self._globalConfig.getBatchFile() + \
                             "' is accessible, but not regular."
-                self.outputError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(thisError)
 
                 self._globalConfig.setExitSuccess(False)
                 return
@@ -95,7 +63,7 @@ class BatchRunner:
         except OSError, (errno, strerror):
             thisError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \
                                                        self._globalConfig.getBatchFile() )
-            self.outputError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(thisError)
 
             self._globalConfig.setExitSuccess(False)
             return
@@ -103,7 +71,7 @@ class BatchRunner:
         # Let everyone know what we're doing.        
         thisInfo = "INFO:  Batch File: " + \
             self._globalConfig.getBatchFile()
-        self.outputInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
 
         thisCommandCount = 0
         thisError = ''
@@ -133,7 +101,7 @@ class BatchRunner:
                         thisError = "ERROR: Variable $var3 referenced on line %d, but not defined." % thisLineCount
 
                 if (len(thisError) != 0):
-                    self.outputError(thisError)
+                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
 
                     self._globalConfig.setExitSuccess(False)
                     return
@@ -219,7 +187,7 @@ class BatchRunner:
                 #
                 if (thisTokens[0] == 'exit'):
                     thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
-                    self.outputInfo(thisInfo)
+                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
 
                     return
 
@@ -264,7 +232,7 @@ class BatchRunner:
         except IOError, (errno, strerror):
             thisError = "ERROR: [Errno %s] %s: %s" % \
                         (errno, strerror, thisFilename)
-            self.outputError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(thisError)
 
             self._globalConfig.setExitSuccess(False)
             return
@@ -274,18 +242,18 @@ class BatchRunner:
         #
         # Define a pretty seperator.
         thisSeperator = '----------------------------------------------------------------------'
-        self.outputInfo(thisSeperator)
+        self._globalConfig.getMultiLogger().LogMsgInfo(thisSeperator)
 
         thisInfo = "INFO:  Commands Run:      %d commands" % \
               thisCommandCount
-        self.outputInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
 
         thisTimeFinished = time.time()
         thisTimeDuration = thisTimeFinished - thisTimeStarted
 
         thisInfo = "INFO:  Run Time:          %.2f seconds" % \
               thisTimeDuration
-        self.outputInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
 
         if ( (int(thisTimeDuration) > 0) & (int(thisCommandCount) > 0) ):
             thisInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
@@ -293,7 +261,7 @@ class BatchRunner:
         else:
             thisInfo = "INFO:  Avg. Command Time: 0 seconds"
 
-        self.outputInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
 
         return
 

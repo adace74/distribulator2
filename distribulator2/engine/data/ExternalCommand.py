@@ -85,25 +85,18 @@ class ExternalCommand:
     def runBatch(self):
         """This method is responsible for running a given command in batch mode."""
 
-        self._globalConfig.getSysLogger().LogMsgInfo(
+        self._globalConfig.getMultiLogger().LogMsgInfo(
             "EXEC:  " + self._command )
-        if (self._globalConfig.isQuietMode() == False):
-            print("EXEC:  " + self._command)
 
         thisStatus, thisOutput = commands.getstatusoutput(self._command)
 
         for thisLine in thisOutput.split('\n'):
-            self._globalConfig.getSysLogger().LogMsgInfo(
+            self._globalConfig.getMultiLogger().LogMsgInfo(
                 "OUTPUT:" + thisLine )
-            if (self._globalConfig.isQuietMode() == False):
-                print(thisLine)
 
         if (thisStatus != 0):
             thisError = "ERROR: Local shell returned error state."
-
-            self._globalConfig.getSysLogger().LogMsgError(thisError)
-            if ( self._globalConfig.isQuietMode() == False):
-                print(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(thisError)
 
             self._globalConfig.setExitSuccess(False)
 
