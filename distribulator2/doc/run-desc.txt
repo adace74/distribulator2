@@ -1,24 +1,19 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run "command_line" [local|server_group|server_name]
+Syntax: run "command" on [server_group,server_group...]
 
 Description: Runs a given command across multiple servers,
 or on a particular server.
 
 Examples:
-	run "uptime"		-- Runs uptime on current server group.
-	run "uptime" www	-- Runs uptime on www server group.
-	run "uptime" www01	-- Runs uptime on www01 string-matched server.
-
-	run -t "vi /tmp/blah"	-- Runs vi with a remote tty on current server
-				   group.
-	run -t "vi /tmp/blah" www -- Runs vi with a remote tty on www server
-				     group.
+	run "uptime"        	-- Runs uptime on current server group.
+	run "uptime" on app,www	-- Runs uptime on app and www server groups.
+	run "uptime" on www01	-- Runs uptime on www01 string-matched server.
 
 Notes:
-	No does priority-based partial-string matching on
-	server group name, then on server hostname.
+    Running commands on a particular server hostname will only work
+    for one server.
 
 ----------------------------------------------------------------------
 $Id$
