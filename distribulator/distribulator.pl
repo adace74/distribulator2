@@ -15,8 +15,12 @@ $|=1;
 
 #
 # * Enforce strict conventions.
+# * Current working directory Module
 # * Command-line Options Module
-# * Perl Documentation Module
+# * ICMP ping Module
+# * Perl documentation Module
+# * Unix hostname Module
+# * Readline Module
 #
 use strict;
 use Cwd;
@@ -29,9 +33,10 @@ use Term::ReadLine;
 ######################################################################
 # USER CONFIGURABLE SETTINGS
 #
+# Where distribulator is installed, required for help files.
 my($HOME_DIR) = '/usr/local/novo/distribulator';
+# Where the configuration files are located.
 my($CONF_DIR) = "/usr/local/ops/environ/";
-#
 #
 ######################################################################
 
