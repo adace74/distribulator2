@@ -63,6 +63,7 @@ my($MYFILE);
 
 #
 # State Tracking Variables
+#
 my($current_server_group) = 'wlx';
 my($environment);
 my(@server_groups);
@@ -156,6 +157,12 @@ while ($TRUE)
 
 	@command_tokens = split(' ', $input);
 	$command = shift(@command_tokens);
+
+    # If the user just hit ENTER, simply give them another prompt.
+    if ($input eq '')
+    {
+        next;
+    }
 
     # If the command isn't found in the array.
     if (!isValidCommand($command))
