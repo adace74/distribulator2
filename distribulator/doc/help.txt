@@ -1,0 +1,10 @@
+#
+# $Id$
+#
+######################################################################
+
+The Distribulator Help Screen
+-----------------------------
+
+Some day this file will have more information in it.
+For now, it just kinda sucks.
