@@ -46,12 +46,12 @@ import generic.SysLogger
 # Display a nice pretty header.
 def printTitleHeader():
     print
-    print("The Distribulator v0.50")
-    print("-----------------------")
+    print("The Distribulator v0.50 (Python v" + \
+          sys.version.split()[0] + "/" + sys.platform + ")")
+    print("--------------------------------------------------")
     print
 
 def printInfoHeader(PassedServerEnv, PassedConfigDir):
-    print("Python Version:      " + sys.version.split()[0])
     print("Local Hostname:      " + socket.gethostname())
     print("Current Environment: " + PassedServerEnv)
     print("Config Directory:    " + PassedConfigDir)
