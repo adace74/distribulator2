@@ -147,6 +147,10 @@ class CommandRunner:
             thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
             self.handleError(thisError)
             return False            
+        if (self._commString.find(' reverse') > 0):
+            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self.handleError(thisError)
+            return False
         else:
             thisLocalPath = self._commTokens[1]
             thisRemotePath = self._commTokens[2]
