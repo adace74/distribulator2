@@ -39,7 +39,7 @@ BEGIN
                  %groups_servers_hash
                  &LoadServers
                  &getMatchingGroup &getMatchingServer
-                 &getServerGroup &getServerUser);
+                 &getServerGroup &getServerList &getServerUser);
     @EXPORT_OK = qw();
 }
 
@@ -230,6 +230,41 @@ sub getServerGroup
     }
 
     return($FALSE);
+}
+
+#
+# Cope with the every-other-element-is-a-hostname pain.
+#
+sub getServerList
+{
+    my($find_group) = @_;
+    my(@server_list);
+    my($is_server, $loop_temp) = $TRUE;
+
+    # Check if the group actually exists.
+    if ( !$groups_servers_hash{$find_group} )
+    {
+        print("ERROR: No such server group '$find_group'\n");
+
+        return $FALSE;
+    }
+
+    foreach $loop_temp ( @{$groups_servers_hash{$find_group}} )
+    {
+        # Congratulations, it's s hostname.
+        if ($is_server)
+        {
+            push(@server_list, $loop_temp);
+
+            $is_server = $FALSE;
+        }
+        else
+        {
+            $is_server = $TRUE;
+        }
+    }
+
+    return(@server_list);
 }
 
 #

@@ -110,13 +110,7 @@ sub RunCommandRemote
 
         print "EXEC:  $exec_line\n";
 
-        @command_output = qx/$exec_line 2>&1/;
-
-        foreach $output_line (@command_output)
-        {
-            chomp($output_line);
-            print "$output_line\n";
-        }
+        system($exec_line);
 
         if ($? != 0)
         {

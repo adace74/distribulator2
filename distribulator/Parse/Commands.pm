@@ -139,7 +139,7 @@ sub PrintHelpFile
 sub setUserAborting
 {
     # Variable Scope Hack -- Not Sure Why?
-    my($TempVar) = @_;
+    my($TempVar) = shift(@_);
 
     $user_aborting = $TempVar;
 }
@@ -161,7 +161,7 @@ sub isUserAborting
 #
 sub isValidExternalCommand
 {
-    my($validate_me) = @_;
+    my($validate_me) = shift(@_);
     my($command_str);
 
     foreach $command_str (@external_commands)
@@ -180,7 +180,7 @@ sub isValidExternalCommand
 #
 sub isValidInternalCommand
 {
-    my($validate_me) = @_;
+    my($validate_me) = shift(@_);
     my($command_str);
 
     foreach $command_str (@internal_commands)
@@ -203,7 +203,7 @@ sub isValidInternalCommand
 #
 sub ParseCopy
 {
-    my($input) = @_;
+    my($input) = shift(@_);
 
     my($copy_server, $copy_user);
 
@@ -338,9 +338,7 @@ sub ParseLogin
 
             $exec_str = "$SSH_BIN -l $found_user $login_server";
             
-            print "EXEC:  $exec_str\n";
-            
-            system($exec_str);
+            RunCommandLocal($exec_str);
         }
     }
     else
@@ -359,7 +357,7 @@ sub ParseLogin
 #
 sub ParseRun
 {
-    my($input) = @_;
+    my($input) = shift(@_);
 
     my($run_server);
 
@@ -380,7 +378,7 @@ sub ParseRun
 
         if ( AreYouSure() )
         {
-            foreach $run_server ( @{$groups_servers_hash{$current_server_group}} )
+            foreach $run_server ( getServerList($current_server_group) )
             {
                 if ( !isUserAborting() )
                 {
@@ -411,7 +409,7 @@ sub ParseRun
 
             if ( AreYouSure() )
             {
-                foreach $run_server ( @{$groups_servers_hash{$2}} )
+                foreach $run_server ( getServerList($2) )
                 {
                     RunCommandRemote($run_server,$1);
                 }
@@ -456,6 +454,7 @@ sub ParseServerGroup
     elsif ( $groups_servers_hash{$server_group} )
     {
         $current_server_group = $server_group;
+
         print("NOTE:  Current server group now is '$current_server_group'.\n");
     }
     else
@@ -470,50 +469,31 @@ sub ParseServerGroup
 sub ParseServerList
 {
     my($server_group) = shift(@_);
-    my($flag, $server_user_temp);
+    my($server_user_temp, @server_list);
 
     # If there's no target, list the current server group.
     if ( !$server_group )
     {
         print("Known servers in group $current_server_group:\n");
-	print("---------------------------------\n");
+        print("---------------------------------\n");
 
-        $flag = $TRUE;
+        @server_list = getServerList($current_server_group);
 
-        foreach $server_user_temp ( @{$groups_servers_hash{$current_server_group}} )
+        foreach $server_user_temp ( @server_list )
         {
-            # Congratulations, it's s hostname.
-            if ($flag)
-            {
-                print("$server_user_temp\n");
-                
-                $flag = $FALSE;
-            }
-            else
-            {
-                $flag = $TRUE;
-            }
+            print("$server_user_temp\n");
         }
     }
     elsif ( $groups_servers_hash{$server_group} )
     {
         print("Known servers in group $server_group:\n");
         print("---------------------------------\n");
-        
-        $flag = $TRUE;
-        
-        foreach $server_user_temp ( @{$groups_servers_hash{$server_group}} )
+
+        @server_list = getServerList($server_group);
+
+        foreach $server_user_temp ( @server_list )
         {
-            if ($flag)
-            {
-                print("$server_user_temp\n");
-                
-                $flag = $FALSE;
-            }
-            else
-            {
-                $flag = $TRUE;
-            }
+            print("$server_user_temp\n");
         }
     }
     else

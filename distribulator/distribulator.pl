@@ -277,6 +277,7 @@ while ($TRUE)
 #
 sub catchSigInt
 {
+    # How can I reset ReadLine???  Argh!
     print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
 
     setUserAborting($TRUE);
