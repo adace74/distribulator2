@@ -84,9 +84,9 @@ AC_SUBST(PYTHON_BIN)
 AC_SUBST(DIST_HOME)
 
 OUTPUT_FILES="
-distribulator.py:distribulator.py.tmpl
-conf/logging.conf:conf/logging.conf.tmpl
-scripts/distribulator.sh:scripts/distribulator.sh.tmpl
+./distribulator.py:./distribulator.py.tmpl
+./conf/logging.conf:./conf/logging.conf.tmpl
+./scripts/distribulator.sh:./scripts/distribulator.sh.tmpl
 "
 
 AC_OUTPUT([ ${OUTPUT_FILES} ])

@@ -127,7 +127,7 @@ class CopyCommand(Command.Command):
                 # Check for server group match.
                 myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
                 # Validate.
-                if (myServerGroup == False):
+                if (not myServerGroup):
                     myError = "No matching server name or group '" + \
                                 myGroupStr + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
@@ -180,7 +180,7 @@ class CopyCommand(Command.Command):
         #
         # Step 6: Must make sure...are you sure you're sure?
         #
-        if ( (self._globalConfig.isBatchMode() == False) and (myIsNow == False) ):
+        if ( (not self._globalConfig.isBatchMode()) and (not myIsNow) ):
             myDisplayStr = ''
 
             if ( len(myServerNameList) > 0):
@@ -195,7 +195,7 @@ class CopyCommand(Command.Command):
                       "on server(s) " + myDisplayStr + "?"
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-                if (self.doAreYouSure() == False):
+                if (not self.doAreYouSure()):
                     myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
@@ -211,7 +211,7 @@ class CopyCommand(Command.Command):
                       "on server group(s) " + myDisplayStr + "?"
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-                if (self.doAreYouSure() == False):
+                if (not self.doAreYouSure()):
                     myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False

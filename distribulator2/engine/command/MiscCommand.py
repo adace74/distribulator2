@@ -110,7 +110,7 @@ class MiscCommand(Command.Command):
 
         myFilePrinter = generic.FilePrinter.FilePrinter()
 
-        if (myFilePrinter.printFile(myFileName) == False):
+        if (not myFilePrinter.printFile(myFileName)):
             myError = "Cannot find help for specified command '" + \
                         self._commTokens[1] + "'."
             self._globalConfig.getMultiLogger().LogMsgError(myError)

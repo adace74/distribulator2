@@ -246,7 +246,7 @@ The available options are:
             myGlobalConfig.setListMode(False)
 
         # Console mode.
-        if ( (len(myBatchFile) == 0) & (len(myRequestedList) == 0) ):
+        if ( (len(myBatchFile) == 0) and (len(myRequestedList) == 0) ):
             myGlobalConfig.setConsoleMode(True)
         else:
             myGlobalConfig.setConsoleMode(False)
@@ -304,7 +304,7 @@ The available options are:
             myGlobalConfig.setRealUsername( getpass.getuser() )
 
         # Some silly hacks to keep sppamy debug out of console mode.  Please excuse the mess.
-        if (myGlobalConfig.isConsoleMode() == False):
+        if (not myGlobalConfig.isConsoleMode()):
             myMultiLogger.LogMsgDebugSeperator()
         else:
             myGlobalConfig.getAuditLogger().debug( myGlobalConfig.getSeperator() )
@@ -323,7 +323,7 @@ The available options are:
                    " | " + "EUID: " + myGlobalConfig.getUsername() + \
                    " | " + "Env: " + myServerEnv
 
-        if (myGlobalConfig.isConsoleMode() == False):
+        if (not myGlobalConfig.isConsoleMode()):
             myMultiLogger.LogMsgDebug(myDebug)
         else:
             myGlobalConfig.getAuditLogger().debug(myDebug)

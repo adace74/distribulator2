@@ -89,9 +89,8 @@ class ConfigLoader:
 
         try:
             # Let's make sure the file we've been given is readable.
-            if ( stat.S_ISREG(os.stat(
-                self._globalConfig.getLoggingConfigFile())[stat.ST_MODE]) \
-                 == False ):
+            if ( not stat.S_ISREG(os.stat(
+                self._globalConfig.getLoggingConfigFile())[stat.ST_MODE]) ):
                 myError = "File '" + \
                             self._globalConfig.getLoggingConfigFile() + \
                             "' is accessible, but not regular."

@@ -53,7 +53,7 @@ class ServerCommand(Command.Command):
         if ( len(self._commTokens) > 2 ):
             myServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[2] )
 
-            if (myServerGroup == False):
+            if (not myServerGroup):
                 myError = "No matching server group '" + \
                             self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
@@ -93,7 +93,7 @@ class ServerCommand(Command.Command):
                 self._commTokens[2] )
 
             # Check for errors.
-            if (myServerGroup == False):
+            if (not myServerGroup):
                 myError = "No matching server group '" + self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
 

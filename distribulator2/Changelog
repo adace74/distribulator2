@@ -246,6 +246,7 @@ Change List For v0.8.6 (Language: Python / Status: In Progress)
 * Cleanup: Added an autoconf script such that no matter where the package is installed
   or where Python is, we'll run with it.
 * Cleanup: Replaced all highly unreadable "&" "|" characters with keyword equivalents.
+* Cleanup: replaced all less readable "foo == FALSE" clauses with "not foo" equivalents.
 - Cleanup: Added logic to check config.xml for well-formedness before actual parsing.
 - Ability to load all environments at startup, then switch environments at runtime.
 

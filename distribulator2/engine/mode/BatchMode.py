@@ -49,9 +49,8 @@ class BatchMode(Mode.Mode):
 
         try:
             # Let's make sure the file we've been given is readable.
-            if ( stat.S_ISREG(os.stat(
-                self._globalConfig.getBatchFile())[stat.ST_MODE]) \
-                 == False ):
+            if ( not stat.S_ISREG(os.stat(
+                self._globalConfig.getBatchFile())[stat.ST_MODE]) ):
                 myError = "File '" + \
                             self._globalConfig.getBatchFile() + \
                             "' is accessible, but not regular."

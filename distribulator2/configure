@@ -692,9 +692,9 @@ echo "checking python binary... |$PYTHON_BIN|"
 
 
 OUTPUT_FILES="
-distribulator.py:distribulator.py.tmpl
-conf/logging.conf:conf/logging.conf.tmpl
-scripts/distribulator.sh:scripts/distribulator.sh.tmpl
+./distribulator.py:./distribulator.py.tmpl
+./conf/logging.conf:./conf/logging.conf.tmpl
+./scripts/distribulator.sh:./scripts/distribulator.sh.tmpl
 "
 
 trap '' 1 2 15
