@@ -78,6 +78,8 @@ sub AreYouSure
 
     if ( $term->readline("Yes / No> ") =~ /^[Yy]/ )
     {
+        $term->set_prompt( getReadLinePrompt() );
+
         return $TRUE;
     }
     else

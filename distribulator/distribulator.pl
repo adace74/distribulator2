@@ -55,7 +55,7 @@ my($flag,$input,$server,$server_user_temp,$temp_str,$user);
 #
 # Prompt-related Storage
 #
-my($prompt, $prompt_env, $prompt_hostname, $promp_user);
+my($prompt_env, $prompt_hostname, $promp_user);
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
@@ -143,11 +143,11 @@ while ($TRUE)
 {
     # Setting up our state.
     $command = '';
-    $prompt = "<$prompt_user\@$prompt_env\[wlx\]:" .
-        cwd() . "> ";
+    setReadLinePrompt("<$prompt_user\@$prompt_env\[wlx\]:" .
+        cwd() . "> ");
     setUserAborting($FALSE);
 
-    $input = $term->readline($prompt);
+    $input = $term->readline( getReadLinePrompt() );
 
     # Parsing magic.
     @command_tokens = split(' ', $input);

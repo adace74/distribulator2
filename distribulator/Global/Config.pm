@@ -39,6 +39,7 @@ BEGIN
                  $CONFIG_DIR $INSTALL_DIR
                  &getBinaryLocations
                  &getNewReadLineTerm
+                 &getReadLinePrompt &setReadLinePrompt
                  &getReadLineTerm &getReadLineVersion
                  &ResetTermAndExit);
     @EXPORT_OK = qw();
@@ -66,6 +67,7 @@ $FALSE = 0;
 #
 # Runtime storage variables
 #
+my($prompt);
 my($term);
 
 ######################################################################
@@ -159,6 +161,26 @@ sub ResetTermAndExit
 ######################################################################
 # Various Get/Set Function For Dynamic Runtime Settings
 ######################################################################
+
+#
+# Allow other modules to get ahold of our ReadLine prompt.
+#
+sub getReadLinePrompt
+{
+    return $prompt;
+}
+
+#
+# Allow other modules to set the ReadLine prompt.
+#
+sub setReadLinePrompt
+{
+    # Variable Scope Hack -- Not Sure Why?
+    my($TempVar) = shift(@_);
+
+    # Store it.
+    $prompt = $TempVar;
+}
 
 #
 # Allow other modules to get ahold of our ReadLine session.
