@@ -2,6 +2,8 @@
 #
 # $Id$
 #
+# Description:  This script acts as a wrapper for calling the python program proper.
+#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #

@@ -18,7 +18,4 @@ Short-term TODO List
        (BatchRunner, CommandLine)
     2) Review object naming, refer to design patterns, and fix them.
        (currently icky-but-works)
-    3) Squash all currently outstanding bugs.
-    4) Take a closer look at the parsing logic for the "copy" command.
-       Currently it's "good enough" but could be better in the way it
-       handles spaces within server / server group lists.
+

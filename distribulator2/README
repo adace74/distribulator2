@@ -7,18 +7,22 @@
 You have found perhaps the world's only Open Source stand-alone
 distributed server shell command / batch system.
 
-Website--Easy:       http://distribulator.turing.com/
-Website--Real:       http://sourceforge.net/projects/distribulator/
-Pydoc Documentation: http://distribulator.turing.com:8080/
+Websites
+--------
+Website--Easy:              http://distribulator.turing.com/
+Website--Real:              http://sourceforge.net/projects/distribulator/
+Pydoc Documentation:        http://distribulator.turing.com:8080/
+
+Mailing Lists
+-------------
+Announcement Email List:    distribulator-announce@lists.sourceforge.net
+User Discussion Email List: distribulator-users@lists.sourceforge.net
 
 What Is It?
 -----------
 The Distribulator concept arised after working with an environment
 consisting of over 750 servers, in a company where there aren't nearly
 that many employees total -- much less just to maintain servers!
-
-Unfortunately life's daily busywork has kept most everyone from having
-the time in the office to develop longer-term solutions.
 
 The Distribulator is a longer-term project whose goal is to provide
 "the rest of us" not running advanced cluster-oriented OS-level software --
