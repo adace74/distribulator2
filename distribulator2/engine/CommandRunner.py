@@ -236,10 +236,10 @@ class CommandRunner:
                         thisExternalCommand.run()
                     else:
                         print("ERROR: Server '" + thisServer.getName() + \
-                              " appears to be down.  Continuing...")
+                              "' appears to be down.  Continuing...")
                         self._globalConfig.getSysLogger().LogMsgInfo(
                             "ERROR: Server '" + thisServer.getName() + \
-                            " appears to be down.  Continuing.." )
+                            "' appears to be down.  Continuing.." )
 
             except KeyboardInterrupt:
                 print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
