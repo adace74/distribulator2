@@ -52,6 +52,12 @@ class GlobalConfig:
     #
     # System binary locations.
     #
+    def getLognameBinary(self):
+        return self._lognameBinary
+
+    def setLognameBinary(self, PassedLognameBinary):
+        self._lognameBinary = PassedLognameBinary
+
     def getScpBinary(self):
         return self._scpBinary
 
@@ -95,6 +101,14 @@ class GlobalConfig:
 
     def setPassThruList(self, PassedPassThruList):
         self._passThruList = PassedPassThruList
+    #
+    # Local Unix username.
+    #
+    def getUsername(self):
+        return self._username
+
+    def setUsername(self, PassedUsername):
+        self._username = PassedUsername
     #
     # Servers and ServerGroups
     #

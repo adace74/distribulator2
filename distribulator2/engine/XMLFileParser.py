@@ -77,8 +77,13 @@ class XMLFileParser:
 
     # Binary locations.
     def handleBinary(self, PassedBinary):
+        self.handleLogname(PassedBinary.getElementsByTagName("logname")[0])
         self.handleScp(PassedBinary.getElementsByTagName("scp")[0])
         self.handleSsh(PassedBinary.getElementsByTagName("ssh")[0])
+
+    def handleLogname(self, PassedLogname):
+        self._globalConfig.setLognameBinary( \
+            self.getText(PassedLogname.childNodes) )
 
     def handleScp(self, PassedScp):
         self._globalConfig.setScpBinary( self.getText(PassedScp.childNodes) )

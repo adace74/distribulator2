@@ -64,8 +64,7 @@ class CommandLine:
     def invoke(self):
 
         thisPromptEnv = self._globalConfig.getServerEnv()
-        thisPromptUser = getpass.getuser()
-
+        thisPromptUser = self._globalConfig.getUsername()
 
         while (1):
             #

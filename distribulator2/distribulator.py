@@ -28,6 +28,7 @@ __version__ = '$Revision$'[11:-2]
 # Import modules
 try:
     # Standard modules
+    import commands
     import getopt
     import getpass
     import os
@@ -165,9 +166,18 @@ The available options are:
     thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
 
     # Log our startup.
+    thisStatus, thisOutput = commands.getstatusoutput( \
+        thisGlobalConfig.getLognameBinary())
+
+    if ( len(thisOutput) > 1 ):
+        thisGlobalConfig.setUsername(thisOutput)
+    else:
+        thisGlobalConfig.setUsername( getpass.getuser() )
+    
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
     thisGlobalConfig.setSysLogger(thisLogger)
-    thisLogger.LogMsgInfo("INFO: Started by user " + getpass.getuser() + '.')
+    thisLogger.LogMsgInfo("INFO: Started by user " + \
+                          thisGlobalConfig.getUsername() + '.')
 
     # Try to chdir() to thisStartDir if possible.
     try:
