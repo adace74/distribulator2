@@ -91,12 +91,17 @@ Spontaneous Feature List For v0.47 (Shipped):
 Spontaneous Feature List For v0.48 (Shipping Soon):
 
 * Fixed a silly bug where the command-line prompt wasn't being updated with
-  the current server group.
-* Added the -t flag to the run command.  This will allow one to specify
+  the current server group. --Perl
+* Added a -t flag to the run command.  This will allow one to specify
   whether a remote tty is required for a given command.  This has caused
   much pain within my work environment lately.  Use with caution, some
   programs/scripts require -t (i.e. vi) and some will utterly break on
-  Linux if given -t (i.e. some custom startup scripts).
+  Linux if given -t (i.e. some custom startup scripts).  --Perl
+* Fixed the included wrapper script such that it stores the user's
+  pwd on startup, then passes it along to the distribulator such that
+  the module directory magic going is transparent.  --Perl
+* Utterly annoyed with the current organization of code / objects,
+  a lets-do-it-better version written in Python has begun.  --Python
 
 Feature List For v0.5 (Coming Soon!):
 
@@ -127,8 +132,7 @@ Who Is Working On It?
 
 Currently there's just me.  However, I'd appreciate all the help I can get!
 Whatever company you might work for, your efforts are welcome here.
-Just send me an email, feel free to put something akin to
-"DISTRIBULATOR CODER NEEDS ACCESS" in the subject line lest I confuse
-legit email with spam.
+
+Just send me an email...
 
 --Adam W. Dace <adam@turing.com>
