@@ -116,6 +116,7 @@ The available options are:
 
     thisBatchFile = ''
     thisQuietMode = False
+    thisTerseMode = False
     thisServerEnv = 'demo'
     thisStartDir = '/tmp'
     thisVar1 = ''
@@ -186,7 +187,7 @@ The available options are:
         thisGlobalConfig.setVar1(thisVar1)
         thisGlobalConfig.setVar2(thisVar2)
         thisGlobalConfig.setVar3(thisVar3)
-
+    
         if ( thisGlobalConfig.isBatchMode() == False ):
             printTitleHeader()
             printInfoHeader(thisServerEnv, thisConfigDir)
@@ -195,6 +196,11 @@ The available options are:
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
         thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
+
+        # Set our silly output flag
+        if ( thisGlobalConfig.isBatchMode() & \
+             (thisGlobalConfig.isQuietMode() == False) ):
+            thisTerseMode = True
 
         # Setup syslog.
         thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility())
@@ -214,9 +220,13 @@ The available options are:
         # Define a pretty seperator.
         thisSeperator = '----------------------------------------------------------------------'
         thisLogger.LogMsgInfo(thisSeperator)
+        if (thisTerseMode):
+            print(thisSeperator)
 
         if (thisGlobalConfig.isBatchMode()):
             thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- batch mode.")
+            if (thisTerseMode):
+                print("INFO:  Starting The Distribulator v0.60 -- batch mode.")
         else:
             thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- console mode.")
 
@@ -226,8 +236,17 @@ The available options are:
                               thisGlobalConfig.getUsername())
         thisLogger.LogMsgInfo("INFO:  Environment:   " + \
                               thisServerEnv)
+        if (thisTerseMode):
+            print("INFO:  Real UID:      " +
+                                  thisGlobalConfig.getRealUsername())
+            print("INFO:  Effective UID: " + \
+                                  thisGlobalConfig.getUsername())
+            print("INFO:  Environment:   " + \
+                                  thisServerEnv)
 
         thisLogger.LogMsgInfo(thisSeperator)
+        if (thisTerseMode):
+            print(thisSeperator)
 
     except (EOFError, KeyboardInterrupt):
             thisError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."

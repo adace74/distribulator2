@@ -56,6 +56,7 @@ class BatchRunner:
         thisCommandCount = 0
         thisIsMore = False
         thisLineBuffer = ''
+        thisTerseMode = False
         thisTimeDuration = 0
         thisTimeStarted = time.time()
         thisTimeFinished = 0
@@ -181,9 +182,24 @@ class BatchRunner:
             self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
+        #
+        # Output our "footer" for batch mode.
+        #
+        # Define a pretty seperator.
+        thisSeperator = '----------------------------------------------------------------------'
+        if ( self._globalConfig.isBatchMode() & \
+             (self._globalConfig.isQuietMode() == False) ):
+            thisTerseMode = True
+
+        self._globalConfig.getSysLogger().LogMsgInfo(thisSeperator)
+        if (thisTerseMode):
+            print(thisSeperator)
+
         thisInfo = "INFO:  Commands Run:      %d commands" % \
               thisCommandCount
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+        if (thisTerseMode):
+            print(thisInfo)
 
         thisTimeFinished = time.time()
         thisTimeDuration = thisTimeFinished - thisTimeStarted
@@ -191,13 +207,18 @@ class BatchRunner:
         thisInfo = "INFO:  Run Time:          %.2f seconds" % \
               thisTimeDuration
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+        if (thisTerseMode):
+            print(thisInfo)
 
         if (int(thisTimeDuration) > 0):
             thisInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
                   (thisTimeDuration / thisCommandCount)
         else:
             thisInfo = "INFO:  Avg. Command Time: 0 seconds"
+
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+        if (thisTerseMode):
+            print(thisInfo)
 
         return True
 
