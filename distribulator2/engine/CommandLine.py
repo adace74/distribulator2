@@ -17,6 +17,8 @@ import readline
 import rlcompleter
 import sys
 
+######################################################################
+
 class CommandLine:
 
     def initHistory(self):
@@ -54,7 +56,7 @@ class CommandLine:
                 print
                 print("Caught CTRL-D keystroke.  Wrote history.  Dying...")
                 print
-                sys.exit(0)
+                return
 
             except KeyboardInterrupt:
                 pass
@@ -67,6 +69,8 @@ class CommandLine:
                     print
                     print("Received exit command.  Wrote history.  Dying...")
                     print
-                    sys.exit(0)
+                    return
             else:
                 print
+
+######################################################################

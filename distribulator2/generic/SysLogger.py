@@ -10,15 +10,28 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import atexit
-import os
-import os.path
-import readline
-import sys
+import syslog
+
+######################################################################
 
 class SysLogger:
-    "A simple example class"
-    i = 12345
-    def hello(self):
-        print "Hello world"
-        return
+
+    def __init__(self, PassedFacility):
+        self.myFacility = PassedFacility
+
+    def LogMsgInfo(self, PassedMessage):
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.syslog(syslog.LOG_INFO, PassedMessage)
+        syslog.closelog()
+
+    def LogMsgWarn(self, PassedMessage):
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.syslog(syslog.LOG_WARN, PassedMessage)
+        syslog.closelog()
+
+    def LogMsgError(self, PassedMessage):
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.syslog(LOG_ERROR, PassedMessage)
+        syslog.closelog()
+
+######################################################################

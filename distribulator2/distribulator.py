@@ -29,10 +29,12 @@ __version__ = '$Revision$'[11:-2]
 try:
     # Standard modules
     import getopt
+    import getpass
     import os
     import os.path
     import socket
     import sys
+    import syslog
 
     # Custom modules
     import engine.CommandLine
@@ -42,6 +44,8 @@ try:
 except ImportError:
     print "An error occured while loading Python modules, exiting..."
     sys.exit(1)
+
+######################################################################
 
 # Display a nice pretty header.
 def title_header():
@@ -132,6 +136,10 @@ The available options are:
 
     config_dir = os.path.join(os.getcwd(), 'conf')
 
+    # Log our startup.
+    myLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL0)
+    myLogger.LogMsgInfo("Started by user " + getpass.getuser() + ".")
+
     # Create CommandLine instance, and pass it through to ConfigLoader.
     myCommLine = engine.CommandLine.CommandLine()
 
@@ -139,12 +147,16 @@ The available options are:
     myLoader = engine.ConfigLoader.ConfigLoader()
     myLoader.load(myCommLine, config_dir)
 
-    # Example functional class.
-    #myLogger = generic.SysLogger.SysLogger()
-    #myLogger.hello()
-
+    # The main readline loop.
     myCommLine.processInput()
+
+    # Once it returns, we're done!
+    myLogger.LogMsgInfo("Shutting down...")
+    sys.exit(0)
+
+######################################################################
 #
 # If called from the command line, invoke thyself!
 #
+######################################################################
 if __name__=='__main__': main(sys.argv)

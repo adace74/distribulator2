@@ -19,6 +19,8 @@ import sys
 # Custom modules
 import engine.CommandLine
 
+######################################################################
+
 class ConfigLoader:
 
     def load(self, myCommLine, myConfigDir):
@@ -35,3 +37,5 @@ class ConfigLoader:
         print("- Application settings and server lists.")
         print("- Entering interactive mode...")
         print
+
+######################################################################
