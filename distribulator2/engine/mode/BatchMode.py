@@ -19,11 +19,10 @@ __version__= '$Revision$'[11:-2]
 
 # Standard modules
 import os
-#import os.path
 import socket
 import stat
 import string
-#import sys
+import sys
 import time
 
 # Custom modules
@@ -49,8 +48,8 @@ class BatchMode(Mode.Mode):
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
 
-        # Let's make sure the file we've been given is readable.
         try:
+            # Let's make sure the file we've been given is readable.
             if ( stat.S_ISREG(os.stat(
                 self._globalConfig.getBatchFile())[stat.ST_MODE]) \
                  == False ):
@@ -61,6 +60,9 @@ class BatchMode(Mode.Mode):
 
                 self._globalConfig.setExitSuccess(False)
                 return
+
+            # Turn off STDIN, we really don't need it anymore.
+            sys.stdin.close()
 
         except OSError, (errno, strerror):
             myError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \
