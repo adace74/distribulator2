@@ -391,7 +391,7 @@ sub ParseRun
                     RunCommandRemote($run_server,$1);
 
                     # Sleep 1/4 second.
-                    sleep(0.25);
+                    select(undef, undef, undef, 0.25);
                 }
                 else
                 {
@@ -424,7 +424,7 @@ sub ParseRun
                         RunCommandRemote($run_server,$1);
 
                         # Sleep 1/4 second.
-                        sleep(0.25);
+                        select(undef, undef, undef, 0.25);
                     }
                     else
                     {
