@@ -168,13 +168,13 @@ class ConfigLoader:
 
         for myEnvironment in self._globalConfig.getEnvironmentList():
             myTotalEnvironmentCount = myTotalEnvironmentCount + 1;
+            for myServerGroup in myEnvironment.getServerGroupList():
+                myTotalServerCount = myTotalServerCount + myServerGroup.getServerCount()
 
         for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():
             myColumnCount = myColumnCount + 1
-            myTotalServerCount = myTotalServerCount + \
-                                   myServerGroup.getServerCount()
-            myServerGroupStr = myServerGroupStr + '%10s (%3d) ' % \
-                                 (myServerGroup.getName(), myServerGroup.getServerCount())
+            myServerGroupStr = myServerGroupStr + '%16s (%3d) ' % \
+                               (myServerGroup.getName(), myServerGroup.getServerCount())
 
             if (myColumnCount == 4):
                 myColumnCount = 0
