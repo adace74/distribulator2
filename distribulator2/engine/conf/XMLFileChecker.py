@@ -17,11 +17,9 @@ __version__= '$Revision$'[11:-2]
 import logging
 import os
 import os.path
-
-# XML Well-formedness recipe modules.
+import sys
 import xml.parsers.expat
 from glob import glob
-import sys
 
 # Custom modules
 import engine.data.GlobalConfig
