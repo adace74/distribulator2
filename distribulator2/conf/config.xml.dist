@@ -38,7 +38,7 @@
     <!-- Demo Environment: Default servergroup set to "www" -->
     <environment name="demo" default="www">
         <!-- SSH v1 Group -->
-        <servergroup name="app" username="tomcat" flags="-1">
+        <servergroup name="app" username="tomcat" version="1">
             <server>app01.somewhere.com</server>
             <server>app02.somewhere.com</server>
             <server>app03.somewhere.com</server>
@@ -47,7 +47,7 @@
         </servergroup>
 
         <!-- SSH v2 Group -->
-        <servergroup name="db" username="postgres" flags="-2">
+        <servergroup name="db" username="postgres" version="2">
             <server>db01.somewhere.com</server>
             <server>db02.somewhere.com</server>
             <server>db03.somewhere.com</server>
@@ -56,7 +56,7 @@
         </servergroup>
 
         <!-- SSH v1 Group -->
-        <servergroup name="www" username="apache" flags="-1">
+        <servergroup name="www" username="apache" version="1">
             <server>www01.somewhere.com</server>
             <server>www02.somewhere.com</server>
             <server>www03.somewhere.com</server>

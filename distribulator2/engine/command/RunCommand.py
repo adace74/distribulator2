@@ -242,12 +242,22 @@ class RunCommand(Command.Command):
 
                     if (myPinger.ping(myNameStr) == 0):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        myExternalCommand.setCommand( \
-                            self._globalConfig.getSshBinary() + myFlagStr + \
-                            myServer.getFlags() + \
-                            " -l " + myServer.getUsername() + " " + \
-                            myServer.getName() + " " + \
-                            myBodyStr )
+
+                        # Build It.
+                        if (myServer.getVersion()):
+                            myExternalCommand.setCommand( \
+                                self._globalConfig.getSshBinary() + myFlagStr + \
+                                "-" + myServer.getVersion() + \
+                                " -l " + myServer.getUsername() + " " + \
+                                myServer.getName() + " " + \
+                                myBodyStr )
+                        else:
+                            myExternalCommand.setCommand( \
+                                self._globalConfig.getSshBinary() + myFlagStr + \
+                                " -l " + myServer.getUsername() + " " + \
+                                myServer.getName() + " " + \
+                                myBodyStr )
+
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
                             myExternalCommand.runBatch()
@@ -297,12 +307,22 @@ class RunCommand(Command.Command):
 
                         if (myPinger.ping(myServer.getName()) == 0):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                            myExternalCommand.setCommand( \
-                            self._globalConfig.getSshBinary() + myFlagStr + \
-                            myServer.getFlags() + \
-                            " -l " + myServer.getUsername() + " " + \
-                            myServer.getName() + " " + \
-                            myBodyStr )
+
+                            # Build It.
+                            if (myServer.getVersion()):
+                                myExternalCommand.setCommand( \
+                                self._globalConfig.getSshBinary() + myFlagStr + \
+                                "-" + myServer.getVersion() + \
+                                " -l " + myServer.getUsername() + " " + \
+                                myServer.getName() + " " + \
+                                myBodyStr )
+                            else:
+                                myExternalCommand.setCommand( \
+                                self._globalConfig.getSshBinary() + myFlagStr + \
+                                " -l " + myServer.getUsername() + " " + \
+                                myServer.getName() + " " + \
+                                myBodyStr )
+
                             # Run It.
                             if ( self._globalConfig.isBatchMode() ):
                                 myExternalCommand.runBatch()
