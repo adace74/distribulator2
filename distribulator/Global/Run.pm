@@ -88,7 +88,6 @@ sub RunCommandLocal
     my(@command_output, $output_line);
 
     print "EXEC:  $local_command\n";
-    print($SEPERATOR);
 
     system($local_command);
 
@@ -115,7 +114,6 @@ sub RunCommandRemote
         $exec_line = "$SSH_BIN -l $remote_user $remote_server $remote_command";
 
         print "EXEC:  $exec_line\n";
-        print($SEPERATOR);
 
         system($exec_line);
 
