@@ -1,0 +1,84 @@
+#
+# $Id$
+#
+######################################################################
+
+WARNING:  DANGER, DANGER, WILL ROBINSON!
+          YOU ARE ENTERING AN ALPHA CODE ZONE.
+          ALL CODE FOUND IN THIS ZONE IS CONSIDERED OF ALPHA QUALITY
+          AND MAY NOT FUNCTION APPROPRIATELY, IF AT ALL.
+          YOU HAVE BEEN WARNED.
+
+This is what will someday be The Distribulator.
+Either that or the path to my professional demise at a given employer,
+one of the two.  :-)
+
+What Is It?
+-----------
+
+The Distribulator concept arised after working with an environment
+consisting of over 500 servers, all held together with duct tape,
+rubber bands, some random scripts, and SSH.
+
+Despite everyone's best efforts in the rush to keep things working,
+no unified effort was made to create a tool that would allow us to
+manage various sets of servers in a sane manner.
+
+If completed, the Distribulator will be a shell-like perl-based console
+interface designed to "wrap" around SSH in a manner such that
+atomic transactions can be applied to multiple servers in
+multiple environments, without giving the end-user enough flexibility
+to shoot themselves in the foot(I call this the
+"Oh crap!  That was production?" situation).
+
+What Will It Do?
+----------------
+
+Feature List For v0.5:
+
+* Some semblance of a shell, include a useful prompt.
+* Ability to load in text-based lists of servers, representing
+  server sets.
+* Ability to load in different remote usernames for different server sets
+  from a text file.
+  (i.e. apache@web01, tomcat@app01)
+* Ability to work with -one- set of servers at a time,
+  specified at startup via --env=my_environment.
+* Single remote box command execution.
+* Multiple set-based remote box command execution.
+* Single local box file to single remote box file copy.
+(i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
+* Single local box file to many remote boxes file copy.
+(i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
+* Single remote box file to single remote box file copy.
+(i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)
+* Single remote box file to many remote boxes file copy.
+(i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
+
+Feature List For v0.7:
+
+* Regular expression support in server hostnames.
+* Remote server health-check before attempting to run SSH.
+  Instead of keeping track of which servers are actually down,
+  by sending a single ping packet we could dynamically check every
+  time we need to access a given server.  This would RULE!
+* Sudo-based remote permissions checking.
+* Other random pie-in-the-sky dreamsicle features.
+
+Feature List For v1.0:
+
+* Integration with ncurses such that one could run a command on 4 boxes
+  in parallel, and see the output from each of them?
+* Auditing capabilities via syslog?
+* Other random pie-in-the-sky dreamsicle features.
+
+Who Is Working On It?
+---------------------
+
+Currently there's just me.  However, I'd appreciate all the help I can get!
+Whatever company you might work for, your efforts are welcome here.
+Just send me an email, feel free to put something akin to
+"DISTRIBULATOR CODER NEEDS ACCESS" in the subject line lest I confuse
+legitamite email with spam.
+
+--Adam W. Dace <adam@turing.com>
