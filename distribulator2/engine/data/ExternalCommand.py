@@ -100,6 +100,9 @@ class ExternalCommand:
                 print(thisError)
                 self._globalConfig.getSysLogger().LogMsgError(thisError)
 
+        if (self._globalConfig.isQuietMode() == False):
+            print(self._seperator)
+
         # Sleep just a -little- bit to allow for catching CTRL-C's
         time.sleep(0.05)
 
