@@ -57,7 +57,6 @@ my($TRUE) = 1;
 # Runtime Arg/Temp Variables
 #
 my($env_arg, $help_arg, $noping_arg, $shell_arg, $version_arg) = '';
-my($counter);
 my($command);
 my(@command_tokens);
 my($exec_str);
@@ -286,36 +285,21 @@ while ($TRUE)
         {
             print("Known user-server pairs in group $current_server_group:\n");
 
-            foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
+            foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
             {
 		print("$userserver\n");                    
             }
 
-            print("\n");
         }
 		elsif ( $groups_userservers_hash{$temp_str} )
 		{
-            $counter = 0;
-
             print("Known user-server pairs in group $temp_str:\n");
 
-            foreach $userserver ( @{$groups_userservers_hash{$temp_str}} )
+            foreach $userserver ( sort @{$groups_userservers_hash{$temp_str}} )
             {
-                $counter++;
-
-                if ($counter == 3)
-                {
-                    $counter = 0;
-
                     print("$userserver\n");                    
-                }
-                else
-                {
-                    print("$userserver\t");
-                }
             }
 
-            print("\n");
 		}
 		else
 		{
@@ -465,7 +449,12 @@ sub getMatchingUserServer
     {
         foreach $userserver ( @{$groups_userservers_hash{$group}} )
         {
-	    $userserver =~ /(\w*)\@(\w*)/;
+	    $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
+
+            if ($partial eq $2)
+            {
+                return $userserver;
+            }
 
             $sub_string = substr($2, 0, length($partial));
 
@@ -491,7 +480,7 @@ sub getServerGroup
     {
         foreach $userserver ( @{$groups_userservers_hash{$group}} )
         {
-            $userserver =~ /(\w*)\@(\w*)/;
+            $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
 
             if ($find_server eq $2)
             {
@@ -511,7 +500,7 @@ sub getServerUser
     my($group) = getServerGroup($server);
 
     $userserver = pop(@{$groups_userservers_hash{$group}});
-    $userserver =~ /(\w*)\@(\w*)/;
+    $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
 
     return $1;
 }
@@ -555,8 +544,8 @@ sub LoadConfig
 
             while(<MYFILE>)
             {
-                $line = $_;
-                chomp($line);
+                $server = $_;
+                chomp($server);
 
 		open(MYUSERFILE, "<$CONFIG_DIR/$environment/user/$filename")
 		    || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
@@ -564,14 +553,18 @@ sub LoadConfig
 		while(<MYUSERFILE>)
 		{
 		    $user = $_;
+		    chomp($user);
 		}
 
 		close(MYUSERFILE);
 
-		chomp($user);
-		$line = "$user\@$line";
+		$line = "$user\@$server";
 
-		push(@{$groups_userservers_hash{'all'}}, $line);
+		if ( !getMatchingUserServer($server) )
+		{
+			push(@{$groups_userservers_hash{'all'}}, $line);
+		}
+
                 push(@{$groups_userservers_hash{$filename}}, $line);
             }
 
@@ -652,7 +645,7 @@ sub ParseCopy
     # with the remote path specified.
     # EXAMPLE: copy /tmp/test.out wlx
     # EXAMPLE: copy /tmp/test.out wlx01st
-    if ( $input =~ /^copy (.*) (\w*)$/ )
+    if ( $input =~ /^copy (.*) ([0-9a-zA-z.]*)$/ )
     {
         if ( !stat($1) )
         {
@@ -668,7 +661,7 @@ sub ParseCopy
     # with remote path specified.
     # EXAMPLE: copy /tmp/test.out wlx:/usr/local/tmp/
     # EXAMPLE: copy /tmp/test.out wlx01st:/usr/local/tmp/
-    if ( $input =~ /^copy (.*) (\w*):(.*\/)$/ )
+    if ( $input =~ /^copy (.*) ([0-9a-zA-z.]*):(.*\/)$/ )
     {
         if ( !stat($1) )
         {
@@ -684,7 +677,7 @@ sub ParseCopy
 
             if ( AreYouSure() )
             {
-                foreach $userserver ( @{$groups_userservers_hash{$2}} )
+                foreach $userserver ( sort @{$groups_userservers_hash{$2}} )
                 {
                     if ( PingUserServer($userserver) )
                     {
@@ -735,7 +728,7 @@ sub ParseCopy
 
             if ( AreYouSure() )
             {
-                foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
+                foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
                 {
                     if ( PingUserServer($userserver) )
                     {
@@ -781,7 +774,7 @@ sub ParseRun
         
         if ( AreYouSure() )
         {
-            foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
+            foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
             {
                 RunCommandRemote($userserver,$1);
             }
@@ -793,7 +786,7 @@ sub ParseRun
     # Run command on a specific server or group.
     # EXAMPLE: run "uptime" wlx
     # EXAMPLE: run "uptime" wlx01st
-    if ( $input =~ /^run (\".*\") (\w*)$/ )
+    if ( $input =~ /^run (\".*\") ([a-zA-z0-9.]*)$/ )
     {
         # Check groups first, they get priority.
         if ( getMatchingGroup($2) )
@@ -802,7 +795,7 @@ sub ParseRun
 
             if ( AreYouSure() )
             {
-                foreach $userserver ( @{$groups_userservers_hash{$2}} )
+                foreach $userserver ( sort @{$groups_userservers_hash{$2}} )
                 {
                     RunCommandRemote($userserver,$1);
                 }
@@ -821,7 +814,7 @@ sub ParseRun
         else
         {
             # If no match, then print a sane error.
-            print("ERROR: No server hostname or group matching '$temp_str' found.\n");
+            print("ERROR: No server hostname or group matching '$2' found.\n");
         }
 
 	return;
@@ -847,7 +840,7 @@ sub PingUserServer
     {
         $pinger = Net::Ping->new("tcp", 22);
 
-        $userserver =~ /(\w*)\@(\w*)/;
+        $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
 
         if ($pinger->ping($2))
         {
