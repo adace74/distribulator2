@@ -67,12 +67,16 @@ def main(argv):
 
 The available options are:
 
+    -b / --batch=filename
+    Enables batch mode processing, requires a readable input file.
+    Not yet implemented.  OPTIONAL
+
     -e / --env=
     Set the server environment we wish to operate in.
 
     -s / --shell=
     Sets the remote shell type we wish to use.  Defaults to ssh.
-    Not fully implemented.  OPTIONAL
+    Not yet implemented.  OPTIONAL
 
 """ % argv[0]
 
