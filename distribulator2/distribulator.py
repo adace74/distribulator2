@@ -87,11 +87,6 @@ The available options are:
     -h / --help
     This usage statement.
 
-    -s / --shell=
-    Sets the remote shell type we wish to use.  Defaults to ssh.
-    Not yet implemented.
-    OPTIONAL
-
     -v / --version
     Print version information.
 
@@ -99,7 +94,6 @@ The available options are:
 
     thisBatchFile = ''
     thisServerEnv = 'demo'
-    thisServerShell = 'ssh'
     thisStartDir = '/tmp'
 
     try:
@@ -121,8 +115,6 @@ The available options are:
                 elif (opt[0] == '-h') or (opt[0] == '--help'):
                     sys.stdout.write(usage)
                     sys.exit(0)
-                elif (opt[0] == '-s') or (opt[0] == '--shell'):
-                    thisServerShell = opt[1]
                 elif (opt[0] == '-v') or (opt[0] == '--version'):
                     print("The Distribulator v0.50")
                     print("Please see the LICENSE file for accompanying legalese.")
