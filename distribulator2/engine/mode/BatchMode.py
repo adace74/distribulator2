@@ -227,8 +227,13 @@ class BatchMode(Mode.Mode):
                     myInternalCommand = engine.data.InternalCommand.InternalCommand()
                     myInternalCommand.setCommand(myLine)
                     myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
-                    myCommandCount = myCommandCount + \
-                                       myDispatcher.invoke(myInternalCommand)
+
+                    myTempCount = myDispatcher.invoke(myInternalCommand)
+
+                    if (myTempCount == False):
+                        break
+                    else:
+                        myCommandCount = myCommandCount + myTempCount
 
                     del myInternalCommand
                     del myDispatcher
