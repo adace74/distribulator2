@@ -105,7 +105,7 @@ class EnvCommand(Command.Command):
             myTempStr = "Known server groups for environment '" + myEnvironment.getName() + "'\n"
             myTempStr = myTempStr + "--------------------------------------------------\n"
 
-            for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():
+            for myServerGroup in myEnvironment.getServerGroupList():
                 myColumnCount = myColumnCount + 1
                 myTempStr = myTempStr + "%10s (%2d) " % \
                             (myServerGroup.getName(), myServerGroup.getServerCount())
