@@ -243,7 +243,7 @@ Change List For v0.8.5 (Language: Python / Bloat Factor: 3983 lines / Status: Sh
 
 Change List For v0.8.6 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
-- Cleanup: Added an autoconf script such that no matter where the package is installed
+* Cleanup: Added an autoconf script such that no matter where the package is installed
   or where Python is, we'll run with it.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)

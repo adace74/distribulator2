@@ -9,19 +9,20 @@ Installing The Distribulator
 
 Prerequisites
 -------------
-Before installing the distribulator, one must have already installed
-a copy of the following:
+Before installing the distribulator, one must have already installed a copy of the following:
 
 - A Unix-like OS.
 
 The usual suspects.  *BSD, Linux, Solaris, etc.
 
-FYI, the author currently tests on both FreeBSD 4.x and Linux(RedHat) environments.
+- Recommended: GNU autoconf v2.13 (http://www.gnu.org/software/autoconf/)
+
+Currently, autoconf is being used to morph the software based on install dir
+and the location of Python v2.3.X in on the filesystem.  Later revs of autoconf should work, too.
 
 - Recommended: GNU Readline v4.3 (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
 
-Since the software uses the Python readline module pretty extensively,
-we need this.
+Since the software uses the Python readline module pretty extensively, we need this.
 
 - Recommended: OpenSSH v3.4p1 (http://www.openssh.org/)
 
@@ -33,14 +34,18 @@ It handles SSH v1/v2 very well, and there have been no major problems found so f
 I give no guarantee this software will work with earlier versions.
 This also provides a sane yardstick to measure by in the case of problems.
 
-If for some reason you don't have a symlink for python in /usr/local/bin/,
-either put one there or change the first line of distribulator.py.
+Defaults (autoconf will use these if one just runs "./configure")
+-----------------------------------------------------------------
+Install Path: /usr/local/distribulator2
+Python Path:  /usr/local/bin/python
+Script Path:  /usr/local/bin
 
 Installation
 ------------
 1) Pick a place you'd like to install the program.  The default is /usr/local/distribulator2
 
-   For example, let's say you'd like to install into /apps/distribulator2.
+   For the sake of example, let's say you have Python installed as /usr/bin/python2.3
+   and you want to install this software into /apps/distribulator2
 
 2) Go to the subdir of where you'd like it to be:
    cd /apps/
@@ -48,32 +53,28 @@ Installation
 3) Unpack the distribution:
    tar xfz distribulator-X.X.X.tar.gz
 
-4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
-   reflect your installation directory(in this case /apps/distribulator2):
-   vi scripts/distribulator.sh
+4) Run autoconf:
+   cd /apps/distribulator2/
+   ./configure --prefix=/apps/distribulator2 --with-python=/usr/bin/python2.3
 
-5) Create a symlink from /usr/local/bin/ to the wrapper script
-   (or your path-happy location of choice):
+5) Create a symlink from any directory in your path(/usr/local/bin, etc) to the wrapper script
    cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh distribulator
 
-6) Symlink or copy the config.xml.dist file to config.xml.
-   cd /apps/distribulator2/conf; ln -s config.xml.dist config.xml
-
-7) Fire it up:
+6) Fire it up:
    distribulator
 
-8) Test it out, tinker around, read the next section for how to setup config.xml for your environments.
+7) Test it out, tinker around, read the next section for how to setup config.xml for your environments.
 
 Configuration Overview
 ----------------------
-This file won't go into extensive detail on the configuration files
-listed here, however you'll at least have a starting point.
+This file won't go into extensive detail on the configuration files listed here,
+however you'll at least have a starting point.
 
 conf/config.xml -- Main XML configuration file.
 
-This file contains all interesting settings, including binary locations,
-server and server group settings, etc.  Most likely this will be the file
-of most interest to you.
+This file contains all configure settings except logging.
+Includes binary locations, server and server group settings, etc.
+Most likely this will be the file of most interest to you.
 
 Settings of interest:
 - Binary locations for logname, scp, and ssh.
@@ -81,22 +82,30 @@ Settings of interest:
 - Host Pinger options.
 - Server environment(s) and group(s) settings.
 
-config/pass_through_cmds.txt -- Simple list of Unix common commands for
-the command-line interface to "pass through", that is to simply run as
-a good shell would.
+config/logging.conf -- Logging configuration file.
 
-examples/ -- Directory containing example batch files that should work
-if configuration is setup properly.
+This file contains all configuration relating to logging.
+Please keep in mind the fact that we consider STDOUT to be just another log destination.
+See the Python "logging" module documentation for more detailed documentation.
+
+config/pass_through_cmds.txt -- Pass-through commands list.
+
+This file contains a simple list of Unix common commands for the command-line interface to "pass through",
+that is to simply run locally as a good shell should.
+
+examples/ -- Directory containing example batch files that should work if configuration is setup properly.
 
 Directory Layout Overview
 -------------------------
 
 /distribulator2			- Main install dir.
+	/build			- Autoconf required dir.
 	/conf			- Configuration dir.
 	/doc			- Help file dir.
 	/engine			- Core engine Python classes.
 	/examples		- Example batch files.
 	/generic		- Generic Python classes.
+	/log			- Default audit log destination directory.
 	/scripts		- Wrapper shell scripts.
 	/tests			- Manual test suite location,
 				  future automated regression tests.
