@@ -150,16 +150,12 @@ class XMLFileParser:
 
         # Load custom settings.
         if (myName == 'filename'):
-            print "FILENAME"
             self._globalConfig.setLogFilename(myValue)
         elif (myName == 'level'):
-            print "LEVEL"
             self._globalConfig.setLogLevel( eval('logging.' + myValue) )
         elif (myName == 'date_mask'):
-            print "DATE"
             self._globalConfig.setLogDateMask(myValue)
         elif (myName == 'log_mask'):
-            print "MASK"
             self._globalConfig.setLogMask(myValue)
 
 ######################################################################
