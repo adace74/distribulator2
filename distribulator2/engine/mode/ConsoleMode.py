@@ -161,7 +161,7 @@ class ConsoleMode(Mode.Mode):
 
                 except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                    self.handleInfo(myInfo)
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 # Icky flow-control hack.
                 if (myTokens[0] == 'exit'):

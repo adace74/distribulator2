@@ -88,6 +88,22 @@ class GlobalConfig:
         self._batchFile = PassedBatchFile
 
 ######################################################################
+# Our break state.
+######################################################################
+
+    def isBreakState(self):
+        """This is a typical accessor method."""
+    
+        return self._breakState
+
+######################################################################
+
+    def setBreakState(self, PassedBreakState):
+        """This is a typical accessor method."""
+    
+        self._breakState = PassedBreakState   
+
+######################################################################
 # Our configuration directory path.
 ######################################################################
 

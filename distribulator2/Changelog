@@ -202,14 +202,16 @@ Change List For v0.7.2 (Language: Python / Status: Shipped)
 * Cleanup: Updated the accompanying config.dtd with the "ping" XML tag.
 * Cleanup: Disable GNU readline history when running in batch mode.
 
-Change List For v0.7.3 (Language: Python / Status: Shipped)
+Change List For v0.7.3 (Language: Python / Status: Skipped)
 ---------------------------------------------------------------
-* Cleanup: Making the batch mode header and footer output more concise.
 
-Change List For v0.7.4 (Language: Python / Status: Shipped)
+Change List For v0.7.4 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * Ability to specify per-servergroup SSH version for use with both
   "copy" and "run" commands.  If no version is specified, no extra flags are added.
+* Cleanup: Made the batch mode header and footer output more concise.
+* Cleanup: Moved CTRL-C state info into GlobalConfig.py.
+  This allows us to completely dump out of bactch mode on CTRL-C.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------

@@ -226,6 +226,7 @@ The available options are:
             myGlobalConfig.setConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
 
         # More with the loading of the GlobalConfig object.
+        myGlobalConfig.setBreakState(False)
         myGlobalConfig.setExitSuccess(True)
         myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
         myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )

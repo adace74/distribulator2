@@ -279,6 +279,7 @@ class RunCommand(Command.Command):
             except KeyboardInterrupt:
                 myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                self._globalConifg.setBreakState(True)
                 return False
 
             return True
@@ -345,6 +346,7 @@ class RunCommand(Command.Command):
                 except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                    self._globalConfig.setBreakState(True)
                     return False
 
                 if (isReverse):

@@ -186,13 +186,15 @@ class BatchMode(Mode.Mode):
                         continue
 
                 #
-                # Step 4: Handle "exit" from my chunk of code.
+                # Step 4: Handle CTRL-C and "exit" from this chunk of code.
                 #
-                if (myTokens[0] == 'exit'):
-                    myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                if (self._globalConfig.getBreakState()):
+                     break
 
-                    return
+                if (myTokens[0] == 'exit'):
+                     myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                     break
 
                 #
                 # Step 5: Check for Unix "pass through" commands.
@@ -207,7 +209,8 @@ class BatchMode(Mode.Mode):
 
                         except KeyboardInterrupt:
                             myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
-                            self.handleInfo(myInfo)
+                            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                            self._globalConfig.setBreakState(True)
                             break
 
                         myCommandCount = myCommandCount + 1
@@ -237,7 +240,7 @@ class BatchMode(Mode.Mode):
                 except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-                    break
+                    self._globalConfig.setBreakState(True)
 
             myFile.close()
 
