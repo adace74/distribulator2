@@ -1,0 +1,20 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+The Distribulator contains several classes for various functionality.
+
+This directory contains application-specific classes that handle
+the "heavy lifting" of the application.
+
+Application classes include:
+
+engine.BatchRunner   - Responsible for batch mode-specific functionality.
+engine.CommandLine   - Responsible for the console mode interface.
+engine.CommandRunner - Semi-generic class used to run commands in any mode.
+engine.ConfigLoader  - Responsible for loading configuration information.
+engine.XMLFileParser - Responsible for parsing our XML-based configuration.
+
+######################################################################

@@ -1,0 +1,18 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+The Distribulator contains several classes for various functionality.
+
+This directory contains classes considered generic enough for reuse
+in other applications.
+
+Generic classes include:
+
+generic.FilePrinter - Simple class to dump a textfile to the screen.
+generic.HostPinger  - Simple class to try and "ping" a given host.
+generic.SysLogger   - Simple class to interface with the syslog module.
+
+######################################################################

@@ -2,12 +2,13 @@
 #
 # $Id$
 #
-# Name: XMLParser.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""This class is responsible for loading in data from our XML configuration file."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -28,15 +29,18 @@ import engine.data.ServerGroup
 ######################################################################
 
 class XMLFileParser:
+    """This class is responsible for loading in data from our XML configuration file.""" 
 
     def __init__(self):
+        """Constructor."""
+
         pass
 
 ######################################################################
-# Main parsing entry point.
-######################################################################
 
     def parse(self, PassedGlobalConfig):
+        """This method represents the main entry point into the XML parsing logic."""
+
         self._globalConfig = PassedGlobalConfig
         self._isEnvFound = False
         self._serverGroupList = []
@@ -77,6 +81,11 @@ class XMLFileParser:
 ######################################################################
 
     def getText(self, nodelist):
+        """
+        This method is responsible for walking the DOM tree and
+        finding a given node's relevant text.
+        """
+
         rc = ''
         for node in nodelist:
             if node.nodeType == node.TEXT_NODE:
@@ -86,6 +95,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleConfig(self, PassedConfig):
+        """This method branches processing off into sub-methods."""
+
         self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
         self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
         self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
@@ -95,12 +106,16 @@ class XMLFileParser:
 ######################################################################
 
     def handleBinaries(self, PassedBinaries):
+        """This method branches processing off into sub-methods."""
+
         for Binary in PassedBinaries:
             self.handleBinary(Binary)
 
 ######################################################################
 
     def handleBinary(self, PassedBinary):
+        """This method handles a single <Binary> tag."""
+
         thisName = PassedBinary.getAttribute('name')
         thisValue = PassedBinary.getAttribute('value')
         if (thisName == 'logname'):
@@ -117,6 +132,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleLogging(self, PassedLogging):
+        """This method handles a single <Logging> tag."""
+
         self._globalConfig.setSyslogFacility(
             eval("syslog.LOG_" + PassedLogging.getAttribute('facility').strip()) )
 
@@ -125,12 +142,16 @@ class XMLFileParser:
 ######################################################################
 
     def handleEnvironments(self, PassedEnvironments):
+        """This method branches processing off into sub-methods."""
+
         for Environment in PassedEnvironments:
             self.handleEnvironment(Environment)
 
 ######################################################################
 
     def handleEnvironment(self, PassedEnvironment):
+        """This method handles a specific <Environment> tag."""
+
         # Only load the environment specified on startup.
         if ( PassedEnvironment.getAttribute('name') ==
              self._globalConfig.getServerEnv() ):
@@ -141,6 +162,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleServerGroups(self, PassedServerGroups):
+        """This method branches processing off into sub-methods."""
+
         for ServerGroup in PassedServerGroups:
             self._serverGroupList.append( self.handleServerGroup(ServerGroup) )
 
@@ -149,6 +172,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleServerGroup(self, PassedServerGroup):
+        """This method handles a single <ServerGroup> tag."""
+
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
         thisServerGroup.setName(
             PassedServerGroup.getAttribute('name').strip() )
@@ -162,6 +187,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleServers(self, PassedServerGroup, PassedServers):
+        """This method branches processing off into sub-methods."""
+
         thisServerGroup = PassedServerGroup
 
         for thisServer in PassedServers:
@@ -175,6 +202,8 @@ class XMLFileParser:
 ######################################################################
 
     def handleServer(self, PassedServer):
+        """This method handles a single <Server> tag."""
+
         thisServer = engine.data.Server.Server()
         thisServer.setName( self.getText(PassedServer.childNodes).strip() )
 

@@ -2,12 +2,17 @@
 #
 # $Id$
 #
-# Name: CommandRunner.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""
+This class is responsible for doing the actual work of
+expanding a given distribulator command into a set of
+SSH commands and running them.
+"""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -27,12 +32,25 @@ import generic.HostPinger
 ######################################################################
 
 class CommandRunner:
+    """
+    This class is responsible for doing the actual work of
+    expanding a given distribulator command into a set of 
+    SSH commands and running them.
+    """
+
     def __init__(self, PassedGlobalConfig):
+        """Constructor."""
+
         self._globalConfig = PassedGlobalConfig
 
 ######################################################################
 
     def handleError(self, PassedError):
+        """
+        This method is responsible for logging error messages
+        in a manner consistent with a quite mode, if applicable.
+        """
+
         if ( self._globalConfig.isQuietMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 PassedError)
@@ -44,6 +62,11 @@ class CommandRunner:
 ######################################################################
 
     def handleInfo(self, PassedInfo):
+        """
+        This method is responsible for logging info messages 
+        in a manner consistent with a quite mode, if applicable.
+        """
+
         if ( self._globalConfig.isQuietMode() ):
             self._globalConfig.getSysLogger().LogMsgInfo(
                 PassedInfo)
@@ -55,6 +78,8 @@ class CommandRunner:
 ######################################################################
 
     def run(self, PassedInternalCommand):
+        """This method is the main entry point into the expansion engine."""
+
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
         thisCommandCount = 0
@@ -95,6 +120,8 @@ class CommandRunner:
 ######################################################################
 
     def doAreYouSure(self):
+        """This method simply asks the never-ending question: Are You Sure?"""
+
         try:
             sys.stdout.write("Yes / No> ")
             thisInput = sys.stdin.readline()
@@ -113,6 +140,8 @@ class CommandRunner:
 ######################################################################
 
     def doChdir(self):
+        """This method is responsible for the processing of the 'cd' command."""
+
         # If the user just types 'cd', do what most shells would do.
         if (len(self._commTokens) == 1):
             thisDirStr = os.environ.get('HOME')
@@ -134,6 +163,8 @@ class CommandRunner:
 ######################################################################
 
     def doCopy(self):
+        """This method is responsible for the processing of the 'copy' command."""
+
         thisCommandCount = 0
         thisCopyTarget = '';
         thisServerGroupList = []
@@ -397,6 +428,8 @@ class CommandRunner:
 ######################################################################
 
     def doExit(self):
+        """This method is responsible for the processing of the 'exit' command."""
+
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."
@@ -412,6 +445,8 @@ class CommandRunner:
 ######################################################################
 
     def doHelp(self):
+        """This method is responsible for the processing of the 'help' command."""
+
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."
@@ -438,6 +473,8 @@ class CommandRunner:
 ######################################################################
 
     def doLogin(self):
+        """This method is responsible for the processing of the 'login' command."""
+
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."
@@ -474,6 +511,8 @@ class CommandRunner:
 ######################################################################
 
     def doRun(self):
+        """This method is responsible for the processing of the 'run' command."""
+
         thisCommandCount = 0
         thisServerGroupList = []
         thisServerNameList = []
@@ -740,6 +779,8 @@ class CommandRunner:
 ######################################################################
 
     def doServerGroup(self):
+        """This method is responsible for the processing of the 'server-group' command."""
+
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."
@@ -786,6 +827,8 @@ class CommandRunner:
 ######################################################################
 
     def doServerList(self):
+        """This method is responsible for the processing of the 'server-list' command."""
+
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."

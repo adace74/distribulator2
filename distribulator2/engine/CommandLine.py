@@ -2,12 +2,13 @@
 #
 # $Id$
 #
-# Name: CommandLine.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""This class is responsible for handling the console mode of the application."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -30,8 +31,11 @@ import engine.data.InternalCommand
 ######################################################################
 
 class CommandLine:
+    """This class is responsible for handling the console mode of the application."""
 
     def __init__(self, PassedGlobalConfig):
+        """Constructor."""
+
         self._globalConfig = PassedGlobalConfig
         self._commList = [ 'copy', 'exit', 'help', 'login', 'run',
                            'server-group' ]
@@ -39,6 +43,8 @@ class CommandLine:
 ######################################################################
 
     def getAttemptedCompletion(self, thisString, thisIndex):
+        """This method is registered with GNU readline and called for tab-completion."""
+
         # Don't ask me exactly how, but this seems to work well.
         if ( (thisIndex == 0) & (readline.get_begidx() == 0) ):
             if (len(thisString) > 0):
@@ -53,6 +59,8 @@ class CommandLine:
 ######################################################################
 
     def initHistory(self):
+        """This method loads history data for use with GNU readline."""
+
         thisCounter = 0
         thisHistory = os.path.join(os.environ['HOME'], ".dist_history")
     
@@ -84,6 +92,7 @@ class CommandLine:
 ######################################################################
 
     def invoke(self):
+        """This method is the main entry point into tons of custom logic."""
 
         thisPromptEnv = self._globalConfig.getServerEnv()
         thisPromptUser = self._globalConfig.getUsername()

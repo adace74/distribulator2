@@ -140,10 +140,13 @@ Change List For v0.6 (Language: Python / Status: Shipped)
 
 Change List For v0.61 (Language Python / Status: In Progress)
 ---------------------------------------------------------
+* Finally got around to parameterizing the application version info.
+* Added a fair amount of in-code documentation, viewable via pydoc.
 * SourceForge bug #776079 fixed.
 * SourceForge bug #787445 fixed.
 - SourceForge bug #776080 fixed.
 - SourceForge bug #774953 fixed.
+- SourceForge bug #791970 fixed.
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------

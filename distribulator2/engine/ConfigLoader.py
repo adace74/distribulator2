@@ -2,12 +2,13 @@
 #
 # $Id$
 #
-# Name: ConfigLoader.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""This class is responsible for loading the application's configuration data."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -26,13 +27,21 @@ import engine.data.GlobalConfig
 ######################################################################
 
 class ConfigLoader:
+    """This class is responsible for loading the application's configuration data."""
 
     def __init__(self, PassedGlobalConfig):
+        """Constructor."""
+
         self._globalConfig = PassedGlobalConfig
 
 ######################################################################
 
     def loadGlobalConfig(self, PassedCommLine):
+        """
+        This method is responsible for loading configuration data into the
+        engine.data.GlobalConfig object.
+        """
+
         # Load GNU Readline history.
         if (self._globalConfig.isBatchMode() == False):
             print('Loading configuration...')

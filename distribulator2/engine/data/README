@@ -1,0 +1,20 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+The Distribulator contains several classes for various functionality.
+
+This directory contains application-specific data classes that handle
+the "heavy lifting" of the application.
+
+Data classes include:
+
+engine.data.ExternalCommand - External command shell integration.
+engine.data.GlobalConfig    - Responsible for containing our global config.
+engine.data.InternalCommand - Internal command container.
+engine.data.ServerGroup     - Internal data container.
+engine.data.Server          - Internal data container.
+
+######################################################################

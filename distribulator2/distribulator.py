@@ -3,8 +3,6 @@
 #
 # $Id$
 #
-# Name: distribulator.py
-#
 # Description: The Distribulator.
 # A detailed description can be found in the README file.
 #
@@ -15,18 +13,15 @@
 # requires that methods be defined before calling them.
 # As such, main() will always be at the -bottom- of a file.
 #
-# Flow:
-# 1) Fire up / validation
-# 2) Load up Server / ServerGroup objectsets.
-# 3) Report Load Summary
-# 4) Interactive Mode (Parser object, Command objects?)
-#
-# Server object -- contains server hostname, username
-# ServerGroup object -- contains many Server objects
 ######################################################################
 
-# Version tag
+# Pydoc comments
+"""Application entry point for The Distribulator."""
+
+# File version tag
 __version__ = '$Revision$'[11:-2]
+# Application version tag
+__appversion__ = 'The Distribulator v0.61'
 
 # Standard modules
 import commands
@@ -36,7 +31,6 @@ import os
 import os.path
 import socket
 import sys
-import syslog
 
 # Custom modules
 import engine.BatchRunner
@@ -50,8 +44,10 @@ import generic.SysLogger
 ######################################################################
 
 def printTitleHeader():
+    """Print the title header."""
+
     print
-    print("The Distribulator v0.60 (Python v" + \
+    print(__appversion__ + " (Python v" + \
           sys.version.split()[0] + " / " + sys.platform + ")")
     print("--------------------------------------------------")
     print
@@ -59,6 +55,8 @@ def printTitleHeader():
 ######################################################################
 
 def printInfoHeader(PassedServerEnv, PassedConfigDir):
+    """Print the informational header."""
+
     print("Local Hostname:      " + socket.gethostname())
     print("Current Environment: " + PassedServerEnv)
     print("Config Directory:    " + PassedConfigDir)
@@ -69,6 +67,8 @@ def printInfoHeader(PassedServerEnv, PassedConfigDir):
 ######################################################################
 
 def main(argv):
+    """Good old main."""
+
     long_options = ['batch=',
                     'directory=',
                     'env=',
@@ -150,7 +150,7 @@ The available options are:
                 elif (opt[0] == '--var3'):
                     thisVar3 = opt[1]
                 elif (opt[0] == '--version'):
-                    print("The Distribulator v0.60")
+                    print(__appversion__)
                     print("Please see the LICENSE file for accompanying legalese.")
                     sys.exit(0)
         else:
@@ -203,7 +203,7 @@ The available options are:
             thisTerseMode = True
 
         # Setup syslog.
-        thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility())
+        thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility(), 'distribulator.py')
         thisGlobalConfig.setSysLogger(thisLogger)
 
         # Log our startup.
@@ -224,12 +224,12 @@ The available options are:
             print(thisSeperator)
 
         if (thisGlobalConfig.isBatchMode()):
-            thisInfo = "INFO:  Starting The Distribulator v0.60 -- batch mode."
-            thisLogger.LogMsgInfo(thisInfo)
+            thisInfo = "INFO:  Starting " + __appversion__ + " -- batch mode."
             if (thisTerseMode):
                 print(thisInfo)
         else:
-            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- console mode.")
+            thisInfo = "INFO:  Starting " + __appversion__ + " -- console mode."
+        thisLogger.LogMsgInfo(thisInfo)
 
         thisLogger.LogMsgInfo("INFO:  Real UID:      " +
                               thisGlobalConfig.getRealUsername())

@@ -2,12 +2,13 @@
 #
 # $Id$
 #
-# Name: ServerGroup.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""This class holds data regarding a given server group."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -21,8 +22,11 @@ import sys
 ######################################################################
 
 class ServerGroup:
+    """This class holds data regarding a given server group."""
 
     def __init__(self):
+        """Constructor."""
+
         self._serverCount = 0
         self._serverList = []
 
@@ -31,11 +35,15 @@ class ServerGroup:
 ######################################################################
 
     def getName(self):
+        """This is a typical accessor method."""
+
         return self._name
 
 ######################################################################
 
     def setName(self, PassedName):
+        """This is a typical accessor method."""
+
         self._name = PassedName
 
 ######################################################################
@@ -43,11 +51,15 @@ class ServerGroup:
 ######################################################################
 
     def getUsername(self):
+        """This is a typical accessor method."""
+
         return self._username
 
 ######################################################################
 
     def setUsername(self, PassedUsername):
+        """This is a typical accessor method."""
+
         self._username = PassedUsername
 
 ######################################################################
@@ -55,22 +67,30 @@ class ServerGroup:
 ######################################################################
 
     def getServerCount(self):
+        """This is a typical accessor method."""
+
         return self._serverCount
 
 ######################################################################
 
     def getServerList(self):
+        """This is a typical accessor method."""
+
         return self._serverList
 
 ######################################################################
 
     def addServer(self, PassedServer):
+        """This is a typical accessor method."""
+
         self._serverCount = self._serverCount + 1
         self._serverList.append(PassedServer)
 
 ######################################################################
 
     def getServerByName(self, PassedServerName):
+        """This is a typical accessor method."""
+
         PassedServerName = PassedServerName.strip()
 
         for thisServer in self._serverList:

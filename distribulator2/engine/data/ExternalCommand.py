@@ -2,12 +2,13 @@
 #
 # $Id$
 #
-# Name: ExternalCommand.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""This class holds data regarding an external command."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -25,6 +26,8 @@ import time
 class ExternalCommand:
 
     def __init__(self, PassedGlobalConfig):
+        """Constructor."""
+
         self._globalConfig = PassedGlobalConfig
         self._seperator = '----------------------------------------------------------------------'
 
@@ -33,11 +36,15 @@ class ExternalCommand:
 ######################################################################
 
     def getCommand(self):
+        """This is a typical accessor method."""
+
         return self._command
 
 ######################################################################
 
     def setCommand(self, PassedCommand):
+        """This is a typical accessor method."""
+
         self._command = PassedCommand
 
 ######################################################################
@@ -45,6 +52,8 @@ class ExternalCommand:
 ######################################################################
 
     def run(self, isLoggable=False):
+        """This method is responsible for running a given command."""
+
         if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 "ERROR:ExternalCommand.run() called in batch mode." )

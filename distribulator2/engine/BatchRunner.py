@@ -2,12 +2,17 @@
 #
 # $Id$
 #
-# Name: BatchRunner.py
-#
 # (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
+
+# Pydoc comments
+"""
+This class is responsible for doing the actual reading of a given
+batch file, and pre-processing the input before calling the
+CommandRunner for command expansion work.
+"""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -26,13 +31,22 @@ import engine.data.ExternalCommand
 import engine.data.InternalCommand
 
 class BatchRunner:
+    """
+    This class is responsible for doing the actual reading of a given
+    batch file, and pre-processing the input before calling the
+    CommandRunner for command expansion work.
+    """
 
     def __init__(self, PassedGlobalConfig):
+        """Constructor."""
+
         self._globalConfig = PassedGlobalConfig
 
 ######################################################################
 
     def invoke(self):
+        """This method is the main entry point into tons of custom logic."""
+
         # Let's make sure the file we've been given is readable.
         try:
             if ( stat.S_ISREG(os.stat(
