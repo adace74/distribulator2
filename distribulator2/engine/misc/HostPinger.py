@@ -50,7 +50,7 @@ class HostPinger:
             return 0
 
         except socket.error, myErrorInfo:
-            myError = "OS Reports: [%s] during TCP ping attempt.\n" % (myErrorInfo)
+            myError = "OS Reports: [%s] during TCP ping attempt." % (myErrorInfo)
             if ( self._globalConfig.isListMode() == False ):
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1

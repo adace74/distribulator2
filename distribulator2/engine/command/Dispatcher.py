@@ -55,11 +55,7 @@ class Dispatcher:
 
         if (self._commTokens[0] != 'cd'):
             # Log it.
-            self._globalConfig.getLogger().info("CMD:  " + \
-                                                         self._commString)
-            # If we're not being quiet, print it.
-            if ( self._globalConfig.isQuietMode() == False ):
-                print("INFO: CMD:  " + self._commString)
+            self._globalConfig.getMultiLogger().LogMsgDebug("CMD:  " + self._commString)
 
         try:
             # Cheezy branching logic.  Works well, though.

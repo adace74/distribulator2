@@ -59,16 +59,14 @@ class ExternalCommand:
 
         # This could be a pass-through command, no need to log that.
         if (isLoggable):
-            self._globalConfig.getLogger().info(
+            self._globalConfig.getMultiLogger().LogDebugInfo(
                 "EXEC: " + self._command )
 
-        print("EXEC: " + self._command)
-
         myStatus = os.system(self._command)
-        print( "INFO: " + self._globalConfig.getSeperator() )
+        self._globalConfig.getMultiLogger().LogDebugSeperator()
 
         if (myStatus != 0):
-            print("Local shell returned error state.")
+            self._globalConfig.getMultiLogger().LogMsgWarn("Local shell returned error state.")
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
@@ -83,23 +81,22 @@ class ExternalCommand:
     def runBatch(self):
         """This method is responsible for running a given command in batch mode."""
 
-        self._globalConfig.getMultiLogger().LogMsgInfo(
+        self._globalConfig.getMultiLogger().LogMsgDebug(
             "EXEC: " + self._command )
 
         myStatus, myOutput = commands.getstatusoutput(self._command)
 
         for myLine in myOutput.split('\n'):
-            self._globalConfig.getMultiLogger().LogMsgInfo(
+            self._globalConfig.getMultiLogger().LogMsgDebug(
                 "OUT:  " + myLine )
 
         if (myStatus != 0):
-            myError = "Local shell returned error state."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            myWarn = "Local shell returned error state."
+            self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
 
             self._globalConfig.setExitSuccess(False)
 
-        if (self._globalConfig.isQuietMode() == False):
-            print( "INFO: " + self._globalConfig.getSeperator() )
+        self._globalConfig.getMultiLogger().LogDebugSeperator()
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's

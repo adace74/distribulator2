@@ -94,14 +94,12 @@ class ConsoleMode(Mode.Mode):
 
             except EOFError:
                 myInfo = "Caught CTRL-D keystroke.  Wrote history.  Dying..."
-                print
-                print(myInfo)
-                self._globalConfig.getLogger().info(myInfo)
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 return
 
             except KeyboardInterrupt:
-                print
+                pass
 
             if ( len(myInput.strip()) > 0 ):
                 myTokens = myInput.split()
@@ -118,8 +116,7 @@ class ConsoleMode(Mode.Mode):
                             myExternalCommand.runConsole()
                         except KeyboardInterrupt:
                             myInfo = "Caught CTRL-C keystroke.  Returning to command prompt..."
-                            print("INFO: " + myInfo)
-                            self._globalConfig.getLogger().info(myInfo)
+                            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                         del myExternalCommand
                         myFoundIt = True
                         break

@@ -13,6 +13,12 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
+# Standard modules
+import logging
+import logging.config
+import os
+import stat
+
 # Custom modules
 import engine.conf.XMLFileParser
 import engine.data.GlobalConfig
@@ -76,7 +82,45 @@ class ConfigLoader:
                    % (len(myPassThruList)) )
 
         #
-        # Step 2: Load the main XML configuration file.
+        # Step 2: Load the logging configuration file.
+        #
+        myConfigLines = 0
+
+        try:
+            # Let's make sure the file we've been given is readable.
+            if ( stat.S_ISREG(os.stat(
+                self._globalConfig.getLoggingConfigFile())[stat.ST_MODE]) \
+                 == False ):
+                myError = "File '" + \
+                            self._globalConfig.getLoggingConfigFile() + \
+                            "' is accessible, but not regular."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                self._globalConfig.setExitSuccess(False)
+                return
+
+            # We might as well count the lines as well.
+            myFile = open(self._globalConfig.getLoggingConfigFile(), 'r')
+            for myLine in myFile:
+                myConfigLines = myConfigLines + 1
+            myFile.close()
+
+        except OSError, (errno, strerror):
+            myError = "[Errno %s] %s: %s" % ( errno, strerror, \
+                                                       self._globalConfig.getBatchFile() )
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.setExitSuccess(False)
+            return
+
+        # Load it!
+        logging.config.fileConfig( self._globalConfig.getLoggingConfigFile() )
+        self._globalConfig.setAuditLogger( logging.getLogger('audit') )
+        self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
+
+        if ( self._globalConfig.isConsoleMode() ):
+            print( "- Logging configuration:       %d lines loaded." % myConfigLines )
+
+        #
+        # Step 3: Load the main XML configuration file.
         #
         myParser = engine.conf.XMLFileParser.XMLFileParser()
         self._globalConfig.setCurrentServerGroup(False)

@@ -79,7 +79,6 @@ class BatchMode(Mode.Mode):
         myTimeDuration = 0
         myTimeStarted = time.time()
         myTimeFinished = 0
-        myVerboseMode = False
 
         try:
             # First Pass: Validation

@@ -44,7 +44,7 @@ class XMLFileParser:
         self._isEnvFound = False
         self._serverGroupList = []
 
-        myFilename = self._globalConfig.getConfigFile()
+        myFilename = self._globalConfig.getAppConfigFile()
 
         try:
             myConfigLines = 0
@@ -70,7 +70,6 @@ class XMLFileParser:
             myError = "ERROR: No matching tags found for environment '" + \
                         self._globalConfig.getServerEnv() + "' in config.xml!"
             print(myError)
-
             sys.exit(True)
 
 ######################################################################
@@ -94,7 +93,6 @@ class XMLFileParser:
 
         try:
             self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
-            self.handleLoggings(PassedConfig.getElementsByTagName('logging'))
             self.handlePing(PassedConfig.getElementsByTagName('ping')[0])
             self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
 
@@ -128,35 +126,6 @@ class XMLFileParser:
             self._globalConfig.setScpBinary(myValue)
         elif (myName == 'ssh'):
             self._globalConfig.setSshBinary(myValue)
-
-######################################################################
-# Logging options.
-######################################################################
-
-    def handleLoggings(self, PassedLoggings):
-        """This method branches processing off into sub-methods."""
-
-        for Logging in PassedLoggings:
-            self.handleLogging(Logging)
-    
-######################################################################
-
-    def handleLogging(self, PassedLogging):
-        """This method handles a single <Logging> tag."""
-
-        # Get our name/value pair.
-        myName = PassedLogging.getAttribute('name')
-        myValue = PassedLogging.getAttribute('value').strip()
-
-        # Load custom settings.
-        if (myName == 'filename'):
-            self._globalConfig.setLogFilename(myValue)
-        elif (myName == 'level'):
-            self._globalConfig.setLogLevel( eval('logging.' + myValue) )
-        elif (myName == 'date_mask'):
-            self._globalConfig.setLogDateMask(myValue)
-        elif (myName == 'log_mask'):
-            self._globalConfig.setLogMask(myValue)
 
 ######################################################################
 # Ping options.

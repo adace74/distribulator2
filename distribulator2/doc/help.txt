@@ -7,8 +7,8 @@ Valid Commands:
     help               -- This command.
     login              -- Remotely logs into a given server.
     run                -- Run remote commands.
-    set server-group   -- Sets current server group.
-    show server-group  -- List servers in a given or current working server group.
+    set                -- Sets a given parameter.
+    show               -- Displays a given parameter.
 
 For more detailed help, try "help <command>".
 

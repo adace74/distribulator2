@@ -104,20 +104,34 @@ class GlobalConfig:
         self._breakState = PassedBreakState   
 
 ######################################################################
-# Our configuration directory path.
+# Our app-level and logging configuration files.
 ######################################################################
 
-    def getConfigFile(self):
+    def getAppConfigFile(self):
         """This is a typical accessor method."""
 
-        return self._configFile
+        return self._appConfigFile
 
 ######################################################################
 
-    def setConfigFile(self, PassedConfigFile):
+    def setAppConfigFile(self, PassedAppConfigFile):
         """This is a typical accessor method."""
 
-        self._configFile = PassedConfigFile
+        self._appConfigFile = PassedAppConfigFile
+
+######################################################################
+
+    def getLoggingConfigFile(self):
+        """This is a typical accessor method."""
+    
+        return self._loggingConfigFile
+
+######################################################################
+
+    def setLoggingConfigFile(self, PassedLoggingConfigFile):
+        """This is a typical accessor method."""
+    
+        self._loggingConfigFile = PassedLoggingConfigFile
 
 ######################################################################
 # Our global delay between remote commands.
@@ -214,22 +228,6 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._isPrintUsername = PassedPrintUsername
-
-######################################################################
-# Our quiet-or-not boolean flag.
-######################################################################
-
-    def isQuietMode(self):
-        """This is a typical accessor method."""
-
-        return self._quietMode
-
-######################################################################
-
-    def setQuietMode(self, PassedQuietMode):
-        """This is a typical accessor method."""
-
-        self._quietMode = PassedQuietMode
 
 ######################################################################
 # Requested server or server group list, if applicable.
@@ -355,74 +353,31 @@ class GlobalConfig:
 # Logging Functionality.
 ######################################################################
 
-    def getLogFilename(self):
+    def getAuditLogger(self):
         """This is a typical accessor method."""
 
-        return self._logFilename
+        return self._auditLogger
 
 ######################################################################
 
-    def setLogFilename(self, PassedLogFilename):
+    def setAuditLogger(self, PassedAuditLogger):
         """This is a typical accessor method."""
 
-        self._logFilename = PassedLogFilename
+        self._auditLogger = PassedAuditLogger
 
 ######################################################################
 
-    def getLogLevel(self):
+    def getStdoutLogger(self):
         """This is a typical accessor method."""
-
-        return self._logLevel
+    
+        return self._stdoutLogger
 
 ######################################################################
 
-    def setLogLevel(self, PassedLogLevel):
+    def setStdoutLogger(self, PassedStdoutLogger):
         """This is a typical accessor method."""
-
-        self._logLevel = PassedLogLevel
-
-
-######################################################################
-
-    def getLogDateMask(self): 
-        """This is a typical accessor method."""
-        
-        return self._logDateMask 
-        
-######################################################################
-
-    def setLogDateMask(self, PassedLogDateMask):
-        """This is a typical accessor method."""
-        
-        self._logDateMask = PassedLogDateMask  
-
-######################################################################
-
-    def getLogMask(self): 
-        """This is a typical accessor method."""
-        
-        return self._logMask 
-        
-######################################################################
-
-    def setLogMask(self, PassedLogMask):
-        """This is a typical accessor method."""
-        
-        self._logMask = PassedLogMask  
-
-######################################################################
-
-    def getLogger(self):
-        """This is a typical accessor method."""
-
-        return self._logger
-
-######################################################################
-
-    def setLogger(self, PassedLogger):
-        """This is a typical accessor method."""
-
-        self._logger = PassedLogger
+    
+        self._stdoutLogger = PassedStdoutLogger
 
 ######################################################################
 # Ping Options.

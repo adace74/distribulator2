@@ -201,8 +201,9 @@ class RunCommand(Command.Command):
                 myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Run command " + myBodyStr + " on server(s) " + \
-                      myDisplayStr + "?")
+                myInfo = "Run command " + myBodyStr + " on server(s) " + \
+                      myDisplayStr + "?"
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 if (self.doAreYouSure() == False):
                     myInfo = "Aborting command."
@@ -215,8 +216,9 @@ class RunCommand(Command.Command):
                 myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Run command " + myBodyStr + " on server group(s) " + \
-                      myDisplayStr + "?")
+                myInfo = "Run command " + myBodyStr + " on server group(s) " + \
+                      myDisplayStr + "?"
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 if (self.doAreYouSure() == False):
                     myInfo = "Aborting command."
@@ -274,8 +276,7 @@ class RunCommand(Command.Command):
                         myError = "Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        if (self._globalConfig.isQuietMode() == False):
-                            print( self._globalConfig.getSeperator() )
+                        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
             except EOFError:
                 pass
@@ -341,8 +342,7 @@ class RunCommand(Command.Command):
                             myError = "Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
-                            if (self._globalConfig.isQuietMode() == False):
-                                print( self._globalConfig.getSeperator() )
+                            self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
                 except EOFError:
                     pass

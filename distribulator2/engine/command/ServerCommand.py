@@ -60,7 +60,8 @@ class ServerCommand(Command.Command):
                 return False
             else:
                 self._globalConfig.setCurrentServerGroup(myServerGroup)
-                print("INFO:  Current server group is now '" + self._commTokens[2] + "'.")
+                myInfo = "INFO:  Current server group is now '" + self._commTokens[2] + "'."
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                 return True
         else:
             myError = "No server group name given."
@@ -96,20 +97,20 @@ class ServerCommand(Command.Command):
 
                 return False
             else:
-                print("Known servers for group '" + myServerGroup.getName() + "'")
-                print("--------------------------------------------------")
+                self._globalConfig.getMultiLogger().LogMsgInfo("Known servers for group '" + myServerGroup.getName() + "'")
+                self._globalConfig.getMultiLogger().LogMsgInfo("--------------------------------------------------")
                 # Actual server list goes here.
                 myTempStr = ''
 
                 for myServer in myServerGroup.getServerList():
                     if ( len(myTempStr) > 0 ):
-                        print (myTempStr + "\t" + myServer.getName())
+                        self._globalConfig.getMultiLogger().LogMsgInfo(myTempStr + "\t" + myServer.getName())
                         myTempStr = ''
                     else:
                         myTempStr = myServer.getName()
 
                 if ( len(myTempStr) > 0 ):
-                    print(myTempStr)
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myTempStr)
 
                 return True
         else:
@@ -132,6 +133,6 @@ class ServerCommand(Command.Command):
                     myColumnCount = 0
                     myServerGroupStr = myServerGroupStr + '\n'
 
-            print(myServerGroupStr)
+            self._globalConfig.getMultiLogger().LogMsgInfo(myServerGroupStr)
 
 ######################################################################

@@ -56,12 +56,13 @@ def printTitleHeader():
 
 ######################################################################
 
-def printInfoHeader(PassedServerEnv, PassedConfigFile):
+def printInfoHeader(PassedServerEnv, PassedAppConfigFile, PassedLoggingConfigFile):
     """Print the informational header."""
 
     print("Local Hostname:      " + socket.gethostname())
     print("Current Environment: " + PassedServerEnv)
-    print("Config File:         " + PassedConfigFile)
+    print("Global Config File:  " + PassedAppConfigFile)
+    print("Logging Config File: " + PassedLoggingConfigFile)
     print
 
 ######################################################################
@@ -135,10 +136,6 @@ The available options are:
     Specifies that for this particular invocation, we do NOT want to load username data from config.xml.
     OPTIONAL
 
-    --quiet
-    Batch Mode Only: Disable STDOUT, particularly useful when run from cron.
-    OPTIONAL
-
     --var1=some_string
     --var2=some_other_string
     --var3=you_get_the_idea
@@ -147,22 +144,24 @@ The available options are:
     as $var1, $var2, and $var3.
     OPTIONAL
 
+    --verbose=log_level
+    Enables on-the-fly customized stdout level setting.  Valid options include DEBUG,INFO, and ERROR.
+    OPTIONAL
+
     --version
     Print version information.
 """ % argv[0]
 
     myBatchFile = 'None'
-    myConfigFile = ''
+    myAppConfigFile = ''
     myInstallDir = '/tmp'
     myLoadUsername = True
     myPrintUsername = False
-    myQuietMode = False
     myRequestedList = ''
     myServerEnv = 'demo'
     myVar1 = ''
     myVar2 = ''
     myVar3 = ''
-    myVerboseMode = False
 
     try:
         if len(argv) < 2:
@@ -176,7 +175,7 @@ The available options are:
                 if (opt[0] == '--batch'):
                     myBatchFile = opt[1]
                 elif (opt[0] == '--config'):
-                    myConfigFile = opt[1]
+                    myAppConfigFile = opt[1]
                 elif (opt[0] == '--directory'):
                     myInstallDir = opt[1]
                 elif (opt[0] == '--env'):
@@ -194,8 +193,6 @@ The available options are:
                     myRequestedList = opt[1]
                 elif (opt[0] == '--nouser'):
                     myLoadUsername = False
-                elif (opt[0] == '--quiet'):
-                    myQuietMode = True
                 elif (opt[0] == '--var1'):
                     myVar1 = opt[1]
                 elif (opt[0] == '--var2'):
@@ -249,10 +246,12 @@ The available options are:
         else:
             myGlobalConfig.setConsoleMode(False)
 
-        if ( len(myConfigFile) > 0 ):
-            myGlobalConfig.setConfigFile(myConfigFile)
+        if ( len(myAppConfigFile) > 0 ):
+            myGlobalConfig.setAppConfigFile(myAppConfigFile)
         else:
-            myGlobalConfig.setConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
+            myGlobalConfig.setAppConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
+
+        myGlobalConfig.setLoggingConfigFile( os.path.join(myInstallDir, 'conf/logging.conf') )
 
         # More with the loading of the GlobalConfig object.
         myGlobalConfig.setBreakState(False)
@@ -261,7 +260,6 @@ The available options are:
         myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
         myGlobalConfig.setLoadUsername(myLoadUsername)
         myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )
-        myGlobalConfig.setQuietMode(myQuietMode)
         myGlobalConfig.setServerEnv(myServerEnv)
         myGlobalConfig.setUsername( getpass.getuser() )
         myGlobalConfig.setVar1(myVar1)
@@ -270,7 +268,7 @@ The available options are:
 
         if ( myGlobalConfig.isConsoleMode() ):
             printTitleHeader()
-            printInfoHeader(myServerEnv, myGlobalConfig.getConfigFile())
+            printInfoHeader(myServerEnv, myGlobalConfig.getAppConfigFile(), myGlobalConfig.getLoggingConfigFile())
 
         # These three really should be pinned to an interface.
         myBatchMode = engine.mode.BatchMode.BatchMode(myGlobalConfig)
@@ -280,21 +278,9 @@ The available options are:
         myLoader = engine.conf.ConfigLoader.ConfigLoader(myGlobalConfig)
         myGlobalConfig = myLoader.load(myCommLine)
 
-        # Currently not using the MultiLogger here as we log based on a different set of criteria
-        # than it is aware of.
-        if ( myGlobalConfig.isBatchMode() & \
-             (myGlobalConfig.isQuietMode() == False) ):
-            myVerboseMode = True
-
         # Setup console and logging output handles.
-        myLogger = logging.getLogger('dist')
-        myHandler = logging.FileHandler( myGlobalConfig.getLogFilename() )
-        myFormatter = logging.Formatter( myGlobalConfig.getLogMask(), myGlobalConfig.getLogDateMask() )
-        myHandler.setFormatter(myFormatter)
-        myLogger.addHandler(myHandler) 
-        myLogger.setLevel( myGlobalConfig.getLogLevel() )
+        myLogger = myGlobalConfig.getStdoutLogger()
 
-        myGlobalConfig.setLogger(myLogger)
         myMultiLogger = engine.misc.MultiLogger.MultiLogger(myGlobalConfig)
         myGlobalConfig.setMultiLogger(myMultiLogger)
 
@@ -307,21 +293,17 @@ The available options are:
         else:
             myGlobalConfig.setRealUsername( getpass.getuser() )
 
-        # Define a pretty seperator.
-        mySeperator = '----------------------------------------------------------------------'
-        myLogger.info(mySeperator)
-        if (myVerboseMode):
-            print("INFO: " + mySeperator)
+        myMultiLogger.LogMsgDebugSeperator()
 
         if (myGlobalConfig.isBatchMode()):
-            myInfo = __appversion__ + " (batch mode) START"
+            myDebug = __appversion__ + " (batch mode) START"
         elif (myGlobalConfig.isListMode()):
-            myInfo = __appversion__ + " (list mode) START"
+            myDebug = __appversion__ + " (list mode) START"
         else:
-            myInfo = __appversion__ + " (console mode) START"
-        myLogger.info(myInfo)
+            myDebug = __appversion__ + " (console mode) START"
+        myMultiLogger.LogMsgDebug(myDebug)
 
-        myInfo = "UID: " + myGlobalConfig.getRealUsername() + \
+        myDebug = "UID: " + myGlobalConfig.getRealUsername() + \
                    " | " + \
                    "EUID: " + myGlobalConfig.getUsername() + \
                    " | " + \
@@ -329,9 +311,7 @@ The available options are:
                    " | " + \
                    "File: " + myBatchFile
 
-        myLogger.info(myInfo)
-        if (myVerboseMode):
-            print("INFO: " + myInfo)
+        myMultiLogger.LogMsgDebug(myDebug)
 
     except (EOFError, KeyboardInterrupt):
             print("ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting...")
@@ -341,30 +321,22 @@ The available options are:
     if ( myGlobalConfig.isBatchMode() ):
         myBatchMode.invoke()
 
-        myInfo = __appversion__ + " (batch mode) EXIT"
-        myLogger.info(myInfo)
-
-        myLogger.info(mySeperator)
-        if (myVerboseMode):
-            print("INFO: " + mySeperator)
+        myDebug = __appversion__ + " (batch mode) EXIT"
+        myMultiLogger.LogMsgDebug(myDebug)
     # List mode.
     elif ( myGlobalConfig.isListMode() ):
-        myListModeer.invoke()
+        myListMode.invoke()
 
-        myInfo = __appversion__ + " (list mode) EXIT"
-        myLogger.info(myInfo)
+        myDebug = __appversion__ + " (list mode) EXIT"
+        myMultiLogger.LogMsgDebug(myDebug)
     # Console mode.
     else:
         myCommLine.invoke()
 
-        myInfo = __appversion__ + " (console mode) EXIT"
-        myLogger.info(myInfo)
-        if (myVerboseMode):
-            print(myInfo)
+        myDebug = __appversion__ + " (console mode) EXIT"
+        myMultiLogger.LogMsgDebug(myDebug)
 
-        myLogger.info(mySeperator)
-        if (myVerboseMode):
-            print(mySeperator)
+    myMultiLogger.LogMsgDebugSeperator()
 
     if ( myGlobalConfig.isExitSuccess() ):
         logging.shutdown()

@@ -199,9 +199,10 @@ class CopyCommand(Command.Command):
                 myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Copy local file '" + myLocalPath + \
-                      "' to remote directory '" + myRemotePath + "'")
-                print("on server(s) " + myDisplayStr + "?")
+                myInfo = "Copy local file '" + myLocalPath + \
+                      "' to remote directory '" + myRemotePath + "'" + \
+                      "on server(s) " + myDisplayStr + "?"
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 if (self.doAreYouSure() == False):
                     myInfo = "Aborting command."
@@ -214,9 +215,10 @@ class CopyCommand(Command.Command):
                 myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Copy local file '" + myLocalPath + \
-                      "' to remote directory '" + myRemotePath + "'")
-                print("on server group(s) " + myDisplayStr + "?")
+                myInfo = "Copy local file '" + myLocalPath + \
+                      "' to remote directory '" + myRemotePath + "'" + \
+                      "on server group(s) " + myDisplayStr + "?"
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 if (self.doAreYouSure() == False):
                     myInfo = "Aborting command."
@@ -263,8 +265,7 @@ class CopyCommand(Command.Command):
                         myError = "Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        if (self._globalConfig.isQuietMode() == False):
-                            print( self._globalConfig.getSeperator() )
+                        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
             except EOFError:
                 pass
@@ -316,8 +317,7 @@ class CopyCommand(Command.Command):
                             myError = "Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
-                            if (self._globalConfig.isQuietMode() == False):
-                                print( self._globalConfig.getSeperator() )
+                            self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
                 except EOFError:
                     pass

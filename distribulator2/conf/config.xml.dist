@@ -27,12 +27,6 @@
     <binary name="scp" value="/usr/bin/scp"/>
     <binary name="ssh" value="/usr/bin/ssh"/>
 
-    <!-- Logging Options -->
-    <logging name="filename" value="/var/log/command.log"/>
-    <logging name="level" value="DEBUG"/>
-    <logging name="date_mask" value="%m-%d-%Y|%H:%M:%S"/>
-    <logging name="log_mask" value="%(asctime)s|%(process)s|%(levelname)s|%(message)s"/>
-
     <!-- Ping Options -->
     <ping banner="OpenSSH" port="22" timeout="10"/>
 
