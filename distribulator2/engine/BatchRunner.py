@@ -178,22 +178,22 @@ class BatchRunner:
             self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
-        thisInfo = "INFO:  Commands Run:     %d commands" % \
+        thisInfo = "INFO:  Commands Run:      %d commands" % \
               thisCommandCount
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
         thisTimeFinished = time.time()
         thisTimeDuration = thisTimeFinished - thisTimeStarted
 
-        thisInfo = "INFO:  Run Time:         %d seconds" % \
-              int(thisTimeDuration)
+        thisInfo = "INFO:  Run Time:          %.2f seconds" % \
+              thisTimeDuration
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
         if (int(thisTimeDuration) > 0):
-            thisInfo = "INFO:  Time Per Command: %d seconds" % \
-                  int((thisTimeDuration) / thisCommandCount)
+            thisInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
+                  (thisTimeDuration / thisCommandCount)
         else:
-            thisInfo = "INFO:  Time Per Command: 0 seconds"
+            thisInfo = "INFO:  Avg. Command Time: 0 seconds"
         self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
         return True
