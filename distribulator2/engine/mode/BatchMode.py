@@ -190,6 +190,7 @@ class BatchMode(Mode.Mode):
 
                 if (myTokens[0] == 'exit'):
                      myInfo = "Received exit command.  Wrote history.  Dying..."
+                     self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
                      self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                      break
 
@@ -207,6 +208,7 @@ class BatchMode(Mode.Mode):
                         except KeyboardInterrupt:
                             myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                            self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
                             self._globalConfig.setBreakState(True)
                             break
 
@@ -237,6 +239,7 @@ class BatchMode(Mode.Mode):
                 except KeyboardInterrupt:
                     myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                    self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
                     self._globalConfig.setBreakState(True)
 
             myFile.close()
