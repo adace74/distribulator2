@@ -57,9 +57,13 @@ class RunCommand(Command.Command):
         myServerNameList = []
         myRunTarget = '';
 
+        myIsNow = False
+        myIsReverse = False
+        myIsSingle = False
+
         #
         # Step 1:  Create our own tokens, and check for SSH flags and
-        #          the 'reverse' and 'single' keywords.
+        #          the special-case keywords. (i.e. now, reverse, single)
         #
         if ( self._commString.find('"') == -1 ):
             myError = "Command Syntax Error.  Try 'help run' for more information."
@@ -80,19 +84,18 @@ class RunCommand(Command.Command):
         else:
             myFlagStr = ''
 
-        # Check for the 'single' keyword.
+        # Check for special-case keywords.
+        if (mySuffixStr.find(' now') != -1):
+            myIsNow = True
+            mySuffixStr = string.replace(mySuffixStr, ' now' , '')
+
+        if (mySuffixStr.find(' reverse') != -1):
+            myIsReverse = True
+            mySuffixStr = string.replace(mySuffixStr, ' reverse' , '')
+
         if (mySuffixStr.find(' single') != -1):
-            isReverse = False
-            isSingle = True
-            mySuffixStr = mySuffixStr[:mySuffixStr.find(' single')]
-        else:
-            isSingle = False
-            # Check for the 'reverse' keyword.
-            if (mySuffixStr.find(' reverse') != -1):
-                isReverse = True
-                mySuffixStr = mySuffixStr[:mySuffixStr.find(' reverse')]
-            else: 
-                isReverse = False
+            myIsSingle = True
+            mySuffixStr = string.replace(mySuffixStr, ' single' , '') 
 
         #
         # Step 2: Try to determine what the target of the command is
@@ -188,7 +191,7 @@ class RunCommand(Command.Command):
         #
         # Step 5: Must make sure...are you sure you're sure?
         #
-        if (self._globalConfig.isBatchMode() == False):
+        if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
             myDisplayStr = ''
 
             if ( len(myServerNameList) > 0):
@@ -232,7 +235,7 @@ class RunCommand(Command.Command):
         # 2) Run the commands
         #
         if ( len(myServerNameList) > 0 ):
-            if (isReverse):
+            if (myIsReverse):
                 myServerNameList.reverse()
 
             try:
@@ -265,7 +268,7 @@ class RunCommand(Command.Command):
                             myExternalCommand.runConsole(True)
                         myCommandCount = myCommandCount + 1
 
-                        if (isSingle):
+                        if (myIsSingle):
                             break
                     else:
                         myError = "Server '" + myServer.getName() + \
@@ -300,7 +303,7 @@ class RunCommand(Command.Command):
 
                 myServerList = myServerGroup.getServerList()
 
-                if (isReverse):
+                if (myIsReverse):
                     myServerList.reverse()
 
                 try:
@@ -332,7 +335,7 @@ class RunCommand(Command.Command):
                                 myExternalCommand.runConsole(True)
                             myCommandCount = myCommandCount + 1
 
-                            if (isSingle):
+                            if (myIsSingle):
                                 break
                         else:
                             myError = "Server '" + myServer.getName() + \
@@ -349,7 +352,7 @@ class RunCommand(Command.Command):
                     self._globalConfig.setBreakState(True)
                     return False
 
-                if (isReverse):
+                if (myIsReverse):
                     myServerList.sort()
 
             return myCommandCount
