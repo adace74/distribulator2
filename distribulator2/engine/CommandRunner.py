@@ -75,9 +75,15 @@ class CommandRunner:
         self._globalConfig.getSysLogger().LogMsgInfo("INPUT:" + \
                                                      self._commString)
 
+        # If the user just types 'cd', do what most shells would do.
+        if (len(self._commTokens) == 1):
+            thisDirStr = os.environ.get('HOME')
+        else:
+            thisDirStr = self._commTokens[1]
+
         try:
             if (self._commTokens[0] == 'cd'):
-                os.chdir(self._commTokens[1])
+                os.chdir(thisDirStr)
 
         except OSError, (errno, strerror):
             print( "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
