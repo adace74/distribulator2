@@ -172,7 +172,7 @@ class CopyCommand(Command.Command):
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
-        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+        if ( (len(myServerNameList) > 0) and (len(myServerGroupList) > 0) ):
             myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
@@ -180,7 +180,7 @@ class CopyCommand(Command.Command):
         #
         # Step 6: Must make sure...are you sure you're sure?
         #
-        if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
+        if ( (self._globalConfig.isBatchMode() == False) and (myIsNow == False) ):
             myDisplayStr = ''
 
             if ( len(myServerNameList) > 0):

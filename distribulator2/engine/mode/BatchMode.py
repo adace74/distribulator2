@@ -263,7 +263,7 @@ class BatchMode(Mode.Mode):
 
         myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
 
-        if ( (myTimeDuration > 0) & (int(myCommandCount) > 0) ):
+        if ( (myTimeDuration > 0) and (int(myCommandCount) > 0) ):
             myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
         else:
             myInfo = myInfo + "0s avg. per command"

@@ -184,7 +184,7 @@ class RunCommand(Command.Command):
         # Step 4: Make sure noone's trying to mix
         # server hostnames and server group names together.
         #
-        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+        if ( (len(myServerNameList) > 0) and (len(myServerGroupList) > 0) ):
             myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
@@ -192,7 +192,7 @@ class RunCommand(Command.Command):
         #
         # Step 5: Must make sure...are you sure you're sure?
         #
-        if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
+        if ( (self._globalConfig.isBatchMode() == False) and (myIsNow == False) ):
             myDisplayStr = ''
 
             if ( len(myServerNameList) > 0):
@@ -311,7 +311,7 @@ class RunCommand(Command.Command):
 		if (maggie != None):
 			myServerList = myServerGroup.getRegExServerList(maggie.group(2))
 
-			if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
+			if ( (self._globalConfig.isBatchMode() == False) and (myIsNow == False) ):
 			    myDisplayStr = ''
 			    for servlist in myServerList:
 				myDisplayStr = myDisplayStr + servlist.getName() + ','

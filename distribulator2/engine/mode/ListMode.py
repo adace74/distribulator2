@@ -86,7 +86,7 @@ class ListMode(Mode.Mode):
         # Step 2: Make sure noone's trying to mix
         # server hostnames and server group names together.
         #
-        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+        if ( (len(myServerNameList) > 0) and (len(myServerGroupList) > 0) ):
             myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False

@@ -55,7 +55,7 @@ class ExternalCommand:
         myStatus = 0
 
         # A little validation never hurt anyone...
-        if ( self._globalConfig.isBatchMode() & PassedIsInteractive ):
+        if ( self._globalConfig.isBatchMode() and PassedIsInteractive ):
             self._globalConfig.getMultiLogger().LogMsgError(
                 "ExternalCommand.run(True) called in batch mode." )
             return False
