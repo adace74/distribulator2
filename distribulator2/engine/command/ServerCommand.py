@@ -72,7 +72,7 @@ class ServerCommand(Command.Command):
 ######################################################################
 
     def doShowServerGroup(self, PassedCommString):
-        """This method is responsible for the processing of the 'list server-group' command."""
+        """This method is responsible for the processing of the 'show server-group' command."""
 
         # Tokenize!
         self._commTokens = PassedCommString.split()
