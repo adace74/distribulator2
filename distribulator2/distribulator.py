@@ -301,8 +301,7 @@ The available options are:
 
     except (EOFError, KeyboardInterrupt):
             myError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            if (myVerboseMode):
-                print(myError)
+            print(myError)
 
             sys.exit(True)
 
