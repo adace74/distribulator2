@@ -145,7 +145,7 @@ while ($TRUE)
 {
     # Setting up our state.
     $command = '';
-    setReadLinePrompt("<$prompt_user\@$prompt_env\[wlx\]:" .
+    setReadLinePrompt("<$prompt_user\@$prompt_env\[$current_server_group\]:" .
         cwd() . "> ");
 
     $input = $term->readline( getReadLinePrompt() );
