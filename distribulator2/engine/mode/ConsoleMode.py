@@ -150,14 +150,18 @@ class ConsoleMode(Mode.Mode):
                 # Step 3: Create InternalCommand object and
                 #         fire up the parser.
                 #
-                myInternalCommand = engine.data.InternalCommand.InternalCommand()
-                myInternalCommand.setCommand(myInput)
-                myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
-                myDispatcher.invoke(myInternalCommand)
+                try:
+                    myInternalCommand = engine.data.InternalCommand.InternalCommand()
+                    myInternalCommand.setCommand(myInput)
+                    myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
+                    myDispatcher.invoke(myInternalCommand)
 
-                # Free up some memory.
-                del myInternalCommand
-                del myDispatcher
+                    del myInternalCommand
+                    del myDispatcher
+
+                except InterruptException:
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self.handleInfo(myInfo)
 
                 # Icky flow-control hack.
                 if (myTokens[0] == 'exit'):

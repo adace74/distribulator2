@@ -3,11 +3,11 @@ Server List Command Syntax & Examples
 
 Syntax: show server-group [server_group]
 
-Description: Lists known servers in a given group,
-             or the current working group if none is specified.
+Description: Lists known server groups in a given environment,
+             and known servers in a server group.
 
 Examples:
-    show server-group         -- Displays servers in current working group.
+    show server-group         -- Displays server groups in the current environment.
     show server-group www     -- Displays servers in the 'www' group.
 
 Notes:

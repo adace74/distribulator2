@@ -95,7 +95,7 @@ class Dispatcher:
 
             del myCommand
 
-        except (IndexError):
+        except IndexError:
             myError = "ERROR: Unknown Command: '" + \
                             self._commString + "'."
             self._globalConfig.getMultiLogger().LogMsgError(myError)

@@ -99,10 +99,16 @@ class XMLFileParser:
     def handleConfig(self, PassedConfig):
         """This method branches processing off into sub-methods."""
 
-        self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
-        self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
-        self.handlePing(PassedConfig.getElementsByTagName('ping')[0])
-        self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
+        try:
+            self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
+            self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
+            self.handlePing(PassedConfig.getElementsByTagName('ping')[0])
+            self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
+
+        except IndexError:
+            print "ERROR: Couldn't find one of the following required tags --"
+            print "       <binary> <environment> <logging> <ping>"
+            sys.exit(True)
 
 ######################################################################
 # Binary locations.

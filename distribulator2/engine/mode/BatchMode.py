@@ -224,13 +224,19 @@ class BatchMode(Mode.Mode):
                 # Step 6: Create InternalCommand object and fire up
                 #         the parser.
                 #
-                myInternalCommand = engine.data.InternalCommand.InternalCommand()
-                myInternalCommand.setCommand(myLine)
-                myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
-                myCommandCount = myCommandCount + \
-                                   myDispatcher.invoke(myInternalCommand)
-                del myInternalCommand
-                del myDispatcher
+                try:
+                    myInternalCommand = engine.data.InternalCommand.InternalCommand()
+                    myInternalCommand.setCommand(myLine)
+                    myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
+                    myCommandCount = myCommandCount + \
+                                       myDispatcher.invoke(myInternalCommand)
+
+                    del myInternalCommand
+                    del myDispatcher
+
+                except KeyboardInterrupt:
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self.handleInfo(myInfo)
 
             myFile.close()
 

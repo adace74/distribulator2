@@ -62,6 +62,10 @@ class ServerCommand(Command.Command):
                 self._globalConfig.setCurrentServerGroup(myServerGroup)
                 print("INFO:  Current server group is now '" + self._commTokens[2] + "'.")
                 return True
+        else:
+            myError = "ERROR: No server group name given."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            return False
 
             return True
 

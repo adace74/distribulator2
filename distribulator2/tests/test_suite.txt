@@ -136,10 +136,10 @@ Expected Result: Runs the "uptime" command on servers matching 'www01'
 
 ######################################################################
 
-Commands: server-group and server-list
+Commands: set server-group and show server-group
 
-Test Case:       server-group
-Expected Result: Listing of available server groups.
+Test Case:       set server-group
+Expected Result: No response.
 
 Test Case:       server-group bogus
 Expected Result: Error.

@@ -187,11 +187,14 @@ Change List For v0.7.1 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * Ability to "ping" servers via internal TCP check logic.
   Options include TCP port, timeout in secs, and a banner string contains "foo" check.
+  NOTE: This appears to have sped up overall speed significantly.  Nice!
 * Rename "server-group" command to "set server-group"
   and "server-list" command to "list server-group".
 * Ability to use a new run command keyword: "single".
   This will copy or run a command to a single server within a group,
   skipping failed servers as necessary.
+* Cleanup: Added a generic error message to the XMLConfigParser,
+  should avoid some raw stack traces on missing XML tags.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------

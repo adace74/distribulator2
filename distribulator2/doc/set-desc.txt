@@ -1,12 +1,12 @@
 Server Group Command Syntax & Examples
 --------------------------------------
 
-Syntax: set server-group [server_group]
+Syntax: set server-group server_group_name
 
 Description: Sets the current working server group.
 
 Examples:
-    set server-group     -- Shows the list of available server groups.
+    set server-group app -- Sets the current server group to "app".
     set server-group www -- Sets the current server group as "www".
 
 Notes:
