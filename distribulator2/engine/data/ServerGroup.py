@@ -57,6 +57,8 @@ class ServerGroup:
         self._serverList.append(PassedServer)
 
     def getServerByName(self, PassedServerName):
+        PassedServerName = PassedServerName.strip()
+
         for thisServer in self._serverList:
             thisDotIndex = thisServer.getName().find('.')
 

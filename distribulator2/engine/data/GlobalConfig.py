@@ -184,6 +184,8 @@ class GlobalConfig:
         self._serverGroupList.append(PassedServerGroup)
 
     def getServerByName(self, PassedServerName):
+        PassedServerName = PassedServerName.strip()
+
         for thisServerGroup in self._serverGroupList:
             if ( thisServerGroup.getServerByName(PassedServerName) ):
                 return thisServerGroup.getServerByName(PassedServerName)
@@ -191,6 +193,8 @@ class GlobalConfig:
         return False
 
     def getServerGroupByName(self, PassedServerGroupName):
+        PassedServerGroupName = PassedServerGroupName.strip()
+
         for thisServerGroup in self._serverGroupList:
             if (PassedServerGroupName == thisServerGroup.getName()):
                 return thisServerGroup

@@ -343,6 +343,7 @@ class CommandRunner:
 
     def doRun(self):
         thisServerGroupList = []
+        thisServerNameList = []
 
         #
         # Attempt to retokenize our command based on appropriate syntax.
@@ -396,91 +397,111 @@ class CommandRunner:
                 thisSpaceIndex = thisSuffixStr.rfind(' ')
                 thisGroupStr = thisSuffixStr[thisSpaceIndex + 1:]
 
-                # If the string given is in fact a lone server name,
-                # run the command right here.
+                # Check for server name match.
                 thisServer = self._globalConfig.getServerByName(thisGroupStr)
 
                 if (thisServer):
-                    print("Run command " + thisBodyStr + " on server " + \
-                          thisServer.getName() + "?")
-                    if (self.doAreYouSure() == False):
-                        thisInfo = "INFO:  Aborting command."
-                        self.handleInfo(thisInfo)
-                        return False
-
-                    try:
-                        thisPinger = generic.HostPinger.HostPinger(
-                            self._globalConfig.getPingBinary() )
-
-                        if (thisPinger.ping(thisServer.getName()) == 0):
-                            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                            thisExternalCommand.setCommand( \
-                            self._globalConfig.getSshBinary() + thisFlagStr + \
-                            " -l " + thisServer.getUsername() + " " + \
-                            thisServer.getName() + " " + \
-                            thisBodyStr )
-                            # Run It.
-                            if ( self._globalConfig.isBatchMode() ):
-                                thisExternalCommand.runAtomic()
-                                return True
-                            else:
-                                thisExternalCommand.run(True)
-                                return True
-                        else:
-                            thisError = "ERROR: Server '" + \
-                                        thisServer.getName() + \
-                                        "' appears to be down.  Continuing..."
-                            self.handleError(thisError)
-                            return False
-
-                    except EOFError:
-                        noop
-                    except KeyboardInterrupt:
-                        thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                        self.handleInfo(thisInfo)
-
-                # Check for server group match.
-                thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
-
-                # Validate.
-                if (thisServerGroup == False):
-                    thisError = "ERROR: No matching server or server group '" + \
-                                thisGroupStr + "'."
-                    self.handleError(thisError)
-                    return False
+                    thisServerNameList.append( thisServer.getName() )
                 else:
-                    thisServerGroupList.append( thisGroupStr.strip() )
-            else:
-                # run "uptime" on app, www
-                # run -t "uptime" on app, www
-                thisGroupList = thisSuffixStr.split(',')
+                    # Check for server group match.
+                    thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
 
-                for thisGroupStr in thisGroupList:
-                    if (self._globalConfig.getServerGroupByName(thisGroupStr.strip())
-                        == False):
-                        thisError = "ERROR: No matching server group '" + \
-                              thisGroupStr.strip() + "'."
+                    # Validate.
+                    if (thisServerGroup == False):
+                        thisError = "ERROR: No matching server name or group '" + \
+                                    thisGroupStr + "'."
                         self.handleError(thisError)
                         return False
                     else:
                         thisServerGroupList.append( thisGroupStr.strip() )
+            else:
+                # run "uptime" on app, www
+                # run -t "uptime" on app, www
+                # run "uptime" on app01, www01
+                # run -t "uptime" on app01, www01
+                thisGroupList = thisSuffixStr.split(',')
 
+                for thisGroupStr in thisGroupList:
+                    # Check for server name match.
+                    thisServer = self._globalConfig.getServerByName(thisGroupStr)
+
+                    if (thisServer):
+                        thisServerNameList.append( thisServer.getName() )
+                    else:
+                        thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+                        if (thisServerGroup):
+                            thisServerGroupList.append( thisGroupStr.strip() )
+                        else:
+                            thisError = "ERROR: No matching server name or group '" + \
+                                        thisGroupStr.strip() + "'."
+                            self.handleError(thisError)
+                            return False
+
+        # Back to main logic path.
         if (self._globalConfig.isBatchMode() == False):
-            # Verify.
             thisDisplayStr = ''
-            for thisGroupStr in thisServerGroupList:
-                thisDisplayStr = thisDisplayStr + thisGroupStr + ','
-            thisDisplayStr = thisDisplayStr.rstrip(',')
 
-            # Are you sure?
-            print("Run command " + thisBodyStr + " on server group(s) " + \
-                  thisDisplayStr + "?")
-            if (self.doAreYouSure() == False):
-                thisInfo = "INFO:  Aborting command."
+            if ( len(thisServerNameList) > 0):
+                for thisNameStr in thisServerNameList:
+                    thisDisplayStr = thisDisplayStr + thisNameStr + ','
+
+                thisDisplayStr = thisDisplayStr.rstrip(',')
+
+                # Are you sure?
+                print("Run command " + thisBodyStr + " on server(s) " + \
+                      thisDisplayStr + "?")
+                if (self.doAreYouSure() == False):
+                    thisInfo = "INFO:  Aborting command."
+                    self.handleInfo(thisInfo)
+                    return False
+            else:
+                for thisGroupStr in thisServerGroupList:
+                    thisDisplayStr = thisDisplayStr + thisGroupStr + ','
+
+                thisDisplayStr = thisDisplayStr.rstrip(',')
+
+                # Are you sure?
+                print("Run command " + thisBodyStr + " on server group(s) " + \
+                      thisDisplayStr + "?")
+                if (self.doAreYouSure() == False):
+                    thisInfo = "INFO:  Aborting command."
+                    self.handleInfo(thisInfo)
+                    return False
+
+        # If we found server hostnames, then run with that.
+        if ( len(thisServerNameList) > 0 ):
+            try:
+                for thisNameStr in thisServerNameList:
+                    thisPinger = generic.HostPinger.HostPinger(
+                        self._globalConfig.getPingBinary() )
+
+                    if (thisPinger.ping(thisNameStr) == 0):
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                        thisExternalCommand.setCommand( \
+                            self._globalConfig.getSshBinary() + thisFlagStr + \
+                            " -l " + thisServer.getUsername() + " " + \
+                            thisNameStr + " " + \
+                            thisBodyStr )
+                        # Run It.
+                        if ( self._globalConfig.isBatchMode() ):
+                            thisExternalCommand.runAtomic()
+                        else:
+                            thisExternalCommand.run(True)
+                    else:
+                        thisError = "ERROR: Server '" + \
+                                    thisNameStr + \
+                                    "' appears to be down.  Continuing..."
+                        self.handleError(thisError)
+
+            except EOFError:
+                noop
+            except KeyboardInterrupt:
+                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
-                return False
 
-        # Just Do It.
+            return True
+
+        # If we found server group names, then run with that.
         for thisGroupStr in thisServerGroupList:
             thisServerGroup = self._globalConfig.getServerGroupByName(
                 thisGroupStr)
