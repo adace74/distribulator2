@@ -1,0 +1,14 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+This package contains action classes that simply don't fit anywhere else.
+
+Package Overview:
+
+engine.misc.MultiLogger - Implementation of a simple API to allow for
+                          logging to either console, syslog, or both.
+
+######################################################################

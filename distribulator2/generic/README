@@ -6,7 +6,7 @@
 
 The Distribulator contains several classes for various functionality.
 
-This directory contains classes considered generic enough for reuse
+This package contains classes considered generic enough for reuse
 in other applications.
 
 Generic classes include:

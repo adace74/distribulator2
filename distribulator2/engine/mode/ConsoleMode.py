@@ -31,7 +31,7 @@ import engine.mode.Mode
 
 ######################################################################
 
-class CommandMode(engine.mode.Mode.Mode):
+class ConsoleMode(engine.mode.Mode.Mode):
     """This class is responsible for handling the console mode of the application."""
 
     def __init__(self, PassedGlobalConfig):

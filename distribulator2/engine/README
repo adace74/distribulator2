@@ -4,19 +4,16 @@
 #
 ######################################################################
 
-The Distribulator contains several classes for various functionality.
-
-This directory contains application-specific classes that handle
+This package contains application-specific packages that handle
 the "heavy lifting" of the application.
 
-Application classes include:
+Package Overview:
 
-engine.BatchRunner   - Responsible for batch mode-specific functionality.
-engine.CommandLine   - Responsible for the console mode interface.
-engine.CommandRunner - Semi-generic class used to run commands in any mode.
-engine.ConfigLoader  - Responsible for loading configuration information.
-engine.MultiLogger   - Semi-generic class used to output to syslog or STDOUT or both.
-engine.ServerLister  - Responsible for list mode-specific functionality.
-engine.XMLFileParser - Responsible for parsing our XML-based configuration.
+engine.command - Contains action classes responsible for processing meta commands.
+engine.conf    - Contains action classes responsible for loading configuration data.
+engine.data    - Contains data classes that hold data for every aspect of the application.
+engine.misc    - Contains action classes that don't quite fit anywhere else.
+engine.mode    - Contains action classes responsible for the various "modes" in which
+                 the application operates.
 
 ######################################################################

@@ -4,12 +4,9 @@
 #
 ######################################################################
 
-The Distribulator contains several classes for various functionality.
+This package contains action classes responsible for storing runtime data.
 
-This directory contains application-specific data classes that handle
-the "heavy lifting" of the application.
-
-Data classes include:
+Package Overview:
 
 engine.data.ExternalCommand - External command shell integration.
 engine.data.GlobalConfig    - Responsible for containing our global config.

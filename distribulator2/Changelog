@@ -179,6 +179,9 @@ Change List For v0.7.0 (Language: Python / Status: In Progress)
   but at least there are less monolithic classfiles now.
 - Cleanup: Examine all source files, eliminate extraneous imports
   where possible.
+* Cleanup: Update code-based documentation to reflect above changes.
+- Testing: Created a miniature test suite to compliment the existing manual
+  test suite.
 * Add $hostname as a built-in variable, referencing the local hostname
   of the server this software is running on.
 
