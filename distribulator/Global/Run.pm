@@ -72,6 +72,9 @@ my($flag, $group, $server, $sub_string, $user);
 my(@server_user);
 my($server_user_temp);
 
+my($SEPERATOR) =
+"------------------------------------------------------------\n";
+
 ######################################################################
 # Various Functionality
 ######################################################################
@@ -85,8 +88,11 @@ sub RunCommandLocal
     my(@command_output, $output_line);
 
     print "EXEC:  $local_command\n";
+    print($SEPERATOR);
 
     system($local_command);
+
+    print($SEPERATOR);
 
     if ($? != 0)
     {
@@ -109,8 +115,11 @@ sub RunCommandRemote
         $exec_line = "$SSH_BIN -l $remote_user $remote_server $remote_command";
 
         print "EXEC:  $exec_line\n";
+        print($SEPERATOR);
 
         system($exec_line);
+
+        print($SEPERATOR);
 
         if ( $? != 0 )
         {
