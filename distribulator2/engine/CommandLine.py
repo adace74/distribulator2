@@ -11,13 +11,16 @@ __version__= '$Revision$'[11:-2]
 
 # Import modules
 import atexit
-import commands
 import getpass
 import os
 import os.path
 import readline
 import rlcompleter
 import sys
+
+# Custom modules
+import engine.data.ExternalCommand
+import engine.data.InternalCommand
 
 ######################################################################
 
@@ -49,18 +52,20 @@ class CommandLine:
 
         return thisCounter
 
-    def invoke(self, thisGlobalConfig):
+    def invoke(self, PassedGlobalConfig):
+
         thisPromptEnv = 'sample'
         thisPromptUser = getpass.getuser()
         thisPromptGroup = 'wlx'
-        thisSeperator = '============================================================'
 
         while (1):
-
+            #
+            # Reset critical variables every time around the loop.
+            #
+            thisFoundIt = False
+            thisInput = ''
             thisPrompt = '<' + thisPromptUser + '@' + thisPromptEnv + \
             '[' + thisPromptGroup + ']:' + os.getcwd() + '> '
-
-            thisInput = ''
 
             try:
                 thisInput = raw_input(thisPrompt)
@@ -78,20 +83,16 @@ class CommandLine:
             if (thisInput):
                 thisTokens = thisInput.split()
 
+                #
+                # Step 1 - Handle both "cd" and "exit" from this chunk of code.
+                # Should probably be moved into the parser proper,
+                #
                 if (thisTokens[0] == 'exit'):
                     print
                     print("Received exit command.  Wrote history.  Dying...")
                     print
                     return
-                #
-                # Only with objects can one -truly- cheat in life!
-                #
-                # This most likely should follow the
-                # InternalCommand / ExternalCommand / CommandRunner standard
-                # but for now I'm just too lazy to rework it.
-                #
-                # Step 1 - If they want to cd, let them!
-                #
+
                 try:
                     if (thisTokens[0] == 'cd'):
                         os.chdir(thisTokens[1])
@@ -99,23 +100,29 @@ class CommandLine:
 
                 except OSError, (errno, strerror):
                     print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
+                    continue
                 #
                 # Step 2 - Check for Unix "pass through" commands.
                 #
-                for thisCommand in thisGlobalConfig.getPassThruList():
+                for thisCommand in PassedGlobalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
-                        print "EXEC:  " + thisInput
-                        thisStatus, thisOutput = commands.getstatusoutput(thisInput)
-                        print thisOutput
-                        print thisSeperator
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand.setCommand(thisInput)
+                        thisExternalCommand.run()
+                        del thisExternalCommand
+                        thisFoundIt = True
+                        break
 
-                        if (thisStatus != 0):
-                            print "ERROR: Local shell returned error state."
-
-                        continue
-
+                # Icky flow-control hack.
+                if (thisFoundIt):
+                    continue
                 #
-                # Step 3 - Invoke Das Parser!
+                # Step 3 - Create InternalCommand object and fire up
+                # the parser.
                 #
+                thisInternalCommand = engine.data.InternalCommand.InternalCommand()
+                thisInternalCommand.setCommand(thisInput)
+                thisInternalCommand.parse()
+                del thisInternalCommand
 
 ######################################################################

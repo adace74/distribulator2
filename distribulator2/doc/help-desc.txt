@@ -1,0 +1,14 @@
+Help Command Syntax & Examples
+------------------------------
+
+Syntax: help [command]
+
+Description:  Displays help for summary and per-command detail.
+
+Examples:
+	help		-- Shows the main help file.
+	help run	-- Shows the run command detailed help file.
+
+----------------------------------------------------------------------
+$Id$
+----------------------------------------------------------------------
