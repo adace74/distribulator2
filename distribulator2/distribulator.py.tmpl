@@ -316,7 +316,7 @@ The available options are:
             myDebug = __appversion__ + " (console mode) START"
             myGlobalConfig.getAuditLogger().debug(myDebug)
         elif (myGlobalConfig.isListMode()):
-            self._globalConfig.getStdoutLogger().setLevel(logging.INFO)
+            myGlobalConfig.getStdoutLogger().setLevel(logging.INFO)
             myDebug = __appversion__ + " (list mode) START"
             myMultiLogger.LogMsgDebug(myDebug)
 
