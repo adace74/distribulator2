@@ -16,7 +16,6 @@ try:
     import os
     import os.path
     import readline
-    import rlcompleter
     import string
     import sys
 
