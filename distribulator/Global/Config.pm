@@ -151,9 +151,9 @@ sub getNewReadLineTerm
 #
 sub ResetTermAndExit
 {
-    #system("reset");
+    system("reset");
 
-    print "\nReceived exit command.  Dying...\n\n";
+    print "\nReceived exit command.  Reset terminal.  Dying...\n\n";
 
     exit(0);
 }
