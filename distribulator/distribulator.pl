@@ -132,10 +132,9 @@ getBinaryLocations();
 my($user) = getlogin() || getpwuid($<);
 my($hostname) = Sys::Hostname::hostname();
 #
-# Setup signal handler for SIGINT & SIGQUIT.
+# Setup signal handler for SIGINT.
 #
 $SIG{INT} = \&catchSigInt;
-$SIG{QUIT} = \&catchSigQuit;
 #
 # Setup ReadLine for input...
 #
@@ -370,15 +369,7 @@ sub AreYouSure
 #
 sub catchSigInt
 {
-    print "NOTICE: Caught SIGINT, continuing...\n";
-}
-
-#
-# Catch the SIGQUIT signal.
-#
-sub catchSigQuit
-{
-    print "NOTICE: Caught SIGQUIT, continuing...\n";
+    print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
 }
 
 #
