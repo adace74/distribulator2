@@ -60,7 +60,9 @@ class ServerGroup:
 
     def getServerByName(self, PassedServerName):
         for thisServer in self._serverList:
-            if ( PassedServerName == thisServer.getName() ):
+            thisIndex = string.find(thisServer.getName(), PassedServerName)
+
+            if (thisIndex != -1):
                 return thisServer
 
         return False

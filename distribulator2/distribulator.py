@@ -166,7 +166,8 @@ The available options are:
 
     # Log our startup.
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
-    thisLogger.LogMsgInfo("Started by user " + getpass.getuser() + '.')
+    thisGlobalConfig.setSysLogger(thisLogger)
+    thisLogger.LogMsgInfo("INFO: Started by user " + getpass.getuser() + '.')
 
     # Try to chdir() to thisStartDir if possible.
     try:
@@ -179,7 +180,7 @@ The available options are:
     thisCommLine.invoke()
 
     # Once it returns, we're done!
-    thisLogger.LogMsgInfo("Shutting down...")
+    thisLogger.LogMsgInfo("INFO: User requested exit, shutting down...")
     sys.exit(0)
 
 ######################################################################

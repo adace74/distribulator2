@@ -17,6 +17,7 @@ try:
     import sys
 
     # Custom modules
+    import engine.data.ExternalCommand
     import generic.FilePrinter
 
 except ImportError:
@@ -54,6 +55,14 @@ class CommandRunner:
             print("ERROR: Unknown Command: '" + self._commTokens[0] + \
                   "'.")
 
+    def doAreYouSure(self):
+        thisInput = raw_input("Yes / No> ")
+
+        if (string.find(thisInput.lower(), 'yes') == -1):
+            return False
+        else:
+            return True
+
     def doChdir(self):
         try:
             if (self._commTokens[0] == 'cd'):
@@ -64,7 +73,7 @@ class CommandRunner:
                                                 self._commTokens[1]) )
 
     def doCopy(self):
-        print("Copy")
+        print("ERROR: This command not yet implemented.")
 
     def doHelp(self):
         if ( len(self._commTokens) > 1 ):
@@ -81,10 +90,63 @@ class CommandRunner:
             self._commTokens[1] + "'."
 
     def doLogin(self):
-        print("ERROR: No Matching Server '" + self._commTokens[1] + "'.")
+        thisFoundIt = False
+
+        if ( len(self._commTokens) > 1):
+            thisServerGroupList = self._globalConfig.getServerGroupList()
+
+            for thisServerGroup in thisServerGroupList:
+                if ( thisServerGroup.getServerByName(self._commTokens[1]) ):
+                    thisServer = thisServerGroup.getServerByName(self._commTokens[1])
+                    thisFoundIt = True
+
+            if (thisFoundIt):
+                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                thisExternalCommand.setCommand( \
+                    self._globalConfig.getSshBinary() + " -l " + \
+                    thisServer.getUsername() + " " + thisServer.getName() )
+                self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                             thisExternalCommand.getCommand())
+                thisExternalCommand.run()
+            else:
+                print("ERROR: No matching server '" + \
+                      self._commTokens[1] + "'.")
+        else:
+            print("ERROR: No server name given.");
 
     def doRun(self):
-        print("Run")
+        thisFoundIt = False
+
+        if ( len(self._commTokens) < 2 ):
+            print("ERROR: Syntax error.  Try 'help run' for usage information.")
+            return False
+        # run "uptime"
+        elif ( len(self._commTokens) == 2 ):
+            self._commTokens.append(self._globalConfig.getCurrentServerGroup().getName())
+        # run "uptime" wlx
+        if (self._globalConfig.getServerGroupByName(self._commTokens[2]) == False):
+            print("ERROR: No matching server group '" + \
+                  self._commTokens[2] + "' found.")
+            return False
+
+        # Found it...
+        print("Run " + self._commTokens[1] + " on server group '" +
+              self._commTokens[2] + "'?")
+
+        if (self.doAreYouSure() == False):
+            print("INFO:  Aborting command.")
+            return False
+
+        thisServerGroup = self._globalConfig.getServerGroupByName(self._commTokens[2])
+        for thisServer in thisServerGroup.getServerList():
+            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+            thisExternalCommand.setCommand( \
+                    self._globalConfig.getSshBinary() + " -l " + \
+                    thisServer.getUsername() + " " + \
+                    thisServer.getName() + " " + self._commTokens[1] )
+            self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                         thisExternalCommand.getCommand())
+            thisExternalCommand.run()
 
     def doServerGroup(self):
         if ( len(self._commTokens) > 1 ):

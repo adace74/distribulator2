@@ -44,11 +44,14 @@ class ExternalCommand:
     #
     def run(self):
         print("EXEC:  " + self._command)
+
         thisStatus, thisOutput = commands.getstatusoutput(self._command)
         print(thisOutput)
         print(self._seperator)
 
         if (thisStatus != 0):
             print("ERROR: Local shell returned error state.")
+
+        return thisStatus
 
 ######################################################################

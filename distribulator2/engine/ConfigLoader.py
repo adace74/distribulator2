@@ -85,7 +85,9 @@ class ConfigLoader:
                                  thisServerGroup.getServerCount()
 
         print("- Available Server Groups:     " + \
-              thisServerGroupStr + "all(%d)" % thisTotalServerCount)
+              thisServerGroupStr)
+        # Implement the "all" group sometime!
+        #+ "all(%d)" % thisTotalServerCount)
         print
         print("Confused?  Need help?  Try typing 'help' and see what happens!")
         print

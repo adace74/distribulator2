@@ -132,8 +132,11 @@ class XMLFileParser:
     def handleServers(self, PassedServerGroup, PassedServers):
         thisServerGroup = PassedServerGroup
 
-        for Server in PassedServers:
-            thisServerGroup.addServer( self.handleServer(Server) )
+        for thisServer in PassedServers:
+            thisServerGroup.addServer( self.handleServer(thisServer) )
+
+        for thisServer in thisServerGroup.getServerList():
+            thisServer.setUsername( thisServerGroup.getUsername() )
 
         return thisServerGroup
 

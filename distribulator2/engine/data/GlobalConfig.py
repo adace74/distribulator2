@@ -72,6 +72,14 @@ class GlobalConfig:
     def setSyslogFacility(self, PassedSyslogFacility):
         self._syslogFacility = PassedSyslogFacility
     #
+    # Syslogger Object.
+    #
+    def getSysLogger(self):
+        return self._sysLogger
+
+    def setSysLogger(self, PassedSysLogger):
+        self._sysLogger = PassedSysLogger
+    #
     # Server Environment.
     #
     def getServerEnv(self):
