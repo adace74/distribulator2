@@ -277,13 +277,13 @@ while ($TRUE)
 #
 sub catchSigInt
 {
-    # How can I reset ReadLine???  Argh!
     print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
 
-    setUserAborting($TRUE);
+    # Trying to have ReadLine hit the reset button.
+    $term->reset_line_state();
 
-    # Do we really need this?
-    print "$prompt";
+    # Internal flag to stop runaway statements.
+    setUserAborting($TRUE);
 }
 
 #

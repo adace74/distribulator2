@@ -384,11 +384,13 @@ sub ParseRun
                 {
                     RunCommandRemote($run_server,$1);
 
-                    # Sleep 1/4 second.
-                    sleep(0.25);
+                    # Sleep 1/10 second.
+                    sleep(0.10);
                 }
                 else
                 {
+                    print("NOTICE: Aborting run command.\n");
+
                     last;
                 }
             }
@@ -411,7 +413,19 @@ sub ParseRun
             {
                 foreach $run_server ( getServerList($2) )
                 {
-                    RunCommandRemote($run_server,$1);
+                    if ( !isUserAborting() )
+                    {
+                        RunCommandRemote($run_server,$1);
+
+                        # Sleep 1/10 second.
+                        sleep(0.10);
+                    }
+                    else
+                    {
+                        print("NOTICE: Aborting run command.\n");
+                        
+                        last;
+                    }
                 }
             }
         }
