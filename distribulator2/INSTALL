@@ -12,10 +12,15 @@ Prerequisites
 Before installing the distribulator, one must have already installed
 a copy of the following:
 
-- Python v2.2.2+ (http://www.python.org/)
+- A Unix-like OS.
+
+The usual suspects.  *BSD, Linux, Solaris, etc.
+
+- Python v2.2.2+ (http://www.python.org/) accessible via /usr/local/bin/python
 
 In theory the distribulator might work on earlier(i.e. v1.5.2) versions
-of Python, but I wouldn't bet on it.
+of Python, but I wouldn't bet on it.  Also if you don't have a symlink for python
+in /usr/local/bin/, either put on there or hack the distribulator.py first line.
 
 - PyXML v0.8.2+ (http://pyxml.sourceforge.net/)
 
@@ -37,21 +42,18 @@ Installation
 3) Unpack the distribution:
    tar xfz distribulator-0.50.tar.gz
 
-4) Copy the example config file for real-world use:
-   cd /apps/distribulator2/; cp conf/config.xml.dist conf/config.xml
-
-5) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
+4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
    reflect your installation directory(in this case /apps/distribulator2):
    vi scripts/distribulator
 
-6) Create a symlink from /usr/local/bin/ to the wrapper script
+5) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
 	cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator
 
-7) Fire it up:
+6) Fire it up:
    distribulator
 
-8) Test it out, tinker around, read the next section for how to
+7) Test it out, tinker around, read the next section for how to
    setup config.xml for your environments.
 
 Configuration Overview
