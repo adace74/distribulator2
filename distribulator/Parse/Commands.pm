@@ -395,7 +395,7 @@ sub ParseRun
                 }
                 else
                 {
-                    print("NOTE:  Aborting run command.\n");
+                    print("NOTE:  CTRL-C detected, aborting command.\n");
                     setUserAborting($FALSE);
                     last;
                 }
@@ -428,7 +428,7 @@ sub ParseRun
                     }
                     else
                     {
-                        print("NOTE:  Aborting run command.\n");
+                        print("NOTE:  CTRL-C detected, aborting command.\n");
                         setUserAborting($FALSE);
                         last;
                     }

@@ -112,7 +112,7 @@ sub RunCommandRemote
 
         system($exec_line);
 
-        if ($? != 0)
+        if ( $? != 0 )
         {
             print("ERROR: Remote shell returned error state.\n");
         }

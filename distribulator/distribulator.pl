@@ -76,7 +76,7 @@ if ($help_arg)
 # Give the user a banner, no matter what.
 #
 print("\n");
-print("The Distribulator v0.45\n");
+print("The Distribulator v0.47\n");
 print("-----------------------\n");
 print("\n");
 #
@@ -114,7 +114,8 @@ my($prompt_hostname) = Sys::Hostname::hostname();
 #
 # Setup signal handler for SIGINT.
 #
-$SIG{INT} = \&catchSigInt;
+$SIG{INT} = \&catchSignal;
+$SIG{TERM} = \&catchSignal;
 #
 # Setup ReadLine for input...
 #
@@ -275,9 +276,9 @@ while ($TRUE)
 }
 
 #
-# Catch SIGINT signal.
+# Catch signals.
 #
-sub catchSigInt
+sub catchSignal
 {
     print("\n");
 
