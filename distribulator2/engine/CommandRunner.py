@@ -653,6 +653,7 @@ class CommandRunner:
 
             try:
                 for thisNameStr in thisServerNameList:
+                    thisServer = self._globalConfig.getServerByName(thisNameStr)
                     thisPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
 
