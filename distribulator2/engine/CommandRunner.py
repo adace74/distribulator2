@@ -56,7 +56,7 @@ class CommandRunner:
         self._commTokens = self._commString.split()
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
                                                      self._commString)
 
         #for thisToken in self._commTokens:
