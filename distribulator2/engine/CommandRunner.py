@@ -201,6 +201,12 @@ class CommandRunner:
 ######################################################################
 
     def doHelp(self):
+        # Check for batch mode.
+        if ( self._globalConfig.isBatchMode() ):
+            thisError = "ERROR: Invalid command for batch mode."
+            self.handleError(thisError)
+            return False
+
         if ( len(self._commTokens) > 1 ):
             thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
                                         self._commTokens[1] + '-desc.txt')
@@ -222,6 +228,12 @@ class CommandRunner:
             
     def doLogin(self):
         thisFoundIt = False
+
+        # Check for batch mode.
+        if ( self._globalConfig.isBatchMode() ):
+            thisError = "ERROR: Invalid command for batch mode."
+            self.handleError(thisError)
+            return False
 
         if ( len(self._commTokens) > 1):
             thisServerGroupList = self._globalConfig.getServerGroupList()
@@ -381,6 +393,12 @@ class CommandRunner:
 ######################################################################
     
     def doServerGroup(self):
+        # Check for batch mode.
+        if ( self._globalConfig.isBatchMode() ):
+            thisError = "ERROR: Invalid command for batch mode."
+            self.handleError(thisError)
+            return False
+
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
 
@@ -399,6 +417,12 @@ class CommandRunner:
             return False
 
     def doServerList(self):
+        # Check for batch mode.
+        if ( self._globalConfig.isBatchMode() ):
+            thisError = "ERROR: Invalid command for batch mode."
+            self.handleError(thisError)
+            return False
+
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( \
                 self._commTokens[1] )

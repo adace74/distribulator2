@@ -186,6 +186,8 @@ The available options are:
                               thisGlobalConfig.getRealUsername())
         thisLogger.LogMsgInfo("INFO:  Effective UID: " + \
                               thisGlobalConfig.getUsername())
+        thisLogger.LogMsgInfo("INFO:  Environment:   " + \
+                              thisServerEnv)
 
         thisLogger.LogMsgInfo(thisSeperator)
 
