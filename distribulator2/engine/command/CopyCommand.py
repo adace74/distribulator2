@@ -245,12 +245,24 @@ class CopyCommand(Command.Command):
 
                     if (myPinger.ping(myNameStr) == 0):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        myExternalCommand.setCommand( \
-                            self._globalConfig.getScpBinary() + " " + \
-                            myLocalPath + " " + \
-                            myServer.getUsername() + "@" + \
-                            myServer.getName() + ":" + \
-                            myRemotePath )
+
+                        # Build It.
+                        if (myServer.getVersion()):
+                            myExternalCommand.setCommand( \
+                                self._globalConfig.getScpBinary() + " " + \
+                                "-oProtocol=" + myServer.getVersion() + " " + \
+                                myLocalPath + " " + \
+                                myServer.getUsername() + "@" + \
+                                myServer.getName() + ":" + \
+                                myRemotePath )
+                        else:
+                            myExternalCommand.setCommand( \
+                                self._globalConfig.getScpBinary() + " " + \
+                                myLocalPath + " " + \
+                                myServer.getUsername() + "@" + \
+                                myServer.getName() + ":" + \
+                                myRemotePath )
+
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
                             myExternalCommand.runBatch()
@@ -284,12 +296,24 @@ class CopyCommand(Command.Command):
 
                         if (myPinger.ping(myServer.getName()) == 0):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                            myExternalCommand.setCommand( \
-                            self._globalConfig.getScpBinary() + " " + \
-                            myLocalPath + " " + \
-                            myServer.getUsername() + "@" + \
-                            myServer.getName() + ":" + \
-                            myRemotePath )
+
+                            # Build It.
+                            if (myServer.getVersion()):
+                                myExternalCommand.setCommand( \
+                                self._globalConfig.getScpBinary() + " " + \
+                                myLocalPath + " " + \
+                                myServer.getUsername() + "@" + \
+                                myServer.getName() + ":" + \
+                                myRemotePath )
+                            else:
+                                myExternalCommand.setCommand( \
+                                self._globalConfig.getScpBinary() + " " + \
+                                "-oProtocol=" + myServer.getVersion() + " " + \
+                                myLocalPath + " " + \
+                                myServer.getUsername() + "@" + \
+                                myServer.getName() + ":" + \
+                                myRemotePath )
+
                             # Run It.
                             if ( self._globalConfig.isBatchMode() ):
                                 myExternalCommand.runBatch()
