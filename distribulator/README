@@ -82,9 +82,9 @@ Spontaneous Feature List For v0.47 (Coming Soon!):
 * Various fixes, including that of the Net::Ping code,
   no CPAN module addon required.  Removed --noping as the underlying
   assumption behind it is not valid.
-* Tons of GNU libreadline functionality, including history fixes,
-  auto-load/save history, and tab-completion of commands.
-* Experimental ability to stop a command while executing on X servers.
+* Tons of GNU libreadline functionality: history load/save,
+  tab-completion of first word command, some CTRL-C integration.
+* Added ability to stop a command while executing on X servers.
   (Hold down CTRL-C)
 * Improved testing process, thus improved stability.
 

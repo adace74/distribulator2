@@ -115,7 +115,6 @@ my($prompt_hostname) = Sys::Hostname::hostname();
 # Setup signal handler for SIGINT.
 #
 $SIG{INT} = \&catchSignal;
-$SIG{TERM} = \&catchSignal;
 #
 # Setup ReadLine for input...
 #
@@ -124,7 +123,7 @@ my($term) = getNewReadLineTerm();
 #
 # Print a little intro.
 #
-print("GNU Readline Version:     " . getReadLineVersion($term) . "\n");
+print("GNU Readline Version:     " . getReadLineVersion() . "\n");
 print("Local Install Dir:        $INSTALL_DIR\n");
 print("Local Config Dir:         $CONFIG_DIR\n");
 print("Local Host:               $prompt_hostname\n");

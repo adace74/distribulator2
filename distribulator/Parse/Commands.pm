@@ -43,7 +43,7 @@ BEGIN
 {
     # Initialize subroutines immediately so their contents
     # can be used in the 'use vars' below.
-    @EXPORT = qw(@external_commands @internal_commands
+    @EXPORT = qw(@external_commands
                  &isUserAborting &setUserAborting
                  &isValidExternalCommand &isValidInternalCommand
                  &LoadCommands &ParseCopy &ParseLogin &ParseRun
@@ -57,12 +57,9 @@ use vars @EXPORT, @EXPORT_OK;
 ######################################################################
 
 #
-# Hard-coded, icky icky.
+# Holding place for external commands.
 #
 @external_commands = ( 'ls' );
-@internal_commands = ( 'cd', 'copy', 'exit', 'help', 'login',
-                       'remote-shell', 'run', 'server-group',
-                       'server-list' );
 
 # Attempt to do state-tracking for cancelled commands.
 my($user_aborting) = $FALSE;

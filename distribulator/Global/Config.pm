@@ -37,8 +37,9 @@ BEGIN
     # can be used in the 'use vars' below.
     @EXPORT = qw($SCP_BIN $SSH_BIN $TRUE $FALSE
                  $CONFIG_DIR $INSTALL_DIR
+                 @internal_commands
                  &getBinaryLocations
-                 &getNewReadLineTerm
+                 &getNewReadLineTerm &getAttemptedCompletion
                  &getReadLinePrompt &setReadLinePrompt
                  &getReadLineTerm &getReadLineVersion
                  &ResetTermAndExit);
@@ -65,8 +66,16 @@ $TRUE = 1;
 $FALSE = 0;
 
 #
+# Hard-coded, icky icky.
+#
+@internal_commands = ( 'cd', 'copy', 'exit', 'help', 'login',
+                       'remote-shell', 'run', 'server-group',
+                       'server-list' );
+
+#
 # Runtime storage variables
 #
+my($attribs);
 my($prompt);
 my($term);
 
@@ -125,6 +134,7 @@ sub getNewReadLineTerm
     # Setup ReadLine for input...
     #
     $term = new Term::ReadLine 'Distribulator';
+    $attribs = $term->Attribs;
     #
     # No ornaments(i.e. bold)
     #
@@ -141,9 +151,36 @@ sub getNewReadLineTerm
     #
     # Minimum size of command to add to history.
     #
-    $term->MinLine(5);
+    $term->MinLine(4);
+    #
+    # Command completion magic.
+    #
+    $attribs->{attempted_completion_function} = \&getAttemptedCompletion;
+    $attribs->{completion_word} = \@internal_commands;
+    #
+    # Load history from ~/.distribulator if possible.
+    #
+    $term->ReadHistory("$ENV{'HOME'}/.dist_history");
 
     return $term;
+}
+
+#
+# Attempted completion check.
+#
+sub getAttemptedCompletion
+{
+    my ($text, $line, $start, $end) = @_;
+
+    # If first word then username completion, else filename completion
+    if (substr($line, 0, $start) =~ /^\s*$/) {
+        return $term->completion_matches($text,
+            $attribs->{'list_completion_function'});
+    }
+    else
+    {
+        return ();
+    }
 }
 
 #
@@ -151,6 +188,8 @@ sub getNewReadLineTerm
 #
 sub ResetTermAndExit
 {
+    $term->WriteHistory("$ENV{'HOME'}/.dist_history");
+
     system("reset");
 
     print "\nReceived exit command.  Reset terminal.  Dying...\n\n";
@@ -195,11 +234,7 @@ sub getReadLineTerm
 #
 sub getReadLineVersion
 {
-    my($term) = @_;
-
-    my($attribs, $version_str);
-
-    $attribs = $term->Attribs;
+    my($version_str);
 
     $version_str = $attribs->{'library_version'};
 
