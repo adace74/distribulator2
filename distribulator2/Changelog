@@ -237,8 +237,9 @@ Change List For v0.8.0 (Language: Python / Bloat Factor: 3944 lines / Status: Sh
 Change List For v0.8.5 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * Cleanup: Changed logging.conf to utilize in-memory buffering for high-volume logging.
-- Ability to have batch mode report back with total number of servers down during a given run.
-- Ability to use remote sudo to run root-level commands in a semi-secure fashion.
+* Cleanup: Reordered the global config object, attempted to organize variables better.
+- Ability to have batch mode report back with names of servers down and how many during a given run.
+- Ability to use "set password", along with password echo with or without remote sudo functionality.
 - Ability to use regular expressions in "copy" and "run" commands.
 ? Ability to run multiple commands using typical shell-style semicolon delimiter.
 
