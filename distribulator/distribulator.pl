@@ -34,9 +34,9 @@ use Term::ReadLine;
 # USER CONFIGURABLE SETTINGS
 #
 # Where distribulator is installed, required for help files.
-my($HOME_DIR) = '/usr/local/novo/distribulator';
+my($HOME_DIR) =   '/usr/local/novo/distribulator';
 # Where the configuration files are located.
-my($CONFIG_DIR) = "/usr/local/ops/environ/";
+my($CONFIG_DIR) = '/usr/local/novo/distribulator/conf';
 #
 ######################################################################
 
