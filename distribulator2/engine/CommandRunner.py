@@ -33,8 +33,8 @@ class CommandRunner:
     def run(self, PassedInternalCommand):
         self._commTokens = PassedInternalCommand.getCommand().split()
 
-        for thisToken in self._commTokens:
-            print("DEBUG: Token |" + thisToken + "|")
+        #for thisToken in self._commTokens:
+        #    print("DEBUG: Token |" + thisToken + "|")
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
