@@ -323,10 +323,9 @@ class CommandRunner:
         if ( len(thisServerNameList) > 0 ):
             try:
                 for thisNameStr in thisServerNameList:
+                    thisServer = self._globalConfig.getServerByName(thisNameStr)
                     thisPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
-
-                    thisServer = self._globalConfig.getServerByName(thisNameStr)
 
                     if (thisPinger.ping(thisNameStr) == 0):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
