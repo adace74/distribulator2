@@ -25,7 +25,8 @@ class ConfigLoader:
 
     def getGlobalConfig(self, PassedCommLine, PassedConfigDir):
         # Load GNU Readline history.
-        print('Loading config. from ' + PassedConfigDir)
+        print('Loading configuration...')
+
         thisLinesLoaded = PassedCommLine.initHistory()
         #
         # Try to print status -after- actions so as to be

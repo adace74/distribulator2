@@ -55,19 +55,20 @@ def printTitleHeader():
     print "-----------------------"
     print
 
-def printInfoHeader(PassedServerEnv, PassedStartDir):
+def printInfoHeader(PassedServerEnv, PassedConfigDir):
     print "Python Version:      " + sys.version.split()[0]
     print "Local Hostname:      " + socket.gethostname()
     print "Current Environment: " + PassedServerEnv
-    print "Current Directory:   " + PassedStartDir
+    print "Config Directory:    " + PassedConfigDir
     print
 
 # Good old main...
 def main(argv):
-    short_options = ':b:d:e:s:'
+    short_options = ':b:d:e:h:s:'
     long_options = ['batch=',
                     'directory=',
                     'env=',
+                    'help',
                     'shell=']
 
     usage = """Usage: %s [options] --env=environment
@@ -86,6 +87,9 @@ The available options are:
     -e / --env=
     Set the server environment we wish to operate in.
     REQUIRED
+
+    -h / --help
+    This usage statement.
 
     -s / --shell=
     Sets the remote shell type we wish to use.  Defaults to ssh.
@@ -114,6 +118,9 @@ The available options are:
                     thisStartDir = opt[1]
                 elif (opt[0] == '-e') or (opt[0] == '--env'):
                     thiServerEnv = opt[1]
+                elif (opt[0] == '-h') or (opt[0] == '--help'):
+                    sys.stdout.write(usage)
+                    sys.exit(0)
                 elif (opt[0] == '-s') or (opt[0] == '--shell'):
                     thisServerShell = opt[1]
         else:
@@ -133,9 +140,10 @@ The available options are:
 
     # Future batch check goes here.
     printTitleHeader()
-    printInfoHeader(thisServerEnv, thisStartDir)
 
     thisConfigDir = os.path.join(os.getcwd(), 'conf')
+
+    printInfoHeader(thisServerEnv, thisConfigDir)
 
     # Log our startup.
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
@@ -148,8 +156,15 @@ The available options are:
     thisLoader = engine.ConfigLoader.ConfigLoader()
     thisGlobalConfig = thisLoader.getGlobalConfig(thisCommLine, thisConfigDir)
 
+    # Try to chdir() to thisStartDir if possible.
+    try:
+        os.chdir(thisStartDir)
+
+    except OSError, (errno, strerror):
+        print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
+
     # The main readline loop.
-    thisCommLine.processInput(thisGlobalConfig)
+    thisCommLine.invoke(thisGlobalConfig)
 
     # Once it returns, we're done!
     thisLogger.LogMsgInfo("Shutting down...")

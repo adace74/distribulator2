@@ -9,33 +9,34 @@ Various objects required for the distribulator to function happily.
 Object Package Structure
 ------------------------
 
-engine.*		Core classes sepcific to this application.
-engine.data.*	Data classes specific to this application.
-generic.*	Generic classes -not- specific to this application.
+engine.*        Core classes sepcific to this application.
+engine.data.*   Data classes specific to this application.
+generic.*       Generic classes -not- specific to this application.
+
+And no, unfortunately they aren't really setup to be imported
+in this fashion.  See the code for the preferred method.  :)
 
 Method Classes
 --------------
 
-* engine.Batch class
+- engine.Batch class
 
 This class shall represent the ability to run commands in a batch fashion,
 acting as a controller for the Parser and CommandRunner classes.
 Any additional functionality(email notification for example) for batch-only
 mode will be added here.
 
-Methods:
-
-* engine.CommandParser class
+- engine.CommandParser class
 
 The heart of the system, this class shall implement the actual command parsing
-capabilities of the engine.  It will allow for pass-through Unix shell commands,
-turn pseudo-commands into real Unix commands, and provide for appropriate loggin
-g.
+capabilities of the engine.  It will allow for pass-through Unix shell
+commands, turn pseudo-commands into real Unix commands, and provide for
+appropriate logging.
 
 Methods:
 ExternalCommmand getParsedCommand(InternalCommand)
 
-* engine.CommandRunner class
+- engine.CommandRunner class
 
 This class shall contain the ability to run both internal and external
 commands.
@@ -43,7 +44,7 @@ commands.
 Methods:
 boolean runCommand(ExternalCommand)
 
-* engine.CommandLine class
+- engine.CommandLine class
 
 This class shall represent the distribulator command-line interface.
 
@@ -51,24 +52,19 @@ It will take care of any work regarding GNU readline functionality,
 and act as a controller of the Parser and CommandRunner classes
 to perform actual work.
 
-Methods:
-null invokeCommandLine()
-
-* engine.ConfigLoader class 
+- engine.ConfigLoader class 
 
 This class shall take care of loading configuration options for
 the Config class.
 
-Methods:
-boolean loadConfig(String Directory)
-
-* engine.CommandParser class
+- engine.CommandParser class
 
 The heart of the system, this class shall implement the actual command parsing
-capabilities of the engine.  It will allow for pass-through Unix shell commands,
-turn pseudo-commands into real Unix commands, and provide for appropriate logging.
+capabilities of the engine.  It will allow for pass-through Unix shell
+commands, turn pseudo-commands into real Unix commands, and provide for
+appropriate logging.
 
-* generic.HostPinger class
+- generic.HostPinger class
 
 This class shall implement a simple API to allow us to attempt to connect
 to a server via TCP/22 before attempting scp/ssh to that machine.
@@ -78,27 +74,22 @@ generic.
 Methods:
 boolean ping(String Hostname)
 
-* generic.SysLogger class 
+- generic.SysLogger class 
 
 This class shall implement a simple API to wrap around Python's built-in syslog
 class.  Syslog itself should help us in this endeavor assuming we log events
 with the correct "level" (i.e. DEBUG, INFO, CRIT, etc).
 
-Methods:
-boolean openLog(LOG_DAEMON, LOG_ALL);
-boolean Log(String LogString);
-boolean close();
-
 Data Classes
 ------------
 
-- engine.storage.Command class.
-  engine.storage.InternalCommand
-  engine.storage.ExternalCommand
-A data storage class which will hold all relevant information regarding a given
+- engine.data.InternalCommand
+- engine.data.ExternalCommand
+
+Data storage classes which will hold all relevant information regarding a given
 command.
 
-- engine.storage.GlobalConfig class.
+- engine.data.GlobalConfig class.
 
 A data storage class which will hold all relevant information regarding
 the global configuration of the program.  It will hold startup settings,

@@ -49,7 +49,7 @@ class CommandLine:
 
         return thisCounter
 
-    def processInput(self, thisGlobalConfig):
+    def invoke(self, thisGlobalConfig):
         thisPromptEnv = 'sample'
         thisPromptUser = getpass.getuser()
         thisPromptGroup = 'wlx'
@@ -83,14 +83,25 @@ class CommandLine:
                     print("Received exit command.  Wrote history.  Dying...")
                     print
                     return
-
+                #
+                # Only with objects can one -truly- cheat in life!
+                #
+                # This most likely should follow the
+                # InternalCommand / ExternalCommand / CommandRunner standard
+                # but for now I'm just too lazy to rework it.
+                #
+                # Step 1 - If they want to cd, let them!
+                #
                 try:
                     if (thisTokens[0] == 'cd'):
                         os.chdir(thisTokens[1])
+                        continue
 
                 except OSError, (errno, strerror):
                     print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
-
+                #
+                # Step 2 - Check for Unix "pass through" commands.
+                #
                 for thisCommand in thisGlobalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
                         print "EXEC:  " + thisInput
@@ -100,5 +111,11 @@ class CommandLine:
 
                         if (thisStatus != 0):
                             print "ERROR: Local shell returned error state."
+
+                        continue
+
+                #
+                # Step 3 - Invoke Das Parser!
+                #
 
 ######################################################################
