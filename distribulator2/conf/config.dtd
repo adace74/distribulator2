@@ -37,8 +37,8 @@
 <!-- The "servergroup" tag. -->
 <!ELEMENT servergroup (server+)>
 <!ATTLIST servergroup
-    name CDATA #IMPLIED
-    username CDATA #IMPLIED>
+    name CDATA #REQUIRED
+    username CDATA #REQUIRED>
 
 <!-- The "server" tag. -->
 <!ELEMENT server (#PCDATA)>

@@ -22,6 +22,9 @@ import sys
 
 class GlobalConfig:
 
+    def __init__(self):
+        pass
+
 ######################################################################
 # Which mode we're operating in.
 ######################################################################
@@ -34,6 +37,8 @@ class GlobalConfig:
     def setBatchMode(self, PassedBatchMode):
         self._isbatchflag = PassedBatchMode
 
+######################################################################
+# Batch file name, if applicable.
 ######################################################################
 
     def getBatchFile(self):

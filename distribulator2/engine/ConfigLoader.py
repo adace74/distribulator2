@@ -46,7 +46,7 @@ class ConfigLoader:
             print("- GNU Readline history:        %d lines loaded." % \
                   (thisLinesLoaded))
         #
-        # Unix "pass through" commands.
+        # Step 1: Unix "pass through" commands.
         #
         thisPassThruList = []
         
@@ -75,7 +75,9 @@ class ConfigLoader:
             print( "- Unix pass-through commands:  %d lines loaded." \
                    % (len(thisPassThruList)) )
 
-        # Parse XML...ouchies.
+        #
+        # Step 2: Load the main XML configuration file.
+        #
         thisParser = engine.XMLFileParser.XMLFileParser()
         self._globalConfig = thisParser.parse(self._globalConfig)
 

@@ -29,6 +29,13 @@ import engine.data.ServerGroup
 
 class XMLFileParser:
 
+    def __init__(self):
+        pass
+
+######################################################################
+# Main parsing entry point.
+######################################################################
+
     def parse(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
         self._isEnvFound = False

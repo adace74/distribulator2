@@ -32,17 +32,17 @@ Installation
    For example, let's say you'd like to install into /apps/distribulator2.
 
 2) Go to the subdir of where you'd like it to be:
-	cd /apps/
+   cd /apps/
 
 3) Unpack the distribution:
-	tar xfz distribulator-0.50.tar.gz
+   tar xfz distribulator-0.50.tar.gz
 
 4) Copy the example config file for real-world use:
-    cd /apps/distribulator2/conf; cp config.xml.dist config.xml
+   cd /apps/distribulator2/; cp conf/config.xml.dist conf/config.xml
 
 5) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
    reflect your installation directory(in this case /apps/distribulator2):
-	vi distribulator2/scripts/distribulator
+   vi scripts/distribulator
 
 6) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
@@ -76,3 +76,18 @@ a good shell would.
 
 examples/ -- Directory containing example batch files that actually will
 attempt to work.
+
+Directory Layout Overview
+-------------------------
+
+/distribulator2			- Main install dir.
+	/conf			- Configuration dir.
+	/doc			- Help file dir.
+	/engine			- Core engine Python classes.
+		/data/		- Core data Python classes.
+	/examples		- Example batch files.
+	/generic		- Generic Python classes.
+	/scripts		- Wrapper shell scripts.
+	/tests			- Manual test suite location,
+				  future automated regression tests.
+

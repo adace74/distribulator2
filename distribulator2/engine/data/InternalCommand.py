@@ -21,9 +21,14 @@ import sys
 ######################################################################
 
 class InternalCommand:
-    #
-    # Unix command line string.
-    #
+
+    def __init__(self):
+        pass
+
+######################################################################
+# Unix command line string.
+######################################################################
+
     def getCommand(self):
         return self._command
 

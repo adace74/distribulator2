@@ -264,9 +264,7 @@ The available options are:
             sys.exit(1)
 
 ######################################################################
-#
 # If called from the command line, invoke thyself!
-#
 ######################################################################
 
 if __name__=='__main__': main(sys.argv)

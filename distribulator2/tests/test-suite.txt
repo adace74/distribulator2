@@ -19,18 +19,30 @@ Test Case:       copy /tmp/bogus /tmp/
 Expected Result: Error.
 
 Test Case:       copy /tmp/test.out /tmp/
-Expected Result: Copies local /tmp/test.out file out to current server group, 
+Expected Result: Copies local file /tmp/test.out out to current server group, 
                  remote directory /tmp/.
 
 Test Case:       copy /tmp/test.out www
 Expected Result: Error.
 
-Test Case:       copy /tmp/test.out www:/tmp/
-Expected Result: Copies local /tmp/test.out file out to all 'www' servers,
-		 remote directory /tmp/.
-
-Test Case:       copy /tmp/test.out www01st:/tmp/
+Test Case:       copy /tmp/test.out bogus:/tmp/
 Expected Result: Error.
+
+Test Case:       copy /tmp/test.out www:/tmp/
+Expected Result: Copies local file /tmp/test.out out to all 'www' servers,
+                 remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out app,www:/tmp/
+Expected Result: Copies local file /tmp/test.out out to all 'app' and 'www'
+                 server group servers, remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out www01:/tmp/
+Expected Result: Copies local file /tmp/test.out out to a server matching
+                 'www01'.
+
+Test Case:       copy /tmp/test.out www02:/tmp/
+Expected Result: Copies local file /tmp/test.out out to a server matching
+                 'www02'.
 
 ######################################################################
 
@@ -52,8 +64,11 @@ Command(s): login
 Test Case:       login
 Expected Result: Error.
 
-Test Case:       login www01st
-Expected Result: SSH Connection to www01st.
+Test Case:       login www0
+Expected Result: Error.
+
+Test Case:       login www01
+Expected Result: SSH Connection to a server matching 'www01'.
 
 Test Case:       login jfjfjf
 Expected Result: Error.
@@ -68,11 +83,33 @@ Expected Result: Error.
 Test Case:       run "uptime"
 Expected Result: Runs the "uptime" command on current server group.
 
+Test Case:       run "uptime" on bogus
+Expected Result: Error.
+
 Test Case:       run "uptime" on www
 Expected Result: Runs the "uptime" command on 'www' server group.
 
-Test Case:       run "uptime" on www01st
-Expected Result: Error.
+Test Case:       run "uptime" on www reverse
+Expected Result: Runs the "uptime" command on 'www' server group,
+                 in reverse sort order.
+
+Test Case:       run "uptime" on app,www
+Expected Result: Runs the "uptime" command on the 'app' and 'www' server groups.
+
+Test Case:       run "uptime" on app,www reverse
+Expected Result: Runs the "uptime" command on the 'app' and 'www' server groups,
+                 in reverse sort order.
+
+Test Case:       run "uptime" on www01
+Expected Result: Runs the "uptime" command on a server matching 'www01'.
+
+Test Case:       run "uptime" on www01,www02
+Expected Result: Runs the "uptime" command on servers matching 'www01'
+                 and 'www02'.
+
+Test Case:       run "uptime" on www01,www02 reverse
+Expected Result: Runs the "uptime" command on servers matching 'www01'
+                 and 'www02' in reverse sort order.
 
 ######################################################################
 
@@ -81,13 +118,19 @@ Command(s): server-group and server-list
 Test Case:       server-group
 Expected Result: Listing of available server groups.
 
+Test Case:       server-group bogus
+Expected Result: Error.
+
 Test Case:       server-group www
 Expected Result: Sets current group to 'www'.
 
 Test Case:       server-list
 Expected Result: Listing of servers in current server group.
 
-Test Case:       server-group www
+Test Case:       server-list bogus
+Expected Result: Listing of servers in current server group.
+
+Test Case:       server-list www
 Expected Result: Listing of servers in 'www' server group.   
 
 ######################################################################
