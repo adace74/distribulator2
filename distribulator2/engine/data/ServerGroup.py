@@ -61,4 +61,6 @@ class ServerGroup:
             if ( PassedServerName == thisServer.getName() ):
                 return thisServer
 
+        return False
+
 ######################################################################

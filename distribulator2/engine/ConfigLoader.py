@@ -74,7 +74,7 @@ class ConfigLoader:
 
         print("- Global options and settings: %d lines loaded." % self.thisGlobalConfig.getConfigLines())
 
-        self.thisGlobalConfig.setCurrentServerGroup( self.thisGlobalConfig.getServerGroupList()[0].getName() )
+        self.thisGlobalConfig.setCurrentServerGroup( self.thisGlobalConfig.getServerGroupList()[0] )
 
         thisServerGroupStr = ''
         for thisServerGroup in self.thisGlobalConfig.getServerGroupList():

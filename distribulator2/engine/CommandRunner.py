@@ -75,13 +75,12 @@ class CommandRunner:
                                         'help.txt')
 
         thisFilePrinter = generic.FilePrinter.FilePrinter()
-        thisFilePrinter.printFile(thisFileName)
+
+        if (thisFilePrinter.printFile(thisFileName) == False):
+            print "ERROR: Cannot find help for specified command '" + \
+            self.thisCommTokens[1] + "'"
 
     def doLogin(self):
-        #for thisServerGroup in self.thisGlobalConfig.getServerGroupList():
-        #    if ( thisServerGroup.getServerByName(self.thisCommTokens[1]) ):
-        #        print "Login: " + thisServerGroup.getServerByName(self.thisCommTokens[1]).getName()
-        #    else:
         print("ERROR: No Matching Server '" + self.thisCommTokens[1] + "'")
 
     def doRun(self):
@@ -91,7 +90,8 @@ class CommandRunner:
         print("Server-Group")
 
     def doServerList(self):
-        print("Known servers for group '" + self.thisGlobalConfig.getCurrentServerGroup() + "'")
+        print("Known servers for group '" +
+              self.thisGlobalConfig.getCurrentServerGroup().getName() + "'")
         print("----------------------------------------")
         # Actual server list goes here.
 

@@ -66,7 +66,7 @@ class CommandLine:
 
         thisPromptEnv = self.thisGlobalConfig.getServerEnv()
         thisPromptUser = getpass.getuser()
-        thisPromptGroup = self.thisGlobalConfig.getCurrentServerGroup()
+        thisPromptGroup = self.thisGlobalConfig.getCurrentServerGroup().getName()
 
         while (1):
             #
