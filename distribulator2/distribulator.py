@@ -46,8 +46,9 @@ import engine.data.GlobalConfig
 import generic.SysLogger
 
 ######################################################################
-
 # Display a nice pretty header.
+######################################################################
+
 def printTitleHeader():
     print
     print("The Distribulator v0.60 (Python v" + \
@@ -55,13 +56,18 @@ def printTitleHeader():
     print("--------------------------------------------------")
     print
 
+######################################################################
+
 def printInfoHeader(PassedServerEnv, PassedConfigDir):
     print("Local Hostname:      " + socket.gethostname())
     print("Current Environment: " + PassedServerEnv)
     print("Config Directory:    " + PassedConfigDir)
     print
 
+######################################################################
 # Good old main...
+######################################################################
+
 def main(argv):
     long_options = ['batch=',
                     'directory=',
@@ -262,4 +268,7 @@ The available options are:
 # If called from the command line, invoke thyself!
 #
 ######################################################################
+
 if __name__=='__main__': main(sys.argv)
+
+######################################################################

@@ -126,8 +126,8 @@ Change List For v0.6 (Language: Python / Status: In Progress)
   actually validates via a standard XML validator.
 * Removed short version of option flags.  They've outlived their
   usefullness and have become more effort than they're worth.
-* Documentation system-wide has been updated to reflect new features added,
-  as well as the usual clean-up efforts.
+* Documentation system-wide has been updated to reflect new features added.
+  Also started the process of standardizing comments within the sourcecode.
 * Small LICENSE fixes, also propogated other legalese.
 
 Change List For v0.61 (Language Python / Status: On Hold)

@@ -67,7 +67,8 @@ class XMLFileParser:
             # possible until the config is fully loaded.
             sys.exit(1)
 
-    # Gotta clean this up some day...
+######################################################################
+
     def getText(self, nodelist):
         rc = ''
         for node in nodelist:
@@ -75,15 +76,22 @@ class XMLFileParser:
                 rc = rc + node.data
                 return rc
 
+######################################################################
+
     def handleConfig(self, PassedConfig):
         self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
         self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
         self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
 
-    # Binary locations.
+######################################################################
+# Binary locations.
+######################################################################
+
     def handleBinaries(self, PassedBinaries):
         for Binary in PassedBinaries:
             self.handleBinary(Binary)
+
+######################################################################
 
     def handleBinary(self, PassedBinary):
         thisName = PassedBinary.getAttribute('name')
@@ -97,15 +105,23 @@ class XMLFileParser:
         elif (thisName == 'ssh'):
             self._globalConfig.setSshBinary(thisValue)
 
-    # Logging options.
+######################################################################
+# Logging options.
+######################################################################
+
     def handleLogging(self, PassedLogging):
         self._globalConfig.setSyslogFacility(
             eval("syslog.LOG_" + PassedLogging.getAttribute('facility').strip()) )
 
-    # Server environments, groups, and individual servers.
+######################################################################
+# Server environments, groups, and individual servers.
+######################################################################
+
     def handleEnvironments(self, PassedEnvironments):
         for Environment in PassedEnvironments:
             self.handleEnvironment(Environment)
+
+######################################################################
 
     def handleEnvironment(self, PassedEnvironment):
         # Only load the environment specified on startup.
@@ -115,11 +131,15 @@ class XMLFileParser:
             self.handleServerGroups(
                 PassedEnvironment.getElementsByTagName('servergroup') )
 
+######################################################################
+
     def handleServerGroups(self, PassedServerGroups):
         for ServerGroup in PassedServerGroups:
             self._serverGroupList.append( self.handleServerGroup(ServerGroup) )
 
         self._globalConfig.setServerGroupList(self._serverGroupList)
+
+######################################################################
 
     def handleServerGroup(self, PassedServerGroup):
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
@@ -132,6 +152,8 @@ class XMLFileParser:
 
         return thisServerGroup
 
+######################################################################
+
     def handleServers(self, PassedServerGroup, PassedServers):
         thisServerGroup = PassedServerGroup
 
@@ -142,6 +164,8 @@ class XMLFileParser:
             thisServer.setUsername( thisServerGroup.getUsername() )
 
         return thisServerGroup
+
+######################################################################
 
     def handleServer(self, PassedServer):
         thisServer = engine.data.Server.Server()

@@ -264,7 +264,7 @@ class CommandRunner:
 
         #
         # Step 4: Make sure noone's trying to mix
-        # server hostnames and server group names together.
+        #         server hostnames and server group names together.
         #
         if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
             thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
@@ -310,7 +310,7 @@ class CommandRunner:
 
         #
         # Step 6: If we found server name(s), then run with that.
-        # Otherwise, do the same with the server group(s) given.
+        #         Otherwise, do the same with the server group(s) given.
         #
         if ( len(thisServerNameList) > 0 ):
             try:

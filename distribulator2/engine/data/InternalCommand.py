@@ -26,7 +26,9 @@ class InternalCommand:
     #
     def getCommand(self):
         return self._command
-    
+
+######################################################################
+
     def setCommand(self, PassedCommand):
         self._command = PassedCommand
 

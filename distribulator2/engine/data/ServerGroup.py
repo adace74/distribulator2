@@ -21,40 +21,54 @@ import sys
 ######################################################################
 
 class ServerGroup:
-    #
-    # Constructor.
-    #
+
     def __init__(self):
         self._serverCount = 0
         self._serverList = []
-    #
-    # Name.
-    #
+
+######################################################################
+# Name.
+######################################################################
+
     def getName(self):
         return self._name
 
+######################################################################
+
     def setName(self, PassedName):
         self._name = PassedName
-    #
-    # Username.
-    #
+
+######################################################################
+# Username.
+######################################################################
+
     def getUsername(self):
         return self._username
 
+######################################################################
+
     def setUsername(self, PassedUsername):
         self._username = PassedUsername
-    #
-    # Servers.
-    #
+
+######################################################################
+# Servers.
+######################################################################
+
     def getServerCount(self):
         return self._serverCount
+
+######################################################################
 
     def getServerList(self):
         return self._serverList
 
+######################################################################
+
     def addServer(self, PassedServer):
         self._serverCount = self._serverCount + 1
         self._serverList.append(PassedServer)
+
+######################################################################
 
     def getServerByName(self, PassedServerName):
         PassedServerName = PassedServerName.strip()

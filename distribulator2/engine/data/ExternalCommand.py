@@ -24,27 +24,26 @@ import time
 
 class ExternalCommand:
 
-    #
-    # Constructor.
-    #
     def __init__(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
         self._seperator = '----------------------------------------------------------------------'
 
-    #
-    # Unix command line string.
-    #
+######################################################################
+# Unix command line string.
+######################################################################
+
     def getCommand(self):
         return self._command
-    
+
+######################################################################
+
     def setCommand(self, PassedCommand):
         self._command = PassedCommand
-    #
-    # Function methods.
-    #
-    # run() -- Only to be used in console mode.
-    # runAtomic() -- Only to be used for non-interactive sessions.
-    #
+
+######################################################################
+# Only to be used in console mode.
+######################################################################
+
     def run(self, isLoggable=False):
         if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
@@ -67,6 +66,10 @@ class ExternalCommand:
         time.sleep(0.05)
 
         return thisStatus
+
+######################################################################
+# Only to be used for batch mode.
+######################################################################
 
     def runAtomic(self):
         if ( self._globalConfig.isQuietMode() ):

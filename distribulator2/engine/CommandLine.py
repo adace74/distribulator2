@@ -36,6 +36,8 @@ class CommandLine:
         self._commList = [ 'copy', 'exit', 'help', 'login', 'run',
                            'server-group', 'server-list' ]
 
+######################################################################
+
     def getAttemptedCompletion(self, thisString, thisIndex):
         # Don't ask me exactly how, but this seems to work well.
         if ( (thisIndex == 0) & (readline.get_begidx() == 0) ):
@@ -47,6 +49,8 @@ class CommandLine:
                 return 'help '
 
         return None
+
+######################################################################
 
     def initHistory(self):
         thisCounter = 0
@@ -77,6 +81,8 @@ class CommandLine:
 
         return thisCounter
 
+######################################################################
+
     def invoke(self):
 
         thisPromptEnv = self._globalConfig.getServerEnv()
@@ -84,7 +90,7 @@ class CommandLine:
 
         while (1):
             #
-            # Reset critical variables every time around the loop.
+            # Step 1: Reset critical variables every time around the loop.
             #
             thisFoundIt = False
             thisInput = ''
@@ -110,7 +116,7 @@ class CommandLine:
                 thisTokens = thisInput.split()
 
                 #
-                # Step 1 - Check for Unix "pass through" commands.
+                # Step 2: Check for Unix "pass through" commands.
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
@@ -131,8 +137,8 @@ class CommandLine:
                 if (thisFoundIt):
                     continue
                 #
-                # Step 2 - Create InternalCommand object and
-                #          fire up the parser.
+                # Step 3: Create InternalCommand object and
+                #         fire up the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisInput)

@@ -29,6 +29,8 @@ class BatchRunner:
     def __init__(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
 
+######################################################################
+
     def invoke(self):
         # Let's make sure the file we've been given is readable.
         try:
@@ -82,16 +84,16 @@ class BatchRunner:
                 thisTokens = thisLine.split()
 
                 #
-                # Step 1 -- Check to see if this is a comment line.
-                # If so, skip it.
+                # Step 1: Check to see if this is a comment line.
+                #         If so, skip it.
                 #
                 if (thisTokens[0].find('#') == 0):
                     thisIsMore = False
                     continue
 
                 #
-                # Step 2 -- If the line contains a backslash indicating
-                # logical line continuation, honor it.
+                # Step 2: If the line contains a backslash indicating
+                #         logical line continuation, honor it.
                 #
                 # The last line ended with a \
                 if (thisIsMore):
@@ -118,8 +120,7 @@ class BatchRunner:
                         continue
 
                 #
-                # Step 3 - Handle "exit" from this chunk of code.
-                # It should probably be moved into the parser proper.
+                # Step 3: Handle "exit" from this chunk of code.
                 #
                 if (thisTokens[0] == 'exit'):
                     thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
@@ -127,7 +128,7 @@ class BatchRunner:
                     break
 
                 #
-                # Step 4 - Check for Unix "pass through" commands.
+                # Step 4: Check for Unix "pass through" commands.
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
@@ -148,8 +149,8 @@ class BatchRunner:
                     continue
 
                 #
-                # Step 5 - Create InternalCommand object and fire up
-                #          the parser.
+                # Step 5: Create InternalCommand object and fire up
+                #         the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisLine)

@@ -30,6 +30,8 @@ class ConfigLoader:
     def __init__(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
 
+######################################################################
+
     def loadGlobalConfig(self, PassedCommLine):
         # Load GNU Readline history.
         if (self._globalConfig.isBatchMode() == False):
