@@ -370,6 +370,8 @@ sub AreYouSure
 sub catchSigInt
 {
     print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
+
+    print "$prompt";
 }
 
 #
