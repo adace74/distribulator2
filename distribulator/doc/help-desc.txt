@@ -9,4 +9,6 @@ Examples:
 	help		-- Shows the main help file.
 	help run	-- Shows the run command detailed help file.
 
+----------------------------------------------------------------------
 $Id$
+----------------------------------------------------------------------
