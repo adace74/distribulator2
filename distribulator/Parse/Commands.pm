@@ -389,7 +389,7 @@ sub ParseRun
                 }
                 else
                 {
-                    print("NOTICE: Aborting run command.\n");
+                    print("NOTE:  Aborting run command.\n");
 
                     last;
                 }
@@ -422,7 +422,7 @@ sub ParseRun
                     }
                     else
                     {
-                        print("NOTICE: Aborting run command.\n");
+                        print("NOTE:  Aborting run command.\n");
                         
                         last;
                     }
