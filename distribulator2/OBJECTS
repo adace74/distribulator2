@@ -19,50 +19,42 @@ in this fashion.  See the code for the preferred method.  :)
 Method Classes
 --------------
 
-- engine.Batch class
+- engine.BatchRunner class
 
 This class shall represent the ability to run commands in a batch fashion,
-acting as a controller for the Parser and CommandRunner classes.
-Any additional functionality(email notification for example) for batch-only
-mode will be added here.
-
-- engine.CommandParser class
-
-The heart of the system, this class shall implement the actual command parsing
-capabilities of the engine.  It will allow for pass-through Unix shell
-commands, turn pseudo-commands into real Unix commands, and provide for
-appropriate logging.
-
-Methods:
-ExternalCommmand getParsedCommand(InternalCommand)
-
-- engine.CommandRunner class
-
-This class shall contain the ability to run both internal and external
-commands.
-
-Methods:
-boolean runCommand(ExternalCommand)
+acting as a controller for other classes.  Any additional functionality
+(email notification for example) for batch-only mode should be added here.
 
 - engine.CommandLine class
 
 This class shall represent the distribulator command-line interface.
-
 It will take care of any work regarding GNU readline functionality,
-and act as a controller of the Parser and CommandRunner classes
-to perform actual work.
+and act as a controller of other classes to perform actual work.
+
+- engine.CommandRunner class
+
+The heart of the system, this class shall implement the actual command parsing
+capabilities of the engine.  Its main purpose is to handle "internal" commands.
 
 - engine.ConfigLoader class 
 
-This class shall take care of loading configuration options for
-the Config class.
+This class takes care of loading in settings for the GlobalConfig object,
+history for GNU readline, etc.
 
-- engine.CommandParser class
+- engine.XMLFileParser class
 
-The heart of the system, this class shall implement the actual command parsing
-capabilities of the engine.  It will allow for pass-through Unix shell
-commands, turn pseudo-commands into real Unix commands, and provide for
-appropriate logging.
+This class take care of the burder associated with reading in our XML-based
+config, and construction appropriate Server/ServerGroup objects.
+
+Once created, most objects are stored for easy-access via the GlobalConfig
+object.
+
+Generic Classes
+---------------
+
+- generic.FilePrinter class
+
+This class implements a quick'n'dirty API to print files on STDOUT.
 
 - generic.HostPinger class
 
@@ -70,9 +62,6 @@ This class shall implement a simple API to allow us to attempt to connect
 to a server via TCP/22 before attempting scp/ssh to that machine.
 It should take protocol type and remote port number as arguments to be truly
 generic.
-
-Methods:
-boolean ping(String Hostname)
 
 - generic.SysLogger class 
 
