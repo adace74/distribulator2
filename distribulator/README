@@ -65,6 +65,7 @@ Feature List For v0.3 (Shipped):
   in all of us.
 
 Feature List For v0.4-v0.45 (Shipped):
+
 * Addition of the "login" command.  Basically allows the user to specify
   a server to login to without having to exit the distribulator.
 * Addition of --noping for environments where either a ServerPing is
@@ -76,6 +77,7 @@ Feature List For v0.4-v0.45 (Shipped):
   simply pass them through to the underlying shell via perl's system() call.
 
 Spontaneous Feature List For v0.47 (Shipped):
+
 * Modularized codebase.  Still not all that generic, but at least
   broken out by functionality.  There's still way too many
   inter-dependancies, but it's at least more manageable.
