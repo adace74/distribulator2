@@ -49,6 +49,11 @@ class CommandRunner:
         """This method is the main entry point into the expansion engine."""
 
         self._commString = PassedInternalCommand.getCommand()
+
+        # Verify there's something to process.
+        if (len(self._commString) == 0):
+             return False
+
         self._commTokens = self._commString.split()
         thisCommandCount = 0
 
