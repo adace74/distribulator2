@@ -244,7 +244,7 @@ class RunCommand(Command.Command):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                         myExternalCommand.setCommand( \
                             self._globalConfig.getSshBinary() + myFlagStr + \
-                            myServer.getFlags() + " " + \
+                            myServer.getFlags() + \
                             " -l " + myServer.getUsername() + " " + \
                             myServer.getName() + " " + \
                             myBodyStr )
@@ -299,7 +299,7 @@ class RunCommand(Command.Command):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                             myExternalCommand.setCommand( \
                             self._globalConfig.getSshBinary() + myFlagStr + \
-                            myServer.getFlags() + " " + \
+                            myServer.getFlags() + \
                             " -l " + myServer.getUsername() + " " + \
                             myServer.getName() + " " + \
                             myBodyStr )

@@ -68,7 +68,7 @@ class LoginCommand(Command.Command):
         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
         myExternalCommand.setCommand( \
             self._globalConfig.getSshBinary() + \
-            myServer.getFlags + " -l " + \
+            myServer.getFlags() + " -l " + \
             myServer.getUsername() + " " + myServer.getName() )
         try:
             myExternalCommand.runConsole(True)
