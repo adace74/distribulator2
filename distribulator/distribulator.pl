@@ -829,16 +829,21 @@ sub PingUserServer
     }
     else
     {
-        $pinger = Net::Ping->new("tcp", 22);
+        $pinger = Net::Ping->new("tcp", 2);
+	$pinger->{port_num} = 22;
 
         $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
 
-        if ($pinger->ping($2))
+        if ( $pinger->ping($2) )
         {
+            $pinger->close();
+
             return $TRUE;
         }
         else
         {
+            $pinger->close();
+
             print("ERROR: Host $2 appears to be down.\n");
 
             return $FALSE;
