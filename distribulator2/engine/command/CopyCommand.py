@@ -247,7 +247,7 @@ class CopyCommand(Command.Command):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
 
                         # Build It.
-                        if (myServer.getVersion()):
+                        if ( myServer.getVersion() != None ):
                             myExternalCommand.setCommand( \
                                 self._globalConfig.getScpBinary() + " " + \
                                 "-oProtocol=" + myServer.getVersion() + " " + \
@@ -298,7 +298,7 @@ class CopyCommand(Command.Command):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
 
                             # Build It.
-                            if (myServer.getVersion()):
+                            if ( myServer.getVersion() != None ):
                                 myExternalCommand.setCommand( \
                                 self._globalConfig.getScpBinary() + " " + \
                                 myLocalPath + " " + \

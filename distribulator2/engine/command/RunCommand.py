@@ -244,7 +244,7 @@ class RunCommand(Command.Command):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
 
                         # Build It.
-                        if (myServer.getVersion()):
+                        if ( myServer.getVersion() != None ):
                             myExternalCommand.setCommand( \
                                 self._globalConfig.getSshBinary() + myFlagStr + \
                                 " -" + myServer.getVersion() + \
@@ -309,7 +309,7 @@ class RunCommand(Command.Command):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
 
                             # Build It.
-                            if (myServer.getVersion()):
+                            if ( myServer.getVersion() != None ):
                                 myExternalCommand.setCommand( \
                                 self._globalConfig.getSshBinary() + myFlagStr + \
                                 " -" + myServer.getVersion() + \
