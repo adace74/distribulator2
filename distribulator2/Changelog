@@ -173,6 +173,8 @@ Change List For v0.6.3 (Language: Python / Status: In Progress)
   thisThing, thisOtherThing, etc.
 - Cleanup: Take a look at the various modes the distribulator now supports
   and verify if the "VerboseMode" internal flags are still truly necessary.
+- Cleanup: Change classes that should be static to be so, also start thinking about
+  interfaces / subclassing.  A lot of the engine.* classes could use this...
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------

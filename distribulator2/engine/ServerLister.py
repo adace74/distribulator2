@@ -8,7 +8,7 @@
 ######################################################################
 
 # Pydoc comments
-"""This class is responsible for handling the console mode of the application."""
+"""This class is responsible for handling the list mode of the application."""
 
 # Version tag
 __version__= '$Revision$'[11:-2]
@@ -31,7 +31,7 @@ import engine.data.InternalCommand
 ######################################################################
 
 class ServerLister:
-    """This class is responsible for handling the console mode of the application."""
+    """This class is responsible for handling the list mode of the application."""
 
     def __init__(self, PassedGlobalConfig):
         """Constructor."""

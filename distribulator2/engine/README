@@ -15,6 +15,8 @@ engine.BatchRunner   - Responsible for batch mode-specific functionality.
 engine.CommandLine   - Responsible for the console mode interface.
 engine.CommandRunner - Semi-generic class used to run commands in any mode.
 engine.ConfigLoader  - Responsible for loading configuration information.
+engine.MultiLogger   - Semi-generic class used to output to syslog or STDOUT or both.
+engine.ServerLister  - Responsible for list mode-specific functionality.
 engine.XMLFileParser - Responsible for parsing our XML-based configuration.
 
 ######################################################################

@@ -10,10 +10,6 @@
 # Pydoc comments
 """
 Simple generic class whose funciton is to attempt to ping a given host.
-
-TODO:
-- Change my from a pass-through to the ping command to a real
-  independent test.
 """
 
 # Version tag
