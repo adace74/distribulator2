@@ -64,6 +64,26 @@ class GlobalConfig:
     def setQuietMode(self, PassedQuietMode):
         self._quietMode = PassedQuietMode
     #
+    # User-defined substitution variables.
+    #
+    def getVar1(self):
+        return self._var1
+
+    def setVar1(self, PassedVar1):
+        self._var1 = PassedVar1
+
+    def getVar2(self):
+        return self._var2
+
+    def setVar2(self, PassedVar2):
+        self._var2 = PassedVar2
+
+    def getVar3(self):
+        return self._var3
+
+    def setVar3(self, PassedVar3):
+        self._var3 = PassedVar3
+    #
     # Number of config lines loaded.
     #
     def getConfigLines(self):

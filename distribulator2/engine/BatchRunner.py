@@ -63,9 +63,21 @@ class BatchRunner:
                 # Pre-processing.
                 # * Strip any linefeeds / CR's.
                 # * Turn tabs into spaces.
+                # * Do variable substitution.
+                # * Tokenzie.
                 #
                 thisLine = thisLine.strip()
                 thisLine = string.replace(thisLine, '\t', ' ')
+
+                if ( self._globalConfig.getVar1() ):
+                    thisLine = string.replace( thisLine, '$var1',
+                                               self._globalConfig.getVar1() )
+                if ( self._globalConfig.getVar2() ):
+                    thisLine = string.replace( thisLine, '$var2',
+                                               self._globalConfig.getVar2() )
+                if ( self._globalConfig.getVar3() ):
+                    thisLine = string.replace( thisLine, '$var3',
+                                               self._globalConfig.getVar3() )
 
                 thisTokens = thisLine.split()
 

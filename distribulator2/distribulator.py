@@ -63,12 +63,14 @@ def printInfoHeader(PassedServerEnv, PassedConfigDir):
 
 # Good old main...
 def main(argv):
-    #short_options = ':b:d:e:h:q:v:'
     long_options = ['batch=',
                     'directory=',
                     'env=',
                     'help',
                     'quiet',
+                    'var1=',
+                    'var2=',
+                    'var3=',
                     'version']
 
     usage = """
@@ -100,7 +102,7 @@ The available options are:
     --var3=you_get_the_idea
     Batch Mode Only: Enables simple string substitution.
     Up to 3 variables may be defined then referenced in a given batch file
-    as $var1, $Var2, and $var3.
+    as $var1, $var2, and $var3.
 
     --version
     Print version information.
@@ -110,6 +112,9 @@ The available options are:
     thisQuietMode = False
     thisServerEnv = 'demo'
     thisStartDir = '/tmp'
+    thisVar1 = ''
+    thisVar2 = ''
+    thisVar3 = ''
 
     try:
         if len(argv) < 2:
@@ -120,18 +125,24 @@ The available options are:
 
         if len(optlist) > 0:
             for opt in optlist:
-                if (opt[0] == '-b') or (opt[0] == '--batch'):
+                if (opt[0] == '--batch'):
                     thisBatchFile = opt[1]
-                elif (opt[0] == '-d') or (opt[0] == '--directory'):
+                elif (opt[0] == '--directory'):
                     thisStartDir = opt[1]
-                elif (opt[0] == '-e') or (opt[0] == '--env'):
+                elif (opt[0] == '--env'):
                     thisServerEnv = opt[1]
-                elif (opt[0] == '-h') or (opt[0] == '--help'):
+                elif (opt[0] == '--help'):
                     print(usage)
                     sys.exit(0)
-                elif (opt[0] == '-q') or (opt[0] == '--quiet'):
+                elif (opt[0] == '--quiet'):
                     thisQuietMode = True
-                elif (opt[0] == '-v') or (opt[0] == '--version'):
+                elif (opt[0] == '--var1'):
+                    thisVar1 = opt[1]
+                elif (opt[0] == '--var2'):
+                    thisVar2 = opt[1]
+                elif (opt[0] == '--var3'):
+                    thisVar3 = opt[1]
+                elif (opt[0] == '--version'):
                     print("The Distribulator v0.60")
                     print("Please see the LICENSE file for accompanying legalese.")
                     sys.exit(0)
@@ -166,6 +177,9 @@ The available options are:
         thisGlobalConfig.setHelpDir(thisHelpDir)
         thisGlobalConfig.setQuietMode(thisQuietMode)
         thisGlobalConfig.setServerEnv(thisServerEnv)
+        thisGlobalConfig.setVar1(thisVar1)
+        thisGlobalConfig.setVar2(thisVar2)
+        thisGlobalConfig.setVar3(thisVar3)
 
         if ( thisGlobalConfig.isBatchMode() == False ):
             printTitleHeader()

@@ -58,11 +58,13 @@ class CommandRunner:
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
 
-        # Log it and print it.
         if (self._commTokens[0] != 'cd'):
-            print("CMD:   " + self._commString)
+            # Log it.
             self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
                                                          self._commString)
+            # If we're not being quiet, print it.
+            if ( self._globalConfig.isQuietMode() == False ):
+                print("CMD:   " + self._commString)
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
