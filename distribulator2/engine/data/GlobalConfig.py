@@ -13,6 +13,9 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
+# Standard modules
+import re
+
 ######################################################################
 
 class GlobalConfig:
@@ -573,9 +576,16 @@ class GlobalConfig:
 
         PassedServerGroupName = PassedServerGroupName.strip()
 
-        for myServerGroup in self._serverGroupList:
-            if (PassedServerGroupName == myServerGroup.getName()):
-                return myServerGroup
+	reggie = re.compile(r'(.*):r\'(.*)\'')
+	maggie = reggie.match(PassedServerGroupName)
+	if maggie != None:
+		for myServerGroup in self._serverGroupList:
+		    if (maggie.group(1) == myServerGroup.getName()):
+			return myServerGroup
+	else:
+		for myServerGroup in self._serverGroupList:
+		    if (PassedServerGroupName == myServerGroup.getName()):
+			return myServerGroup
 
         return False
 

@@ -13,6 +13,9 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
+# Standard modules
+import re
+
 ######################################################################
 
 class ServerGroup:
@@ -90,6 +93,18 @@ class ServerGroup:
 
 ######################################################################
 
+    def getRegExServerList(self,regex):
+        """This is a typical accessor method."""
+
+	newlist=[]
+	reggie=re.compile(regex)
+	for i in self._serverList:
+		if (reggie.search(i.getName()) != None):
+			newlist.append(i)
+        return newlist
+
+######################################################################
+
     def addServer(self, PassedServer):
         """This is a typical accessor method."""
 
@@ -105,18 +120,18 @@ class ServerGroup:
 
         for myServer in self._serverList:
 
-            # Match by full hostname.
-            # i.e. 'app01.somewhere.com' will match 'app01.somewhere.com'
-            if (PassedServerName == myServer.getName()):
-                return myServer
+	    # Match by full hostname.
+	    # i.e. 'app01.somewhere.com' will match 'app01.somewhere.com'
+	    if (PassedServerName == myServer.getName()):
+		return myServer
 
-            # Match by hostname prefix.
-            # i.e. 'app01' will match app01.somewhere.com
-            myDotIndex = myServer.getName().find('.')
+	    # Match by hostname prefix.
+	    # i.e. 'app01' will match app01.somewhere.com
+	    myDotIndex = myServer.getName().find('.')
 
-            if (myDotIndex != -1):
-                if (PassedServerName == myServer.getName()[:myDotIndex]):
-                    return myServer
+	    if (myDotIndex != -1):
+		if (PassedServerName == myServer.getName()[:myDotIndex]):
+		    return myServer
 
         return False
 

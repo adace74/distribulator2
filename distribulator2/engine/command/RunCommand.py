@@ -7,8 +7,6 @@
 #
 ######################################################################
 
-import re
-
 # Pydoc comments
 """
 This class is responsible for doing the actual work of
@@ -20,6 +18,7 @@ SSH commands and running them.
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
+import re
 import os
 import os.path
 import stat
