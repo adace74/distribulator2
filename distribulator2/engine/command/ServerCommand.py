@@ -75,6 +75,9 @@ class ServerCommand(Command.Command):
     def doShowServerGroup(self, PassedCommString):
         """This method is responsible for the processing of the 'show server-group' command."""
 
+        myColumnCount = 0
+        myTempStr = ''
+
         # Tokenize!
         self._commTokens = PassedCommString.split()
 
@@ -91,48 +94,42 @@ class ServerCommand(Command.Command):
 
             # Check for errors.
             if (myServerGroup == False):
-                myError = "No matching server group '" + \
-                            self._commTokens[2] + "'."
+                myError = "No matching server group '" + self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                 return False
             else:
-                self._globalConfig.getMultiLogger().LogMsgInfo("Known servers for group '" + myServerGroup.getName() + "'")
-                self._globalConfig.getMultiLogger().LogMsgInfo("--------------------------------------------------")
-                # Actual server list goes here.
-                myTempStr = ''
+                myTempStr = "Known servers for group '" + myServerGroup.getName() + "'\n"
+                myTempStr = myTempStr = "--------------------------------------------------\n"
 
                 for myServer in myServerGroup.getServerList():
-                    if ( len(myTempStr) > 0 ):
-                        self._globalConfig.getMultiLogger().LogMsgInfo(myTempStr + "\t" + myServer.getName())
-                        myTempStr = ''
+                    myColumnCount = myColumnCount + 1
+
+                    if (myColumnCount == 2):
+                        myColumnCount = 0
+                        myTempStr = myTempStr + myServer.getName() + '\n'
                     else:
-                        myTempStr = myServer.getName()
-
-                if ( len(myTempStr) > 0 ):
-                    self._globalConfig.getMultiLogger().LogMsgInfo(myTempStr)
-
-                return True
+                        myTempStr = myTempStr + myServer.getName() + '\t\t'
         else:
             # Otherwise, display the server group list given at startup.
-            myServerGroupStr = "Known server groups for environment '" + \
-                                 self._globalConfig.getServerEnv() + "'\n"
-            myServerGroupStr = myServerGroupStr + \
-                                 "--------------------------------------------------\n"
-            myTotalServerCount = 0
-            myColumnCount = 0
+            myTempStr = "Known server groups for environment '" + \
+                        self._globalConfig.getServerEnv() + "'\n"
+            myTempStr = myTempStr + "--------------------------------------------------\n"
    
             for myServerGroup in self._globalConfig.getServerGroupList():
                 myColumnCount = myColumnCount + 1
-                myTotalServerCount = myTotalServerCount + \
-                                       myServerGroup.getServerCount()
-                myServerGroupStr = myServerGroupStr + '%10s (%2d) ' % \
-                                     (myServerGroup.getName(), myServerGroup.getServerCount())
+                myTempStr = myTempStr + "%10s (%2d) " % \
+                            (myServerGroup.getName(), myServerGroup.getServerCount())
 
                 if (myColumnCount == 4):
                     myColumnCount = 0
-                    myServerGroupStr = myServerGroupStr + '\n'
+                    myTempStr = myTempStr + '\n'
 
-            self._globalConfig.getMultiLogger().LogMsgInfo(myServerGroupStr)
+        if ( len(myTempStr) > 0 ):
+            for myLine in myTempStr.split('\n'):
+                self._globalConfig.getMultiLogger().LogMsgInfo(
+                    "OUT:  " + myLine )
+
+        return True
 
 ######################################################################
