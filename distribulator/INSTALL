@@ -46,4 +46,8 @@ However, being that this is not a piece of software most of the world
 will ever use, feel free to contact me personally if you need support,
 find bugs, have suggestions, etc.
 
+P.S.  There's an itty-bitty shell script under the wrappers/ directory
+that should make it easier to run the program from anywhere on the filesystem.
+Now that Perl modules are in use, there are @INC path issues.  Blargh...
+
 --Adam W. Dace <adam@turing.com>

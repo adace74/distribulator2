@@ -9,9 +9,8 @@ WARNING:  DANGER, DANGER, WILL ROBINSON!
           AND MAY NOT FUNCTION APPROPRIATELY, IF AT ALL.
           YOU HAVE BEEN WARNED.
 
-This is what will someday be The Distribulator.
-Either that or the path to my professional demise at a given employer,
-one of the two.  :-)
+You have found perhaps the world's only Open Source
+distributed server shell.
 
 Website Easy URL: http://distribulator.turing.com/
 Website Real URL: http://sourceforge.net/projects/distribulator/
@@ -22,8 +21,9 @@ What Is It?
 -----------
 
 The Distribulator concept arised after working with an environment
-consisting of over 500 servers, all held together with duct tape,
-rubber bands, some random scripts, and SSH.
+consisting of about 500 servers, mostly held together with duct tape,
+rubber bands, some random scripts, and SSH(okay, I lied about the first
+two, but you get the idea).
 
 Despite everyone's best efforts in the rush to keep things working,
 no unified effort was made to create a tool that would allow us to
@@ -75,17 +75,21 @@ Feature List For v0.4-v0.45 (Shipped):
 * Addition of the ability to distinguish those commands as external and
   simply pass them through to the underlying shell via perl's system() call.
 
-Spontaneous Feature List For v0.47 (Coming Soon!):
+Spontaneous Feature List For v0.47 (Shipped):
 * Modularized codebase.  Still not all that generic, but at least
-  broken out by functionality.  Too many inter-dependancies,
-  will ponder how do things The Best Way.
+  broken out by functionality.  There's still way too many
+  inter-dependancies, but it's at least more manageable.
 * Various fixes, including that of the Net::Ping code,
   no CPAN module addon required.  Removed --noping as the underlying
   assumption behind it is not valid.
-* Tons of GNU libreadline functionality: history load/save,
-  tab-completion of first word command, some CTRL-C integration.
-* Added ability to stop a command while executing on X servers.
-  (Hold down CTRL-C)
+* Term::ReadLine::GNU & GNU libreadline are now required for this
+  software to perform correctly(or even run it seems).
+* Lots of GNU libreadline functionality: history load/save,
+  tab-completion of first word command, some CTRL-C / CTRL-D integration.
+* Crude attempts to fix problems relating to running distribulator,
+  then exiting and having one's term act very flakey.
+* Added ability to abort a command while executing on X servers.
+  (Hold down CTRL-C, or just hit it a number of times)
 * Improved testing process, thus improved stability.
 
 Feature List For v0.5 (Coming Soon!):
