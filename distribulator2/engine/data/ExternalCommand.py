@@ -69,7 +69,7 @@ class ExternalCommand:
         return thisStatus
 
     def runAtomic(self):
-        if ( self._globalConfig.isBatchMode() ):
+        if ( self._globalConfig.isQuietMode() ):
             self._globalConfig.getSysLogger().LogMsgInfo(
                 "EXEC:  " + self._command )
         else:
@@ -80,7 +80,7 @@ class ExternalCommand:
         thisStatus, thisOutput = commands.getstatusoutput(self._command)
 
         for thisLine in thisOutput.split('\n'):
-            if ( self._globalConfig.isBatchMode() ):
+            if ( self._globalConfig.isQuietMode() ):
                 self._globalConfig.getSysLogger().LogMsgInfo(
                     "OUTPUT:" + thisLine )
             else:
@@ -91,7 +91,7 @@ class ExternalCommand:
         if (thisStatus != 0):
             thisError = "ERROR: Local shell returned error state."
 
-            if ( self._globalConfig.isBatchMode() ):
+            if ( self._globalConfig.isQuietMode() ):
                 self._globalConfig.getSysLogger().LogMsgError(thisError)
             else:
                 print(thisError)

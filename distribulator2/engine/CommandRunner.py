@@ -33,7 +33,7 @@ class CommandRunner:
 ######################################################################
 
     def handleError(self, PassedError):
-        if ( self._globalConfig.isBatchMode() ):
+        if ( self._globalConfig.isQuietMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 PassedError)
         else:
@@ -44,7 +44,7 @@ class CommandRunner:
 ######################################################################
 
     def handleInfo(self, PassedInfo):
-        if ( self._globalConfig.isBatchMode() ):
+        if ( self._globalConfig.isQuietMode() ):
             self._globalConfig.getSysLogger().LogMsgInfo(
                 PassedInfo)
         else:

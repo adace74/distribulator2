@@ -63,12 +63,12 @@ def printInfoHeader(PassedServerEnv, PassedConfigDir):
 
 # Good old main...
 def main(argv):
-    #short_options = ':b:d:e:h:s:v:'
+    #short_options = ':b:d:e:h:q:v:'
     long_options = ['batch=',
                     'directory=',
                     'env=',
                     'help',
-                    'shell=',
+                    'quiet',
                     'version']
 
     usage = """
@@ -84,7 +84,7 @@ The available options are:
     Allows the wrapper script to pass in the user's real cwd.
     OPTIONAL
 
-    --env=
+    --env=env_name
     The server environment we wish to operate in.
     REQUIRED
 
@@ -107,6 +107,7 @@ The available options are:
 """ % argv[0]
 
     thisBatchFile = ''
+    thisQuietMode = False
     thisServerEnv = 'demo'
     thisStartDir = '/tmp'
 
@@ -128,6 +129,8 @@ The available options are:
                 elif (opt[0] == '-h') or (opt[0] == '--help'):
                     print(usage)
                     sys.exit(0)
+                elif (opt[0] == '-q') or (opt[0] == '--quiet'):
+                    thisQuietMode = True
                 elif (opt[0] == '-v') or (opt[0] == '--version'):
                     print("The Distribulator v0.60")
                     print("Please see the LICENSE file for accompanying legalese.")
@@ -161,9 +164,10 @@ The available options are:
 
         thisGlobalConfig.setConfigDir(thisConfigDir)
         thisGlobalConfig.setHelpDir(thisHelpDir)
+        thisGlobalConfig.setQuietMode(thisQuietMode)
         thisGlobalConfig.setServerEnv(thisServerEnv)
 
-        if ( thisGlobalConfig.isBatchMode() == False):
+        if ( thisGlobalConfig.isBatchMode() == False ):
             printTitleHeader()
             printInfoHeader(thisServerEnv, thisConfigDir)
 

@@ -61,7 +61,7 @@ class BatchRunner:
 
                 #
                 # Step 1 - Handle "exit" from this chunk of code.
-                # Should probably be moved into the parser proper.
+                # It should probably be moved into the parser proper.
                 #
                 if (thisTokens[0] == 'exit'):
                     thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."

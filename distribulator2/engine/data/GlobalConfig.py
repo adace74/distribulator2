@@ -56,6 +56,14 @@ class GlobalConfig:
     def setHelpDir(self, PassedHelpDir):
         self._helpDir = PassedHelpDir
     #
+    # Should we be quiet?
+    #
+    def isQuietMode(self):
+        return self._quietMode
+
+    def setQuietMode(self, PassedQuietMode):
+        self._quietMode = PassedQuietMode
+    #
     # Number of config lines loaded.
     #
     def getConfigLines(self):
