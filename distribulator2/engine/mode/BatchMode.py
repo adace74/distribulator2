@@ -228,15 +228,11 @@ class BatchMode(Mode.Mode):
                     myInternalCommand.setCommand(myLine)
                     myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
 
-                    myTempCount = myDispatcher.invoke(myInternalCommand)
+                    myCommandCount = myCommandCount + \
+                                     myDispatcher.invoke(myInternalCommand)
 
                     del myInternalCommand
                     del myDispatcher
-
-                    if (myTempCount > 0):
-                        myCommandCount = myCommandCount + myTempCount
-                    else:
-                        break
 
                 except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
