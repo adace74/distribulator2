@@ -32,11 +32,11 @@ fi
 #
 # Step 1: Clean up any compiled python objects.
 #
-$FIND_BIN $CVSWORK_DIR/$PROJECT_DIR -name '*.pyc' | $XARGS_BIN $RM_BIN
+$FIND_BIN $CVSWORK_DIR/$PROJECT_DIR -name '*.pyc' | $XARGS_BIN $RM_BIN > /dev/null 2>&1
 #
 # Step 2: Clean up any emacs temp files.
 #
-$FIND_BIN $CVSWORK_DIR/$PROJECT_DIR -name '*~' | $XARGS_BIN $RM_BIN
+$FIND_BIN $CVSWORK_DIR/$PROJECT_DIR -name '*~' | $XARGS_BIN $RM_BIN > /dev/null 2>&1
 #
 # Step 3: Clean up the config.xml symlink.
 #
