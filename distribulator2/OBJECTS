@@ -41,6 +41,10 @@ capabilities of the engine.  Its main purpose is to handle "internal" commands.
 This class takes care of loading in settings for the GlobalConfig object,
 history for GNU readline, etc.
 
+- engine.ServerLister class
+
+This class shall represent the distribulator list mode.
+
 - engine.XMLFileParser class
 
 This class take care of the burder associated with reading in our XML-based

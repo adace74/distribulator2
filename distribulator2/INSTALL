@@ -40,24 +40,24 @@ Installation
 1) Pick a place you'd like to install the program.
    The default is /usr/local/distribulator2
 
-   For example, let's say you'd like to install into /usr/local/distribulator2.
+   For example, let's say you'd like to install into /apps/distribulator2.
 
 2) Go to the subdir of where you'd like it to be:
-   cd /usr/local/
+   cd /apps/
 
 3) Unpack the distribution:
    tar xfz distribulator-X.X.X.tar.gz
 
 4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
-   reflect your installation directory(in this case /usr/local/distribulator2):
+   reflect your installation directory(in this case /apps/distribulator2):
    vi scripts/distribulator
 
 5) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
-   cd /usr/local/bin; ln -s /usr/local/distribulator2/scripts/distribulator.sh distribulator
+   cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh distribulator
 
 6) Symlink or copy the config.xml.dist file to config.xml.
-   cd /usr/local/distribulator2/conf; ln -s config.xml.dist config.xml
+   cd /apps/distribulator2/conf; ln -s config.xml.dist config.xml
 
 7) Fire it up:
    distribulator
@@ -85,8 +85,8 @@ config/pass_through_cmds.txt -- Simple list of Unix common commands for
 the command-line interface to "pass through", that is to simply run as
 a good shell would.
 
-examples/ -- Directory containing example batch files that actually will
-attempt to work.
+examples/ -- Directory containing example batch files that should work
+if configuration is setup properly.
 
 Directory Layout Overview
 -------------------------
