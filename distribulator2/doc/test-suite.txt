@@ -15,9 +15,12 @@ Command(s): copy
 Test Case:       copy
 Expected Result: Error.
 
-Test Case:       copy /tmp/test.out /var/tmp/
-Expected Result: Copies local /tmp/test.out file out to all current server group
-                 servers, remote directory /var/tmp/.
+Test Case:       copy /tmp/bogus /tmp/
+Expected Result: Error.
+
+Test Case:       copy /tmp/test.out /tmp/
+Expected Result: Copies local /tmp/test.out file out to current server group, 
+                 remote directory /tmp/.
 
 Test Case:       copy /tmp/test.out www
 Expected Result: Error.
@@ -76,12 +79,15 @@ Expected Result: Error.
 Command(s): server-group and server-list
 
 Test Case:       server-group
-Expected Result: Error.
+Expected Result: Listing of available server groups.
 
 Test Case:       server-group www
-Expected Result: Changes current group to 'www'.
+Expected Result: Sets current group to 'www'.
 
 Test Case:       server-list
-Expected Result: Output conforms to the interaction of both commands.
+Expected Result: Listing of servers in current server group.
+
+Test Case:       server-group www
+Expected Result: Listing of servers in 'www' server group.   
 
 ######################################################################
