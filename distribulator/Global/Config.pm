@@ -115,12 +115,12 @@ sub getBinaryLocations
     if ($os_name eq 'Linux')
     {
         $SCP_BIN = '/usr/bin/scp -c blowfish';
-        $SSH_BIN = '/usr/bin/ssh -t -c blowfish';
+        $SSH_BIN = '/usr/bin/ssh -c blowfish';
     }
     elsif ($os_name eq 'SunOS')
     {
         $SCP_BIN = '/usr/local/bin/scp -c blowfish';
-        $SSH_BIN = '/usr/local/bin/ssh -t -c blowfish';
+        $SSH_BIN = '/usr/local/bin/ssh -c blowfish';
     }
 }
 

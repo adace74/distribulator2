@@ -104,14 +104,21 @@ sub RunCommandLocal
 #
 sub RunCommandRemote
 {
-    my($remote_server, $remote_command) = @_;
+    my($remote_server, $remote_command, $remote_tty) = @_;
     my(@command_output, $exec_line, $output_line, $remote_user);
 
     if ( PingServer($remote_server) )
     {
         $remote_user = getServerUser($remote_server);
 
-        $exec_line = "$SSH_BIN -l $remote_user $remote_server $remote_command";
+        if ($remote_tty)
+        {
+            $exec_line = "$SSH_BIN -t -l $remote_user $remote_server $remote_command";
+        }
+        else
+        {
+            $exec_line = "$SSH_BIN -l $remote_user $remote_server $remote_command";
+        }
 
         print "EXEC:  $exec_line\n";
 

@@ -384,7 +384,17 @@ sub ParseRun
 {
     my($input) = shift(@_);
 
-    my($run_server);
+    my($run_server, $run_tty) = $FALSE;
+
+    #
+    # Attempt to see if the user is attempting the -t flag.
+    #
+    if ( $input =~ /^run -t (.*)/ )
+    {
+        $input = "run $1";
+
+        $run_tty = $TRUE;
+    }
 
     # Run command on local host
     # EXAMPLE: run "uptime" local
@@ -407,7 +417,7 @@ sub ParseRun
             {
                 if ( !isUserAborting() )
                 {
-                    RunCommandRemote($run_server,$1);
+                    RunCommandRemote($run_server, $1, $run_tty);
 
                     # Sleep 1/4 second.
                     select(undef, undef, undef, 0.25);
@@ -440,7 +450,7 @@ sub ParseRun
                 {
                     if ( !isUserAborting() )
                     {
-                        RunCommandRemote($run_server,$1);
+                        RunCommandRemote($run_server, $1, $run_tty);
 
                         # Sleep 1/4 second.
                         select(undef, undef, undef, 0.25);
@@ -461,7 +471,7 @@ sub ParseRun
 
             if ( AreYouSure() )
             {
-                RunCommandRemote($run_server,$1);
+                RunCommandRemote($run_server, $1, $run_tty);
             }
         }
         else
