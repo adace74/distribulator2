@@ -88,6 +88,16 @@ Spontaneous Feature List For v0.47 (Shipped):
   (Hold down CTRL-C, or just hit it a number of times)
 * Improved testing process, thus improved stability.
 
+Spontaneous Feature List For v0.48 (Shipping Soon):
+
+* Fixed a silly bug where the command-line prompt wasn't being updated with
+  the current server group.
+* Added the -t flag to the run command.  This will allow one to specify
+  whether a remote tty is required for a given command.  This has caused
+  much pain within my work environment lately.  Use with caution, some
+  programs/scripts require -t (i.e. vi) and some will utterly break on
+  Linux if given -t (i.e. some custom startup scripts).
+
 Feature List For v0.5 (Coming Soon!):
 
 * Single local server file to single remote server file copy.
