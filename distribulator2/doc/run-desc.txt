@@ -13,6 +13,10 @@ Examples:
                                in reverse order.
     run "uptime" on app,www -- Runs uptime on app and www server groups
                                in forward order.
+    run "uptime" on app01   -- Runs uptime on app01.somewhere.com.
+    run "uptime" on app01,www01
+                            -- Runs uptime on app01.somewhere.com and
+                               www01.somewhere.com in forward order.
     run "uptime" on app,www reverse
                             -- Runs uptime on app and www server groups
                                in reverse order.
@@ -20,9 +24,6 @@ Examples:
                                in forward order, and forces an ssh tty.
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
                                in forward order, and forces an ssh tty.
-
-TODO:
-    run "uptime" on www01   -- Runs uptime on server named 'www01'.
 
 ----------------------------------------------------------------------
 $Id$

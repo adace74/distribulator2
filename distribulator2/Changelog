@@ -107,6 +107,7 @@ Change List For v0.53 (Language: Python / Status: Skipped)
 Change List For v0.6 (Language: Python / Status: Shipped)
 -------------------------------------------------------------
 * Small LICENSE fixes, also propogated other legalese.
+* Small number of documentation updates.
 * Batch Mode: Addition of --quiet flag to indicate we don't want output when
   run in batch mode.  The default now is to NOT be quiet.
 * Batch Mode: Addition of comment(#) and line(\) continuation compatability.
@@ -115,6 +116,8 @@ Change List For v0.6 (Language: Python / Status: Shipped)
   substitution such that batch files don't have to be completely hard-coded.
 * Removed short version of option flags.  They've outlived their
   usefullness and have become a pain.
+* Added the ability to run commands on single or multiple servers
+  as well as server groups. 
 
 Change List For v0.61 (Language Python / Status: On Hold)
 ---------------------------------------------------------

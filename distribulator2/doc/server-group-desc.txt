@@ -1,15 +1,17 @@
-Group Command Syntax & Examples
--------------------------------
+Server Group Command Syntax & Examples
+--------------------------------------
 
-Syntax: server-group server_group
+Syntax: server-group [server_group]
 
 Description: Sets the current working server group.
 
 Examples:
+    server-group     -- Shows the list of available server groups.
     server-group www -- Sets the current server group as "www".
 
 Notes:
-    Defaults to first server group specified in configuration.
+    The "current working server group" defaults to the first server group
+    specified in XML configuration.
 
 ----------------------------------------------------------------------
 $Id$

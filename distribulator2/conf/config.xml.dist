@@ -27,19 +27,6 @@
 
     <!-- Demo Environment -->
     <environment name="demo">
-        <servergroup name="www" username="apache">
-            <server>www01.somewhere.com</server>
-            <server>www02.somewhere.com</server>
-            <server>www03.somewhere.com</server>
-            <server>www04.somewhere.com</server>
-            <server>www05.somewhere.com</server>
-            <server>www06.somewhere.com</server>       
-            <server>www07.somewhere.com</server>       
-            <server>www08.somewhere.com</server>       
-            <server>www09.somewhere.com</server>       
-            <server>www10.somewhere.com</server>       
-        </servergroup>
-
         <servergroup name="app" username="tomcat">
             <server>app01.somewhere.com</server>
             <server>app02.somewhere.com</server>
@@ -54,6 +41,19 @@
             <server>db03.somewhere.com</server>
             <server>db04.somewhere.com</server>
             <server>db05.somewhere.com</server>
+        </servergroup>
+
+        <servergroup name="www" username="apache">
+            <server>www01.somewhere.com</server>
+            <server>www02.somewhere.com</server>
+            <server>www03.somewhere.com</server>
+            <server>www04.somewhere.com</server>
+            <server>www05.somewhere.com</server>
+            <server>www06.somewhere.com</server>
+            <server>www07.somewhere.com</server>
+            <server>www08.somewhere.com</server>
+            <server>www09.somewhere.com</server>
+            <server>www10.somewhere.com</server>
         </servergroup>
     </environment>
 </config>

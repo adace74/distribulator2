@@ -2,7 +2,6 @@ The Distribulator Help Screen
 -----------------------------
 
 Valid Commands:
-    cd           -- Unix-style change directory.
     copy         -- Copies files among servers.
     exit         -- Exits the Distribulator.
     help         -- This command.
@@ -16,6 +15,7 @@ For more detailed help, try "help <command>".
 Notes:
     Other valid commands include "standard" Unix commands, which are listed
     for parsing purposes in ./conf/pass-through.conf.
+
     If you need, feel free to add more, and please let the author know as well
     (making that list wasn't easy!).
 
