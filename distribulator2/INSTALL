@@ -95,7 +95,6 @@ Directory Layout Overview
 	/conf			- Configuration dir.
 	/doc			- Help file dir.
 	/engine			- Core engine Python classes.
-		/data/		- Core data Python classes.
 	/examples		- Example batch files.
 	/generic		- Generic Python classes.
 	/scripts		- Wrapper shell scripts.
