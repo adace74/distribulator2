@@ -295,6 +295,13 @@ class CommandRunner:
         else:
             thisFlagStr = ''
 
+        # Check for the 'reverse' keyword.
+        if (thisSuffixStr.find(' reverse') != -1):
+            isReverse = True
+            thisSuffixStr = thisSuffixStr[:thisSuffixStr.find(' reverse')]
+        else:
+            isReverse = False
+
         # run "uptime"
         # run -t "uptime"
         if (len(thisSuffixStr) == 0):
@@ -359,8 +366,20 @@ class CommandRunner:
             thisServerGroup = self._globalConfig.getServerGroupByName(
                 thisGroupStr)
 
+            thisServerList = thisServerGroup.getServerList()
+
+            #
+            # Slightly nasty hack.  Since lists can only be sorted in-place,
+            # and Python doesn't support object copying, we do the following:
+            # 1) Reverse sort the list
+            # 2) Run the commands
+            # 3) Forward-sort the list, hopefully back to its original state.
+            #
+            if (isReverse):
+                thisServerList.reverse()
+
             try:
-                for thisServer in thisServerGroup.getServerList():
+                for thisServer in thisServerList:
                     thisPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
 
@@ -387,6 +406,9 @@ class CommandRunner:
             except KeyboardInterrupt:
                 thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
+
+            if (isReverse):
+                thisServerList.sort()
 
         return True
 
