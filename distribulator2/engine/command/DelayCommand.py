@@ -45,7 +45,14 @@ class DelayCommand(Command.Command):
 
         # If given a new delay time, set it.
         if ( len(self._commTokens) > 2 ):
-            self._globalConfig.setDelaySecs( int(self._commTokens[2]) )
+            try:
+                self._globalConfig.setDelaySecs( int(self._commTokens[2]) )
+
+            except ValueError:
+                myError = "Invalid delay of '" + self._commTokens[2] + "' entered.  Please use an integer number."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                return False
+
             myInfo = "Current delay between remote commands is %d seconds." % self._globalConfig.getDelaySecs()
             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
             return True
