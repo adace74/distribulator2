@@ -78,27 +78,27 @@ my(@external_commands);
 my(@server_groups);
 my(%groups_userservers_hash);
 my(@internal_commands) = ( 'cd', 'copy', 'exit', 'help', 'login', 'remote-shell',
-	'run', 'server-group', 'server-list' );
+    'run', 'server-group', 'server-list' );
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
            "noping" => \$noping_arg,
            "shell=s" => \$shell_arg,
            "version" => \$version_arg) ||
-	pod2usage(-exitstatus => 0, -verbose => 2);
+    pod2usage(-exitstatus => 0, -verbose => 2);
 #
 # Check for --help
 #
 if ($help_arg)
 {
-	pod2usage(-exitstatus => 0, -verbose => 2);
+    pod2usage(-exitstatus => 0, -verbose => 2);
 }
 #
 # Give the user a banner, no matter what.
 #
-print("+======================+\n");
-print("|The Distribulator v0.5|\n");
-print("+======================+\n");
+print("+=======================+\n");
+print("|The Distribulator v0.45|\n");
+print("+=======================+\n");
 print("\n");
 #
 # Check for --version
@@ -163,13 +163,13 @@ print("\n");
 #
 while ($TRUE)
 {
-	$command = '';
-	$prompt = "<$user\@$environment\[$current_server_group\]:" .
+    $command = '';
+    $prompt = "<$user\@$environment\[$current_server_group\]:" .
         cwd() . "> ";
-	$input = $term->readline($prompt);
+    $input = $term->readline($prompt);
 
-	@command_tokens = split(' ', $input);
-	$command = shift(@command_tokens);
+    @command_tokens = split(' ', $input);
+    $command = shift(@command_tokens);
 
     # If the user just hit ENTER, simply give them another prompt.
     # How can we possibly detect CTRL-D?
@@ -182,7 +182,7 @@ while ($TRUE)
     if ( (!isValidInternalCommand($command)) &&
          (!isValidExternalCommand($command)) )
     {
-		print("ERROR: Unknown Command: $command\n");
+        print("ERROR: Unknown Command: $command\n");
 
         next;
     }
@@ -199,57 +199,57 @@ while ($TRUE)
 
     # Exit
     if ( ($command eq 'exit') )
-	{
-		print "Received exit command.  Dying...\n\n";
+    {
+        print "Received exit command.  Dying...\n\n";
 
-		exit(0);
-	}
+        exit(0);
+    }
 
-	# Group
-	if ($command eq 'server-group')
-	{
-		$temp_str = shift(@command_tokens);
+    # Group
+    if ($command eq 'server-group')
+    {
+        $temp_str = shift(@command_tokens);
 
         if ( !$temp_str )
         {
             print("ERROR: No server group given.\n");
         }
-		elsif ( $groups_userservers_hash{$temp_str} )
-		{
-			$current_server_group = $temp_str;
-			print("NOTE:  Current server group now is '$current_server_group'.\n");
-		}
-		else
-		{
-			print("ERROR: Unknown server group $temp_str.\n");
-		}
-
-        next;
-	}
-
-	# Help
-	if ($command eq 'help')
-	{
-		$temp_str = shift(@command_tokens);
-
-        # If the next argument is a valid command, show help for it.
-		if ( isValidInternalCommand($temp_str) )
-		{
-			if ( !PrintHelpFile("$temp_str-desc.txt") )
-			{
-				print("ERROR: Problem displaying $temp_str-desc.txt file.\n");
-			}
-		}
+        elsif ( $groups_userservers_hash{$temp_str} )
+        {
+            $current_server_group = $temp_str;
+            print("NOTE:  Current server group now is '$current_server_group'.\n");
+        }
         else
         {
-			if ( !PrintHelpFile('help.txt') )
+            print("ERROR: Unknown server group $temp_str.\n");
+        }
+
+        next;
+    }
+
+    # Help
+    if ($command eq 'help')
+    {
+        $temp_str = shift(@command_tokens);
+
+        # If the next argument is a valid command, show help for it.
+        if ( isValidInternalCommand($temp_str) )
+        {
+            if ( !PrintHelpFile("$temp_str-desc.txt") )
+            {
+                print("ERROR: Problem displaying $temp_str-desc.txt file.\n");
+            }
+        }
+        else
+        {
+            if ( !PrintHelpFile('help.txt') )
             {
                 print("ERROR: Problem displaying help.txt file.\n");
             }
         }
 
         next;
-	}
+    }
 
     # Login
     if ($command eq 'login')
@@ -275,10 +275,10 @@ while ($TRUE)
         next;
     }
 
-	# List
-	if ($command eq 'server-list')
-	{
-		$temp_str = shift(@command_tokens);
+    # List
+    if ($command eq 'server-list')
+    {
+        $temp_str = shift(@command_tokens);
 
         # If there's no target, list the current server group.
         if ( !$temp_str )
@@ -287,12 +287,12 @@ while ($TRUE)
 
             foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
             {
-		print("$userserver\n");                    
+        print("$userserver\n");                    
             }
 
         }
-		elsif ( $groups_userservers_hash{$temp_str} )
-		{
+        elsif ( $groups_userservers_hash{$temp_str} )
+        {
             print("Known user-server pairs in group $temp_str:\n");
 
             foreach $userserver ( sort @{$groups_userservers_hash{$temp_str}} )
@@ -300,22 +300,22 @@ while ($TRUE)
                     print("$userserver\n");                    
             }
 
-		}
-		else
-		{
-			print("ERROR: No server group matching '$temp_str' found.\n");
-		}
+        }
+        else
+        {
+            print("ERROR: No server group matching '$temp_str' found.\n");
+        }
 
         next;
-	}
+    }
 
-	# Run
-	if ($command eq 'run')
-	{
+    # Run
+    if ($command eq 'run')
+    {
         ParseRun();
 
         next;
-	}
+    }
 
     #################### IMPLEMENTED - External ####################
 
@@ -353,16 +353,16 @@ while ($TRUE)
 #
 sub AreYouSure
 {
-	if ( $term->readline("Yes / No> ") =~ /^[Yy]/ )
-	{
-		return $TRUE;
-	}
-	else
-	{
+    if ( $term->readline("Yes / No> ") =~ /^[Yy]/ )
+    {
+        return $TRUE;
+    }
+    else
+    {
         print "Okay, NOT running the command.\n";
 
-		return $FALSE;
-	}
+        return $FALSE;
+    }
 }
 
 #
@@ -380,40 +380,40 @@ sub catchSigQuit
 #
 sub getBinaryLocations
 {
-	my($uname1_bin) = '/bin/uname';
-	my($uname2_bin) = '/usr/bin/uname';
-	my($os_name) = '';
+    my($uname1_bin) = '/bin/uname';
+    my($uname2_bin) = '/usr/bin/uname';
+    my($os_name) = '';
 
-	if ( stat($uname1_bin) )
-	{
-		$os_name = qx/$uname1_bin/;
-	}
-	elsif ( stat($uname2_bin) )
-	{
-		$os_name = qx/$uname2_bin/;
-	}
-	else
-	{
-		die("Unable to determine platform.  Can't find uname!");
-	}
+    if ( stat($uname1_bin) )
+    {
+        $os_name = qx/$uname1_bin/;
+    }
+    elsif ( stat($uname2_bin) )
+    {
+        $os_name = qx/$uname2_bin/;
+    }
+    else
+    {
+        die("Unable to determine platform.  Can't find uname!");
+    }
 
-	chomp($os_name);
+    chomp($os_name);
 
-	#
-	# Binary utility locations, setup based on platform.
-	#
-	# NOTE: Blowfish is chosen because of its low CPU overhead.
-	#
-	if ($os_name eq 'Linux')
-	{
-		$SCP_BIN = '/usr/bin/scp -c blowfish';
-		$SSH_BIN = '/usr/bin/ssh -c blowfish';
-	}
-	elsif ($os_name eq 'SunOS')
-	{
-		$SCP_BIN = '/usr/local/bin/scp -c blowfish';
-		$SSH_BIN = '/usr/local/bin/ssh -c blowfish';
-	}
+    #
+    # Binary utility locations, setup based on platform.
+    #
+    # NOTE: Blowfish is chosen because of its low CPU overhead.
+    #
+    if ($os_name eq 'Linux')
+    {
+        $SCP_BIN = '/usr/bin/scp -c blowfish';
+        $SSH_BIN = '/usr/bin/ssh -c blowfish';
+    }
+    elsif ($os_name eq 'SunOS')
+    {
+        $SCP_BIN = '/usr/local/bin/scp -c blowfish';
+        $SSH_BIN = '/usr/local/bin/ssh -c blowfish';
+    }
 }
 
 #
@@ -449,7 +449,7 @@ sub getMatchingUserServer
     {
         foreach $userserver ( @{$groups_userservers_hash{$group}} )
         {
-	    $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
+        $userserver =~ /(\w*)\@([0-9a-zA-z.]*)/;
 
             if ($partial eq $2)
             {
@@ -547,23 +547,23 @@ sub LoadConfig
                 $server = $_;
                 chomp($server);
 
-		open(MYUSERFILE, "<$CONFIG_DIR/$environment/user/$filename")
-		    || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
+                open(MYUSERFILE, "<$CONFIG_DIR/$environment/user/$filename")
+                    || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
 
-		while(<MYUSERFILE>)
-		{
-		    $user = $_;
-		    chomp($user);
-		}
+                while(<MYUSERFILE>)
+                {
+                    $user = $_;
+                    chomp($user);
+                }
 
-		close(MYUSERFILE);
+                close(MYUSERFILE);
 
-		$line = "$user\@$server";
+                $line = "$user\@$server";
 
-		if ( !getMatchingUserServer($server) )
-		{
-			push(@{$groups_userservers_hash{'all'}}, $line);
-		}
+                if ( !getMatchingUserServer($server) )
+                {
+                    push(@{$groups_userservers_hash{'all'}}, $line);
+                }
 
                 push(@{$groups_userservers_hash{$filename}}, $line);
             }
@@ -578,20 +578,6 @@ sub LoadConfig
 
     push(@server_groups, 'all');
     @server_groups = sort(@server_groups);
-
-######################################################################
-#    foreach my $group (sort keys(%groups_userservers_hash) )
-#    {
-#        print("Group: $group\n");
-#
-#        foreach my $userserver ( @{$groups_userservers_hash{$group}} )
-#        {
-#            print("     User-Server: $userserver\n");
-#        }
-#    }
-#
-######################################################################
-
 }
 
 #
@@ -652,9 +638,9 @@ sub ParseCopy
              print("ERROR: Local file $1 is not accessible.\n");
         }
 
-	print("ERROR: This syntax of the copy command is currently incomplete.\n");
+        print("ERROR: This syntax of the copy command is currently incomplete.\n");
 
-	return;
+        return;
     }
 
     # Copy from a local file to a specified server group or single server,
@@ -667,7 +653,7 @@ sub ParseCopy
         {
             print("ERROR: Local file $1 is not accessible.\n");
 
-	    return;
+            return;
         }
 
         # Check groups first, they get priority.
@@ -681,7 +667,7 @@ sub ParseCopy
                 {
                     if ( PingUserServer($userserver) )
                     {
-			print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
+                        print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
 
                         system("$SCP_BIN $1 $userserver:$3");
                     }
@@ -697,7 +683,7 @@ sub ParseCopy
             {
                 if ( PingUserServer($userserver) )
                 {
-		    print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
+                    print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
 
                     system("$SCP_BIN $1 $userserver:$3");
                 }
@@ -709,7 +695,7 @@ sub ParseCopy
             print("ERROR: No server hostname or group matching '$temp_str' found.\n");
         }
 
-	return;
+    return;
     }
 
     # Copy a local file to the current working server group,
@@ -726,18 +712,18 @@ sub ParseCopy
 
         print("Copy local file $1 to server group $current_server_group, remote directory $2?\n");
 
-            if ( AreYouSure() )
+        if ( AreYouSure() )
+        {
+            foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
             {
-                foreach $userserver ( sort @{$groups_userservers_hash{$current_server_group}} )
+                if ( PingUserServer($userserver) )
                 {
-                    if ( PingUserServer($userserver) )
-                    {
-                        print("EXEC:  $SCP_BIN $1 $userserver:$2\n");
+                    print("EXEC:  $SCP_BIN $1 $userserver:$2\n");
 
-                        system("$SCP_BIN $1 $userserver:$2");
-                    }
+                    system("$SCP_BIN $1 $userserver:$2");
                 }
             }
+        }
 
         return;
     }
@@ -780,7 +766,7 @@ sub ParseRun
             }
         }
 
-	return;
+        return;
     }
 
     # Run command on a specific server or group.
@@ -817,7 +803,7 @@ sub ParseRun
             print("ERROR: No server hostname or group matching '$2' found.\n");
         }
 
-	return;
+        return;
     }
 
     # Fall-through logic, invalid syntax error.
@@ -860,10 +846,10 @@ sub PingUserServer
 #
 sub PrintHelpFile
 {
-	my ($filename) = @_;
+    my ($filename) = @_;
 
     open(MYFILE, "<$HOME_DIR/doc/$filename") ||
-	    return($FALSE);
+        return($FALSE);
 
     print "\n";
 
@@ -876,7 +862,7 @@ sub PrintHelpFile
 
     print "\n";
 
-	return($TRUE);
+    return($TRUE);
 }
 
 #
