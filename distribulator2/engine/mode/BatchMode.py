@@ -265,10 +265,10 @@ class BatchMode(Mode.Mode):
 
             myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
 
-            if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
+            if ( (myTimeDuration > 0) & (int(myCommandCount) > 0) ):
                 myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
             else:
-                myInfo = myInfo + "0s per command"
+                myInfo = myInfo + "0s avg. per command"
 
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
