@@ -3,8 +3,22 @@
 #
 ######################################################################
 
+Quick-Hack Install Directions
+-----------------------------
+
+1) Pick a place you wish to install the distribution
+   (i.e. /usr/local/novo/distribulator).
+2) Untar/gzip the distribution into that directory.
+3) Edit distribulator.pl, and specify where the distribution
+is installed, and where the config files containing server group
+lists can be found.
+4) Fire it up!
+
 This document is more end-user oriented and as such has been placed at
-the absolute bottom of the priority list.  Once the software herein
-is more complete, this document will say something useful.
+the absolute bottom of the priority list.
+
+However, being that this is not a piece of software most of the world
+will ever use, feel free to contact me personally if you need support,
+find bugs, have suggestions, etc.
 
 --Adam W. Dace <adam@turing.com>

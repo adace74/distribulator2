@@ -4,8 +4,8 @@
 #
 # Name: distribulator.pl
 #
-# Description: The Distribulator.  A detail description can be found
-# in the README file in the above directory(..).
+# Description: The Distribulator.
+# A detailed description can be found in the ../README file.
 #
 ######################################################################
 #

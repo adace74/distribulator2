@@ -39,44 +39,42 @@ Legend For Features Below:
 "+" Indicates a feature that is currently being developed.
 "*" Indicates a feature that is at least 80%(if not 100%) complete.
 
-Feature List For v0.5:
+Feature List For v0.5 (Coming Soon!):
 
 * Some semblance of a shell, include a useful prompt.
-+ Ability to load in text-based lists of servers, representing
-  server sets. -- In Progress.
-+ Ability to load in different remote usernames for different server sets
-  from a text file. -- Coming Soon.
+* Ability to load in text-based lists of servers, representing
+  server sets.
+* Ability to load in different remote usernames for different server sets
+  from a text file.
   (i.e. apache@web01, tomcat@app01)
-+ Ability to work with -one- environment of servers at a time,
+* Ability to work with -one- environment of servers at a time,
   specified at startup via --env=my_environment.
   The idea here is not allow users to mix devel, testing, and production worlds.
-- Some sort of pre-ssh ping functionality, such that when a server is down,
-  that alone won't hang our session.
-+ Single remote box command execution.
-- Multiple set-based remote box command execution.
-- Single local box file to single remote box file copy.
+* Attempts to connect to all servers port 22, -before- running ssh.
+  This health-check prevents "session hang" that can occur by running
+  ssh alone.
+* Single remote server command execution.
+- Pattern-based hostname matching for use with single remote server
+  command execution.
+* Multiple set-based remote server command execution.
+- Single local server file to single remote server file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
-- Single local box file to many remote boxes file copy.
+- Single local server file to many remote serveres file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
-- Single remote box file to single remote box file copy.
+- Single remote server file to single remote server file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)
-- Single remote box file to many remote boxes file copy.
+- Single remote server file to many remote serveres file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
-- ssh-agent support?
 
-Feature List For v0.7:
+Feature List For v0.7 (A little farther out):
 
 - Regular expression support in server hostnames.
-- Remote server health-check before attempting to run SSH.
-  Instead of keeping track of which servers are actually down,
-  by sending a single ping packet we could dynamically check every
-  time we need to access a given server.  This would RULE!
 - Sudo-based remote permissions checking.
 - Other random pie-in-the-sky dreamsicle features.
 
-Feature List For v1.0:
+Feature List For v1.0 (Will we ever get here?  Who knows!):
 
-- Integration with ncurses such that one could run a command on 4 boxes
+- Integration with ncurses such that one could run a command on 4 servers
   in parallel, and see the output from each of them?
 - Auditing capabilities via syslog?
 - Other random pie-in-the-sky dreamsicle features.
