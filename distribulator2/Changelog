@@ -169,15 +169,16 @@ Change List For v0.6.3 (Language: Python / Status: In Progress)
 * Ability to simply echo any given set of hosts or server groups to STDOUT
   in a space-delimited format acceptable to other languages(i.e. shell/Perl)
   that is also easily passable to SSH.
-* Removed redundant / silly code in CommandRunner.py,
-  resulting in reduced complexity.
+* Cleanup: Renaming instance variables with a naming convention less lame than
+  thisThing, thisOtherThing, etc.
+- Cleanup: Take a look at the various modes the distribulator now supports
+  and verify if the "VerboseMode" internal flags are still truly necessary.
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
 ? Replacing the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.  Good idea?  Hmm...
-- Renaming instance variables with a naming convention less lame than
-  thisThing, thisOtherThing, etc.  s/this/my/g ?
+- Ability to use regular expressions to match server names.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background threads in parallel.
   Output will be spooled to one file per server in a standard output directory.

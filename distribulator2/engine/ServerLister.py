@@ -43,79 +43,79 @@ class ServerLister:
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
 
-        thisGroupList = []
-        thisOutput = '';
-        thisServerGroupList = []
-        thisServerNameList = []
+        myGroupList = []
+        myOutput = '';
+        myServerGroupList = []
+        myServerNameList = []
 
         self._listString = self._globalConfig.getRequestedList()
 
         #
         # Step 1: Assemble two lists based on command syntax.
         #
-        # thisServerNameList will contain a list of server names.
+        # myServerNameList will contain a list of server names.
         # -or-
-        # thisServerGroupList will contain a list of server groups.
+        # myServerGroupList will contain a list of server groups.
         #
-        # If this works, back-patch me into CommandRunner.py
+        # If my works, back-patch me into CommandRunner.py
         if (self._listString.find(',') == -1):
-            thisGroupList.append(self._listString)
+            myGroupList.append(self._listString)
         else:
-            thisGroupList = self._listString.split(',')
+            myGroupList = self._listString.split(',')
 
-        for thisLoopStr in thisGroupList:
-            thisLoopStr = thisLoopStr.strip()
+        for myLoopStr in myGroupList:
+            myLoopStr = myLoopStr.strip()
             # Check for server name match.
-            thisServer = self._globalConfig.getServerByName(thisLoopStr)
+            myServer = self._globalConfig.getServerByName(myLoopStr)
 
-            if (thisServer):
-                thisServerNameList.append(thisServer.getName())
+            if (myServer):
+                myServerNameList.append(myServer.getName())
                 continue
 
             # Check for server group match.
-            thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
-            if (thisServerGroup):
-                thisServerGroupList.append(thisLoopStr)
+            myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+            if (myServerGroup):
+                myServerGroupList.append(myLoopStr)
             else:
-                thisError = "ERROR: No matching server name or group '" + \
-                            thisLoopStr + "'."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                myError = "ERROR: No matching server name or group '" + \
+                            myLoopStr + "'."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
 
         #
         # Step 2: Make sure noone's trying to mix
         # server hostnames and server group names together.
         #
-        if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
-            thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         #
         # Step 3: If we found server name(s), then run with that.
         # Otherwise, do the same with the server group(s) given.
         #
-        if ( len(thisServerNameList) > 0 ):
-            for thisNameStr in thisServerNameList:
-                thisServer = self._globalConfig.getServerByName(thisNameStr)
+        if ( len(myServerNameList) > 0 ):
+            for myNameStr in myServerNameList:
+                myServer = self._globalConfig.getServerByName(myNameStr)
 
-                thisOutput = thisOutput + thisServer.getUsername() + "@" + \
-                    thisServer.getName() + " "
+                myOutput = myOutput + myServer.getUsername() + "@" + \
+                    myServer.getName() + " "
         else:
             # If we found server group names, then run with that.
             #
-            for thisGroupStr in thisServerGroupList:
-                thisServerGroup = self._globalConfig.getServerGroupByName(
-                    thisGroupStr)
+            for myGroupStr in myServerGroupList:
+                myServerGroup = self._globalConfig.getServerGroupByName(
+                    myGroupStr)
 
-                thisServerList = thisServerGroup.getServerList()
+                myServerList = myServerGroup.getServerList()
 
-                for thisServer in thisServerList:
-                    thisOutput = thisOutput + thisServer.getUsername() + "@" + \
-                        thisServer.getName() + " "
+                for myServer in myServerList:
+                    myOutput = myOutput + myServer.getUsername() + "@" + \
+                        myServer.getName() + " "
 
-        thisOutput = thisOutput.strip()
-        print thisOutput
+        myOutput = myOutput.strip()
+        print myOutput
 
         return
 

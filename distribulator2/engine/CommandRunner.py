@@ -55,7 +55,7 @@ class CommandRunner:
              return False
 
         self._commTokens = self._commString.split()
-        thisCommandCount = 0
+        myCommandCount = 0
 
         if (self._commTokens[0] != 'cd'):
             # Log it.
@@ -67,28 +67,28 @@ class CommandRunner:
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
-            thisCommandCount = self.doChdir()
+            myCommandCount = self.doChdir()
         elif (self._commTokens[0] == 'copy'):
-            thisCommandCount = self.doCopy()
+            myCommandCount = self.doCopy()
         elif (self._commTokens[0] == 'exit'):
-            thisCommandCount = self.doExit()
+            myCommandCount = self.doExit()
         elif (self._commTokens[0] == 'help'):
-            thisCommandCount = self.doHelp()
+            myCommandCount = self.doHelp()
         elif (self._commTokens[0] == 'login'):
-            thisCommandCount = self.doLogin()
+            myCommandCount = self.doLogin()
         elif (self._commTokens[0] == 'run'):
-            thisCommandCount = self.doRun()
+            myCommandCount = self.doRun()
         elif (self._commTokens[0] == 'server-group'):
-            thisCommandCount = self.doServerGroup()
+            myCommandCount = self.doServerGroup()
         elif (self._commTokens[0] == 'server-list'):
-            thisCommandCount = self.doServerList()
+            myCommandCount = self.doServerList()
         else:
-            thisError = "ERROR: Unknown Command: '" + \
+            myError = "ERROR: Unknown Command: '" + \
                             self._commTokens[0] + "'."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
-        return thisCommandCount
+        return myCommandCount
 
 ######################################################################
 
@@ -97,15 +97,15 @@ class CommandRunner:
 
         try:
             sys.stdout.write("Yes / No> ")
-            thisInput = sys.stdin.readline()
-            thisInput = thisInput.strip()
+            myInput = sys.stdin.readline()
+            myInput = myInput.strip()
 
         except (EOFError, KeyboardInterrupt):
-            thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
-            self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+            myInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
+            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
             return False
 
-        if (thisInput.lower() == 'yes'):
+        if (myInput.lower() == 'yes'):
             return True
         else:
             return False
@@ -117,18 +117,18 @@ class CommandRunner:
 
         # If the user just types 'cd', do what most shells would do.
         if (len(self._commTokens) == 1):
-            thisDirStr = os.environ.get('HOME')
+            myDirStr = os.environ.get('HOME')
         else:
-            thisDirStr = self._commTokens[1]
+            myDirStr = self._commTokens[1]
 
         try:
             if (self._commTokens[0] == 'cd'):
-                os.chdir(thisDirStr)
+                os.chdir(myDirStr)
 
         except OSError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
                                                       self._commTokens[1])
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         return True
@@ -138,43 +138,43 @@ class CommandRunner:
     def doCopy(self):
         """This method is responsible for the processing of the 'copy' command."""
 
-        thisCommandCount = 0
-        thisCopyTarget = '';
-        thisServerGroupList = []
-        thisServerNameList = []
+        myCommandCount = 0
+        myCopyTarget = '';
+        myServerGroupList = []
+        myServerNameList = []
 
         #
         # Step 1: Common validation and variable-setting.
         #
         # Validate token count.
         if (len(self._commTokens) < 3):
-            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         elif (self._commTokens[2].find('/') == -1):
-            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False            
         if (self._commString.find(' reverse') > 0):
-            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         else:
-            thisLocalPath = self._commTokens[1]
-            thisRemotePath = self._commTokens[2]
+            myLocalPath = self._commTokens[1]
+            myRemotePath = self._commTokens[2]
 
         # Validate local file.
         try:
             if ( stat.S_ISREG(os.stat(
-                thisLocalPath)[stat.ST_MODE]) == False):
-                thisError = "ERROR: File '" + thisLocalPath + \
+                myLocalPath)[stat.ST_MODE]) == False):
+                myError = "ERROR: File '" + myLocalPath + \
                             "' is accessible, but not regular."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
         except OSError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
-                                                      thisLocalPath)
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+                                                      myLocalPath)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         #
@@ -183,220 +183,220 @@ class CommandRunner:
         # 
         if (self._commString.find(':') == -1):
             # copy /tmp/blah /tmp/
-            thisCopyTarget = 'current_server_group'
+            myCopyTarget = 'current_server_group'
         elif (self._commTokens[1].find(':') > 0):
             # copy app:/tmp/blah /tmp/
-            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         elif (self._commString.find(',') == -1):
             # copy /tmp/blah.txt app:/tmp/
-            thisCopyTarget = 'single_server_group'
+            myCopyTarget = 'single_server_group'
         else:
             # copy /tmp/blah.txt app,www:/tmp/
-            thisCopyTarget = 'multiple_server_group'
+            myCopyTarget = 'multiple_server_group'
 
         #
         # Step 3: Assemble two lists based on command syntax.
         #
-        # thisServerNameList will contain a list of server names.
+        # myServerNameList will contain a list of server names.
         # -or-
-        # thisServerGroupList will contain a list of server groups.
+        # myServerGroupList will contain a list of server groups.
         #
-        if (thisCopyTarget == 'current_server_group'):
+        if (myCopyTarget == 'current_server_group'):
             # copy /tmp/blah /tmp/
-            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            myGroupStr = self._globalConfig.getCurrentServerGroup().getName()
 
             # Validate remote path.
-            if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
-                thisError = "ERROR: Remote path '" + thisRemotePath + \
+            if (myRemotePath[len(myRemotePath) - 1] != '/'):
+                myError = "ERROR: Remote path '" + myRemotePath + \
                             "' must end with a slash."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
 
-            thisServerGroupList.append(thisGroupStr)
+            myServerGroupList.append(myGroupStr)
 
-        elif (thisCopyTarget == 'single_server_group'):
+        elif (myCopyTarget == 'single_server_group'):
             # copy /tmp/blah app:/tmp/
-            thisGroupStr = self._commTokens[2]
-            thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
-            thisRemotePath = self._commTokens[2]
-            thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
+            myGroupStr = self._commTokens[2]
+            myGroupStr = myGroupStr[:myGroupStr.find(':')]
+            myRemotePath = self._commTokens[2]
+            myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
 
             # Validate remote path.
-            if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
-                thisError = "ERROR: Remote path '" + thisRemotePath + \
+            if (myRemotePath[len(myRemotePath) - 1] != '/'):
+                myError = "ERROR: Remote path '" + myRemotePath + \
                             "' must end with a slash."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
 
             # Check for server name match.
-            thisServer = self._globalConfig.getServerByName(thisGroupStr)
+            myServer = self._globalConfig.getServerByName(myGroupStr)
 
-            if (thisServer):
-                thisServerNameList.append(thisServer.getName())
+            if (myServer):
+                myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match.
-                thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+                myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
                 # Validate.
-                if (thisServerGroup == False):
-                    thisError = "ERROR: No matching server name or group '" + \
-                                thisGroupStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                if (myServerGroup == False):
+                    myError = "ERROR: No matching server name or group '" + \
+                                myGroupStr + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
                 else:
-                    thisServerGroupList.append(thisGroupStr)
-        elif (thisCopyTarget == 'multiple_server_group'):
+                    myServerGroupList.append(myGroupStr)
+        elif (myCopyTarget == 'multiple_server_group'):
             # copy /tmp/blah app,www:/tmp/
-            thisGroupStr = self._commTokens[2]
-            thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
-            thisGroupList = thisGroupStr.split(',')
-            thisRemotePath = self._commTokens[2]
-            thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
+            myGroupStr = self._commTokens[2]
+            myGroupStr = myGroupStr[:myGroupStr.find(':')]
+            myGroupList = myGroupStr.split(',')
+            myRemotePath = self._commTokens[2]
+            myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
 
-            for thisLoopStr in thisGroupList:
-                thisLoopStr = thisLoopStr.strip()
+            for myLoopStr in myGroupList:
+                myLoopStr = myLoopStr.strip()
 
                 # Check for server name match.
-                thisServer = self._globalConfig.getServerByName(thisLoopStr)
+                myServer = self._globalConfig.getServerByName(myLoopStr)
 
-                if (thisServer):
-                    thisServerNameList.append(thisServer.getName())
+                if (myServer):
+                    myServerNameList.append(myServer.getName())
                     continue
 
                 # Check for server group match.
-                thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
-                if (thisServerGroup):
-                    thisServerGroupList.append(thisLoopStr)
+                myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+                if (myServerGroup):
+                    myServerGroupList.append(myLoopStr)
                 else:
-                    thisError = "ERROR: No matching server name or group '" + \
-                                thisLoopStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                    myError = "ERROR: No matching server name or group '" + \
+                                myLoopStr + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
 
         #
         # Step 4: Make sure noone's trying to mix
         #         server hostnames and server group names together.
         #
-        if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
-            thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         #
         # Step 5: Must make sure...are you sure you're sure?
         #
         if (self._globalConfig.isBatchMode() == False):
-            thisDisplayStr = ''
+            myDisplayStr = ''
 
-            if ( len(thisServerNameList) > 0):
-                for thisNameStr in thisServerNameList:
-                    thisDisplayStr = thisDisplayStr + thisNameStr + ','
+            if ( len(myServerNameList) > 0):
+                for myNameStr in myServerNameList:
+                    myDisplayStr = myDisplayStr + myNameStr + ','
 
-                thisDisplayStr = thisDisplayStr.rstrip(',')
+                myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Copy local file '" + thisLocalPath + \
-                      "' to remote directory '" + thisRemotePath + "'")
-                print("on server(s) " + thisDisplayStr + "?")
+                print("Copy local file '" + myLocalPath + \
+                      "' to remote directory '" + myRemotePath + "'")
+                print("on server(s) " + myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    thisInfo = "INFO:  Aborting command."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Aborting command."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
             else:
-                for thisGroupStr in thisServerGroupList:
-                    thisDisplayStr = thisDisplayStr + thisGroupStr + ','
+                for myGroupStr in myServerGroupList:
+                    myDisplayStr = myDisplayStr + myGroupStr + ','
 
-                thisDisplayStr = thisDisplayStr.rstrip(',')
+                myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Copy local file '" + thisLocalPath + \
-                      "' to remote directory '" + thisRemotePath + "'")
-                print("on server group(s) " + thisDisplayStr + "?")
+                print("Copy local file '" + myLocalPath + \
+                      "' to remote directory '" + myRemotePath + "'")
+                print("on server group(s) " + myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    thisInfo = "INFO:  Aborting command."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Aborting command."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
 
         #
         # Step 6: If we found server name(s), then run with that.
         #         Otherwise, do the same with the server group(s) given.
         #
-        if ( len(thisServerNameList) > 0 ):
+        if ( len(myServerNameList) > 0 ):
             try:
-                for thisNameStr in thisServerNameList:
-                    thisServer = self._globalConfig.getServerByName(thisNameStr)
-                    thisPinger = generic.HostPinger.HostPinger(
+                for myNameStr in myServerNameList:
+                    myServer = self._globalConfig.getServerByName(myNameStr)
+                    myPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
 
-                    if (thisPinger.ping(thisNameStr) == 0):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        thisExternalCommand.setCommand( \
+                    if (myPinger.ping(myNameStr) == 0):
+                        myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                        myExternalCommand.setCommand( \
                             self._globalConfig.getScpBinary() + " " + \
-                            thisLocalPath + " " + \
-                            thisServer.getUsername() + "@" + \
-                            thisServer.getName() + ":" + \
-                            thisRemotePath )
+                            myLocalPath + " " + \
+                            myServer.getUsername() + "@" + \
+                            myServer.getName() + ":" + \
+                            myRemotePath )
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
-                            thisExternalCommand.runBatch()
+                            myExternalCommand.runBatch()
                         else:
-                            thisExternalCommand.runConsole(True)
-                        thisCommandCount = thisCommandCount + 1
+                            myExternalCommand.runConsole(True)
+                        myCommandCount = myCommandCount + 1
                     else:
-                        thisError = "ERROR: Server '" + \
-                                    thisServer.getName() + \
+                        myError = "ERROR: Server '" + \
+                                    myServer.getName() + \
                                     "' appears to be down.  Continuing..."
-                        self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             except EOFError:
                 pass
             except KeyboardInterrupt:
-                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
         else:
             #
             # Server group version of the above.
             #
-            for thisGroupStr in thisServerGroupList:
-                thisServerGroup = self._globalConfig.getServerGroupByName(
-                    thisGroupStr)
-                thisServerList = thisServerGroup.getServerList()
+            for myGroupStr in myServerGroupList:
+                myServerGroup = self._globalConfig.getServerGroupByName(
+                    myGroupStr)
+                myServerList = myServerGroup.getServerList()
 
                 try:
-                    for thisServer in thisServerList:
-                        thisPinger = generic.HostPinger.HostPinger(
+                    for myServer in myServerList:
+                        myPinger = generic.HostPinger.HostPinger(
                             self._globalConfig.getPingBinary() )
 
-                        if (thisPinger.ping(thisServer.getName()) == 0):
-                            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                            thisExternalCommand.setCommand( \
+                        if (myPinger.ping(myServer.getName()) == 0):
+                            myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                            myExternalCommand.setCommand( \
                             self._globalConfig.getScpBinary() + " " + \
-                            thisLocalPath + " " + \
-                            thisServer.getUsername() + "@" + \
-                            thisServer.getName() + ":" + \
-                            thisRemotePath )
+                            myLocalPath + " " + \
+                            myServer.getUsername() + "@" + \
+                            myServer.getName() + ":" + \
+                            myRemotePath )
                             # Run It.
                             if ( self._globalConfig.isBatchMode() ):
-                                thisExternalCommand.runBatch()
+                                myExternalCommand.runBatch()
                             else:
-                                thisExternalCommand.runConsole(True)
-                            thisCommandCount = thisCommandCount + 1
+                                myExternalCommand.runConsole(True)
+                            myCommandCount = myCommandCount + 1
                         else:
-                            thisError = "ERROR: Server '" + \
-                                        thisServer.getName() + \
+                            myError = "ERROR: Server '" + \
+                                        myServer.getName() + \
                                         "' appears to be down.  Continuing..."
-                            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                 except EOFError:
                     pass
                 except KeyboardInterrupt:
-                    thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-        return thisCommandCount
+        return myCommandCount
 
 ######################################################################
 
@@ -405,13 +405,13 @@ class CommandRunner:
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            thisError = "ERROR: Invalid command for batch mode."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Invalid command for batch mode."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
-        thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+        myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
 
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
         return True
 
@@ -422,23 +422,23 @@ class CommandRunner:
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            thisError = "ERROR: Invalid command for batch mode."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Invalid command for batch mode."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         if ( len(self._commTokens) > 1 ):
-            thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
+            myFileName = os.path.join(self._globalConfig.getHelpDir(), \
                                         self._commTokens[1] + '-desc.txt')
         else:
-            thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
+            myFileName = os.path.join(self._globalConfig.getHelpDir(), \
                                         'help.txt')
 
-        thisFilePrinter = generic.FilePrinter.FilePrinter()
+        myFilePrinter = generic.FilePrinter.FilePrinter()
 
-        if (thisFilePrinter.printFile(thisFileName) == False):
-            thisError = "ERROR: Cannot find help for specified command '" + \
+        if (myFilePrinter.printFile(myFileName) == False):
+            myError = "ERROR: Cannot find help for specified command '" + \
                         self._commTokens[1] + "'."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         return True
@@ -450,34 +450,34 @@ class CommandRunner:
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            thisError = "ERROR: Invalid command for batch mode."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Invalid command for batch mode."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         # Check for server name.
         if ( len(self._commTokens) > 1):
             if ( self._globalConfig.getServerByName(self._commTokens[1]) ):
-                thisServer = self._globalConfig.getServerByName(self._commTokens[1])
+                myServer = self._globalConfig.getServerByName(self._commTokens[1])
             else:
-                thisError = "ERROR: No matching server '" + \
+                myError = "ERROR: No matching server '" + \
                             self._commTokens[1] + "'."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
         else:
-            thisError = "ERROR: No server name given."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: No server name given."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         # Run the expanded shell command.
-        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-        thisExternalCommand.setCommand( \
+        myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+        myExternalCommand.setCommand( \
             self._globalConfig.getSshBinary() + " -l " + \
-            thisServer.getUsername() + " " + thisServer.getName() )
+            myServer.getUsername() + " " + myServer.getName() )
         try:
-            thisExternalCommand.runConsole(True)
+            myExternalCommand.runConsole(True)
         except (EOFError, KeyboardInterrupt):
-            thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
-            self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+            myInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
         return True
 
@@ -486,38 +486,38 @@ class CommandRunner:
     def doRun(self):
         """This method is responsible for the processing of the 'run' command."""
 
-        thisCommandCount = 0
-        thisServerGroupList = []
-        thisServerNameList = []
-        thisRunTarget = '';
+        myCommandCount = 0
+        myServerGroupList = []
+        myServerNameList = []
+        myRunTarget = '';
 
         #
         # Step 1:  Create our own tokens, and check for SSH flags and
         #          the 'reverse' keyword.
         #
         if ( self._commString.find('"') == -1 ):
-            thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         # Get substr indexes.
-        thisFirstQuoteIndex = self._commString.find('"')
-        thisLastQuoteIndex = self._commString.rfind('"')
-        thisPrefixStr = self._commString[0:thisFirstQuoteIndex]
-        thisBodyStr = self._commString[thisFirstQuoteIndex:(thisLastQuoteIndex + 1)]
-        thisSuffixStr = self._commString[thisLastQuoteIndex + 1:]
+        myFirstQuoteIndex = self._commString.find('"')
+        myLastQuoteIndex = self._commString.rfind('"')
+        myPrefixStr = self._commString[0:myFirstQuoteIndex]
+        myBodyStr = self._commString[myFirstQuoteIndex:(myLastQuoteIndex + 1)]
+        mySuffixStr = self._commString[myLastQuoteIndex + 1:]
 
         # Check for pass-through SSH flags
-        if (thisPrefixStr.find('-') != -1):
-            thisFlagStr = ' ' + thisPrefixStr[thisPrefixStr.find('-'):]
-            thisFlagStr = thisFlagStr.rstrip()
+        if (myPrefixStr.find('-') != -1):
+            myFlagStr = ' ' + myPrefixStr[myPrefixStr.find('-'):]
+            myFlagStr = myFlagStr.rstrip()
         else:
-            thisFlagStr = ''
+            myFlagStr = ''
 
         # Check for the 'reverse' keyword.
-        if (thisSuffixStr.find(' reverse') != -1):
+        if (mySuffixStr.find(' reverse') != -1):
             isReverse = True
-            thisSuffixStr = thisSuffixStr[:thisSuffixStr.find(' reverse')]
+            mySuffixStr = mySuffixStr[:mySuffixStr.find(' reverse')]
         else:
             isReverse = False
 
@@ -525,126 +525,126 @@ class CommandRunner:
         # Step 2: Try to determine what the target of the command is
         #         and set a state-tracking variable accordingly.
         # 
-        if (len(thisSuffixStr) == 0):
+        if (len(mySuffixStr) == 0):
             # run "uptime"
             # run -t "uptime"
-            thisRunTarget = 'current_server_group';
+            myRunTarget = 'current_server_group';
         # Check for syntax errors.
-        elif (thisSuffixStr.find(' on ') == -1):
-            thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+        elif (mySuffixStr.find(' on ') == -1):
+            myError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
-        elif (thisSuffixStr.find(',') == -1):
+        elif (mySuffixStr.find(',') == -1):
             # run "uptime" on app
             # run -t "uptime" on app
             # run "uptime" on app01
             # run -t "uptime" on app01
-            thisRunTarget = 'single_server_group';
+            myRunTarget = 'single_server_group';
         else:
             # run "uptime" on app, www
             # run -t "uptime" on app, www
             # run "uptime" on app01, www01
             # run -t "uptime" on app01, www01
-            thisRunTarget = 'multiple_server_group';
+            myRunTarget = 'multiple_server_group';
 
-        # Assuming no error up until this point we can now
+        # Assuming no error up until my point we can now
         # throw out the " on " part of our command.
-        thisGroupStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
-        thisGroupStr = thisGroupStr.strip()
+        myGroupStr = mySuffixStr[mySuffixStr.find(' on ') + 4:]
+        myGroupStr = myGroupStr.strip()
 
         #
         # Step 3: Assemble two lists based on command syntax.
         #
-        # thisServerNameList will contain a list of server names.
+        # myServerNameList will contain a list of server names.
         # -or-
-        # thisServerGroupList will contain a list of server groups.
+        # myServerGroupList will contain a list of server groups.
         #
-        if (thisRunTarget == 'current_server_group'):
-            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
-            thisServerGroupList.append(thisGroupStr)
+        if (myRunTarget == 'current_server_group'):
+            myGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            myServerGroupList.append(myGroupStr)
         #
-        elif (thisRunTarget == 'single_server_group'):
+        elif (myRunTarget == 'single_server_group'):
             # Check for server name match.
-            thisServer = self._globalConfig.getServerByName(thisGroupStr)
+            myServer = self._globalConfig.getServerByName(myGroupStr)
 
-            if (thisServer):
-                thisServerNameList.append(thisServer.getName())
+            if (myServer):
+                myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match.
-                thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+                myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
                 # Validate.
-                if (thisServerGroup == False):
-                    thisError = "ERROR: No matching server name or group '" + \
-                                thisGroupStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                if (myServerGroup == False):
+                    myError = "ERROR: No matching server name or group '" + \
+                                myGroupStr + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
                 else:
-                    thisServerGroupList.append(thisGroupStr)
+                    myServerGroupList.append(myGroupStr)
         #
-        elif (thisRunTarget == 'multiple_server_group'):
-            thisGroupList = thisGroupStr.split(',')
+        elif (myRunTarget == 'multiple_server_group'):
+            myGroupList = myGroupStr.split(',')
 
-            for thisLoopStr in thisGroupList:
-                thisLoopStr = thisLoopStr.strip()
+            for myLoopStr in myGroupList:
+                myLoopStr = myLoopStr.strip()
                 # Check for server name match.
-                thisServer = self._globalConfig.getServerByName(thisLoopStr)
+                myServer = self._globalConfig.getServerByName(myLoopStr)
 
-                if (thisServer):
-                    thisServerNameList.append(thisServer.getName())
+                if (myServer):
+                    myServerNameList.append(myServer.getName())
                     continue
 
                 # Check for server group match.
-                thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
-                if (thisServerGroup):
-                    thisServerGroupList.append(thisLoopStr)
+                myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+                if (myServerGroup):
+                    myServerGroupList.append(myLoopStr)
                 else:
-                    thisError = "ERROR: No matching server name or group '" + \
-                                thisLoopStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                    myError = "ERROR: No matching server name or group '" + \
+                                myLoopStr + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
 
         #
         # Step 4: Make sure noone's trying to mix
         # server hostnames and server group names together.
         #
-        if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
-            thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+        if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
+            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         #
         # Step 5: Must make sure...are you sure you're sure?
         #
         if (self._globalConfig.isBatchMode() == False):
-            thisDisplayStr = ''
+            myDisplayStr = ''
 
-            if ( len(thisServerNameList) > 0):
-                for thisNameStr in thisServerNameList:
-                    thisDisplayStr = thisDisplayStr + thisNameStr + ','
+            if ( len(myServerNameList) > 0):
+                for myNameStr in myServerNameList:
+                    myDisplayStr = myDisplayStr + myNameStr + ','
 
-                thisDisplayStr = thisDisplayStr.rstrip(',')
+                myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Run command " + thisBodyStr + " on server(s) " + \
-                      thisDisplayStr + "?")
+                print("Run command " + myBodyStr + " on server(s) " + \
+                      myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    thisInfo = "INFO:  Aborting command."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Aborting command."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
             else:
-                for thisGroupStr in thisServerGroupList:
-                    thisDisplayStr = thisDisplayStr + thisGroupStr + ','
+                for myGroupStr in myServerGroupList:
+                    myDisplayStr = myDisplayStr + myGroupStr + ','
 
-                thisDisplayStr = thisDisplayStr.rstrip(',')
+                myDisplayStr = myDisplayStr.rstrip(',')
 
                 # Are you sure?
-                print("Run command " + thisBodyStr + " on server group(s) " + \
-                      thisDisplayStr + "?")
+                print("Run command " + myBodyStr + " on server group(s) " + \
+                      myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    thisInfo = "INFO:  Aborting command."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Aborting command."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
 
         #
@@ -658,40 +658,40 @@ class CommandRunner:
         # 1) Reverse sort the list
         # 2) Run the commands
         #
-        if ( len(thisServerNameList) > 0 ):
+        if ( len(myServerNameList) > 0 ):
             if (isReverse):
-                thisServerNameList.reverse()
+                myServerNameList.reverse()
 
             try:
-                for thisNameStr in thisServerNameList:
-                    thisServer = self._globalConfig.getServerByName(thisNameStr)
-                    thisPinger = generic.HostPinger.HostPinger(
+                for myNameStr in myServerNameList:
+                    myServer = self._globalConfig.getServerByName(myNameStr)
+                    myPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
 
-                    if (thisPinger.ping(thisNameStr) == 0):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        thisExternalCommand.setCommand( \
-                            self._globalConfig.getSshBinary() + thisFlagStr + \
-                            " -l " + thisServer.getUsername() + " " + \
-                            thisServer.getName() + " " + \
-                            thisBodyStr )
+                    if (myPinger.ping(myNameStr) == 0):
+                        myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                        myExternalCommand.setCommand( \
+                            self._globalConfig.getSshBinary() + myFlagStr + \
+                            " -l " + myServer.getUsername() + " " + \
+                            myServer.getName() + " " + \
+                            myBodyStr )
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
-                            thisExternalCommand.runBatch()
+                            myExternalCommand.runBatch()
                         else:
-                            thisExternalCommand.runConsole(True)
-                        thisCommandCount = thisCommandCount + 1
+                            myExternalCommand.runConsole(True)
+                        myCommandCount = myCommandCount + 1
                     else:
-                        thisError = "ERROR: Server '" + \
-                                    thisServer.getName() + \
+                        myError = "ERROR: Server '" + \
+                                    myServer.getName() + \
                                     "' appears to be down.  Continuing..."
-                        self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             except EOFError:
                 pass
             except KeyboardInterrupt:
-                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
             return True
         else:
@@ -705,49 +705,49 @@ class CommandRunner:
             # 2) Run the commands
             # 3) Forward-sort the list, hopefully back to its original state.
             #
-            for thisGroupStr in thisServerGroupList:
-                thisServerGroup = self._globalConfig.getServerGroupByName(
-                    thisGroupStr)
+            for myGroupStr in myServerGroupList:
+                myServerGroup = self._globalConfig.getServerGroupByName(
+                    myGroupStr)
 
-                thisServerList = thisServerGroup.getServerList()
+                myServerList = myServerGroup.getServerList()
 
                 if (isReverse):
-                    thisServerList.reverse()
+                    myServerList.reverse()
 
                 try:
-                    for thisServer in thisServerList:
-                        thisPinger = generic.HostPinger.HostPinger(
+                    for myServer in myServerList:
+                        myPinger = generic.HostPinger.HostPinger(
                             self._globalConfig.getPingBinary() )
 
-                        if (thisPinger.ping(thisServer.getName()) == 0):
-                            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                            thisExternalCommand.setCommand( \
-                            self._globalConfig.getSshBinary() + thisFlagStr + \
-                            " -l " + thisServer.getUsername() + " " + \
-                            thisServer.getName() + " " + \
-                            thisBodyStr )
+                        if (myPinger.ping(myServer.getName()) == 0):
+                            myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                            myExternalCommand.setCommand( \
+                            self._globalConfig.getSshBinary() + myFlagStr + \
+                            " -l " + myServer.getUsername() + " " + \
+                            myServer.getName() + " " + \
+                            myBodyStr )
                             # Run It.
                             if ( self._globalConfig.isBatchMode() ):
-                                thisExternalCommand.runBatch()
+                                myExternalCommand.runBatch()
                             else:
-                                thisExternalCommand.runConsole(True)
-                            thisCommandCount = thisCommandCount + 1
+                                myExternalCommand.runConsole(True)
+                            myCommandCount = myCommandCount + 1
                         else:
-                            thisError = "ERROR: Server '" + \
-                                        thisServer.getName() + \
+                            myError = "ERROR: Server '" + \
+                                        myServer.getName() + \
                                         "' appears to be down.  Continuing..."
-                            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                 except EOFError:
                     pass
                 except KeyboardInterrupt:
-                    thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 if (isReverse):
-                    thisServerList.sort()
+                    myServerList.sort()
 
-            return thisCommandCount
+            return myCommandCount
 
 ######################################################################
 
@@ -756,44 +756,44 @@ class CommandRunner:
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            thisError = "ERROR: Invalid command for batch mode."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Invalid command for batch mode."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         # If given a group name, set it.
         if ( len(self._commTokens) > 1 ):
-            thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
+            myServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
 
-            if (thisServerGroup == False):
-                thisError = "ERROR: No matching server group '" + \
+            if (myServerGroup == False):
+                myError = "ERROR: No matching server group '" + \
                             self._commTokens[1] + "'."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
             else:
-                self._globalConfig.setCurrentServerGroup(thisServerGroup)
+                self._globalConfig.setCurrentServerGroup(myServerGroup)
                 print("INFO:  Current server group is now '" + self._commTokens[1] + "'.")
                 return True
         else:
             # Otherwise, display the server group list given at startup.
-            thisServerGroupStr = "Known server groups for environment '" + \
+            myServerGroupStr = "Known server groups for environment '" + \
                                  self._globalConfig.getServerEnv() + "'\n"
-            thisServerGroupStr = thisServerGroupStr + \
+            myServerGroupStr = myServerGroupStr + \
                                  "--------------------------------------------------\n"
-            thisTotalServerCount = 0
-            thisColumnCount = 0
+            myTotalServerCount = 0
+            myColumnCount = 0
 
-            for thisServerGroup in self._globalConfig.getServerGroupList():
-                thisColumnCount = thisColumnCount + 1
-                thisTotalServerCount = thisTotalServerCount + \
-                                       thisServerGroup.getServerCount()
-                thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % \
-                                     (thisServerGroup.getName(), thisServerGroup.getServerCount())
+            for myServerGroup in self._globalConfig.getServerGroupList():
+                myColumnCount = myColumnCount + 1
+                myTotalServerCount = myTotalServerCount + \
+                                       myServerGroup.getServerCount()
+                myServerGroupStr = myServerGroupStr + '%10s (%2d) ' % \
+                                     (myServerGroup.getName(), myServerGroup.getServerCount())
 
-                if (thisColumnCount == 4):
-                    thisColumnCount = 0
-                    thisServerGroupStr = thisServerGroupStr + '\n'
+                if (myColumnCount == 4):
+                    myColumnCount = 0
+                    myServerGroupStr = myServerGroupStr + '\n'
 
-            print(thisServerGroupStr)
+            print(myServerGroupStr)
 
             return True
 
@@ -804,40 +804,40 @@ class CommandRunner:
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            thisError = "ERROR: Invalid command for batch mode."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: Invalid command for batch mode."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
         # If given a server group name, display servers in that group.
         if ( len(self._commTokens) > 1 ):
-            thisServerGroup = self._globalConfig.getServerGroupByName( \
+            myServerGroup = self._globalConfig.getServerGroupByName( \
                 self._commTokens[1] )
         else:
             # Otherwise, display servers in the current working server group.
-            thisServerGroup = self._globalConfig.getCurrentServerGroup()
+            myServerGroup = self._globalConfig.getCurrentServerGroup()
 
         # Check for errors.
-        if (thisServerGroup == False):
-            thisError = "ERROR: No matching server group '" + \
+        if (myServerGroup == False):
+            myError = "ERROR: No matching server group '" + \
                         self._commTokens[1] + "'."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             return False
         else:
-            print("Known servers for group '" + thisServerGroup.getName() + "'")
+            print("Known servers for group '" + myServerGroup.getName() + "'")
             print("--------------------------------------------------")
             # Actual server list goes here.
-            thisTempStr = ''
+            myTempStr = ''
 
-            for thisServer in thisServerGroup.getServerList():
-                if ( len(thisTempStr) > 0 ):
-                    print (thisTempStr + "\t" + thisServer.getName())
-                    thisTempStr = ''
+            for myServer in myServerGroup.getServerList():
+                if ( len(myTempStr) > 0 ):
+                    print (myTempStr + "\t" + myServer.getName())
+                    myTempStr = ''
                 else:
-                    thisTempStr = thisServer.getName()
+                    myTempStr = myServer.getName()
 
-            if ( len(thisTempStr) > 0 ):
-                print(thisTempStr)
+            if ( len(myTempStr) > 0 ):
+                print(myTempStr)
 
             return True
 

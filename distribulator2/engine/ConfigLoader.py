@@ -46,48 +46,48 @@ class ConfigLoader:
         if ( self._globalConfig.isConsoleMode() ):
             print('Loading configuration...')
 
-        thisLinesLoaded = PassedCommLine.initHistory()
+        myLinesLoaded = PassedCommLine.initHistory()
         #
         # Try to print status -after- actions so as to be
         # more accurate.
         #
         if ( self._globalConfig.isConsoleMode() ):
             print("- GNU Readline history:        %d lines loaded." % \
-                  (thisLinesLoaded))
+                  (myLinesLoaded))
         #
         # Step 1: Unix "pass through" commands.
         #
-        thisPassThruList = []
+        myPassThruList = []
         
         try:
-            thisFilename = self._globalConfig.getPassThruFile()
-            thisFile = open(thisFilename, 'r')
+            myFilename = self._globalConfig.getPassThruFile()
+            myFile = open(myFilename, 'r')
             
-            for thisLine in thisFile:
-                thisLine = thisLine.strip()
-                thisPassThruList.append(thisLine)
+            for myLine in myFile:
+                myLine = myLine.strip()
+                myPassThruList.append(myLine)
 
-            thisFile.close()
+            myFile.close()
 
         except IOError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % \
-                        (errno, strerror, thisFilename)
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: [Errno %s] %s: %s" % \
+                        (errno, strerror, myFilename)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
             sys.exit(True)
 
-        self._globalConfig.setPassThruList(thisPassThruList)
+        self._globalConfig.setPassThruList(myPassThruList)
 
         # Status.
         if ( self._globalConfig.isConsoleMode() ):
             print( "- Unix pass-through commands:  %d lines loaded." \
-                   % (len(thisPassThruList)) )
+                   % (len(myPassThruList)) )
 
         #
         # Step 2: Load the main XML configuration file.
         #
-        thisParser = engine.XMLFileParser.XMLFileParser()
+        myParser = engine.XMLFileParser.XMLFileParser()
         self._globalConfig.setCurrentServerGroup(False)
-        self._globalConfig = thisParser.parse(self._globalConfig)
+        self._globalConfig = myParser.parse(self._globalConfig)
 
         if ( self._globalConfig.isConsoleMode() ):
             print( "- Global options and settings: %d lines loaded." %
@@ -99,25 +99,25 @@ class ConfigLoader:
                 self._globalConfig.getServerGroupList()[0] )
 
         # Create our pretty output string.
-        thisServerGroupStr = '- '
-        thisTotalServerCount = 0
-        thisColumnCount = 0
+        myServerGroupStr = '- '
+        myTotalServerCount = 0
+        myColumnCount = 0
 
-        for thisServerGroup in self._globalConfig.getServerGroupList():
-            thisColumnCount = thisColumnCount + 1
-            thisTotalServerCount = thisTotalServerCount + \
-                                   thisServerGroup.getServerCount()
-            thisServerGroupStr = thisServerGroupStr + '%10s (%3d) ' % \
-                                 (thisServerGroup.getName(), thisServerGroup.getServerCount())
+        for myServerGroup in self._globalConfig.getServerGroupList():
+            myColumnCount = myColumnCount + 1
+            myTotalServerCount = myTotalServerCount + \
+                                   myServerGroup.getServerCount()
+            myServerGroupStr = myServerGroupStr + '%10s (%3d) ' % \
+                                 (myServerGroup.getName(), myServerGroup.getServerCount())
 
-            if (thisColumnCount == 4):
-                thisColumnCount = 0
-                thisServerGroupStr = thisServerGroupStr + '\n- '
+            if (myColumnCount == 4):
+                myColumnCount = 0
+                myServerGroupStr = myServerGroupStr + '\n- '
 
         if ( self._globalConfig.isConsoleMode() ):
             print("- Available Server Groups:")
             print("-")
-            print(thisServerGroupStr)        
+            print(myServerGroupStr)        
             print
             print("Confused?  Need help?  Try typing 'help' and see what happens!")
             print

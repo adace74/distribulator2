@@ -42,15 +42,15 @@ class CommandLine:
 
 ######################################################################
 
-    def getAttemptedCompletion(self, thisString, thisIndex):
+    def getAttemptedCompletion(self, myString, myIndex):
         """This method is registered with GNU readline and called for tab-completion."""
 
-        # Don't ask me exactly how, but this seems to work well.
-        if ( (thisIndex == 0) & (readline.get_begidx() == 0) ):
-            if (len(thisString) > 0):
-                for thisCommStr in self._commList:
-                    if (string.find(thisCommStr, thisString) != -1):
-                        return thisCommStr + ' '
+        # Don't ask me exactly how, but my seems to work well.
+        if ( (myIndex == 0) & (readline.get_begidx() == 0) ):
+            if (len(myString) > 0):
+                for myCommStr in self._commList:
+                    if (string.find(myCommStr, myString) != -1):
+                        return myCommStr + ' '
             else:
                 return 'help '
 
@@ -61,24 +61,24 @@ class CommandLine:
     def initHistory(self):
         """This method loads history data for use with GNU readline."""
 
-        thisCounter = 0
-        thisHistory = os.path.join(os.environ['HOME'], ".dist_history")
+        myCounter = 0
+        myHistory = os.path.join(os.environ['HOME'], ".dist_history")
     
         try:
-            thisFile = open(thisHistory, 'r')
-            for thisLine in thisFile:
-                thisCounter = thisCounter + 1
-            thisFile.close()
+            myFile = open(myHistory, 'r')
+            for myLine in myFile:
+                myCounter = myCounter + 1
+            myFile.close()
 
             # Load readline history.
             readline.set_history_length(256)
-            readline.read_history_file(thisHistory)
+            readline.read_history_file(myHistory)
         
         except IOError:
             pass
 
         # Save readline history on exit.
-        atexit.register(readline.write_history_file, thisHistory)
+        atexit.register(readline.write_history_file, myHistory)
 
         # Enable TAB filename-completion, instead of Python's default
         # object completion.
@@ -87,79 +87,79 @@ class CommandLine:
         readline.parse_and_bind("tab: complete")
         readline.set_completer(self.getAttemptedCompletion)
 
-        return thisCounter
+        return myCounter
 
 ######################################################################
 
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
 
-        thisPromptEnv = self._globalConfig.getServerEnv()
-        thisPromptUser = self._globalConfig.getUsername()
+        myPromptEnv = self._globalConfig.getServerEnv()
+        myPromptUser = self._globalConfig.getUsername()
 
         while (1):
             #
             # Step 1: Reset critical variables every time around the loop.
             #
-            thisFoundIt = False
-            thisInput = ''
-            thisPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
-            thisPrompt = '<' + thisPromptUser + '@' + thisPromptEnv + \
-            '[' + thisPromptGroup + ']:' + os.getcwd() + '> '
+            myFoundIt = False
+            myInput = ''
+            myPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
+            myPrompt = '<' + myPromptUser + '@' + myPromptEnv + \
+            '[' + myPromptGroup + ']:' + os.getcwd() + '> '
 
             try:
-                thisInput = raw_input(thisPrompt)
+                myInput = raw_input(myPrompt)
 
             except EOFError:
-                thisInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
+                myInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
                 print
-                print(thisInfo)
-                self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+                print(myInfo)
+                self._globalConfig.getSysLogger().LogMsgInfo(myInfo)
 
                 return
 
             except KeyboardInterrupt:
                 print
 
-            if ( len(thisInput.strip()) > 0 ):
-                thisTokens = thisInput.split()
+            if ( len(myInput.strip()) > 0 ):
+                myTokens = myInput.split()
 
                 #
                 # Step 2: Check for Unix "pass through" commands.
                 #
-                for thisCommand in self._globalConfig.getPassThruList():
-                    if (thisTokens[0] == thisCommand):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        thisExternalCommand.setCommand(thisInput)
+                for myCommand in self._globalConfig.getPassThruList():
+                    if (myTokens[0] == myCommand):
+                        myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                        myExternalCommand.setCommand(myInput)
                         # Wrap it just in case.
                         try:
-                            thisExternalCommand.runConsole()
+                            myExternalCommand.runConsole()
                         except KeyboardInterrupt:
-                            thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                            print(thisInfo)
-                            self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
-                        del thisExternalCommand
-                        thisFoundIt = True
+                            myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            print(myInfo)
+                            self._globalConfig.getSysLogger().LogMsgInfo(myInfo)
+                        del myExternalCommand
+                        myFoundIt = True
                         break
 
                 # Icky flow-control hack.
-                if (thisFoundIt):
+                if (myFoundIt):
                     continue
                 #
                 # Step 3: Create InternalCommand object and
                 #         fire up the parser.
                 #
-                thisInternalCommand = engine.data.InternalCommand.InternalCommand()
-                thisInternalCommand.setCommand(thisInput)
-                thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
-                thisCommandRunner.run(thisInternalCommand)
+                myInternalCommand = engine.data.InternalCommand.InternalCommand()
+                myInternalCommand.setCommand(myInput)
+                myCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
+                myCommandRunner.run(myInternalCommand)
 
                 # Free up some memory.
-                del thisInternalCommand
-                del thisCommandRunner
+                del myInternalCommand
+                del myCommandRunner
 
                 # Icky flow-control hack.
-                if (thisTokens[0] == 'exit'):
+                if (myTokens[0] == 'exit'):
                     return
 
 ######################################################################

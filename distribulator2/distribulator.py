@@ -112,7 +112,7 @@ The available options are:
     This usage statement.
     OPTIONAL
 
-    --list=[host1,host2,...] | [servergroup1,servergroup2,...]
+    --list=[host1, host2, ...] | [servergroup1, servergroup2, ...]
     Enables serer "listing", outputs all given username@hostname pairs
     for a given set of hosts or server groups.
     OPTIONAL
@@ -133,16 +133,16 @@ The available options are:
     Print version information.
 """ % argv[0]
 
-    thisBatchFile = ''
-    thisConfigFile = ''
-    thisInstallDir = '/tmp'
-    thisQuietMode = False
-    thisRequestedList = ''
-    thisServerEnv = 'demo'
-    thisVar1 = ''
-    thisVar2 = ''
-    thisVar3 = ''
-    thisVerboseMode = False
+    myBatchFile = ''
+    myConfigFile = ''
+    myInstallDir = '/tmp'
+    myQuietMode = False
+    myRequestedList = ''
+    myServerEnv = 'demo'
+    myVar1 = ''
+    myVar2 = ''
+    myVar3 = ''
+    myVerboseMode = False
 
     try:
         if len(argv) < 2:
@@ -154,13 +154,13 @@ The available options are:
         if len(optlist) > 0:
             for opt in optlist:
                 if (opt[0] == '--batch'):
-                    thisBatchFile = opt[1]
+                    myBatchFile = opt[1]
                 elif (opt[0] == '--config'):
-                    thisConfigFile = opt[1]
+                    myConfigFile = opt[1]
                 elif (opt[0] == '--directory'):
-                    thisInstallDir = opt[1]
+                    myInstallDir = opt[1]
                 elif (opt[0] == '--env'):
-                    thisServerEnv = opt[1]
+                    myServerEnv = opt[1]
                 elif (opt[0] == '--help'):
                     print(usage)
                     sys.exit(False)
@@ -168,15 +168,15 @@ The available options are:
                     print(usage)
                     sys.exit(False)
                 elif (opt[0] == '--list'):
-                    thisRequestedList = opt[1]
+                    myRequestedList = opt[1]
                 elif (opt[0] == '--quiet'):
-                    thisQuietMode = True
+                    myQuietMode = True
                 elif (opt[0] == '--var1'):
-                    thisVar1 = opt[1]
+                    myVar1 = opt[1]
                 elif (opt[0] == '--var2'):
-                    thisVar2 = opt[1]
+                    myVar2 = opt[1]
                 elif (opt[0] == '--var3'):
-                    thisVar3 = opt[1]
+                    myVar3 = opt[1]
                 elif (opt[0] == '--version'):
                     print(__appversion__)
                     print("(c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved.")
@@ -200,145 +200,145 @@ The available options are:
 
     try:
         # Load up our GlobalConfig object.
-        thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+        myGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
-        if ( len(thisBatchFile) > 0 ):
-            thisGlobalConfig.setBatchMode(True)
-            thisGlobalConfig.setBatchFile(thisBatchFile)
+        if ( len(myBatchFile) > 0 ):
+            myGlobalConfig.setBatchMode(True)
+            myGlobalConfig.setBatchFile(myBatchFile)
         else:
-            thisGlobalConfig.setBatchMode(False)
+            myGlobalConfig.setBatchMode(False)
 
-        if ( len(thisRequestedList) > 0 ):
-            thisGlobalConfig.setListMode(True)
-            thisGlobalConfig.setRequestedList(thisRequestedList)
+        if ( len(myRequestedList) > 0 ):
+            myGlobalConfig.setListMode(True)
+            myGlobalConfig.setRequestedList(myRequestedList)
         else:
-            thisGlobalConfig.setListMode(False)
+            myGlobalConfig.setListMode(False)
 
-        if ( (len(thisBatchFile) == 0) & \
-             (len(thisRequestedList) == 0) ):
-            thisGlobalConfig.setConsoleMode(True)
+        if ( (len(myBatchFile) == 0) & \
+             (len(myRequestedList) == 0) ):
+            myGlobalConfig.setConsoleMode(True)
         else:
-            thisGlobalConfig.setConsoleMode(False)
+            myGlobalConfig.setConsoleMode(False)
 
-        if ( len(thisConfigFile) > 0 ):
-            thisGlobalConfig.setConfigFile(thisConfigFile)
+        if ( len(myConfigFile) > 0 ):
+            myGlobalConfig.setConfigFile(myConfigFile)
         else:
-            thisGlobalConfig.setConfigFile( os.path.join(thisInstallDir, 'conf/config.xml') )
+            myGlobalConfig.setConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
 
-        thisGlobalConfig.setExitSuccess(True)
-        thisGlobalConfig.setHelpDir( os.path.join(thisInstallDir, 'doc') )
-        thisGlobalConfig.setPassThruFile( os.path.join(thisInstallDir, 'conf/pass_through_cmds.txt') )
+        myGlobalConfig.setExitSuccess(True)
+        myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
+        myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )
 
-        if ( thisGlobalConfig.isBatchMode() ):
-            thisGlobalConfig.setQuietMode(thisQuietMode)
+        if ( myGlobalConfig.isBatchMode() ):
+            myGlobalConfig.setQuietMode(myQuietMode)
         else:
-            thisGlobalConfig.setQuietMode(False)
+            myGlobalConfig.setQuietMode(False)
 
-        thisGlobalConfig.setServerEnv(thisServerEnv)
-        thisGlobalConfig.setUsername( getpass.getuser() )
-        thisGlobalConfig.setVar1(thisVar1)
-        thisGlobalConfig.setVar2(thisVar2)
-        thisGlobalConfig.setVar3(thisVar3)
+        myGlobalConfig.setServerEnv(myServerEnv)
+        myGlobalConfig.setUsername( getpass.getuser() )
+        myGlobalConfig.setVar1(myVar1)
+        myGlobalConfig.setVar2(myVar2)
+        myGlobalConfig.setVar3(myVar3)
     
-        if ( thisGlobalConfig.isConsoleMode() ):
+        if ( myGlobalConfig.isConsoleMode() ):
             printTitleHeader()
-            printInfoHeader(thisServerEnv, thisGlobalConfig.getConfigFile())
+            printInfoHeader(myServerEnv, myGlobalConfig.getConfigFile())
 
         # These three really should be pinned to an interface.
-        thisBatchRunner = engine.BatchRunner.BatchRunner(thisGlobalConfig)
-        thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
-        thisServerLister = engine.ServerLister.ServerLister(thisGlobalConfig)
+        myBatchRunner = engine.BatchRunner.BatchRunner(myGlobalConfig)
+        myCommLine = engine.CommandLine.CommandLine(myGlobalConfig)
+        myServerLister = engine.ServerLister.ServerLister(myGlobalConfig)
 
-        thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
-        thisGlobalConfig = thisLoader.load(thisCommLine)
+        myLoader = engine.ConfigLoader.ConfigLoader(myGlobalConfig)
+        myGlobalConfig = myLoader.load(myCommLine)
 
         # Currently not using the MultiLogger here as we log based on a different set of criteria
         # than it is aware of.
-        if ( thisGlobalConfig.isBatchMode() & \
-             (thisGlobalConfig.isQuietMode() == False) ):
-            thisVerboseMode = True
+        if ( myGlobalConfig.isBatchMode() & \
+             (myGlobalConfig.isQuietMode() == False) ):
+            myVerboseMode = True
 
         # Setup syslog and console output handle.
-        thisSysLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility(), 'distribulator.py')
-        thisGlobalConfig.setSysLogger(thisSysLogger)
-        thisMultiLogger = engine.MultiLogger.MultiLogger(thisGlobalConfig)
-        thisGlobalConfig.setMultiLogger(thisMultiLogger)
+        mySysLogger = generic.SysLogger.SysLogger(myGlobalConfig.getSyslogFacility(), 'distribulator.py')
+        myGlobalConfig.setSysLogger(mySysLogger)
+        myMultiLogger = engine.MultiLogger.MultiLogger(myGlobalConfig)
+        myGlobalConfig.setMultiLogger(myMultiLogger)
 
         # Log our startup.
-        thisStatus, thisOutput = commands.getstatusoutput( \
-            thisGlobalConfig.getLognameBinary())
+        myStatus, myOutput = commands.getstatusoutput( \
+            myGlobalConfig.getLognameBinary())
 
-        if ( thisStatus == 0 ):
-            thisGlobalConfig.setRealUsername(thisOutput)
+        if ( myStatus == 0 ):
+            myGlobalConfig.setRealUsername(myOutput)
         else:
-            thisGlobalConfig.setRealUsername( getpass.getuser() )
+            myGlobalConfig.setRealUsername( getpass.getuser() )
 
         # Define a pretty seperator.
-        thisSeperator = '----------------------------------------------------------------------'
-        thisSysLogger.LogMsgInfo(thisSeperator)
-        if (thisVerboseMode):
-            print(thisSeperator)
+        mySeperator = '----------------------------------------------------------------------'
+        mySysLogger.LogMsgInfo(mySeperator)
+        if (myVerboseMode):
+            print(mySeperator)
 
-        if (thisGlobalConfig.isBatchMode()):
-            thisInfo = "INFO:  " + __appversion__ + " (batch mode) START"
-            if (thisVerboseMode):
-                print(thisInfo)
-        elif (thisGlobalConfig.isListMode()):
-            thisInfo = "INFO:  " + __appversion__ + " (list mode) START"
+        if (myGlobalConfig.isBatchMode()):
+            myInfo = "INFO:  " + __appversion__ + " (batch mode) START"
+            if (myVerboseMode):
+                print(myInfo)
+        elif (myGlobalConfig.isListMode()):
+            myInfo = "INFO:  " + __appversion__ + " (list mode) START"
         else:
-            thisInfo = "INFO:  " + __appversion__ + " (console mode) START"
-        thisSysLogger.LogMsgInfo(thisInfo)
+            myInfo = "INFO:  " + __appversion__ + " (console mode) START"
+        mySysLogger.LogMsgInfo(myInfo)
 
-        thisInfo = "INFO:  Real UID: " + thisGlobalConfig.getRealUsername() + \
+        myInfo = "INFO:  Real UID: " + myGlobalConfig.getRealUsername() + \
                    " | " + \
-                   "Effective UID: " + thisGlobalConfig.getUsername() + \
+                   "Effective UID: " + myGlobalConfig.getUsername() + \
                    " | " + \
-                   "Environment: " + thisServerEnv
+                   "Environment: " + myServerEnv
 
-        thisSysLogger.LogMsgInfo(thisInfo)
-        if (thisVerboseMode):
-            print(thisInfo)
+        mySysLogger.LogMsgInfo(myInfo)
+        if (myVerboseMode):
+            print(myInfo)
 
     except (EOFError, KeyboardInterrupt):
-            thisError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            thisSysLogger.LogMsgError(thisError)
-            if (thisVerboseMode):
-                print(thisError)
+            myError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
+            mySysLogger.LogMsgError(myError)
+            if (myVerboseMode):
+                print(myError)
 
             sys.exit(True)
 
     # Batch mode.
-    if ( thisGlobalConfig.isBatchMode() ):
-        thisBatchRunner.invoke()
+    if ( myGlobalConfig.isBatchMode() ):
+        myBatchRunner.invoke()
 
-        thisInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
-        thisSysLogger.LogMsgInfo(thisInfo)
-        if (thisVerboseMode):
-            print(thisInfo)
+        myInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
+        mySysLogger.LogMsgInfo(myInfo)
+        if (myVerboseMode):
+            print(myInfo)
 
-        thisSysLogger.LogMsgInfo(thisSeperator)
-        if (thisVerboseMode):
-            print(thisSeperator)
+        mySysLogger.LogMsgInfo(mySeperator)
+        if (myVerboseMode):
+            print(mySeperator)
     # List mode.
-    elif ( thisGlobalConfig.isListMode() ):
-        thisServerLister.invoke()
+    elif ( myGlobalConfig.isListMode() ):
+        myServerLister.invoke()
 
-        thisInfo = "INFO:  " + __appversion__ + " (list mode) EXIT"
-        thisSysLogger.LogMsgInfo(thisInfo)
+        myInfo = "INFO:  " + __appversion__ + " (list mode) EXIT"
+        mySysLogger.LogMsgInfo(myInfo)
     # Console mode.
     else:
-        thisCommLine.invoke()
+        myCommLine.invoke()
 
-        thisInfo = "INFO:  " + __appversion__ + " (console mode) EXIT"
-        thisSysLogger.LogMsgInfo(thisInfo)
-        if (thisVerboseMode):
-            print(thisInfo)
+        myInfo = "INFO:  " + __appversion__ + " (console mode) EXIT"
+        mySysLogger.LogMsgInfo(myInfo)
+        if (myVerboseMode):
+            print(myInfo)
 
-        thisSysLogger.LogMsgInfo(thisSeperator)
-        if (thisVerboseMode):
-            print(thisSeperator)
+        mySysLogger.LogMsgInfo(mySeperator)
+        if (myVerboseMode):
+            print(mySeperator)
 
-    if ( thisGlobalConfig.isExitSuccess() ):
+    if ( myGlobalConfig.isExitSuccess() ):
         sys.exit(False)
     else:
         sys.exit(True)

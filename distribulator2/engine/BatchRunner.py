@@ -52,67 +52,67 @@ class BatchRunner:
             if ( stat.S_ISREG(os.stat(
                 self._globalConfig.getBatchFile())[stat.ST_MODE]) \
                  == False ):
-                thisError = "ERROR: File '" + \
+                myError = "ERROR: File '" + \
                             self._globalConfig.getBatchFile() + \
                             "' is accessible, but not regular."
-                self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                 self._globalConfig.setExitSuccess(False)
                 return
 
         except OSError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \
+            myError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \
                                                        self._globalConfig.getBatchFile() )
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             self._globalConfig.setExitSuccess(False)
             return
 
         # Let everyone know what we're doing.        
-        thisInfo = "INFO:  Batch File: " + \
+        myInfo = "INFO:  Batch File: " + \
             self._globalConfig.getBatchFile()
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-        thisCommandCount = 0
-        thisError = ''
-        thisIsMore = False
-        thisLineBuffer = ''
-        thisLineCount = 0
-        thisTimeDuration = 0
-        thisTimeStarted = time.time()
-        thisTimeFinished = 0
-        thisVerboseMode = False
+        myCommandCount = 0
+        myError = ''
+        myIsMore = False
+        myLineBuffer = ''
+        myLineCount = 0
+        myTimeDuration = 0
+        myTimeStarted = time.time()
+        myTimeFinished = 0
+        myVerboseMode = False
 
         try:
             # First Pass: Validation
-            thisFile = open(self._globalConfig.getBatchFile(), 'r')
+            myFile = open(self._globalConfig.getBatchFile(), 'r')
 
-            for thisLine in thisFile:
-                thisLineCount = thisLineCount + 1
+            for myLine in myFile:
+                myLineCount = myLineCount + 1
 
-                if (thisLine.find('$var1') != -1):
+                if (myLine.find('$var1') != -1):
                     if (len(self._globalConfig.getVar1()) == 0):
-                        thisError = "ERROR: Variable $var1 referenced on line %d, but not defined." % thisLineCount
-                elif (thisLine.find('$var2') != -1):
+                        myError = "ERROR: Variable $var1 referenced on line %d, but not defined." % myLineCount
+                elif (myLine.find('$var2') != -1):
                     if (len(self._globalConfig.getVar2()) == 0):
-                        thisError = "ERROR: Variable $var2 referenced on line %d, but not defined." % thisLineCount
-                elif (thisLine.find('$var3') != -1):
+                        myError = "ERROR: Variable $var2 referenced on line %d, but not defined." % myLineCount
+                elif (myLine.find('$var3') != -1):
                     if (len(self._globalConfig.getVar3()) == 0):
-                        thisError = "ERROR: Variable $var3 referenced on line %d, but not defined." % thisLineCount
+                        myError = "ERROR: Variable $var3 referenced on line %d, but not defined." % myLineCount
 
-                if (len(thisError) != 0):
-                    self._globalConfig.getMultiLogger().LogMsgError(thisError)
+                if (len(myError) != 0):
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                     self._globalConfig.setExitSuccess(False)
                     return
 
-            thisFile.close()
+            myFile.close()
 
             # Second Pass: Execution
-            thisFile = open(self._globalConfig.getBatchFile(), 'r')
+            myFile = open(self._globalConfig.getBatchFile(), 'r')
 
-            for thisLine in thisFile:
-                thisFoundIt = False
+            for myLine in myFile:
+                myFoundIt = False
                 #
                 # Pre-processing.
                 # * Strip any linefeeds / CR's.
@@ -120,38 +120,38 @@ class BatchRunner:
                 # * Do variable substitution.
                 # * Tokenzie.
                 #
-                thisLine = thisLine.strip()
-                thisLine = string.replace(thisLine, '\t', ' ')
+                myLine = myLine.strip()
+                myLine = string.replace(myLine, '\t', ' ')
 
                 # Variable substitution
-                if ( thisLine.find('$env') != -1 ):
-                    thisLine = string.replace( thisLine, '$env', \
+                if ( myLine.find('$env') != -1 ):
+                    myLine = string.replace( myLine, '$env', \
                                                self._globalConfig.getServerEnv() )
-                if ( thisLine.find('$var1') != -1 ):
-                    thisLine = string.replace( thisLine, '$var1',
+                if ( myLine.find('$var1') != -1 ):
+                    myLine = string.replace( myLine, '$var1',
                                                self._globalConfig.getVar1() )
-                if ( thisLine.find('$var2') != -1 ):
-                    thisLine = string.replace( thisLine, '$var2',
+                if ( myLine.find('$var2') != -1 ):
+                    myLine = string.replace( myLine, '$var2',
                                                self._globalConfig.getVar2() )
-                if ( thisLine.find('$var3') != -1 ):
-                    thisLine = string.replace( thisLine, '$var3',
+                if ( myLine.find('$var3') != -1 ):
+                    myLine = string.replace( myLine, '$var3',
                                                self._globalConfig.getVar3() )
 
                 #
-                # Step 1: Check to see if this is an empty line.
+                # Step 1: Check to see if my is an empty line.
                 #         If so, skip it.
                 #
-                if (len(thisLine) == 0):
+                if (len(myLine) == 0):
                     continue
 
                 #
-                # Step 2: Check to see if this is a comment line.
+                # Step 2: Check to see if my is a comment line.
                 #         If so, skip it.
                 #
-                thisTokens = thisLine.split()
+                myTokens = myLine.split()
 
-                if (thisTokens[0].find('#') == 0):
-                    thisIsMore = False
+                if (myTokens[0].find('#') == 0):
+                    myIsMore = False
                     continue
 
                 #
@@ -159,80 +159,80 @@ class BatchRunner:
                 #         logical line continuation, honor it.
                 #
                 # The last line ended with a \
-                if (thisIsMore):
-                    # And this line ends with another.
-                    if ( thisLine.find('\\') == (len(thisLine) - 1) ):
+                if (myIsMore):
+                    # And my line ends with another.
+                    if ( myLine.find('\\') == (len(myLine) - 1) ):
                         # Strip the \ before concatenating.
-                        thisLineBuffer = thisLineBuffer + \
-                                         string.replace(thisLine, '\\', '')
+                        myLineBuffer = myLineBuffer + \
+                                         string.replace(myLine, '\\', '')
                         continue
                     # If not, concatenate and continue.
                     else:
                         # Add the last of the line, and reset variables.
-                        thisLine = thisLineBuffer + thisLine
-                        thisIsMore = False
-                        thisLineBuffer = ''
+                        myLine = myLineBuffer + myLine
+                        myIsMore = False
+                        myLineBuffer = ''
                 else:
                     # This line ends with a \.
-                    if ( thisLine.find('\\') == (len(thisLine) - 1) ):
+                    if ( myLine.find('\\') == (len(myLine) - 1) ):
                         # Strip the \ before concatenating.
-                        thisLineBuffer = thisLineBuffer + \
-                                         string.replace(thisLine, '\\', '')
+                        myLineBuffer = myLineBuffer + \
+                                         string.replace(myLine, '\\', '')
                         # Set our state flag.
-                        thisIsMore = True
+                        myIsMore = True
                         continue
 
                 #
-                # Step 4: Handle "exit" from this chunk of code.
+                # Step 4: Handle "exit" from my chunk of code.
                 #
-                if (thisTokens[0] == 'exit'):
-                    thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
-                    self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+                if (myTokens[0] == 'exit'):
+                    myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+                    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                     return
 
                 #
                 # Step 5: Check for Unix "pass through" commands.
                 #
-                for thisCommand in self._globalConfig.getPassThruList():
-                    if (thisTokens[0] == thisCommand):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        thisExternalCommand.setCommand(thisLine)
+                for myCommand in self._globalConfig.getPassThruList():
+                    if (myTokens[0] == myCommand):
+                        myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                        myExternalCommand.setCommand(myLine)
                         # Wrap it just in case.
                         try:
-                            thisExternalCommand.runBatch()
+                            myExternalCommand.runBatch()
 
                         except KeyboardInterrupt:
-                            thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                            self.handleInfo(thisInfo)
+                            myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            self.handleInfo(myInfo)
 
-                        thisCommandCount = thisCommandCount + 1
-                        del thisExternalCommand
-                        thisFoundIt = True
+                        myCommandCount = myCommandCount + 1
+                        del myExternalCommand
+                        myFoundIt = True
                         break
 
                 # Icky flow-control hack.
-                if (thisFoundIt):
+                if (myFoundIt):
                     continue
 
                 #
                 # Step 6: Create InternalCommand object and fire up
                 #         the parser.
                 #
-                thisInternalCommand = engine.data.InternalCommand.InternalCommand()
-                thisInternalCommand.setCommand(thisLine)
-                thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
-                thisCommandCount = thisCommandCount + \
-                                   thisCommandRunner.run(thisInternalCommand)
-                del thisInternalCommand
-                del thisCommandRunner
+                myInternalCommand = engine.data.InternalCommand.InternalCommand()
+                myInternalCommand.setCommand(myLine)
+                myCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
+                myCommandCount = myCommandCount + \
+                                   myCommandRunner.run(myInternalCommand)
+                del myInternalCommand
+                del myCommandRunner
 
-            thisFile.close()
+            myFile.close()
 
         except IOError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % \
-                        (errno, strerror, thisFilename)
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+            myError = "ERROR: [Errno %s] %s: %s" % \
+                        (errno, strerror, myFilename)
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             self._globalConfig.setExitSuccess(False)
             return
@@ -241,27 +241,27 @@ class BatchRunner:
         # Output our "footer" for batch mode.
         #
         # Define a pretty seperator.
-        thisSeperator = '----------------------------------------------------------------------'
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisSeperator)
+        mySeperator = '----------------------------------------------------------------------'
+        self._globalConfig.getMultiLogger().LogMsgInfo(mySeperator)
 
-        thisInfo = "INFO:  Commands Run:      %d commands" % \
-              thisCommandCount
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+        myInfo = "INFO:  Commands Run:      %d commands" % \
+              myCommandCount
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-        thisTimeFinished = time.time()
-        thisTimeDuration = thisTimeFinished - thisTimeStarted
+        myTimeFinished = time.time()
+        myTimeDuration = myTimeFinished - myTimeStarted
 
-        thisInfo = "INFO:  Run Time:          %.2f seconds" % \
-              thisTimeDuration
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+        myInfo = "INFO:  Run Time:          %.2f seconds" % \
+              myTimeDuration
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-        if ( (int(thisTimeDuration) > 0) & (int(thisCommandCount) > 0) ):
-            thisInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
-                  (thisTimeDuration / thisCommandCount)
+        if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
+            myInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
+                  (myTimeDuration / myCommandCount)
         else:
-            thisInfo = "INFO:  Avg. Command Time: 0 seconds"
+            myInfo = "INFO:  Avg. Command Time: 0 seconds"
 
-        self._globalConfig.getMultiLogger().LogMsgInfo(thisInfo)
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
         return
 

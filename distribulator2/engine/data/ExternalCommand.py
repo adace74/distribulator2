@@ -67,16 +67,16 @@ class ExternalCommand:
 
         print("EXEC:  " + self._command)
 
-        thisStatus = os.system(self._command)
+        myStatus = os.system(self._command)
         print(self._seperator)
 
-        if (thisStatus != 0):
+        if (myStatus != 0):
             print("ERROR: Local shell returned error state.")
 
         # Sleep just a -little- bit to allow for catching CTRL-C's
         time.sleep(0.05)
 
-        return thisStatus
+        return myStatus
 
 ######################################################################
 # Only to be used for batch mode.
@@ -88,15 +88,15 @@ class ExternalCommand:
         self._globalConfig.getMultiLogger().LogMsgInfo(
             "EXEC:  " + self._command )
 
-        thisStatus, thisOutput = commands.getstatusoutput(self._command)
+        myStatus, myOutput = commands.getstatusoutput(self._command)
 
-        for thisLine in thisOutput.split('\n'):
+        for myLine in myOutput.split('\n'):
             self._globalConfig.getMultiLogger().LogMsgInfo(
-                "OUTPUT:" + thisLine )
+                "OUTPUT:" + myLine )
 
-        if (thisStatus != 0):
-            thisError = "ERROR: Local shell returned error state."
-            self._globalConfig.getMultiLogger().LogMsgError(thisError)
+        if (myStatus != 0):
+            myError = "ERROR: Local shell returned error state."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             self._globalConfig.setExitSuccess(False)
 
@@ -106,6 +106,6 @@ class ExternalCommand:
         # Sleep just a -little- bit to allow for catching CTRL-C's
         time.sleep(0.05)
 
-        return thisStatus
+        return myStatus
 
 ######################################################################

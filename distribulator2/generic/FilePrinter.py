@@ -31,13 +31,13 @@ class FilePrinter:
         """Prints a given file."""
 
         try:
-            thisFile = open(PassedFilename, 'r')
+            myFile = open(PassedFilename, 'r')
             
-            for thisLine in thisFile:
-                thisLine = thisLine.rstrip()
-                print(thisLine)
+            for myLine in myFile:
+                myLine = myLine.rstrip()
+                print(myLine)
 
-            thisFile.close()
+            myFile.close()
 
         except IOError, (errno, strerror):
             print("ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedFilename))

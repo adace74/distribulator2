@@ -93,20 +93,20 @@ class ServerGroup:
 
         PassedServerName = PassedServerName.strip()
 
-        for thisServer in self._serverList:
+        for myServer in self._serverList:
 
             # Match by full hostname.
             # i.e. 'app01.somewhere.com' will match 'app01.somewhere.com'
-            if (PassedServerName == thisServer.getName()):
-                return thisServer
+            if (PassedServerName == myServer.getName()):
+                return myServer
 
             # Match by hostname prefix.
             # i.e. 'app01' will match app01.somewhere.com
-            thisDotIndex = thisServer.getName().find('.')
+            myDotIndex = myServer.getName().find('.')
 
-            if (thisDotIndex != -1):
-                if (PassedServerName == thisServer.getName()[:thisDotIndex]):
-                    return thisServer
+            if (myDotIndex != -1):
+                if (PassedServerName == myServer.getName()[:myDotIndex]):
+                    return myServer
 
         return False
 

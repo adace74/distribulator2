@@ -12,7 +12,7 @@
 Simple generic class whose funciton is to attempt to ping a given host.
 
 TODO:
-- Change this from a pass-through to the ping command to a real
+- Change my from a pass-through to the ping command to a real
   independent test.
 """
 
@@ -34,9 +34,9 @@ class HostPinger:
     def ping(self, PassedHostname):
         """Attempts to ping a given host."""
 
-        thisStatus, thisOutput = \
+        myStatus, myOutput = \
         commands.getstatusoutput(self._command + " " + PassedHostname)
 
-        return thisStatus
+        return myStatus
 
 #######################################################################

@@ -45,39 +45,39 @@ class XMLFileParser:
         self._isEnvFound = False
         self._serverGroupList = []
 
-        thisFilename = self._globalConfig.getConfigFile()
+        myFilename = self._globalConfig.getConfigFile()
 
         try:
-            thisConfigLines = 0
+            myConfigLines = 0
 
-            thisFile = open(thisFilename, 'r')
-            for thisLine in thisFile:
-                thisConfigLines = thisConfigLines + 1
-            thisFile.close()
+            myFile = open(myFilename, 'r')
+            for myLine in myFile:
+                myConfigLines = myConfigLines + 1
+            myFile.close()
 
-            self._globalConfig.setConfigLines(thisConfigLines)
+            self._globalConfig.setConfigLines(myConfigLines)
             
-            thisDom = xml.dom.minidom.parse(thisFilename)
+            myDom = xml.dom.minidom.parse(myFilename)
 
         except IOError, (errno, strerror):
-            thisError = "ERROR: [Errno %s] %s: %s" % \
-                        (errno, strerror, thisFilename)
+            myError = "ERROR: [Errno %s] %s: %s" % \
+                        (errno, strerror, myFilename)
             # NOTE: Would be nice to syslog, but This just isn't
             # possible until the config is fully loaded.
-            print(thisError)
+            print(myError)
 
             sys.exit(True)
 
-        self.handleConfig(thisDom)
+        self.handleConfig(myDom)
 
         if (self._isEnvFound):
             return self._globalConfig
         else:
-            thisError = "ERROR: No matching tags found for environment '" + \
+            myError = "ERROR: No matching tags found for environment '" + \
                         self._globalConfig.getServerEnv() + "' in config.xml!"
             # NOTE: Would be nice to syslog, but This just isn't
             # possible until the config is fully loaded.
-            print(thisError)
+            print(myError)
 
             sys.exit(True)
 
@@ -119,16 +119,16 @@ class XMLFileParser:
     def handleBinary(self, PassedBinary):
         """This method handles a single <Binary> tag."""
 
-        thisName = PassedBinary.getAttribute('name')
-        thisValue = PassedBinary.getAttribute('value')
-        if (thisName == 'logname'):
-            self._globalConfig.setLognameBinary(thisValue)
-        elif (thisName == 'ping'):
-            self._globalConfig.setPingBinary(thisValue)
-        elif (thisName == 'scp'):
-            self._globalConfig.setScpBinary(thisValue)
-        elif (thisName == 'ssh'):
-            self._globalConfig.setSshBinary(thisValue)
+        myName = PassedBinary.getAttribute('name')
+        myValue = PassedBinary.getAttribute('value')
+        if (myName == 'logname'):
+            self._globalConfig.setLognameBinary(myValue)
+        elif (myName == 'ping'):
+            self._globalConfig.setPingBinary(myValue)
+        elif (myName == 'scp'):
+            self._globalConfig.setScpBinary(myValue)
+        elif (myName == 'ssh'):
+            self._globalConfig.setSshBinary(myValue)
 
 ######################################################################
 # Logging options.
@@ -180,44 +180,44 @@ class XMLFileParser:
     def handleServerGroup(self, PassedServerGroup):
         """This method handles a single <ServerGroup> tag."""
 
-        thisServerGroup = engine.data.ServerGroup.ServerGroup()
-        thisServerGroup.setName(
+        myServerGroup = engine.data.ServerGroup.ServerGroup()
+        myServerGroup.setName(
             PassedServerGroup.getAttribute('name').strip() )
 
         if ( len(PassedServerGroup.getAttribute('username').strip()) > 0 ):
-            thisServerGroup.setUsername(
+            myServerGroup.setUsername(
                 PassedServerGroup.getAttribute('username').strip() )
         else:
-            thisServerGroup.setUsername( self._globalConfig.getUsername() )
+            myServerGroup.setUsername( self._globalConfig.getUsername() )
 
-        thisServerGroup = self.handleServers( thisServerGroup,
+        myServerGroup = self.handleServers( myServerGroup,
                                               PassedServerGroup.getElementsByTagName('server') )
 
-        return thisServerGroup
+        return myServerGroup
 
 ######################################################################
 
     def handleServers(self, PassedServerGroup, PassedServers):
         """This method branches processing off into sub-methods."""
 
-        thisServerGroup = PassedServerGroup
+        myServerGroup = PassedServerGroup
 
-        for thisServer in PassedServers:
-            thisServerGroup.addServer( self.handleServer(thisServer) )
+        for myServer in PassedServers:
+            myServerGroup.addServer( self.handleServer(myServer) )
 
-        for thisServer in thisServerGroup.getServerList():
-            thisServer.setUsername( thisServerGroup.getUsername() )
+        for myServer in myServerGroup.getServerList():
+            myServer.setUsername( myServerGroup.getUsername() )
 
-        return thisServerGroup
+        return myServerGroup
 
 ######################################################################
 
     def handleServer(self, PassedServer):
         """This method handles a single <Server> tag."""
 
-        thisServer = engine.data.Server.Server()
-        thisServer.setName( self.getText(PassedServer.childNodes).strip() )
+        myServer = engine.data.Server.Server()
+        myServer.setName( self.getText(PassedServer.childNodes).strip() )
 
-        return thisServer
+        return myServer
 
 ######################################################################

@@ -463,9 +463,9 @@ class GlobalConfig:
 
         PassedServerName = PassedServerName.strip()
 
-        for thisServerGroup in self._serverGroupList:
-            if ( thisServerGroup.getServerByName(PassedServerName) ):
-                return thisServerGroup.getServerByName(PassedServerName)
+        for myServerGroup in self._serverGroupList:
+            if ( myServerGroup.getServerByName(PassedServerName) ):
+                return myServerGroup.getServerByName(PassedServerName)
 
         return False
 
@@ -476,9 +476,9 @@ class GlobalConfig:
 
         PassedServerGroupName = PassedServerGroupName.strip()
 
-        for thisServerGroup in self._serverGroupList:
-            if (PassedServerGroupName == thisServerGroup.getName()):
-                return thisServerGroup
+        for myServerGroup in self._serverGroupList:
+            if (PassedServerGroupName == myServerGroup.getName()):
+                return myServerGroup
 
         return False
 
