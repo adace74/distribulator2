@@ -72,10 +72,7 @@ class ExternalCommand:
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
-        if (self._globalConfig.getDelaySecs() != 0):
-            time.sleep( self._globalConfig.getDelaySecs() )
-        else:
-            time.sleep(0.05)
+        time.sleep( self._globalConfig.getDelaySecs() )
 
         return myStatus
 
@@ -106,10 +103,7 @@ class ExternalCommand:
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
-        if (self._globalConfig.getDelaySecs() != 0):
-            time.sleep( self._globalConfig.getDelaySecs() )
-        else:
-            time.sleep(0.05)
+        time.sleep( self._globalConfig.getDelaySecs() )
 
         return myStatus
 
