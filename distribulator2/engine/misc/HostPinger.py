@@ -51,7 +51,7 @@ class HostPinger:
 
         # Add a debug mode someday!
         except socket.error:
-            myError = "ERROR: [Errno N/A] N/A: %s" % (PassedHostname)
+            myError = "ERROR: [Errno Not Available] Not Available: %s" % (PassedHostname)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
