@@ -85,16 +85,12 @@ Change List For v0.51 (Language: Python / Status: Shipped)
   aiming for the normal INSTALL/README paradigm.
 
 Change List For v0.52 (Language: Python / Status: In Progress)
+* Changed command "server-group" with no arguments to print
+  a server-group list similar to that at startup.
 * Fixed inaccuracies found in this Changelog.
 * SourceForge bug #744225 fixed.
 * SourceForge bug #744226 fixed.
 * SourceForge bug #749953 fixed.
-
-Change List For v0.5? (Language: Python / Status: Planning)
-- Console command syntax improvements:
-  "server-group www" becomes "set server-group www"
-  "server-list www" becomes "show server-group www"
-  "show server-groups" - New command.
 
 Change List For v0.6 (Language: Python / Status: Pondering)
 - A CVS branch will be created for any future v0.5x bug-fixes.

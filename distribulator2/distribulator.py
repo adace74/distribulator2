@@ -47,7 +47,7 @@ import generic.SysLogger
 # Display a nice pretty header.
 def printTitleHeader():
     print
-    print("The Distribulator v0.50 (Python v" + \
+    print("The Distribulator v0.52 (Python v" + \
           sys.version.split()[0] + " / " + sys.platform + ")")
     print("--------------------------------------------------")
     print

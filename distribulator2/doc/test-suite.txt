@@ -5,8 +5,8 @@
 #
 ######################################################################
 
-The idea here is to try and verify that all syntax checking, and logical execution
-is in fact acting properly.
+The idea here is to try and verify that all syntax checking,
+and logical execution is in fact acting properly.
 
 ######################################################################
 
@@ -22,13 +22,12 @@ Expected Result: Copies local /tmp/test.out file out to all current server group
 Test Case:       copy /tmp/test.out www
 Expected Result: Error.
 
-Test Case:       copy /tmp/test.out www:/var/tmp/
-Expected Result: Copies local /tmp/test.out file out to all 'www' server group servers,
-		 remote directory /var/tmp/.
+Test Case:       copy /tmp/test.out www:/tmp/
+Expected Result: Copies local /tmp/test.out file out to all 'www' servers,
+		 remote directory /tmp/.
 
-Test Case:       copy /tmp/test.out www01st:/var/tmp/
-Expected Result: Copies local /tmp/test.out file out to the 'www01st' server,
-		 remote directory /var/tmp/.
+Test Case:       copy /tmp/test.out www01st:/tmp/
+Expected Result: Error.
 
 ######################################################################
 
@@ -41,7 +40,7 @@ Test Case:       help <value>, where value is each command supported.
 Expected Result: Detailed help page.
 
 Test Case:       help jfjfjf
-Expected Result: Main Help Page.
+Expected Result: Error.
 
 ######################################################################
 
@@ -61,16 +60,16 @@ Expected Result: Error.
 Command(s): run
 
 Test Case:       run
-Expected Result: Error
+Expected Result: Error.
 
 Test Case:       run "uptime"
 Expected Result: Runs the "uptime" command on current server group.
 
-Test Case:       run "uptime" www
+Test Case:       run "uptime" on www
 Expected Result: Runs the "uptime" command on 'www' server group.
 
-Test Case:       run "uptime" www01st
-Expected Result: Runs the "uptime" command on the 'www01st' server host.
+Test Case:       run "uptime" on www01st
+Expected Result: Error.
 
 ######################################################################
 

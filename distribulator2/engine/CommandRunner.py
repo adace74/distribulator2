@@ -261,6 +261,12 @@ class CommandRunner:
 ######################################################################
 
     def doExit(self):
+        # Check for batch mode.
+        if ( self._globalConfig.isBatchMode() ):
+            thisError = "ERROR: Invalid command for batch mode."
+            self.handleError(thisError)
+            return False
+
         thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
 
         self.handleInfo(thisInfo)
@@ -294,7 +300,7 @@ class CommandRunner:
         return True
 
 ######################################################################
-            
+
     def doLogin(self):
         thisFoundIt = False
 
@@ -335,7 +341,7 @@ class CommandRunner:
         return True
 
 ######################################################################
-            
+
     def doRun(self):
         thisServerGroupList = []
 
@@ -480,7 +486,7 @@ class CommandRunner:
         return True
 
 ######################################################################
-    
+
     def doServerGroup(self):
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
@@ -488,6 +494,7 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
+        # If given a group name, set it.
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
 
@@ -501,9 +508,29 @@ class CommandRunner:
                 print("Current server group is now '" + self._commTokens[1] + "'.")
                 return True
         else:
-            thisError = "ERROR: No server group name given."
-            self.handleError(thisError)
-            return False
+            # Otherwise, print the server group list given at startup.
+            thisServerGroupStr = "Known server groups for environment '" + \
+                                 self._globalConfig.getServerEnv() + "'\n"
+            thisServerGroupStr = thisServerGroupStr + \
+                                 "--------------------------------------------------\n"
+            thisTotalServerCount = 0
+            thisColumnCount = 0
+
+            for thisServerGroup in self._globalConfig.getServerGroupList():
+                thisColumnCount = thisColumnCount + 1
+                thisTotalServerCount = thisTotalServerCount + \
+                                       thisServerGroup.getServerCount()
+                thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % \
+                                     (thisServerGroup.getName(), thisServerGroup.getServerCount())
+
+                if (thisColumnCount == 4):
+                    thisColumnCount = 0
+                    thisServerGroupStr = thisServerGroupStr + '\n'
+
+            # Print it!
+            print(thisServerGroupStr)
+
+            return True
 
     def doServerList(self):
         # Check for batch mode.
@@ -525,7 +552,7 @@ class CommandRunner:
             return False
         else:
             print("Known servers for group '" + thisServerGroup.getName() + "'")
-            print("----------------------------------------")
+            print("--------------------------------------------------")
             # Actual server list goes here.
             thisTempStr = ''
 
