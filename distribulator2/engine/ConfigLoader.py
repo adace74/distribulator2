@@ -29,7 +29,7 @@ except ImportError:
 
 class ConfigLoader:
 
-    def loadGlobalConfig(self, PassedCommLine, PassedConfigDir):
+    def loadGlobalConfig(self, PassedCommLine, PassedGlobalConfig):
         # Load GNU Readline history.
         print('Loading configuration...')
 
@@ -38,13 +38,12 @@ class ConfigLoader:
         # Try to print status -after- actions so as to be
         # more accurate.
         #
-        print("- Readline history: %d lines loaded." % thisLinesLoaded)
+        print("- GNU Readline history:        %d lines loaded." % thisLinesLoaded)
         
         #
-        # Create GlobalConfig object.
+        # Create a private copy of the GlobalConfig object.
         #
-        thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
-        thisGlobalConfig.setConfigDir(PassedConfigDir)
+        thisGlobalConfig = PassedGlobalConfig
 
         #
         # Unix "pass through" commands.
@@ -69,14 +68,23 @@ class ConfigLoader:
         thisGlobalConfig.setPassThruList(thisPassThruList)
 
         # Status.
-        print( "- Pass-through Unix commands: %d lines loaded." \
+        print( "- Pass-through Unix commands:  %d lines loaded." \
                % len(thisPassThruList) )
 
         # Parse XML...ouchies.
         thisParser = engine.XMLFileParser.XMLFileParser()
         thisGlobalConfig = thisParser.parse(thisGlobalConfig)
-        print("- Global options and settings.")
-        print("- Entering interactive mode...")
+
+        print("- Global options and settings: %d lines loaded." % thisGlobalConfig.getConfigLines())
+
+        thisServerGroupStr = ''
+        for thisServerGroup in thisGlobalConfig.getServerGroupList():
+            thisServerGroupStr = thisServerGroupStr + \
+                                 thisServerGroup.getName() + ' '
+
+        print("- Available Server Groups:     all " + thisServerGroupStr)
+        print
+        print("Confused?  Need help?  Try typing 'help' and see what happens!")
         print
 
         return thisGlobalConfig

@@ -34,6 +34,14 @@ class GlobalConfig:
     def setConfigDir(self, PassedConfigDir):
         self.thisConfigDir = PassedConfigDir
     #
+    # Number of config lines loaded.
+    #
+    def getConfigLines(self):
+        return self.thisConfigLines
+
+    def setConfigLines(self, PassedConfigLines):
+        self.thisConfigLines = PassedConfigLines
+    #
     # System binary locations.
     #
     def getScpBinary(self):
@@ -56,6 +64,14 @@ class GlobalConfig:
     def setSyslogFacility(self, PassedSyslogFacility):
         self.thisSyslogFacility = PassedSyslogFacility
     #
+    # Server Environment.
+    #
+    def getServerEnv(self):
+        return self.thisServerEnv
+
+    def setServerEnv(self, PassedServerEnv):
+        self.thisServerEnv = PassedServerEnv
+    #
     # Unix command "pass through" list.
     #
     def getPassThruList(self):
@@ -66,5 +82,18 @@ class GlobalConfig:
     #
     # Servers and ServerGroups
     #
+    def getServerGroupList(self):
+        return self.thisServerGroupList
+
+    def setServerGroupList(self, PassedServerGroupList):
+        self.thisServerGroupList = PassedServerGroupList
+
+    def addServerGroup(self, PassedServerGroup):
+        self.thisServerGroupList.append(PassedServerGroup)
+
+    def getServerGroupByName(self, PassedServerGroupName):
+        for thisServerGroup in self.thisServerGroupList:
+            if (PassedServerGroupName == thisServerGroup.getName()):
+                return thisServerGroup
 
 ######################################################################

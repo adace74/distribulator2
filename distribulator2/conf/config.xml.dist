@@ -1,23 +1,47 @@
-######################################################################
-#
-# $Id$
-#
-######################################################################
-#
-# Binary locations.
-#
-<Binary SCP_BIN="/usr/bin/scp -c blowfish"/>
-<Binary SSH_BIN="/usr/bin/ssh -c blowfish"/>
-#
-# Logging options.
-#
-<Logging FACILITY="LOCAL0"/>
-#
-# Server groups
-#
-<Environment name="at">
-    <ServerGroup name="wlx" username="orbitz">
-        <Server name="wlx01at.eg.orbitz.com"/>
-        <Server name="wlx02at.eg.orbitz.com"/>
-    </ServerGroup>
-</Environment>
+<!--
+
+$Id$
+
+-->
+
+<!-- Start Global Config -->
+
+<config>
+    <!-- System Binaries -->
+    <binary>
+        <scp>/usr/bin/scp -c blowfish</scp>
+        <ssh>/usr/bin/ssh -c blowfish</ssh>
+    </binary>
+
+    <!-- Logging Options -->
+    <logging>
+        <facility>LOCAL0</facility>
+    </logging>
+
+    <!-- Server environments, groups, etc. -->
+    <environment>
+        <name>sample</name>
+        <servergroup>
+            <name>www</name>
+            <username>orbitz</username>
+            <server>www01st.eg.orbitz.com</server>
+            <server>www02st.eg.orbitz.com</server>
+            <server>www03st.eg.orbitz.com</server>
+            <server>www04st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>wlx</name>
+            <username>orbitz</username>
+            <server>wlx01st.eg.orbitz.com</server>
+            <server>wlx02st.eg.orbitz.com</server>
+            <server>wlx03st.eg.orbitz.com</server>
+            <server>wlx04st.eg.orbitz.com</server>
+            <server>wlx05st.eg.orbitz.com</server>
+            <server>wlx06st.eg.orbitz.com</server>
+            <server>wlx07st.eg.orbitz.com</server>
+            <server>wlx08st.eg.orbitz.com</server>
+        </servergroup>
+    </environment>
+</config>
+
+<!-- End Global Config -->

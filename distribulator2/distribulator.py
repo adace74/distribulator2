@@ -150,7 +150,11 @@ The available options are:
 
     # Create ConfigLoader instance and call that method!
     thisLoader = engine.ConfigLoader.ConfigLoader()
-    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine, thisConfigDir)
+    thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+    thisGlobalConfig.setConfigDir(thisConfigDir)
+    thisGlobalConfig.setServerEnv(thisServerEnv)
+
+    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine, thisGlobalConfig)
 
     # Log our startup.
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
