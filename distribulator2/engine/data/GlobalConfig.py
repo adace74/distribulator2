@@ -487,6 +487,20 @@ class GlobalConfig:
 
 ######################################################################
 
+    def getCurrentEnvironment(self):
+        """This is a typical accessor method."""
+
+        return self._currentEnvironment
+
+######################################################################
+
+    def setCurrentEnvironment(self, PassedEnvironment):
+        """This is a typical accessor method."""
+
+        self._currentEnvironment = PassedEnvironment
+
+######################################################################
+
     def getEnvironmentByName(self, PassedServerEnvName):
         """This is a typical accessor method."""
 
@@ -518,20 +532,6 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._environmentList.append(PassedEnvironment)
-
-######################################################################
-
-    def getCurrentEnvironment(self):
-        """This is a typical accessor method."""
-
-        return self._currentEnvironment
-
-######################################################################
-
-    def setCurrentEnvironment(self, PassedEnvironment):
-        """This is a typical accessor method."""
-
-        self._currentEnvironment = PassedEnvironment
 
 ######################################################################
 # Unix command "pass through" list.
