@@ -173,18 +173,24 @@ The available options are:
             thisGlobalConfig.setRealUsername( getpass.getuser() )
             thisGlobalConfig.setUsername( getpass.getuser() )
 
-        if (thisGlobalConfig.isBatchMode()):
-            thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- batch mode.")
-        else:
-            thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- console mode.")
+        # Define a pretty seperator.
+        thisSeperator = '----------------------------------------------------------------------'
+        thisLogger.LogMsgInfo(thisSeperator)
 
-        thisLogger.LogMsgInfo("INFO: Real UID:      " +
+        if (thisGlobalConfig.isBatchMode()):
+            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.50 -- batch mode.")
+        else:
+            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.50 -- console mode.")
+
+        thisLogger.LogMsgInfo("INFO:  Real UID:      " +
                               thisGlobalConfig.getRealUsername())
-        thisLogger.LogMsgInfo("INFO: Effective UID: " + \
+        thisLogger.LogMsgInfo("INFO:  Effective UID: " + \
                               thisGlobalConfig.getUsername())
 
+        thisLogger.LogMsgInfo(thisSeperator)
+
     except (EOFError, KeyboardInterrupt):
-            thisError = "ERROR:Caught CTRL-C / CTRL-D keystroke.  Exiting..."
+            thisError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
             print(thisError)
             thisLogger.LogMsgError(thisError)
             sys.exit(1)
@@ -194,7 +200,7 @@ The available options are:
         os.chdir(thisStartDir)
 
     except OSError, (errno, strerror):
-        thisError = "ERROR:[Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
+        thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
         print(thisError)
         thisLogger.LogMsgError(thisError)
 
@@ -202,19 +208,19 @@ The available options are:
     if ( thisGlobalConfig.isBatchMode() ):
         if ( thisBatchRunner.invoke() ):
             thisLogger.LogMsgInfo(
-                "INFO: Batch command set completed successfully.  Shutting down.")
+                "INFO:  Batch command set completed successfully.  Shutting down.")
             sys.exit(0)
         else:
             thisLogger.LogMsgError(
-                "ERROR:Shutting down as a result of a previous error.")
+                "ERROR: Shutting down as a result of a previous error.")
             sys.exit(1)
     else:
         if ( thisCommLine.invoke() ):
-            thisLogger.LogMsgInfo("INFO: Console user requested exit.  Shutting down.")
+            thisLogger.LogMsgInfo("INFO:  Console user requested exit.  Shutting down.")
             sys.exit(0)
         else:
             thisLogger.LogMsgError(
-                "ERROR:Shutting down as a result of a previous error.")
+                "ERROR: Shutting down as a result of a previous error.")
             sys.exit(1)
 
 ######################################################################

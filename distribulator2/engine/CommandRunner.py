@@ -30,7 +30,7 @@ class CommandRunner:
 ######################################################################
 
     def handleError(self, PassedError):
-        if ( self._globalConfig.getBatchMode() ):
+        if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 PassedError)
         else:
@@ -41,7 +41,7 @@ class CommandRunner:
 ######################################################################
 
     def handleInfo(self, PassedInfo):
-        if ( self._globalConfig.getBatchMode() ):
+        if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgInfo(
                 PassedInfo)
         else:
@@ -56,7 +56,7 @@ class CommandRunner:
         self._commTokens = self._commString.split()
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("INPUT:" + \
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
                                                      self._commString)
 
         #for thisToken in self._commTokens:
@@ -78,7 +78,7 @@ class CommandRunner:
         elif (self._commTokens[0] == 'server-list'):
             thisStatus = self.doServerList()
         else:
-            thisError = "ERROR:Unknown Command: '" + \
+            thisError = "ERROR: Unknown Command: '" + \
                             self._commTokens[0] + "'."
             self.handleError(thisError)
             return False
@@ -90,7 +90,7 @@ class CommandRunner:
             thisInput = raw_input("Yes / No> ")
 
         except (EOFError, KeyboardInterrupt):
-            thisInfo = "INFO: Caught CTRL-C / CTRL-D keystroke."
+            thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
             self.handleInfo(thisInfo)
             return False
 
@@ -113,7 +113,7 @@ class CommandRunner:
                 os.chdir(thisDirStr)
 
         except OSError, (errno, strerror):
-            thisError = "ERROR:[Errno %s] %s: %s" % (errno, strerror, \
+            thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
                                                       self._commTokens[1])
             self.handleError(thisError)
             return False
@@ -127,7 +127,7 @@ class CommandRunner:
 
         # Sanity check.
         if (len(self._commTokens) != 3):
-            thisError = "ERROR:Command Syntax Error.  Try 'help copy' for more information."
+            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
             self.handleError(thisError)
             return False
 
@@ -136,12 +136,12 @@ class CommandRunner:
             try:
                 if ( stat.S_ISREG(os.stat(
                     self._commTokens[1])[stat.ST_MODE]) == False):
-                    thisError = "ERROR:File '" + self._commTokens[1] + \
+                    thisError = "ERROR: File '" + self._commTokens[1] + \
                                 "' is accessible, but not regular."
                     self.handleError(thisError)
                     return False
             except OSError, (errno, strerror):
-                thisError = "ERROR:[Errno %s] %s: %s" % (errno, strerror, \
+                thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
                                                          self._commTokens[1])
                 self.handleError(thisError)
                 return False
@@ -152,13 +152,13 @@ class CommandRunner:
             print("on server group " + thisGroupStr + "?")
 
             if (self.doAreYouSure() == False):
-                thisInfo = "INFO: Aborting command."
+                thisInfo = "INFO:  Aborting command."
                 self.handleInfo(thisInfo)
                 return False
             else:
                 thisServerGroupList.append( thisGroupStr )
         else:
-            thisError = "ERROR:Syntax not yet implemented!"
+            thisError = "ERROR: Syntax not yet implemented!"
             self.handleError(thisError)
             return False
 
@@ -186,14 +186,14 @@ class CommandRunner:
                         # Run It.
                         thisExternalCommand.run()
                     else:
-                        thisError = "ERROR:Server '" + thisServer.getName() + \
+                        thisError = "ERROR: Server '" + thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self.handleError(thisError)
 
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                thisInfo = "INFO: Caught CTRL-C keystroke.  Returning to command prompt..."
+                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
 
         return True
@@ -211,7 +211,7 @@ class CommandRunner:
         thisFilePrinter = generic.FilePrinter.FilePrinter()
 
         if (thisFilePrinter.printFile(thisFileName) == False):
-            thisError = "ERROR:Cannot find help for specified command '" + \
+            thisError = "ERROR: Cannot find help for specified command '" + \
                         self._commTokens[1] + "'."
             self.handleError(thisError)
             return False
@@ -241,15 +241,15 @@ class CommandRunner:
                 try:
                     thisExternalCommand.run()
                 except (EOFError, KeyboardInterrupt):
-                    thisInfo = "INFO: Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+                    thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
                     self.handleInfo(thisInfo)
             else:
-                thisError = "ERROR:No matching server '" + \
+                thisError = "ERROR: No matching server '" + \
                             self._commTokens[1] + "'."
                 self.handleError(thisError)
                 return False
         else:
-            thisError = "ERROR:No server name given."
+            thisError = "ERROR: No server name given."
             self.handleError(thisError)
             return False
 
@@ -264,7 +264,7 @@ class CommandRunner:
         # Attempt to retokenize our command based on appropriate syntax.
         #
         if ( self._commString.find('"') == -1 ):
-            thisError = "ERROR:Command Syntax Error.  Try 'help run' for more information."
+            thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
             self.handleError(thisError)
             return False
 
@@ -291,7 +291,7 @@ class CommandRunner:
         else:
             # Sanity syntax check.
             if (thisSuffixStr.find(' on ') == -1):
-                thisError = "ERROR:Command Syntax Error.  Try 'help run' for more information."
+                thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
                 self.handleErorr(thisError)
                 return False
 
@@ -307,7 +307,7 @@ class CommandRunner:
 
                 # Validate.
                 if (thisServerGroup == False):
-                    thisError = "ERROR:No matching server group '" + \
+                    thisError = "ERROR: No matching server group '" + \
                                 thisGroupStr + "'."
                     self.handleError(thisError)
                     return False
@@ -321,7 +321,7 @@ class CommandRunner:
                 for thisGroupStr in thisGroupList:
                     if (self._globalConfig.getServerGroupByName(thisGroupStr.strip())
                         == False):
-                        thisError = "ERROR:No matching server group '" + \
+                        thisError = "ERROR: No matching server group '" + \
                               thisGroupStr.strip() + "'."
                         self.handleError(thisError)
                         return False
@@ -338,7 +338,7 @@ class CommandRunner:
             print("Run command " + thisBodyStr + " on server group(s) " + \
                   thisDisplayStr + "?")
             if (self.doAreYouSure() == False):
-                thisInfo = "INFO: Aborting command."
+                thisInfo = "INFO:  Aborting command."
                 self.handleInfo(thisInfo)
                 return False
 
@@ -365,7 +365,7 @@ class CommandRunner:
                         # Run It.
                         thisExternalCommand.run()
                     else:
-                        thisError = "ERROR:Server '" + \
+                        thisError = "ERROR: Server '" + \
                                     thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self.handleError(thisError)
@@ -373,7 +373,7 @@ class CommandRunner:
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                thisInfo = "INFO: Caught CTRL-C keystroke.  Returning to command prompt..."
+                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
 
         return True
@@ -385,7 +385,7 @@ class CommandRunner:
             thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
 
             if (thisServerGroup == False):
-                thisError = "ERROR:No matching server group '" + \
+                thisError = "ERROR: No matching server group '" + \
                             self._commTokens[1] + "'."
                 self.handleError(thisError)
                 return False
@@ -394,7 +394,7 @@ class CommandRunner:
                 print("Current server group is now '" + self._commTokens[1] + "'.")
                 return True
         else:
-            thisError = "ERROR:No server group name given."
+            thisError = "ERROR: No server group name given."
             self.handleError(thisError)
             return False
 
@@ -406,7 +406,7 @@ class CommandRunner:
             thisServerGroup = self._globalConfig.getCurrentServerGroup()
 
         if (thisServerGroup == False):
-            thisError = "ERROR:No matching server group '" + \
+            thisError = "ERROR: No matching server group '" + \
                         self._commTokens[1] + "'."
             self.handleError(thisError)
             return False
