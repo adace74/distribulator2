@@ -13,36 +13,32 @@
    *
   -->
 
-<!-- Define the "config" document type. -->
+<!-- Define the Configuration Markup Language "config" document type. -->
 
-<!DOCTYPE config [
+<!-- The "config" tag. -->
+<!ELEMENT config (binary+, logging?, environment+)>
 
-    <!-- The "config" tag. -->
-    <!ELEMENT config (binary+, logging?, environment+)>
+<!-- The "binary" tag. -->
+<!ELEMENT binary EMPTY>
+<!ATTLIST binary
+    name CDATA #REQUIRED
+    value CDATA #REQUIRED>
 
-        <!-- The "binary" tag. -->
-        <!ELEMENT binary>
-        <!ATTLIST binary
-            name CDATA #IMPLIED
-            value CDATA #IMPLIED>
+<!-- The "logging" tag. -->
+<!ELEMENT logging EMPTY>
+<!ATTLIST logging
+    facility CDATA #REQUIRED>
 
-        <!-- The "logging" tag. -->
-        <!ELEMENT logging>
-        <!ATTLIST logging
-            facility CDATA #IMPLIED>
+<!-- The "environment" tag. -->
+<!ELEMENT environment (servergroup+)>
+<!ATTLIST environment
+    name CDATA #REQUIRED>
 
-        <!-- The "environment" tag. -->
-        <!ELEMENT environment (servergroup+)>
-        <!ATTLIST environment
-            name CDATA #IMPLIED>
+<!-- The "servergroup" tag. -->
+<!ELEMENT servergroup (server+)>
+<!ATTLIST servergroup
+    name CDATA #IMPLIED
+    username CDATA #IMPLIED>
 
-            <!-- The "servergroup" tag. -->
-            <!ELEMENT servergroup (server+)>
-            <!ATTLIST servergroup
-                name CDATA #IMPLIED
-                username CDATA #IMPLIED>
-
-                <!-- The "server" tag. -->
-                <!ELEMENT server #PCDATA>
-
-]>
+<!-- The "server" tag. -->
+<!ELEMENT server (#PCDATA)>

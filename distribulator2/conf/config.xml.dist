@@ -16,7 +16,7 @@
 <!-- Reference our XML DTD. -->
 
 <!DOCTYPE config PUBLIC
-    "-//Adam W. Dace//Distribulator Configuration Version 1.0//EN"
+    "-//Adam W. Dace//DTD CML 1.0 Strict//EN"
     "http://www.turing.com/adam/config.dtd">
 
 <!-- Start Global Config -->
