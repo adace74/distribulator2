@@ -103,7 +103,10 @@ class CommandRunner:
                     thisServer.getUsername() + " " + thisServer.getName() )
                 self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
                                                              thisExternalCommand.getCommand())
-                thisExternalCommand.run()
+                try:
+                    thisExternalCommand.run()
+                except KeyboardInterrupt:
+                    print("Caught CTRL-C keystroke.  Returning to command prompt...")
             else:
                 print("ERROR: No matching server '" + \
                       self._commTokens[1] + "'.")

@@ -41,12 +41,13 @@ class CommandLine:
             thisFile.close()
 
             # Load readline history.
+            readline.set_history_length(256)
             readline.read_history_file(thisHistory)
         
         except IOError:
             pass
 
-        # Save readline history on exit.    
+        # Save readline history on exit.
         atexit.register(readline.write_history_file, thisHistory)
 
         # Enable TAB filename-completion, instead of Python's default
@@ -105,14 +106,11 @@ class CommandLine:
                     if (thisTokens[0] == thisCommand):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
                         thisExternalCommand.setCommand(thisInput)
-
                         # Wrap it just in case.
                         try:
                             thisExternalCommand.run()
-
                         except KeyboardInterrupt:
-                            print "Caught CTRL-C keystroke.  Back to command prompt..."
-
+                            print "Caught CTRL-C keystroke.  Returning to command prompt..."
                         del thisExternalCommand
                         thisFoundIt = True
                         break
