@@ -162,7 +162,10 @@ The available options are:
                     thisVar3 = opt[1]
                 elif (opt[0] == '--version'):
                     print(__appversion__)
+                    print("(c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved.")
+                    print
                     print("Please see the LICENSE file for accompanying legalese.")
+                    print
                     sys.exit(False)
         else:
             print("ERROR: getopt failure!  This shouldn't ever happen!")
