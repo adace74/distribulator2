@@ -7,17 +7,19 @@ Description: Runs a given command across multiple servers,
              in either normal or reverse sort order.
 
 Examples:
-    run "uptime"            -- Runs uptime on current server group.
+    run "uptime"            -- Runs uptime on current server group
+                               in forward order.
     run "uptime" reverse    -- Runs uptime on current server group
                                in reverse order.
-    run "uptime" on app,www -- Runs uptime on app and www server groups.
+    run "uptime" on app,www -- Runs uptime on app and www server groups
+                               in forward order.
     run "uptime" on app,www reverse
                             -- Runs uptime on app and www server groups
                                in reverse order.
     run -t "vi"             -- Runs vi on current server group,
-                               and force a ssh tty.
+                               in forward order, and forces an ssh tty.
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
-                               and force a ssh tty.
+                               in forward order, and forces an ssh tty.
 
 TODO:
     run "uptime" on www01   -- Runs uptime on server named 'www01'.

@@ -75,21 +75,20 @@ Data Classes
 - engine.data.InternalCommand
 - engine.data.ExternalCommand
 
-Data storage classes which will hold all relevant information regarding a given
-command.
+Data storage classes which shall hold all relevant information regarding
+a given command.
 
 - engine.data.GlobalConfig class.
 
-A data storage class which will hold all relevant information regarding
+A data storage class which shall hold all relevant information regarding
 the global configuration of the program.  It will hold startup settings,
 binary locations, collections of ServerGroup and Server objects, etc. 
 
 - engine.data.Server class.
 
-A data storage class which will hold all relevant information regarding a given server.
+A data storage class which shall hold all relevant information regarding a given server.
 
 - engine.data.ServerGroup class.
 
 A collection of Server classes representing a server group.
-Should also provide the ability to return Server lists in either a pre-defined
-or sorted order.
+Contains data, and associated methods to deal with the stored data.

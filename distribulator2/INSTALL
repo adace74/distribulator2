@@ -1,0 +1,78 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+Installing The Distribulator
+----------------------------
+
+Prerequisites
+-------------
+Before installing the distribulator, one must have already installed
+a copy of the following:
+
+- Python v2.2.2+ (http://www.python.org/)
+
+In theory the distribulator might work on earlier(i.e. v1.5.2) versions
+of Python, but I wouldn't bet on it.
+
+- PyXML v0.8.2+ (http://pyxml.sourceforge.net/)
+
+Oddly enough, some installations seem to load the XML parser
+without this package, but in other cases this simply doesn't work.
+
+I personally install this always, as a just-in-case measure.
+
+Installation
+------------
+1) Pick a place you'd like to install the program.
+   The default is /promo/distribulator2 probably not where you'd want it...
+
+   For example, let's say you'd like to install into /apps/distribulator2.
+
+2) Go to the subdir of where you'd like it to be:
+	cd /apps/
+
+3) Unpack the distribution:
+	tar xfz distribulator-0.50.tar.gz
+
+4) Copy the example config file for real-world use:
+    cd /apps/distribulator2/conf; cp config.xml.dist config.xml
+
+5) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
+   reflect your installation directory(in this case /apps/distribulator2):
+	vi distribulator2/scripts/distribulator
+
+6) Create a symlink from /usr/local/bin/ to the wrapper script
+   (or your path-happy location of choice):
+	cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator
+
+7) Fire it up:
+   distribulator
+
+8) Test it out, tinker around, read the next section for how to
+   setup config.xml for your environments.
+
+Configuration Overview
+----------------------
+This file won't go into extensive detail on the configuration files
+listed here, however you'll at least have a starting point.
+
+conf/config.xml -- Main XML configuration file.
+
+This file contains all interesting settings, including binary locations,
+server and server group settings, etc.  Most likely this will be the file
+of most interest to you.
+
+Settings of interest:
+- Binary locations for logname, ping, scp, and ssh.
+- Syslog logging facility.
+- Server environment(s) and group(s) settings.
+
+config/pass_through_cmds.txt -- Simple list of Unix common commands for
+the command-line interface to "pass through", that is to simply run as
+a good shell would.
+
+examples/ -- Directory containing example batch files that actually will
+attempt to work.

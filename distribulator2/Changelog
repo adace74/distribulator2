@@ -39,7 +39,7 @@ Change List For v0.4-v0.45 (Shipped):
 * Addition of the ability to distinguish those commands as external and
   simply pass them through to the underlying shell via the system() call.
 
-Spontaneous Change List For v0.47 (Shipped):
+Change List For v0.47 (Shipped):
 * Modularized codebase.  Still not all that generic, but at least
   broken out by functionality.  There's still way too many
   inter-dependancies, but it's at least more manageable.
@@ -56,7 +56,7 @@ Spontaneous Change List For v0.47 (Shipped):
   (Hold down CTRL-C, or just hit it a number of times)
 * Improved testing process, thus improved stability.
 
-Spontaneous Change List For v0.48 (Shipped):
+Change List For v0.48 (Shipped):
 * Fixed a silly bug where the command-line prompt wasn't being updated with
   the current server group.
 * Added a -t flag to the run command.  This will allow one to specify
@@ -79,8 +79,9 @@ Change List For v0.5 (Shipped):
 * Single local server file to many remote serveres file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
 
-Change List For v0.6 (Coming as soon as it's ready):
-* Stabilization work / bug fixes.
+Change List For v0.51 - v0.6 (Coming as soon as it's ready):
+* Bug fixes / OO design sanity fixes / stabilization work.
+* Documentation updates.
 
 Change List For v0.7 (A little farther out):
 - Ability to run commands on a remote single server.
@@ -91,11 +92,9 @@ Change List For v0.7 (A little farther out):
 (i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
 
 Change List For v1.0 (Will we ever get here?  Who knows!):
-- Regular expression support in server hostnames.
 - Sudo-based remote permissions checking.
 - Other random pie-in-the-sky dreamsicle features.
 - A decent install / setup system!  Perhaps a quick autoconf thingie?
 - Integration with ncurses such that one could run a command on 4 servers
   in parallel, and see the output from each of them?
-- Auditing capabilities via syslog?
 - Other random pie-in-the-sky dreamsicle features.
