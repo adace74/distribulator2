@@ -42,31 +42,30 @@ class HostPinger:
 
                 # Fix to actually do a string compare!
                 if (myString.find(self._globalConfig.getPingBanner()) == -1):
-                        myError = "ERROR: Received non-matching service banner!"
+                        myError = "Received non-matching service banner!"
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         return 3
 
             mySocket.close()
             return 0
 
-        # Add a debug mode someday!
-        except socket.error:
-            myError = "ERROR: [Errno Not Available] Not Available: %s" % (PassedHostname)
+        except socket.error, myErrorInfo:
+            myError = "OS Reports: [%s] during TCP ping attempt.\n" % (myErrorInfo)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
         except socket.herror, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedHostname)
+            myError = "OS Reports: [Errno %s: %s] during TCP ping attempt." % (errno, strerror)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 2
 
         except socket.gaierror, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedHostname)
+            myError = "OS Reports: [Errno %s: %s] during TCP ping attempt." % (errno, strerror)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 3
 
         except socket.timeout:
-            myError = "ERROR: Socket timed out while connecting to server."
+            myError = "OS Reports: [Socket timeout] during TCP ping attempt."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 4
 

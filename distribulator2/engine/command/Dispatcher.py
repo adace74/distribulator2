@@ -55,11 +55,11 @@ class Dispatcher:
 
         if (self._commTokens[0] != 'cd'):
             # Log it.
-            self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
+            self._globalConfig.getLogger().info("CMD: " + \
                                                          self._commString)
             # If we're not being quiet, print it.
             if ( self._globalConfig.isQuietMode() == False ):
-                print("CMD:   " + self._commString)
+                print("CMD: " + self._commString)
 
         try:
             # Cheezy branching logic.  Works well, though.
@@ -96,16 +96,14 @@ class Dispatcher:
                     myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)
                     myCommandCount = myCommand.doShowServerGroup(self._commString)
             else:
-                myError = "ERROR: Unknown Command: '" + \
-                                self._commString + "'."
+                myError = "Unknown Command: '" + self._commString + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
 
             del myCommand
 
         except IndexError:
-            myError = "ERROR: Unknown Command: '" + \
-                            self._commString + "'."
+            myError = "Unknown Command: '" + self._commString + "'."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 

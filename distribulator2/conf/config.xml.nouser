@@ -28,7 +28,8 @@
     <binary name="ssh" value="/usr/bin/ssh"/>
 
     <!-- Logging Options -->
-    <logging facility="LOCAL0"/>
+    <logging filename="/var/log/commandlog"/>
+    <logging level="DEBUG"/>
 
     <!-- Ping Options -->
     <ping banner="OpenSSH" port="22" timeout="10"/>

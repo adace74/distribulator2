@@ -320,36 +320,48 @@ class GlobalConfig:
         self._sshBinary = PassedSshBinary
 
 ######################################################################
-# Syslog Facility.
+# Logging Functionality.
 ######################################################################
 
-    def getSyslogFacility(self):
+    def getLogFilename(self):
         """This is a typical accessor method."""
 
-        return self._syslogFacility
+        return self._logFilename
 
 ######################################################################
 
-    def setSyslogFacility(self, PassedSyslogFacility):
+    def setLogFilename(self, PassedLogFilename):
         """This is a typical accessor method."""
 
-        self._syslogFacility = PassedSyslogFacility
+        self._logFilename = PassedLogFilename
 
 ######################################################################
-# SysLogger Object.
-######################################################################
 
-    def getSysLogger(self):
+    def getLogLevel(self):
         """This is a typical accessor method."""
 
-        return self._sysLogger
+        return self._logLevel
 
 ######################################################################
 
-    def setSysLogger(self, PassedSysLogger):
+    def setLogLevel(self, PassedLogLevel):
         """This is a typical accessor method."""
 
-        self._sysLogger = PassedSysLogger
+        self._logLevel = PassedLogLevel
+
+######################################################################
+
+    def getLogger(self):
+        """This is a typical accessor method."""
+
+        return self._logger
+
+######################################################################
+
+    def setLogger(self, PassedLogger):
+        """This is a typical accessor method."""
+
+        self._logger = PassedLogger
 
 ######################################################################
 # Ping Options.

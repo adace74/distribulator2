@@ -62,7 +62,7 @@ class RunCommand(Command.Command):
         #          the 'reverse' and 'single' keywords.
         #
         if ( self._commString.find('"') == -1 ):
-            myError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
+            myError = "Command Syntax Error.  Try 'help run' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -104,7 +104,7 @@ class RunCommand(Command.Command):
             myRunTarget = 'current_server_group';
         # Check for syntax errors.
         elif (mySuffixStr.find(' on ') == -1):
-            myError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
+            myError = "Command Syntax Error.  Try 'help run' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         elif (mySuffixStr.find(',') == -1):
@@ -147,7 +147,7 @@ class RunCommand(Command.Command):
                 myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
                 # Validate.
                 if (myServerGroup == False):
-                    myError = "ERROR: No matching server name or group '" + \
+                    myError = "No matching server name or group '" + \
                                 myGroupStr + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
@@ -171,7 +171,7 @@ class RunCommand(Command.Command):
                 if (myServerGroup):
                     myServerGroupList.append(myLoopStr)
                 else:
-                    myError = "ERROR: No matching server name or group '" + \
+                    myError = "No matching server name or group '" + \
                                 myLoopStr + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
@@ -181,7 +181,7 @@ class RunCommand(Command.Command):
         # server hostnames and server group names together.
         #
         if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
-            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -268,7 +268,7 @@ class RunCommand(Command.Command):
                         if (isSingle):
                             break
                     else:
-                        myError = "ERROR: Server '" + myServer.getName() + \
+                        myError = "Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         if (self._globalConfig.isQuietMode() == False):
@@ -335,7 +335,7 @@ class RunCommand(Command.Command):
                             if (isSingle):
                                 break
                         else:
-                            myError = "ERROR: Server '" + myServer.getName() + \
+                            myError = "Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
                             if (self._globalConfig.isQuietMode() == False):

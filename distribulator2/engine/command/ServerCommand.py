@@ -45,7 +45,7 @@ class ServerCommand(Command.Command):
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            myError = "ERROR: Invalid command for batch mode."
+            myError = "Invalid command for batch mode."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -54,7 +54,7 @@ class ServerCommand(Command.Command):
             myServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[2] )
 
             if (myServerGroup == False):
-                myError = "ERROR: No matching server group '" + \
+                myError = "No matching server group '" + \
                             self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
@@ -63,7 +63,7 @@ class ServerCommand(Command.Command):
                 print("INFO:  Current server group is now '" + self._commTokens[2] + "'.")
                 return True
         else:
-            myError = "ERROR: No server group name given."
+            myError = "No server group name given."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -79,7 +79,7 @@ class ServerCommand(Command.Command):
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            myError = "ERROR: Invalid command for batch mode."
+            myError = "Invalid command for batch mode."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -90,7 +90,7 @@ class ServerCommand(Command.Command):
 
             # Check for errors.
             if (myServerGroup == False):
-                myError = "ERROR: No matching server group '" + \
+                myError = "No matching server group '" + \
                             self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
 

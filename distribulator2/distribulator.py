@@ -27,6 +27,7 @@ __appversion__ = 'The Distribulator v0.7.5'
 import commands
 import getopt
 import getpass
+import logging
 import os
 import os.path
 import socket
@@ -39,7 +40,6 @@ import engine.misc.MultiLogger
 import engine.mode.BatchMode
 import engine.mode.ConsoleMode
 import engine.mode.ListMode
-import generic.SysLogger
 
 ######################################################################
 # Display a nice pretty header.
@@ -259,9 +259,16 @@ The available options are:
              (myGlobalConfig.isQuietMode() == False) ):
             myVerboseMode = True
 
-        # Setup syslog and console output handle.
-        mySysLogger = generic.SysLogger.SysLogger(myGlobalConfig.getSyslogFacility(), 'distribulator.py')
-        myGlobalConfig.setSysLogger(mySysLogger)
+        # Setup console and logging output handles.
+        myLogger = logging.getLogger('dist')
+        myHandler = logging.FileHandler( myGlobalConfig.getLogFilename() )
+        myFormatter = logging.Formatter('%(asctime)s|%(process)s|%(levelname)s|%(message)s', \
+                                        '%Y%m%d %H:%M:%S')
+        myHandler.setFormatter(myFormatter)
+        myLogger.addHandler(myHandler) 
+        myLogger.setLevel( myGlobalConfig.getLogLevel() )
+
+        myGlobalConfig.setLogger(myLogger)
         myMultiLogger = engine.misc.MultiLogger.MultiLogger(myGlobalConfig)
         myGlobalConfig.setMultiLogger(myMultiLogger)
 
@@ -276,19 +283,19 @@ The available options are:
 
         # Define a pretty seperator.
         mySeperator = '----------------------------------------------------------------------'
-        mySysLogger.LogMsgInfo(mySeperator)
+        myLogger.info(mySeperator)
         if (myVerboseMode):
             print(mySeperator)
 
         if (myGlobalConfig.isBatchMode()):
-            myInfo = "INFO:  " + __appversion__ + " (batch mode) START"
+            myInfo = __appversion__ + " (batch mode) START"
         elif (myGlobalConfig.isListMode()):
-            myInfo = "INFO:  " + __appversion__ + " (list mode) START"
+            myInfo = __appversion__ + " (list mode) START"
         else:
-            myInfo = "INFO:  " + __appversion__ + " (console mode) START"
-        mySysLogger.LogMsgInfo(myInfo)
+            myInfo = __appversion__ + " (console mode) START"
+        myLogger.info(myInfo)
 
-        myInfo = "INFO:  UID: " + myGlobalConfig.getRealUsername() + \
+        myInfo = "UID: " + myGlobalConfig.getRealUsername() + \
                    " | " + \
                    "EUID: " + myGlobalConfig.getUsername() + \
                    " | " + \
@@ -296,48 +303,48 @@ The available options are:
                    " | " + \
                    "File: " + myBatchFile
 
-        mySysLogger.LogMsgInfo(myInfo)
+        myLogger.info(myInfo)
         if (myVerboseMode):
             print(myInfo)
 
     except (EOFError, KeyboardInterrupt):
-            myError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            print(myError)
-
+            print("ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting...")
             sys.exit(True)
 
     # Batch mode.
     if ( myGlobalConfig.isBatchMode() ):
         myBatchMode.invoke()
 
-        myInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
-        mySysLogger.LogMsgInfo(myInfo)
+        myInfo = __appversion__ + " (batch mode) EXIT"
+        myLogger.info(myInfo)
 
-        mySysLogger.LogMsgInfo(mySeperator)
+        myLogger.info(mySeperator)
         if (myVerboseMode):
             print(mySeperator)
     # List mode.
     elif ( myGlobalConfig.isListMode() ):
         myListModeer.invoke()
 
-        myInfo = "INFO:  " + __appversion__ + " (list mode) EXIT"
-        mySysLogger.LogMsgInfo(myInfo)
+        myInfo = __appversion__ + " (list mode) EXIT"
+        myLogger.info(myInfo)
     # Console mode.
     else:
         myCommLine.invoke()
 
-        myInfo = "INFO:  " + __appversion__ + " (console mode) EXIT"
-        mySysLogger.LogMsgInfo(myInfo)
+        myInfo = __appversion__ + " (console mode) EXIT"
+        myLogger.info(myInfo)
         if (myVerboseMode):
             print(myInfo)
 
-        mySysLogger.LogMsgInfo(mySeperator)
+        myLogger.info(mySeperator)
         if (myVerboseMode):
             print(mySeperator)
 
     if ( myGlobalConfig.isExitSuccess() ):
+        logging.shutdown()
         sys.exit(False)
     else:
+        logging.shutdown()
         sys.exit(True)
 
 ######################################################################

@@ -52,7 +52,7 @@ class BatchMode(Mode.Mode):
             if ( stat.S_ISREG(os.stat(
                 self._globalConfig.getBatchFile())[stat.ST_MODE]) \
                  == False ):
-                myError = "ERROR: File '" + \
+                myError = "File '" + \
                             self._globalConfig.getBatchFile() + \
                             "' is accessible, but not regular."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
@@ -61,7 +61,7 @@ class BatchMode(Mode.Mode):
                 return
 
         except OSError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \
+            myError = "[Errno %s] %s: %s" % ( errno, strerror, \
                                                        self._globalConfig.getBatchFile() )
             self._globalConfig.getMultiLogger().LogMsgError(myError)
 
@@ -90,13 +90,13 @@ class BatchMode(Mode.Mode):
 
                 if (myLine.find('$var1') != -1):
                     if (len(self._globalConfig.getVar1()) == 0):
-                        myError = "ERROR: Variable $var1 referenced on line %d, but not defined." % myLineCount
+                        myError = "Variable $var1 referenced on line %d, but not defined." % myLineCount
                 elif (myLine.find('$var2') != -1):
                     if (len(self._globalConfig.getVar2()) == 0):
-                        myError = "ERROR: Variable $var2 referenced on line %d, but not defined." % myLineCount
+                        myError = "Variable $var2 referenced on line %d, but not defined." % myLineCount
                 elif (myLine.find('$var3') != -1):
                     if (len(self._globalConfig.getVar3()) == 0):
-                        myError = "ERROR: Variable $var3 referenced on line %d, but not defined." % myLineCount
+                        myError = "Variable $var3 referenced on line %d, but not defined." % myLineCount
 
                 if (len(myError) != 0):
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
@@ -190,7 +190,7 @@ class BatchMode(Mode.Mode):
                      break
 
                 if (myTokens[0] == 'exit'):
-                     myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+                     myInfo = "Received exit command.  Wrote history.  Dying..."
                      self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                      break
 
@@ -243,8 +243,7 @@ class BatchMode(Mode.Mode):
             myFile.close()
 
         except IOError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % \
-                        (errno, strerror, myFilename)
+            myError = "[Errno %s] %s: %s" % (errno, strerror, myFilename)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             self._globalConfig.setExitSuccess(False)
@@ -253,7 +252,7 @@ class BatchMode(Mode.Mode):
         #
         # Output our "footer" for batch mode.
         #
-        self._globalConfig.getSysLogger().LogMsgInfo(self._globalConfig.getSeperator())
+        self._globalConfig.getLogger().info(self._globalConfig.getSeperator())
 
         if (self._globalConfig.isBreakState()):
             myInfo = "INFO:  Summary: Batch run successfully aborted.  No statistics available."

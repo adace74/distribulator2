@@ -14,7 +14,6 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import atexit
 import getpass
 import os
 import os.path
@@ -78,7 +77,7 @@ class ListMode(Mode.Mode):
             if (myServerGroup):
                 myServerGroupList.append(myLoopStr)
             else:
-                myError = "ERROR: No matching server name or group '" + \
+                myError = "No matching server name or group '" + \
                             myLoopStr + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
@@ -88,7 +87,7 @@ class ListMode(Mode.Mode):
         # server hostnames and server group names together.
         #
         if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
-            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 

@@ -61,15 +61,15 @@ class CopyCommand(Command.Command):
         #
         # Validate token count.
         if (len(self._commTokens) < 3):
-            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         elif (self._commTokens[2].find('/') == -1):
-            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False            
         if (self._commString.find(' reverse') > 0):
-            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         else:
@@ -77,18 +77,18 @@ class CopyCommand(Command.Command):
             myRemotePath = self._commTokens[2]
 
         # Validate local file.
-        try:
-            if ( stat.S_ISREG(os.stat(
-                myLocalPath)[stat.ST_MODE]) == False):
-                myError = "ERROR: File '" + myLocalPath + \
-                            "' is accessible, but not regular."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
-                return False
-        except OSError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
-                                                      myLocalPath)
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
-            return False
+        #try:
+        #    if ( stat.S_ISREG(os.stat(
+        #        myLocalPath)[stat.ST_MODE]) == False):
+        #        myError = "File '" + myLocalPath + \
+        #                    "' is accessible, but not regular."
+        #        self._globalConfig.getMultiLogger().LogMsgError(myError)
+        #        return False
+        #except OSError, (errno, strerror):
+        #    myError = "[Errno %s] %s: %s" % (errno, strerror, \
+        #                                              myLocalPath)
+        #    self._globalConfig.getMultiLogger().LogMsgError(myError)
+        #    return False
 
         #
         # Step 2: Try to determine what the target of the command is,
@@ -99,7 +99,7 @@ class CopyCommand(Command.Command):
             myCopyTarget = 'current_server_group'
         elif (self._commTokens[1].find(':') > 0):
             # copy app:/tmp/blah /tmp/
-            myError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
         elif (self._commString.find(',') == -1):
@@ -122,7 +122,7 @@ class CopyCommand(Command.Command):
 
             # Validate remote path.
             if (myRemotePath[len(myRemotePath) - 1] != '/'):
-                myError = "ERROR: Remote path '" + myRemotePath + \
+                myError = "Remote path '" + myRemotePath + \
                             "' must end with a slash."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
@@ -138,7 +138,7 @@ class CopyCommand(Command.Command):
 
             # Validate remote path.
             if (myRemotePath[len(myRemotePath) - 1] != '/'):
-                myError = "ERROR: Remote path '" + myRemotePath + \
+                myError = "Remote path '" + myRemotePath + \
                             "' must end with a slash."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
@@ -153,7 +153,7 @@ class CopyCommand(Command.Command):
                 myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
                 # Validate.
                 if (myServerGroup == False):
-                    myError = "ERROR: No matching server name or group '" + \
+                    myError = "No matching server name or group '" + \
                                 myGroupStr + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
@@ -182,7 +182,7 @@ class CopyCommand(Command.Command):
                 if (myServerGroup):
                     myServerGroupList.append(myLoopStr)
                 else:
-                    myError = "ERROR: No matching server name or group '" + \
+                    myError = "No matching server name or group '" + \
                                 myLoopStr + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
@@ -192,7 +192,7 @@ class CopyCommand(Command.Command):
         #         server hostnames and server group names together.
         #
         if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
-            myError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -270,7 +270,7 @@ class CopyCommand(Command.Command):
                             myExternalCommand.runConsole(True)
                         myCommandCount = myCommandCount + 1
                     else:
-                        myError = "ERROR: Server '" + myServer.getName() + \
+                        myError = "Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         if (self._globalConfig.isQuietMode() == False):
@@ -323,7 +323,7 @@ class CopyCommand(Command.Command):
                                 myExternalCommand.runConsole(True)
                             myCommandCount = myCommandCount + 1
                         else:
-                            myError = "ERROR: Server '" + myServer.getName() + \
+                            myError = "Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
                             if (self._globalConfig.isQuietMode() == False):

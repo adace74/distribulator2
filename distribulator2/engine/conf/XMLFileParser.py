@@ -14,10 +14,10 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
+import logging
 import os
 import os.path
 import sys
-import syslog
 import xml.dom.minidom
 
 # Custom modules
@@ -59,12 +59,7 @@ class XMLFileParser:
             myDom = xml.dom.minidom.parse(myFilename)
 
         except IOError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % \
-                        (errno, strerror, myFilename)
-            # NOTE: Would be nice to syslog, but This just isn't
-            # possible until the config is fully loaded.
-            print(myError)
-
+            print("ERROR: [Errno %s] %s: %s" % (errno, strerror, myFilename))
             sys.exit(True)
 
         self.handleConfig(myDom)
@@ -74,8 +69,6 @@ class XMLFileParser:
         else:
             myError = "ERROR: No matching tags found for environment '" + \
                         self._globalConfig.getServerEnv() + "' in config.xml!"
-            # NOTE: Would be nice to syslog, but This just isn't
-            # possible until the config is fully loaded.
             print(myError)
 
             sys.exit(True)
@@ -141,8 +134,16 @@ class XMLFileParser:
     def handleLogging(self, PassedLogging):
         """This method handles a single <Logging> tag."""
 
-        self._globalConfig.setSyslogFacility(
-            eval("syslog.LOG_" + PassedLogging.getAttribute('facility').strip()) )
+        if (PassedLogging.getAttribute('filename')):
+            self._globalConfig.setLogFilename(PassedLogging.getAttribute('filename'))
+        else:
+            self._globalConfig.setLogFilename(None)
+
+        if (PassedLogging.getAttribute('level')):
+            self._globalConfig.setLogLevel(
+                eval("logging." + PassedLogging.getAttribute('level').strip()) )         
+        else:
+            self._globalConfig.setLogLevel(logging.DEBUG)
 
 ######################################################################
 # Ping options.

@@ -60,7 +60,7 @@ class MiscCommand(Command.Command):
                 os.chdir(myDirStr)
 
         except OSError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+            myError = "[Errno %s] %s: %s" % (errno, strerror, \
                                                       self._commTokens[1])
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
@@ -77,11 +77,11 @@ class MiscCommand(Command.Command):
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            myError = "ERROR: Invalid command for batch mode."
+            myError = "Invalid command for batch mode."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
-        myInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
+        myInfo = "Received exit command.  Wrote history.  Dying..."
 
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
@@ -97,7 +97,7 @@ class MiscCommand(Command.Command):
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            myError = "ERROR: Invalid command for batch mode."
+            myError = "Invalid command for batch mode."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -111,7 +111,7 @@ class MiscCommand(Command.Command):
         myFilePrinter = generic.FilePrinter.FilePrinter()
 
         if (myFilePrinter.printFile(myFileName) == False):
-            myError = "ERROR: Cannot find help for specified command '" + \
+            myError = "Cannot find help for specified command '" + \
                         self._commTokens[1] + "'."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False

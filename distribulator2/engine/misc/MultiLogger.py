@@ -10,7 +10,7 @@
 # Pydoc comments
 """
 Simple generic class whose purpose is to provide a wrapper around
-the standard syslog module.
+the standard logging module.
 """
 
 # Version tag
@@ -29,37 +29,45 @@ class MultiLogger:
 
         self._globalConfig = PassedGlobalConfig
 
-    def LogMsgInfoSeperator(self):
-        """Logs and possibly prints a seperator with the syslog level INFO."""
+    def LogMsgDebug(self, PassedMessage):
+        """Logs and possibly prints a given message with the log level DEBUG."""
 
-        self._globalConfig.getSysLogger().LogMsgInfo( \
+        self._globalConfig.getLogger().debug(PassedMessage)
+
+        if (self._globalConfig.isQuietMode() == False):
+            print("DEBUG: " + PassedMessage)
+
+    def LogMsgInfoSeperator(self):
+        """Logs and possibly prints a seperator with the log level INFO."""
+
+        self._globalConfig.getLogger().info( \
             self._globalConfig.getSeperator() )
 
         if (self._globalConfig.isQuietMode() == False):
-            print( self._globalConfig.getSeperator() )
+            print( "INFO: " + self._globalConfig.getSeperator() )
 
     def LogMsgInfo(self, PassedMessage):
-        """Logs and possibly prints a given message with the syslog level INFO."""
+        """Logs and possibly prints a given message with the log level INFO."""
 
-        self._globalConfig.getSysLogger().LogMsgInfo(PassedMessage)
+        self._globalConfig.getLogger().info(PassedMessage)
 
         if (self._globalConfig.isQuietMode() == False):
-            print(PassedMessage)
+            print("INFO: " + PassedMessage)
 
     def LogMsgWarn(self, PassedMessage):
-        """Logs and possibly prints given message with the syslog level WARNING."""
+        """Logs and possibly prints given message with the log level WARNING."""
 
-        self._globalConfig.getSysLogger().LogMsgWarn(PassedMessage)
+        self._globalConfig.getLogger().warning(PassedMessage)
 
         if (self._globalConfig.isQuietMode() == False):
-            print(PassedMessage)
+            print("WARN: " + PassedMessage)
 
     def LogMsgError(self, PassedMessage):
-        """Logs and possibly prints a given message with the syslog level WARNING."""
+        """Logs and possibly prints a given message with the log level ERROR."""
 
-        self._globalConfig.getSysLogger().LogMsgError(PassedMessage)
+        self._globalConfig.getLogger().error(PassedMessage)
 
         if (self._globalConfig.isQuietMode() == False):
-            print(PassedMessage)
+            print("ERROR: " + PassedMessage)
 
 ######################################################################

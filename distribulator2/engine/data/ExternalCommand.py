@@ -53,13 +53,13 @@ class ExternalCommand:
         """This method is responsible for running a given command in console mode."""
 
         if ( self._globalConfig.isBatchMode() ):
-            self._globalConfig.getSysLogger().LogMsgError(
-                "ERROR:ExternalCommand.run() called in batch mode." )
+            self._globalConfig.getLogger().error(
+                "ExternalCommand.run() called in batch mode." )
             return False
 
         # This could be a pass-through command, no need to log that.
         if (isLoggable):
-            self._globalConfig.getSysLogger().LogMsgInfo(
+            self._globalConfig.getLogger().info(
                 "EXEC:  " + self._command )
 
         print("EXEC:  " + self._command)
@@ -68,7 +68,7 @@ class ExternalCommand:
         print( self._globalConfig.getSeperator() )
 
         if (myStatus != 0):
-            print("ERROR: Local shell returned error state.")
+            print("Local shell returned error state.")
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
@@ -96,7 +96,7 @@ class ExternalCommand:
                 "OUTPUT:" + myLine )
 
         if (myStatus != 0):
-            myError = "ERROR: Local shell returned error state."
+            myError = "Local shell returned error state."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
 
             self._globalConfig.setExitSuccess(False)

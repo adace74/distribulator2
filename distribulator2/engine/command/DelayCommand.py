@@ -50,7 +50,7 @@ class DelayCommand(Command.Command):
             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
             return True
         else:
-            myError = "ERROR: No delay time specified."
+            myError = "No delay time specified."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 

@@ -63,7 +63,7 @@ class ConfigLoader:
             myFile.close()
 
         except IOError, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % \
+            myError = "[Errno %s] %s: %s" % \
                         (errno, strerror, myFilename)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             sys.exit(True)

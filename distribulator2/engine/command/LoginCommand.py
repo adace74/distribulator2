@@ -46,7 +46,7 @@ class LoginCommand(Command.Command):
 
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
-            myError = "ERROR: Invalid command for batch mode."
+            myError = "Invalid command for batch mode."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
@@ -55,12 +55,12 @@ class LoginCommand(Command.Command):
             if ( self._globalConfig.getServerByName(self._commTokens[1]) ):
                 myServer = self._globalConfig.getServerByName(self._commTokens[1])
             else:
-                myError = "ERROR: No matching server '" + \
+                myError = "No matching server '" + \
                             self._commTokens[1] + "'."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 return False
         else:
-            myError = "ERROR: No server name given."
+            myError = "No server name given."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 

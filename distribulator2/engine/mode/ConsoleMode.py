@@ -93,10 +93,10 @@ class ConsoleMode(Mode.Mode):
                 myInput = raw_input(myPrompt)
 
             except EOFError:
-                myInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
+                myInfo = "Caught CTRL-D keystroke.  Wrote history.  Dying..."
                 print
                 print(myInfo)
-                self._globalConfig.getSysLogger().LogMsgInfo(myInfo)
+                self._globalConfig.getLogger().info(myInfo)
 
                 return
 
@@ -119,7 +119,7 @@ class ConsoleMode(Mode.Mode):
                         except KeyboardInterrupt:
                             myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                             print(myInfo)
-                            self._globalConfig.getSysLogger().LogMsgInfo(myInfo)
+                            self._globalConfig.getLogger().info(myInfo)
                         del myExternalCommand
                         myFoundIt = True
                         break
