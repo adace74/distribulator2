@@ -239,7 +239,7 @@ Change List For v0.8.5 (Language: Python / Status: In Progress)
 * Cleanup: Changed logging.conf to utilize in-memory buffering for high-volume logging.
 * Cleanup: Reordered the global config object, attempted to organize variables better.
 * Transfer of all copyright notices from personal to Orbitz corporate.
-- Ability to use regular expressions in "copy" and "run" commands.
+* Ability to use regular expressions in "run" command.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
