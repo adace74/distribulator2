@@ -38,10 +38,8 @@ class MultiLogger:
     def LogMsgDebugSeperator(self):
         """Logs and possibly prints a seperator with the log level DEBUG."""
 
-        self._globalConfig.getAuditLogger().debug( \
-            self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().debug( \
-            self._globalConfig.getSeperator() )
+        self._globalConfig.getAuditLogger().debug( self._globalConfig.getSeperator() )
+        self._globalConfig.getStdoutLogger().debug( self._globalConfig.getSeperator() )
 
     def LogMsgInfo(self, PassedMessage):
         """Logs and possibly prints a given message with the log level INFO."""
@@ -52,10 +50,8 @@ class MultiLogger:
     def LogMsgInfoSeperator(self):
         """Logs and possibly prints a seperator with the log level DEBUG."""
 
-        self._globalConfig.getAuditLogger().info( \
-            self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().info( \
-            self._globalConfig.getSeperator() )
+        self._globalConfig.getAuditLogger().info( self._globalConfig.getSeperator() )
+        self._globalConfig.getStdoutLogger().info( self._globalConfig.getSeperator() )
 
     def LogMsgWarn(self, PassedMessage):
         """Logs and possibly prints given message with the log level WARNING."""
