@@ -511,57 +511,57 @@ class CommandRunner:
                 self.handleInfo(thisInfo)
 
             return True
+        else:
+            # If we found server group names, then run with that.
+            #
+            # Slightly nasty hack.  Since lists can only be sorted in-place,
+            # and copying objects in Python isn't super-easy, we do the
+            # following:
+            #
+            # 1) Reverse sort the list
+            # 2) Run the commands
+            # 3) Forward-sort the list, hopefully back to its original state.
+            #
+            for thisGroupStr in thisServerGroupList:
+                thisServerGroup = self._globalConfig.getServerGroupByName(
+                    thisGroupStr)
 
-        # If we found server group names, then run with that.
-        #
-        # Slightly nasty hack.  Since lists can only be sorted in-place,
-        # and copying objects in Python isn't super-easy, we do the
-        # following:
-        #
-        # 1) Reverse sort the list
-        # 2) Run the commands
-        # 3) Forward-sort the list, hopefully back to its original state.
-        #
-        for thisGroupStr in thisServerGroupList:
-            thisServerGroup = self._globalConfig.getServerGroupByName(
-                thisGroupStr)
+                thisServerList = thisServerGroup.getServerList()
 
-            thisServerList = thisServerGroup.getServerList()
+                if (isReverse):
+                    thisServerList.reverse()
 
-            if (isReverse):
-                thisServerList.reverse()
+                try:
+                    for thisServer in thisServerList:
+                        thisPinger = generic.HostPinger.HostPinger(
+                            self._globalConfig.getPingBinary() )
 
-            try:
-                for thisServer in thisServerList:
-                    thisPinger = generic.HostPinger.HostPinger(
-                        self._globalConfig.getPingBinary() )
-
-                    if (thisPinger.ping(thisServer.getName()) == 0):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                        thisExternalCommand.setCommand( \
+                        if (thisPinger.ping(thisServer.getName()) == 0):
+                            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                            thisExternalCommand.setCommand( \
                             self._globalConfig.getSshBinary() + thisFlagStr + \
                             " -l " + thisServer.getUsername() + " " + \
                             thisServer.getName() + " " + \
                             thisBodyStr )
-                        # Run It.
-                        if ( self._globalConfig.isBatchMode() ):
-                            thisExternalCommand.runAtomic()
+                            # Run It.
+                            if ( self._globalConfig.isBatchMode() ):
+                                thisExternalCommand.runAtomic()
+                            else:
+                                thisExternalCommand.run(True)
                         else:
-                            thisExternalCommand.run(True)
-                    else:
-                        thisError = "ERROR: Server '" + \
-                                    thisServer.getName() + \
-                                    "' appears to be down.  Continuing..."
-                        self.handleError(thisError)
+                            thisError = "ERROR: Server '" + \
+                                        thisServer.getName() + \
+                                        "' appears to be down.  Continuing..."
+                            self.handleError(thisError)
 
-            except EOFError:
-                noop
-            except KeyboardInterrupt:
-                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                self.handleInfo(thisInfo)
+                except EOFError:
+                    noop
+                except KeyboardInterrupt:
+                    thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self.handleInfo(thisInfo)
 
-            if (isReverse):
-                thisServerList.sort()
+                if (isReverse):
+                    thisServerList.sort()
 
             return True
 
