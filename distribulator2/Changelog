@@ -84,7 +84,7 @@ Change List For v0.51 (Language: Python / Status: Shipped)
 * Lots of documentation updates,
   aiming for the normal INSTALL/README paradigm.
 
-Change List For v0.52 (Language: Python / Status: In Progress)
+Change List For v0.52 (Language: Python / Status: Shipped)
 * Changed command "server-group" with no arguments to print
   a server-group list similar to that at startup.
 * Fixed inaccuracies found in this Changelog.
