@@ -392,7 +392,7 @@ sub ParseRun
                 else
                 {
                     print("NOTE:  Aborting run command.\n");
-
+                    setUserAborting($FALSE);
                     last;
                 }
             }
@@ -425,7 +425,7 @@ sub ParseRun
                     else
                     {
                         print("NOTE:  Aborting run command.\n");
-                        
+                        setUserAborting($FALSE);
                         last;
                     }
                 }
