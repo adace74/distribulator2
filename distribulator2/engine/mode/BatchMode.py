@@ -252,23 +252,22 @@ class BatchMode(Mode.Mode):
         # Output our "footer" for batch mode.
         #
         if (self._globalConfig.isBreakState()):
-            myInfo = "Summary: Batch run successfully aborted.  No statistics available."
+            self._globalConfig.setExitSuccess(False)
+
+        myInfo = "Summary: %d commands run / " % \
+              myCommandCount
+
+        myTimeFinished = time.time()
+        myTimeDuration = myTimeFinished - myTimeStarted
+
+        myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
+
+        if ( (myTimeDuration > 0) & (int(myCommandCount) > 0) ):
+            myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
         else:
-            myInfo = "Summary: %d commands run / " % \
-                  myCommandCount
-
-            myTimeFinished = time.time()
-            myTimeDuration = myTimeFinished - myTimeStarted
-
-            myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
-
-            if ( (myTimeDuration > 0) & (int(myCommandCount) > 0) ):
-                myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
-            else:
-                myInfo = myInfo + "0s avg. per command"
+            myInfo = myInfo + "0s avg. per command"
 
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-
         return
 
 ######################################################################

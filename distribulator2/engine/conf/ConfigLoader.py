@@ -16,6 +16,7 @@ __version__= '$Revision$'[11:-2]
 # Standard modules
 import logging
 import logging.config
+import logging.handlers
 import os
 import stat
 

@@ -234,15 +234,17 @@ Change List For v0.8.0 (Language: Python / Bloat Factor: 3944 lines / Status: Sh
 * Ability to use logging module's configuration file for ultra-flexible logging setup.
   As a result of this change, the --quiet flag has been replaced by the --verbose flag.
 
-Change List For v0.8.1 (Language: Python / Status: Planning)
+Change List For v0.8.5 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
-- Ability to run multiple commands using typical shell-style semicolon delimiter.
-- Ability to list servers who run a particular service.  Config file tags, etc.
+* Cleanup: Changed logging.conf to utilize in-memory buffering for high-volume logging.
+- Ability to have batch mode report back with total number of servers down during a given run.
 - Ability to use remote sudo to run root-level commands in a semi-secure fashion.
 - Ability to use regular expressions in "copy" and "run" commands.
+? Ability to run multiple commands using typical shell-style semicolon delimiter.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
+- Ability to list servers who run a particular service.  Config file tags, etc.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
