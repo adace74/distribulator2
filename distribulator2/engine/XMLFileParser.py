@@ -81,6 +81,8 @@ class XMLFileParser:
         thisValue = PassedBinary.getAttribute('value')
         if (thisName == 'logname'):
             self._globalConfig.setLognameBinary(thisValue)
+        elif (thisName == 'ping'):
+            self._globalConfig.setPingBinary(thisValue)
         elif (thisName == 'scp'):
             self._globalConfig.setScpBinary(thisValue)
         elif (thisName == 'ssh'):

@@ -9,6 +9,7 @@ $Id$
 <config>
     <!-- System Binaries -->
     <binary name="logname" value="/usr/bin/logname"/>
+    <binary name="ping" value="/bin/ping -c 1"/>
     <binary name="scp" value="/usr/bin/scp -c blowfish"/>
     <binary name="ssh" value="/usr/bin/ssh -c blowfish"/>
 

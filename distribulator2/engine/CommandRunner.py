@@ -18,6 +18,7 @@ import sys
 # Custom modules
 import engine.data.ExternalCommand
 import generic.FilePrinter
+import generic.HostPinger
 
 ######################################################################
 
@@ -84,7 +85,7 @@ class CommandRunner:
         print("ERROR: This command not yet implemented.")
 
 ######################################################################
-        
+
     def doHelp(self):
         if ( len(self._commTokens) > 1 ):
             thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
@@ -218,17 +219,28 @@ class CommandRunner:
 
             try:
                 for thisServer in thisServerGroup.getServerList():
-                    thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
-                    thisExternalCommand.setCommand( \
-                    self._globalConfig.getSshBinary() + thisFlagStr + \
-                    " -l " + thisServer.getUsername() + " " + \
-                    thisServer.getName() + " " + \
-                    thisBodyStr )
-                    # Log It.
-                    self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
-                                                                 thisExternalCommand.getCommand())
-                    # Run It.
-                    thisExternalCommand.run()
+                    thisPinger = generic.HostPinger.HostPinger(
+                        self._globalConfig.getPingBinary() )
+
+                    if (thisPinger.ping(thisServer.getName()) == 0):
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand.setCommand( \
+                            self._globalConfig.getSshBinary() + thisFlagStr + \
+                            " -l " + thisServer.getUsername() + " " + \
+                            thisServer.getName() + " " + \
+                            thisBodyStr )
+                        # Log It.
+                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                                     thisExternalCommand.getCommand())
+                        # Run It.
+                        thisExternalCommand.run()
+                    else:
+                        print("ERROR: Server '" + thisServer.getName() + \
+                              " appears to be down.  Continuing...")
+                        self._globalConfig.getSysLogger().LogMsgInfo(
+                            "ERROR: Server '" + thisServer.getName() + \
+                            " appears to be down.  Continuing.." )
+
             except KeyboardInterrupt:
                 print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
 

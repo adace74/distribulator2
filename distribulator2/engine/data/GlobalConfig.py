@@ -60,6 +60,12 @@ class GlobalConfig:
     def setLognameBinary(self, PassedLognameBinary):
         self._lognameBinary = PassedLognameBinary
 
+    def getPingBinary(self):
+        return self._pingBinary
+
+    def setPingBinary(self, PassedPingBinary):
+        self._pingBinary = PassedPingBinary
+
     def getScpBinary(self):
         return self._scpBinary
 
