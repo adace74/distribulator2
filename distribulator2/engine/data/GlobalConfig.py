@@ -473,17 +473,65 @@ class GlobalConfig:
 # Server Environment.
 ######################################################################
 
-    def getServerEnv(self):
+    def getCurrentEnvName(self):
         """This is a typical accessor method."""
 
-        return self._serverEnv
+        return self._currentEnvName
 
 ######################################################################
 
-    def setServerEnv(self, PassedServerEnv):
+    def setCurrentEnvName(self, PassedServerEnvName):
         """This is a typical accessor method."""
 
-        self._serverEnv = PassedServerEnv
+        self._currentEnvName = PassedServerEnvName
+
+######################################################################
+
+    def getEnvironmentByName(self, PassedServerEnvName):
+        """This is a typical accessor method."""
+
+        PassedServerEnvName = PassedServerEnvName.strip()
+
+        for myEnvironment in self._environmentList:
+            if ( myEnvironment.name == PassedServerEnvName ):
+                return myEnvironment
+
+        return False
+
+######################################################################
+
+    def getEnvironmentList(self):
+        """This is a typical accessor method."""
+
+        return self._environmentList
+
+######################################################################
+
+    def setEnvironmentList(self, PassedEnvironmentList):
+        """This is a typical accessor method."""
+
+        self._environmentList = PassedEnvironmentList
+
+######################################################################
+
+    def addEnvironment(self, PassedEnvironment):
+        """This is a typical accessor method."""
+
+        self._environmentList.append(PassedEnvironment)
+
+######################################################################
+
+    def getCurrentEnvironment(self):
+        """This is a typical accessor method."""
+
+        return self._currentEnvironment
+
+######################################################################
+
+    def setCurrentEnvironment(self, PassedEnvironment):
+        """This is a typical accessor method."""
+
+        self._currentEnvironment = PassedEnvironment
 
 ######################################################################
 # Unix command "pass through" list.

@@ -21,6 +21,7 @@ import sys
 import xml.dom.minidom
 
 # Custom modules
+import engine.data.Environment
 import engine.data.GlobalConfig
 import engine.data.Server
 import engine.data.ServerGroup
@@ -42,6 +43,7 @@ class XMLFileParser:
 
         self._globalConfig = PassedGlobalConfig
         self._isEnvFound = False
+        self._environmentList = []
         self._serverGroupList = []
 
         myFilename = self._globalConfig.getAppConfigFile()
@@ -157,22 +159,32 @@ class XMLFileParser:
         """This method branches processing off into sub-methods."""
 
         for Environment in PassedEnvironments:
-            self.handleEnvironment(Environment)
+            self._environmentList.append( self.handleEnvironment(Environment) )
+
+        self._globalConfig.setEnvironmentList(self._environmentList)
 
 ######################################################################
 
     def handleEnvironment(self, PassedEnvironment):
         """This method handles a specific <Environment> tag."""
 
-        # Only load the environment specified on startup.
+        # Load all environments into memory.
         if ( PassedEnvironment.getAttribute('name') ==
-             self._globalConfig.getServerEnv() ):
+             self._globalConfig.getCurrentEnvName() ):
             self._isEnvFound = True
-            self.handleServerGroups(
-                PassedEnvironment.getElementsByTagName('servergroup') )
-            if (PassedEnvironment.getAttribute('default')):
-                self._globalConfig.setCurrentServerGroup(
-                    self._globalConfig.getServerGroupByName(PassedEnvironment.getAttribute('default')))
+
+        # Load environment.
+        myEnvironment = engine.data.Environment.Environment()
+        myEnvironment.setName(PassedEnvironment.getAttribute('name').strip())
+
+        # Load included server groups.
+        self.handleServerGroups(
+            PassedEnvironment.getElementsByTagName('servergroup') )
+        if (PassedEnvironment.getAttribute('default')):
+            self._globalConfig.setCurrentServerGroup(
+                self._globalConfig.getServerGroupByName(PassedEnvironment.getAttribute('default')))
+
+        return myEnvironment
 
 ######################################################################
 
