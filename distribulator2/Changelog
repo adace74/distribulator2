@@ -196,9 +196,10 @@ Change List For v0.7.1 (Language: Python / Status: Shipped)
 * Cleanup: Added a generic error message to the XMLConfigParser,
   should avoid some raw stack traces on missing XML tags.
 
-Change List For v0.7.2 (Language: Python / Status: Not Started)
+Change List For v0.7.2 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
-- Update all code to be functional with Python v2.3.X.
+* Update all code to be functional with Python v2.3.X.
+* Cleanup: Updated the accompanying config.dtd with the "ping" XML tag.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------

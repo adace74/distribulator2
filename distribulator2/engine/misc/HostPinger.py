@@ -17,7 +17,6 @@ __version__= '$Revision$'[11:-2]
 
 # Standard modules
 import socket
-import timeoutsocket
 
 ######################################################################
 
@@ -34,8 +33,8 @@ class HostPinger:
 
         try:
             mySocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            mySocket.set_timeout( self._globalConfig.getPingTimeout() )
-            mySocket.connect( PassedHostname, self._globalConfig.getPingPort() )
+            mySocket.settimeout( self._globalConfig.getPingTimeout() )
+            mySocket.connect( (PassedHostname, self._globalConfig.getPingPort()) )
 
             # Check for a banner if specified.
             if ( len(self._globalConfig.getPingBanner() ) > 0):
@@ -51,7 +50,7 @@ class HostPinger:
             return 0
 
         # Add a debug mode someday!
-        except timeoutsocket.Timeout:
+        except socket.timeout:
             myError = "ERROR: Socket timed out while connecting to server."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1

@@ -16,7 +16,7 @@
 <!-- Define the Configuration Markup Language "config" document type. -->
 
 <!-- The "config" tag. -->
-<!ELEMENT config (binary+, logging?, environment+)>
+<!ELEMENT config (binary+, logging?, ping?, environment+)>
 
 <!-- The "binary" tag. -->
 <!ELEMENT binary EMPTY>
@@ -28,6 +28,13 @@
 <!ELEMENT logging EMPTY>
 <!ATTLIST logging
     facility CDATA #REQUIRED>
+
+<!-- The "ping" tag. -->
+<!ELEMENT ping EMPTY>
+<!ATTLIST ping
+    banner CDATA #IMPLIED
+    port CDATA #IMPLIED
+    timeout CDATA #IMPLIED>
 
 <!-- The "environment" tag. -->
 <!ELEMENT environment (servergroup+)>
