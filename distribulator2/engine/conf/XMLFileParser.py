@@ -224,7 +224,7 @@ class XMLFileParser:
         myServerGroup.setName(
             PassedServerGroup.getAttribute('name').strip() )
 
-        if ( len(PassedServerGroup.getAttribute('username').strip()) > 0 ):
+        if ( self._globalConfig.isLoadUsername() & (len(PassedServerGroup.getAttribute('username').strip()) > 0) ):
             myServerGroup.setUsername(
                 PassedServerGroup.getAttribute('username').strip() )
         else:

@@ -79,6 +79,7 @@ def main(argv):
                     'help',
                     'list=',
                     'list2=',
+                    'nouser',
                     'quiet',
                     'var1=',
                     'var2=',
@@ -114,20 +115,24 @@ The available options are:
     OPTIONAL
 
     --list=[host1, host2, ...] | [servergroup1, servergroup2, ...]
-    Enables serer list mode, requires a valid set of hosts or server groups.
+    Enables server list mode, requires a valid set of hosts or server groups.
     This version pings all servers, then returns a space-delimited list of hostnames.
     One can then iterate over this list from within a perl, shell, or other script.
     OPTIONAL
 
     --list2=[host1, host2, ...] | [servergroup1, servergroup2, ...]
-    Enables serer list mode, requires a valid set of hosts or server groups.
+    Enables server list mode, requires a valid set of hosts or server groups.
     This version pings all servers, then returns a space-delimited list of
     username@hostname pairs(if username is applicable).
     One can then iterate over this list from within a perl, shell, or other script. 
     OPTIONAL
 
-    Enables serer "listing", outputs all given username@hostname pairs
+    Enables server "listing", outputs all given username@hostname pairs
     for a given set of hosts or server groups.
+    OPTIONAL
+
+    --nouser
+    Specifies that for this particular invocation, we do NOT want to load username data from config.xml.
     OPTIONAL
 
     --quiet
@@ -149,6 +154,7 @@ The available options are:
     myBatchFile = 'None'
     myConfigFile = ''
     myInstallDir = '/tmp'
+    myLoadUsername = True
     myPrintUsername = False
     myQuietMode = False
     myRequestedList = ''
@@ -186,6 +192,8 @@ The available options are:
                 elif (opt[0] == '--list2'):
                     myPrintUsername = True
                     myRequestedList = opt[1]
+                elif (opt[0] == '--nouser'):
+                    myLoadUsername = False
                 elif (opt[0] == '--quiet'):
                     myQuietMode = True
                 elif (opt[0] == '--var1'):
@@ -251,6 +259,7 @@ The available options are:
         myGlobalConfig.setDelaySecs(0.05)
         myGlobalConfig.setExitSuccess(True)
         myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
+        myGlobalConfig.setLoadUsername(myLoadUsername)
         myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )
         myGlobalConfig.setQuietMode(myQuietMode)
         myGlobalConfig.setServerEnv(myServerEnv)

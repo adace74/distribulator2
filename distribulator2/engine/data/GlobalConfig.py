@@ -168,6 +168,22 @@ class GlobalConfig:
         self._helpDir = PassedHelpDir
 
 ######################################################################
+# Our load-usernames-or-not boolean flag.
+######################################################################
+
+    def isLoadUsername(self):
+        """This is a typical accessor method."""
+
+        return self._isLoadUsername
+
+######################################################################
+
+    def setLoadUsername(self, PassedLoadUsername):
+        """This is a typical accessor method."""
+
+        self._isLoadUsername = PassedLoadUsername
+
+######################################################################
 # Our pass-through file path.
 ######################################################################
 

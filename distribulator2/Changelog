@@ -229,10 +229,10 @@ Change List For v0.7.5 (Language: Python / Status: Shipped)
 
 Change List For v0.8.0 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
-- Ability to override the are-you-sure questions via the "now" keyword.
-- Ability to ignore username information in config.xml via --nouser command-line flag. 
-- Ability to use logging module's configuration file for dynamic logging setup.
-- Ability to load, save, and use server name regular expression patterns.
+* Ability to ignore username information in config.xml via --nouser command-line flag.
+- Ability to skip the are-you-sure questions via the "now" keyword.
+- Ability to use hostname(s), servergroup name(s), or regular expression in "copy" and "run" commands.
+- Ability to use logging module's configuration file for uber-dynamic logging setup.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
@@ -252,7 +252,6 @@ Idea List For v0.9.1 (Language: Python / Status: Not Started)
 
 Idea List For v0.9.5 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
-- Ability to use regular expressions to match server names.
 - Single remote server file to single remote server file copy.
   (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.
