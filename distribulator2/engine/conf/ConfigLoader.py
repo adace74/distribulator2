@@ -111,6 +111,8 @@ class ConfigLoader:
             print("- Available Server Groups:")
             print("-")
             print(myServerGroupStr)        
+            print("-")
+            print("- Total: %d servers loaded." % myTotalServerCount)
             print
             print("Confused?  Need help?  Try typing 'help' and see what happens!")
             print
