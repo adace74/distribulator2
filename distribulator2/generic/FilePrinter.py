@@ -33,6 +33,8 @@ class FilePrinter:
 
         except IOError, (errno, strerror):
             print("ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedFilename))
-            sys.exit(1)
+            return False
+
+        return True
 
 ######################################################################

@@ -65,7 +65,7 @@ class ConfigLoader:
         self.thisGlobalConfig.setPassThruList(thisPassThruList)
 
         # Status.
-        print( "- Pass-through Unix commands:  %d lines loaded." \
+        print( "- Unix pass-through commands:  %d lines loaded." \
                % len(thisPassThruList) )
 
         # Parse XML...ouchies.
