@@ -9,15 +9,16 @@ Short-term TODO List
 * Stabilization / testing:
     1) Usage testing.
     2) Bug collection / fixes.
-    2) Code refactoring as makes sense.
-    3) Throw a baby at it!
+    3) Code refactoring as makes sense.
+    4) Throw a baby at it!
+    5) Automated regression functionality test system.
 
-* Bugs:
-    1) Review all objects and implement static objects as appropriate
+* Design Fixage:
+    1) Review all objects and implement static objects as appropriate.
        (BatchRunner, CommandLine)
-    2) Review object naming, refer to design patterns, and fix them
+    2) Review object naming, refer to design patterns, and fix them.
        (currently icky-but-works)
-    3) Start using SourceForge's bug tracker.
-       One bug -- copy really should act more like cp
-       and take multiple files as arguments.  The current way kinda sucks.
-
+    3) Squash all currently outstanding bugs.
+    4) Take a closer look at the parsing logic for the "copy" command.
+       Currently it's "good enough" but could be better in the way it
+       handles spaces within server / server group lists.

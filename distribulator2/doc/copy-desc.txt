@@ -1,7 +1,7 @@
 Copy Command Syntax & Examples
 -----------------------------
 
-Syntax: copy [[source [server]]:source_path [[destination [server]]:dest_path
+Syntax: copy source_path [dest_server|dest_server_group,dest_server|dest_server_group...]:dest_path
 
 Description: Copies files to/from various servers within our
              working environment.
@@ -10,16 +10,28 @@ Examples:
     copy /tmp/blah.txt /tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/ 
       on the current server group.
-    copy /tmp/blah.txt www:/tmp/
+    copy /tmp/blah.txt app:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
-      on the 'www' server group.
+      on the 'app' server group.
+    copy /tmp/blah.txt app,www:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on the app and www server groups.
+    copy /tmp/blah.txt app01:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on a server matching app01.
+    copy /tmp/blah.txt app01,www01:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on 2 servers matching app01 and www01.
+
+Notes:
+    The hostname search algorithm has been tweaked in such a way that
+    matches will be based on DNS hostname.  For instance, "login app0"
+    will -not- match app01.somewhere.com while "login app01" will.
 
 TODO:
-    copy /tmp/blah.txt www01:/tmp/
-    - Copies local file /tmp/blah.txt to directory /tmp/
-      on the server 'www01'.
-
-    Various other permutations...
+    Eventually it'd be extremely useful to add permutations of this
+    command to allow for single / many remote-to-local file copy, as well as
+    server1-to-server2 file copy functionality.
 
 ----------------------------------------------------------------------
 $Id$

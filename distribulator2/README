@@ -21,6 +21,10 @@ that many employees total -- much less just to maintain servers!
 Unfortunately life's daily busywork has kept most everyone from having
 the time in the office to develop longer-term solutions.
 
+The Distribulator is a longer-term project whose goal is to provide
+"the rest of us" not running advanced cluster-oriented OS-level software --
+but still need to maintain a server cluster.
+
 Currently, the Distribulator has two modes:
 
 * Console: A console interface designed to "wrap" around SSH,
@@ -34,7 +38,8 @@ Currently, the Distribulator has two modes:
 
 This program shell also attempt to impose some sanity-oriented restructions,
 such as environment isolation, in the hopes of avoiding problems that result
-in exclaimations like "Oh crap!  That was production?"
+in exclaimations like "Oh crap!  That was production?"  This is otherwise known
+as the "environment blinder" feature.
 
 What Will It Do?
 ----------------

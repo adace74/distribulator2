@@ -104,20 +104,31 @@ Change List For v0.53 (Language: Python / Status: Skipped)
 * Minimal cosmetic fixes in how server-list and server-group
   do output.
 
-Change List For v0.6 (Language: Python / Status: Shipped)
+Change List For v0.6 (Language: Python / Status: In Progress)
 -------------------------------------------------------------
-* Small LICENSE fixes, also propogated other legalese.
-* Small number of documentation updates.
+* Goal: The ongoing goal of this release is to provide a "good enough"
+  featureset for real-world applications, and to implement a
+  feature freeze such that focus can be shifted to stability / correctness issues.
 * Batch Mode: Addition of --quiet flag to indicate we don't want output when
   run in batch mode.  The default now is to NOT be quiet.
 * Batch Mode: Addition of comment(#) and line(\) continuation compatability.
   This will only allow comments to be on a single line, by themselves.
-* Addition of --var1, --var2, and --var3, which enable very simple string
+* Batch Mode: Addition of --var1, --var2, and --var3, which enable very simple string
   substitution such that batch files don't have to be completely hard-coded.
+* Addition of the ability to run commands on a single server, list of multiple servers,
+  single server group, as well as multiple server groups.
+* Addition of the ability to copy files(one-way for right now) from a local server
+  out to a single server, list of multiple servers, single server group,
+  as well as multiple server groups.
+* Addition of a valid XML DTD, such that one can use readily-available
+  XML validators to verify that config.xml has no syntax errors,
+  spelling mistakes(in tags anyways), etc.  Verified example config.xml
+  actually validates via a standard XML validator.
 * Removed short version of option flags.  They've outlived their
-  usefullness and have become a pain.
-* Added the ability to run commands on single or multiple servers
-  as well as server groups. 
+  usefullness and have become more effort than they're worth.
+* Documentation system-wide has been updated to reflect new features added,
+  as well as the usual clean-up efforts.
+* Small LICENSE fixes, also propogated other legalese.
 
 Change List For v0.61 (Language Python / Status: On Hold)
 ---------------------------------------------------------

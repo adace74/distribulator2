@@ -6,14 +6,14 @@ Syntax: login server_name
 Description: Logs in to the specified server remotely.
 
 Examples:
-    login www01 -- Login to a server whose hostname starts
-                   with www01.  In our example configuration this
-                   would match www01.somewhere.com.
+    login app01 -- Login to a server whose hostname starts
+                   with app01.  In our example configuration this
+                   would match app01.somewhere.com.
 
 Notes:
     The hostname search algorithm has been tweaked in such a way that
-    matches will be based on DNS hostname.  For instance, "login www0"
-    will -not- match www01.somewhere.com while "login www01" will. 
+    matches will be based on DNS hostname.  For instance, "login app0"
+    will -not- match app01.somewhere.com while "login app01" will. 
 
 ----------------------------------------------------------------------
 $Id$

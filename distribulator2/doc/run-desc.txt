@@ -1,29 +1,35 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run [ssh_flags] "command" on [server_group,server_group...] [reverse]
+Syntax: run [ssh_flags] "command" on [server|server_group,server|server_group...] [reverse]
 
 Description: Runs a given command across multiple servers,
              in either normal or reverse sort order.
 
 Examples:
     run "uptime"            -- Runs uptime on current server group
-                               in forward order.
+                               in forward sort order.
     run "uptime" reverse    -- Runs uptime on current server group
-                               in reverse order.
+                               in reverse sort order.
+    run "uptime" on app     -- Runs uptime on app server group in forward sort order.
     run "uptime" on app,www -- Runs uptime on app and www server groups
-                               in forward order.
-    run "uptime" on app01   -- Runs uptime on app01.somewhere.com.
-    run "uptime" on app01,www01
-                            -- Runs uptime on app01.somewhere.com and
-                               www01.somewhere.com in forward order.
+                               in forward sort order.
     run "uptime" on app,www reverse
                             -- Runs uptime on app and www server groups
-                               in reverse order.
+                               in reverse sort order.
+    run "uptime" on app01   -- Runs uptime on a server matchining app01.
+    run "uptime" on app01,www01
+                            -- Runs uptime on 2 servers matching app01 and www01
+                               in forward sort order.
     run -t "vi"             -- Runs vi on current server group,
-                               in forward order, and forces an ssh tty.
+                               in forward sort order, and forces an ssh tty.
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
-                               in forward order, and forces an ssh tty.
+                               in forward sort order, and forces an ssh tty.
+
+Notes:
+    The hostname search algorithm has been tweaked in such a way that
+    matches will be based on DNS hostname.  For instance, "login app0"
+    will -not- match app01.somewhere.com while "login app01" will.
 
 ----------------------------------------------------------------------
 $Id$

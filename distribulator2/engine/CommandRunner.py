@@ -173,12 +173,12 @@ class CommandRunner:
             # copy /tmp/blah /tmp/
             thisCopyTarget = 'current_server_group'
         elif (self._commTokens[1].find(':') > 0):
-            # copy www:/tmp/blah /tmp/
+            # copy app:/tmp/blah /tmp/
             thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
             self.handleError(thisError)
             return False
         elif (self._commString.find(',') == -1):
-            # copy /tmp/blah.txt www:/tmp/
+            # copy /tmp/blah.txt app:/tmp/
             thisCopyTarget = 'single_server_group'
         else:
             # copy /tmp/blah.txt app,www:/tmp/
@@ -205,7 +205,7 @@ class CommandRunner:
             thisServerGroupList.append(thisGroupStr)
 
         elif (thisCopyTarget == 'single_server_group'):
-            # copy /tmp/blah www:/tmp/
+            # copy /tmp/blah app:/tmp/
             thisGroupStr = self._commTokens[2]
             thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
             thisRemotePath = self._commTokens[2]
