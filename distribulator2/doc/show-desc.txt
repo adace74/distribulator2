@@ -1,12 +1,12 @@
 Server List Command Syntax & Examples
 -------------------------------------
 
-Syntax: show server-group [server_group]
+Syntax: show attribute [sub_attribute]
 
-Description: Lists known server groups in a given environment,
-             and known servers in a server group.
+Description: Shows a given attribute.
 
 Examples:
+    show delay                -- Displays current sleep() delay between remote commands.
     show server-group         -- Displays server groups in the current environment.
     show server-group www     -- Displays servers in the 'www' group.
 

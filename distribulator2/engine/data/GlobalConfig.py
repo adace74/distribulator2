@@ -120,6 +120,22 @@ class GlobalConfig:
         self._configFile = PassedConfigFile
 
 ######################################################################
+# Our global delay between remote commands.
+######################################################################
+
+    def getDelaySecs(self):
+        """This is a typical accessor method."""
+
+        return self._delaySecs
+
+######################################################################
+
+    def setDelaySecs(self, PassedDelaySecs):
+        """This is a typical accessor method."""
+
+        self._delaySecs = PassedDelaySecs
+
+######################################################################
 # Our exit code.
 ######################################################################
 

@@ -70,8 +70,12 @@ class ExternalCommand:
         if (myStatus != 0):
             print("ERROR: Local shell returned error state.")
 
-        # Sleep just a -little- bit to allow for catching CTRL-C's
-        time.sleep(0.05)
+        # If we have a global deley set, wait for that long.
+        # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
+        if (self._globalConfig.getDelaySecs() != 0):
+            time.sleep( self._globalConfig.getDelaySecs() )
+        else:
+            time.sleep(0.05)
 
         return myStatus
 
@@ -100,8 +104,12 @@ class ExternalCommand:
         if (self._globalConfig.isQuietMode() == False):
             print( self._globalConfig.getSeperator() )
 
-        # Sleep just a -little- bit to allow for catching CTRL-C's
-        time.sleep(0.05)
+        # If we have a global deley set, wait for that long.
+        # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
+        if (self._globalConfig.getDelaySecs() != 0):
+            time.sleep( self._globalConfig.getDelaySecs() )
+        else:
+            time.sleep(0.05)
 
         return myStatus
 

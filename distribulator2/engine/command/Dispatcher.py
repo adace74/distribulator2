@@ -18,6 +18,7 @@ __version__= '$Revision$'[11:-2]
 
 # Custom modules
 import CopyCommand
+import DelayCommand
 import LoginCommand
 import MiscCommand
 import RunCommand
@@ -80,6 +81,13 @@ class Dispatcher:
             elif (self._commTokens[0] == 'run'):
                 myCommand = engine.command.RunCommand.RunCommand(self._globalConfig)
                 myCommandCount = myCommand.doRun(self._commString)
+            elif (self._commTokens[1] == 'delay'):
+                if (self._commTokens[0] == 'set'):
+                    myCommand = engine.command.DelayCommand.DelayCommand(self._globalConfig)
+                    myCommandCount = myCommand.doSetDelaySecs(self._commString)
+                elif (self._commTokens[0] == 'show'):
+                    myCommand = engine.command.DelayCommand.DelayCommand(self._globalConfig)
+                    myCommandCount = myCommand.doShowDelaySecs(self._commString)
             elif (self._commTokens[1] == 'server-group'):
                 if (self._commTokens[0] == 'set'):
                     myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)

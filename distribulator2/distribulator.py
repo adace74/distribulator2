@@ -230,6 +230,7 @@ The available options are:
 
         # More with the loading of the GlobalConfig object.
         myGlobalConfig.setBreakState(False)
+        myGlobalConfig.setDelaySecs(0)
         myGlobalConfig.setExitSuccess(True)
         myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
         myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )

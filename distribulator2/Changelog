@@ -214,6 +214,12 @@ Change List For v0.7.4 (Language: Python / Status: Shipped)
 * Cleanup: Added code to batch mode to close STDIN, should help with backgrounding.
 * Cleanup: Made the batch mode header and footer output more concise.
 
+Change List For v0.7.5 (Language: Python / Status: In Progress)
+---------------------------------------------------------------
+* Cleanup: Changed exception handling for socket timeout to avoid stack trace dump.
+* Ability to set and show a global delay for sleep()ing between remote commands.
+  Basically this allows one to "slow things down" if desired.
+
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
