@@ -64,6 +64,7 @@ class DelayCommand(Command.Command):
 
         # Display the current delay setting.
         myInfo = "Current delay between remote commands is %d seconds." % self._globalConfig.getDelaySecs()
+        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
         return True
 
 ######################################################################
