@@ -302,20 +302,30 @@ The available options are:
         else:
             myGlobalConfig.setRealUsername( getpass.getuser() )
 
-        myMultiLogger.LogMsgDebugSeperator()
+        # Some silly hacks to keep sppamy debug out of console mode.  Please excuse the mess.
+        if (myGlobalConfig.isConsoleMode() == False):
+            myMultiLogger.LogMsgDebugSeperator()
+        else:
+            myGlobalConfig.getAuditLogger().debug( myGlobalConfig.getSeperator() )
 
         if (myGlobalConfig.isBatchMode()):
             myDebug = __appversion__ + " (batch mode) START"
+            myMultiLogger.LogMsgDebug(myDebug)
+        elif (myGlobalConfig.isConsoleMode()):
+            myDebug = __appversion__ + " (console mode) START"
+            myGlobalConfig.getAuditLogger().debug(myDebug)
         elif (myGlobalConfig.isListMode()):
             myDebug = __appversion__ + " (list mode) START"
-        else:
-            myDebug = __appversion__ + " (console mode) START"
-        myMultiLogger.LogMsgDebug(myDebug)
+            myMultiLogger.LogMsgDebug(myDebug)
 
         myDebug = "UID: " + myGlobalConfig.getRealUsername() + \
                    " | " + "EUID: " + myGlobalConfig.getUsername() + \
                    " | " + "Env: " + myServerEnv
-        myMultiLogger.LogMsgDebug(myDebug)
+
+        if (myGlobalConfig.isConsoleMode() == False):
+            myMultiLogger.LogMsgDebug(myDebug)
+        else:
+            myGlobalConfig.getAuditLogger().debug(myDebug)
 
         if (len(myBatchFile) > 0):
             myMultiLogger.LogMsgDebug("Batch File: " + myBatchFile)
@@ -330,20 +340,21 @@ The available options are:
 
         myDebug = __appversion__ + " (batch mode) EXIT"
         myMultiLogger.LogMsgDebug(myDebug)
+        myMultiLogger.LogMsgDebugSeperator()
     # List mode.
     elif ( myGlobalConfig.isListMode() ):
         myListMode.invoke()
 
         myDebug = __appversion__ + " (list mode) EXIT"
         myMultiLogger.LogMsgDebug(myDebug)
+        myMultiLogger.LogMsgDebugSeperator()
     # Console mode.
     else:
         myCommLine.invoke()
 
         myDebug = __appversion__ + " (console mode) EXIT"
-        myMultiLogger.LogMsgDebug(myDebug)
-
-    myMultiLogger.LogMsgDebugSeperator()
+        myGlobalConfig.getAuditLogger().debug(myDebug)
+        myGlobalConfig.getAuditLogger().debug( myGlobalConfig.getSeperator() )
 
     if ( myGlobalConfig.isExitSuccess() ):
         logging.shutdown()
