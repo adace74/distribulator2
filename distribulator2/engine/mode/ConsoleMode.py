@@ -43,22 +43,6 @@ class ConsoleMode(Mode.Mode):
 
 ######################################################################
 
-    def getAttemptedCompletion(self, myString, myIndex):
-        """This method is registered with GNU readline and called for tab-completion."""
-
-        # Don't ask me exactly how, but my seems to work well.
-        if ( (myIndex == 0) & (readline.get_begidx() == 0) ):
-            if (len(myString) > 0):
-                for myCommStr in self._commList:
-                    if (string.find(myCommStr, myString) != -1):
-                        return myCommStr + ' '
-            else:
-                return 'help '
-
-        return None
-
-######################################################################
-
     def initHistory(self):
         """This method loads history data for use with GNU readline."""
 
