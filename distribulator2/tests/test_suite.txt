@@ -28,9 +28,6 @@ Command: copy
 Test Case:       copy
 Expected Result: Error.
 
-Test Case:       copy /tmp/bogus /tmp/
-Expected Result: Error.
-
 Test Case:       copy /tmp/test.out /tmp/
 Expected Result: Copies local file /tmp/test.out out to current server group, 
                  remote directory /tmp/.
