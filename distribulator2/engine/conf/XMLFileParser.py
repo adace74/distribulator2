@@ -236,7 +236,8 @@ class XMLFileParser:
             myServerGroup.addServer( self.handleServer(myServer) )
 
         for myServer in myServerGroup.getServerList():
-            myServer.setVersion( myServerGroup.getVersion() )
+            if (myServerGroup.getVersion()):
+                myServer.setVersion( myServerGroup.getVersion() )
 
         for myServer in myServerGroup.getServerList():
             myServer.setUsername( myServerGroup.getUsername() )
