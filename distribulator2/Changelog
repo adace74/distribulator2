@@ -189,6 +189,7 @@ Change List For v0.7.1 (Language: Python / Status: Not Started)
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background threads in parallel.
   Output will be spooled to one file per server in a standard output directory.
+- Cleanup: Provide a larger set of example files.
 - Testing: Completion of a comprehensive batch file test suite.
 
 Idea List For v0.8.0 (Language: Python / Status: Not Started)
