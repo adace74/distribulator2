@@ -498,7 +498,7 @@ sub RunCommandRemote
             getServerUser($remote_server) .
                 "\@$remote_server $remote_command";
 
-        print "EXEC:  $exec_line";
+        print "EXEC:  $exec_line\n";
 
         @command_output = qx/$exec_line 2>&1/;
 
