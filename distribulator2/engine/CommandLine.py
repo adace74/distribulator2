@@ -11,6 +11,8 @@ __version__= '$Revision$'[11:-2]
 
 # Import modules
 import atexit
+import commands
+import getpass
 import os
 import os.path
 import readline
@@ -22,9 +24,15 @@ import sys
 class CommandLine:
 
     def initHistory(self):
-        myHistory = os.path.join(os.environ["HOME"], ".dist_history")
+        myCounter = 0
+        myHistory = os.path.join(os.environ['HOME'], ".dist_history")
     
         try:
+            myFile = open(myHistory, 'r')
+            for myLine in myFile:
+                myCounter = myCounter + 1
+            myFile.close()
+
             # Load readline history.
             readline.read_history_file(myHistory)
         
@@ -39,12 +47,18 @@ class CommandLine:
         readline.set_completer()
         readline.parse_and_bind("tab: complete")
 
-    def processInput(self):
+        return myCounter
+
+    def processInput(self, PassedPassThruList):
+        myPromptEnv = 'sample'
+        myPromptUser = getpass.getuser()
+        myPromptGroup = 'wlx'
+        mySeperator = '============================================================'
+
         while (1):
-            myPromptEnv = 'sample'
-            myPromptUser = 'awd'
-            myPromptGroup = 'wlx'
-            myPrompt = "<" + myPromptUser + "@" + myPromptEnv + "[" + myPromptGroup + "]:" + os.getcwd() + "> "
+
+            myPrompt = '<' + myPromptUser + '@' + myPromptEnv + \
+            '[' + myPromptGroup + ']:' + os.getcwd() + '> '
 
             myInput = ''
 
@@ -62,15 +76,29 @@ class CommandLine:
                 pass
 
             if (myInput):
-                print "You typed: " + myInput
-                print "*****"
+                myTokens = myInput.split()
 
-                if (myInput == "exit"):
+                if (myTokens[0] == 'exit'):
                     print
                     print("Received exit command.  Wrote history.  Dying...")
                     print
                     return
-            else:
-                print
+
+                try:
+                    if (myTokens[0] == 'cd'):
+                        os.chdir(myTokens[1])
+
+                except OSError, (errno, strerror):
+                    print "ERROR: [Errno %s] %s: %s" % (errno, strerror, myTokens[1])
+
+                for myCommand in PassedPassThruList:
+                    if (myTokens[0] == myCommand):
+                        print "EXEC:  " + myInput
+                        myStatus, myOutput = commands.getstatusoutput(myInput)
+                        print myOutput
+                        print mySeperator
+
+                        if (myStatus != 0):
+                            print "ERROR: Local shell returned error state."
 
 ######################################################################

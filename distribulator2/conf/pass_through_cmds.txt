@@ -150,6 +150,7 @@ w
 wget
 what
 whatis
+which
 who
 whoami
 whois

@@ -10,10 +10,9 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import atexit
 import os
 import os.path
-import readline
+import string
 import sys
 
 # Custom modules
@@ -25,17 +24,29 @@ class ConfigLoader:
 
     def load(self, myCommLine, myConfigDir):
         # Load GNU Readline history.
-        print("Loading config. from " + myConfigDir + ":")
-        myCommLine.initHistory()
-        print("- Readline history.")
+        print('Loading config. from ' + myConfigDir)
+        myLinesLoaded = myCommLine.initHistory()
+        print("- Readline history: %d lines loaded." % myLinesLoaded)
         
         # Load Unix pass-through commands.
+        myPassThruList = []
 
-        print("- Pass-through Unix commands.")
+        myFile = open( os.path.join(myConfigDir, 'pass_through_cmds.txt'), 'r' )
+
+        for myLine in myFile:
+            myLine = myLine.strip()
+            myPassThruList.append(myLine)
+
+        myFile.close()
+
+        print( "- Pass-through Unix commands: %d lines loaded." \
+               % len(myPassThruList) )
 
         # Parse XML...ouchies.
-        print("- Application settings and server lists.")
+        print("- Global options and settings.")
         print("- Entering interactive mode...")
         print
+
+        return myPassThruList
 
 ######################################################################

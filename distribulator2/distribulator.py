@@ -137,18 +137,18 @@ The available options are:
     config_dir = os.path.join(os.getcwd(), 'conf')
 
     # Log our startup.
-    myLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL0)
-    myLogger.LogMsgInfo("Started by user " + getpass.getuser() + ".")
+    myLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
+    myLogger.LogMsgInfo("Started by user " + getpass.getuser() + '.')
 
     # Create CommandLine instance, and pass it through to ConfigLoader.
     myCommLine = engine.CommandLine.CommandLine()
 
     # Create ConfigLoader instance and call that method!
     myLoader = engine.ConfigLoader.ConfigLoader()
-    myLoader.load(myCommLine, config_dir)
+    myPassThruList = myLoader.load(myCommLine, config_dir)
 
     # The main readline loop.
-    myCommLine.processInput()
+    myCommLine.processInput(myPassThruList)
 
     # Once it returns, we're done!
     myLogger.LogMsgInfo("Shutting down...")
