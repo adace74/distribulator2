@@ -171,19 +171,19 @@ Change List For v0.6.3 (Language: Python / Status: In Progress)
   that is also easily passable to SSH.
 * Cleanup: Renaming instance variables with a naming convention less lame than
   thisThing, thisOtherThing, etc.
-- Cleanup: Take a look at the various modes the distribulator now supports
-  and verify if the "VerboseMode" internal flags are still truly necessary.
-- Cleanup: Change classes that should be static to be so, also start thinking about
-  interfaces / subclassing.  A lot of the engine.* classes could use this...
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
-? Replacing the HostPinger's functionality with a better,
-  timeout-capable socket conneciton test.  Good idea?  Hmm...
-- Ability to use regular expressions to match server names.
+- Cleanup: Change classes that should be static to be so, also start thinking about
+  interfaces / subclassing.  A lot of the engine.* classes could use this...
+- Cleanup: Take a look at the various modes the distribulator now supports
+  and verify if the "VerboseMode" internal flags are still truly necessary.
+- Supplement the HostPinger's functionality with a better,
+  timeout-capable socket conneciton test.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background threads in parallel.
   Output will be spooled to one file per server in a standard output directory.
+- Ability to use regular expressions to match server names.
 - Single remote server file to single remote server file copy.
 (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.
