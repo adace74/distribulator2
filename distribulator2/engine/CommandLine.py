@@ -15,6 +15,7 @@ import getpass
 import os
 import os.path
 import readline
+import rlcompleter
 import string
 import sys
 
@@ -29,6 +30,16 @@ class CommandLine:
 
     def __init__(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
+        self._commList = [ 'copy', 'exit', 'help', 'login', 'run',
+                           'server-group', 'server-list' ]
+
+    def getAttemptedCompletion(self, thisString, thisIndex):
+        if ( (thisIndex == 0) & (len(thisString) > 0) ):
+            for thisCommStr in self._commList:
+                if (string.find(thisCommStr, thisString) != -1):
+                    return thisCommStr + ' '
+        else: 
+            return None
 
     def initHistory(self):
         thisCounter = 0
@@ -52,8 +63,10 @@ class CommandLine:
 
         # Enable TAB filename-completion, instead of Python's default
         # object completion.
-        readline.set_completer()
+        #readline.set_completer()
+        readline.set_completer(self.getAttemptedCompletion)
         readline.parse_and_bind("tab: complete")
+        readline.set_completer(self.getAttemptedCompletion)
 
         return thisCounter
 
