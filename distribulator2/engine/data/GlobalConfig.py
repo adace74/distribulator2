@@ -110,4 +110,6 @@ class GlobalConfig:
             if (PassedServerGroupName == thisServerGroup.getName()):
                 return thisServerGroup
 
+        return False
+
 ######################################################################

@@ -66,7 +66,7 @@ class CommandLine:
 
         thisPromptEnv = self._globalConfig.getServerEnv()
         thisPromptUser = getpass.getuser()
-        thisPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
+
 
         while (1):
             #
@@ -74,6 +74,7 @@ class CommandLine:
             #
             thisFoundIt = False
             thisInput = ''
+            thisPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
             thisPrompt = '<' + thisPromptUser + '@' + thisPromptEnv + \
             '[' + thisPromptGroup + ']:' + os.getcwd() + '> '
 

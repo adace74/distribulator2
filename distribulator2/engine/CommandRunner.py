@@ -52,7 +52,7 @@ class CommandRunner:
             self.doServerList()
         else:
             print("ERROR: Unknown Command: '" + self._commTokens[0] + \
-                  "'")
+                  "'.")
 
     def doChdir(self):
         try:
@@ -78,39 +78,52 @@ class CommandRunner:
 
         if (thisFilePrinter.printFile(thisFileName) == False):
             print "ERROR: Cannot find help for specified command '" + \
-            self._commTokens[1] + "'"
+            self._commTokens[1] + "'."
 
     def doLogin(self):
-        print("ERROR: No Matching Server '" + self._commTokens[1] + "'")
+        print("ERROR: No Matching Server '" + self._commTokens[1] + "'.")
 
     def doRun(self):
         print("Run")
 
     def doServerGroup(self):
-        print("Server-Group")
+        if ( len(self._commTokens) > 1 ):
+            thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
+
+            if (thisServerGroup == False):
+                print("ERROR: No matching server group '" + self._commTokens[1] + "'.")
+                return
+            else:
+                self._globalConfig.setCurrentServerGroup(thisServerGroup)
+                print("Current server group is now '" + self._commTokens[1] + "'.")
+        else:
+            print("ERROR: No server group name given.")
 
     def doServerList(self):
-
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( \
                 self._commTokens[1] )
         else:
             thisServerGroup = self._globalConfig.getCurrentServerGroup()
 
-        print("Known servers for group '" + thisServerGroup.getName() + "'")
-        print("----------------------------------------")
-        # Actual server list goes here.
-        thisTempStr = ''
+        if (thisServerGroup == False):
+            print("ERROR: No matching server group '" + self._commTokens[1] + "'.")
+            return
+        else:
+            print("Known servers for group '" + thisServerGroup.getName() + "'")
+            print("----------------------------------------")
+            # Actual server list goes here.
+            thisTempStr = ''
 
-        for thisServer in \
-                thisServerGroup.getServerList():
+            for thisServer in \
+                    thisServerGroup.getServerList():
+                if ( len(thisTempStr) > 0 ):
+                    print (thisTempStr + "\t" + thisServer.getName())
+                    thisTempStr = ''
+                else:
+                    thisTempStr = thisServer.getName()
+
             if ( len(thisTempStr) > 0 ):
-                print (thisTempStr + "\t" + thisServer.getName())
-                thisTempStr = ''
-            else:
-                thisTempStr = thisServer.getName()
-
-        if ( len(thisTempStr) > 0 ):
-            print(thisTempStr)
+                print(thisTempStr)
 
 ######################################################################
