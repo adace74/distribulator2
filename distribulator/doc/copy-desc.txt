@@ -7,9 +7,18 @@ Description:  Copies files to/from various servers within our
 working environment.
 
 Examples:
-	copy patch20020822.tar.gz /usr/local/weblogic/
+	copy patch20020822.tar.gz /usr/local/tmp/
 	- Copies local file patch20020822.tar.gz to directory
-	  /usr/local/weblogic/ on current server group.
+	  /usr/local/tmp/ on current server group.
+	copy patch20020822.tar.gz www:/usr/local/tmp/
+	- Copies local file patch20020822.tar.gz to directory
+	  /usr/local/tmp/ on the 'www' server group.
+	copy patch20020822.tar.gz www01st:/usr/local/tmp/
+	- Copies local file patch20020822.tar.gz to directory
+	  /usr/local/tmp/ on the server 'www01st'.
+
+TODO:
+
 	copy wlx01st:/tmp/patch20020822.tar.gz /usr/local/weblogic/
 	- Copies file patch20020822.tar.gz on server wlx01st
 	  to directory /usr/local/weblogic/ on current server group.

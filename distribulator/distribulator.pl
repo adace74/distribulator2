@@ -40,8 +40,7 @@ my($CONFIG_DIR) = '/usr/local/novo/distribulator/conf';
 #
 # Binary Locations - These are defined further on in the file.
 # ------------------------------------------------------------
-my($SSH_BIN);
-my($SCP_BIN);
+my($SCP_BIN, $SSH_BIN);
 ######################################################################
 
 ######################################################################
@@ -67,18 +66,19 @@ my($remote_command);
 my($server);
 my($temp_str);
 my($user);
-my($MYFILE);
+my($MYDIR, $MYFILE);
 
 #
 # State Tracking Variables
 #
 my($current_server_group) = 'wlx';
 my($environment);
+my(@external_commands);
 my(@server_groups);
 my(%users_groups_hash);
 my(%servers_groups_hash);
-my(@valid_commands) = ( 'cat', 'cd', 'copy', 'exit', 'group',
-                        'help', 'login', 'list', 'ls', 'run', 'shell' );
+my(@internal_commands) = ( 'cd', 'copy', 'exit', 'help', 'login', 'remote-shell',
+	'run', 'server-group', 'server-list' );
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
@@ -149,6 +149,8 @@ print("Local Config Dir:        $CONFIG_DIR\n");
 print("Local Host:              $hostname\n");
 print("Current Environment:     $environment\n");
 print("\n");
+print("Shell Commands Loaded:   " .
+    scalar (@external_commands) . "\n");
 print("Available Server Groups: @server_groups\n");
 print("\n");
 print("Prompt Description:      <user\@environment[current_server_group]:local_dir>\n");
@@ -177,46 +179,22 @@ while ($TRUE)
     }
 
     # If the command isn't found in the array.
-    if (!isValidCommand($command))
+    if ( (!isValidInternalCommand($command)) &&
+         (!isValidExternalCommand($command)) )
     {
 		print("ERROR: Unknown Command: $command\n");
 
         next;
     }
 
-    #################### IMPLEMENTED - Unix Style ####################
-
-    # Unix-style list directory
-    if ($command eq 'cat')
-    {
-        # Simple shell-passthrough for this one.
-        RunCommandLocal($input);
-    }
-
-    # Unix-style change directory
-    if ($command eq 'cd')
-    {
-		$temp_str = shift(@command_tokens);
-
-        if ( !chdir($temp_str) )
-        {
-            print("ERROR: Directory $temp_str not found.\n");
-        }
-    }
-
-    # Unix-style list directory
-    if ($command eq 'ls')
-    {
-        # Simple shell-passthrough for this one.
-        RunCommandLocal("ls -al");
-    }
-
-    #################### IMPLEMENTED - Custom ####################
+    #################### IMPLEMENTED - Internal ####################
 
     # Copy
     if ($command eq 'copy')
     {
         ParseCopy();
+
+        next;
     }
 
     # Exit
@@ -228,7 +206,7 @@ while ($TRUE)
 	}
 
 	# Group
-	if ($command eq 'group')
+	if ($command eq 'server-group')
 	{
 		$temp_str = shift(@command_tokens);
 
@@ -245,6 +223,8 @@ while ($TRUE)
 		{
 			print("ERROR: Unknown server group $temp_str.\n");
 		}
+
+                next;
 	}
 
 	# Help
@@ -253,7 +233,7 @@ while ($TRUE)
 		$temp_str = shift(@command_tokens);
 
         # If the next argument is a valid command, show help for it.
-		if ( isValidCommand($temp_str) )
+		if ( isValidInternalCommand($temp_str) )
 		{
 			if ( !PrintHelpFile("$temp_str-desc.txt") )
 			{
@@ -267,6 +247,7 @@ while ($TRUE)
                 print("ERROR: Problem displaying help.txt file.\n");
             }
         }
+	next;
 	}
 
     # Login
@@ -291,10 +272,12 @@ while ($TRUE)
         {
             print("ERROR: No matching server hostname found.\n");
         }
+
+        next;
     }
 
 	# List
-	if ($command eq 'list')
+	if ($command eq 'server-list')
 	{
 		$temp_str = shift(@command_tokens);
 
@@ -351,17 +334,44 @@ while ($TRUE)
 		{
 			print("ERROR: Unknown server group $temp_str.\n");
 		}
+
+	next;
 	}
 
 	# Run
 	if ($command eq 'run')
 	{
         ParseRun();
+
+	next;
 	}
+
+    #################### IMPLEMENTED - External ####################
+
+    # Unix-style change directory
+    if ($command eq 'cd')
+    {
+                $temp_str = shift(@command_tokens);
+
+        if ( !chdir($temp_str) )
+        {
+            print("ERROR: Directory $temp_str not found.\n");
+        }
+
+        next;
+    }
+
+    # This should match any of the listed external commands.
+    if ( isValidExternalCommand($command) )
+    {
+        RunCommandLocal($input);
+
+        next;
+    }
 
     #################### NOT IMPLEMENTED ####################
 
-    if ($command eq 'shell')
+    if ($command eq 'remote-shell')
     {
         print("ERROR: This command is not yet implemented.\n");
     }
@@ -517,9 +527,22 @@ sub getServerUser
 #
 sub LoadConfig
 {
-    my($MYDIR);
     my($filename);
-	my($line);
+    my($line);
+
+    # First, read in our list of valid Unix pass-through commands.
+    open(MYDIR, "$CONFIG_DIR/pass-through.conf")
+	|| die("Failed to open file $CONFIG_DIR/pass-through.config for reading.");
+
+    while(<MYDIR>)
+    {
+	$filename = $_;
+        chomp($filename);
+
+        push(@external_commands, $filename);
+    }
+
+    close(MYDIR);
 
     # The idea here is to go into the environment directory,
     # and pull in -all- files within that directory.
@@ -609,12 +632,33 @@ sub LoadConfig
 #
 # Simple validation logic.
 #
-sub isValidCommand
+sub isValidExternalCommand
 {
     my($validate_me) = @_;
     my($command_str);
 
-    foreach $command_str (@valid_commands)
+    foreach $command_str (@external_commands)
+    {
+        if ($validate_me eq $command_str)
+        {
+            return $TRUE;
+        }
+    }
+
+    print("ValidExt returning false...\n");
+
+    return $FALSE;
+}
+
+#
+# Simple validation logic.
+#
+sub isValidInternalCommand
+{
+    my($validate_me) = @_;
+    my($command_str);
+
+    foreach $command_str (@internal_commands)
     {
         if ($validate_me eq $command_str)
         {
@@ -630,27 +674,91 @@ sub isValidCommand
 #
 sub ParseCopy
 {
-    # NEED SOME KIND OF GENERIC VALIDATION SUCH THAT ALL REMOTE FILEPATHS
-    # END IN A SLASH!!!
+    # Validation TODO:
+    # * All remote filepath should end in /
+    # * All local files should exist.
+    # * Need a subroutine that will seperate the file element from the
+    # the path element.
     #
-    # Copy from a local file to a single server.
-    if ($input =~ /^copy (.*) (.*):(.*)$/)
+    # Copy from a local file to a remote server group or single server,
+    # with remote path specified.
+    # Example: 
+    if ($input =~ /^copy (.*) (.*):(.*)\/$/)
     {
-        print("You wish to copy localhost:$1 to server $2:$3?\n");
-
-        if ( AreYouSure() )
+        # Check groups first, they get priority.
+        if ( getMatchingGroup($2) )
         {
-            if ( PingServer($3) )
+            print("Copy local file $1 to server group $2:$3?\n");
+
+            if ( AreYouSure() )
             {
-#		RunCommand
-                print ("Blah\n");
+                foreach $server ( @{$servers_groups_hash{$2}} )
+                {
+                    if ( PingServer($server) )
+                    {
+                        system("$SCP_BIN $1 $server:$3");
+                    }
+                }
             }
         }
+        # If that fails, then check servers.
+        elsif ( $temp_str = getMatchingServer($2) )
+        {
+            print("Copy local file $1 to server $temp_str?\n");
+
+            if ( AreYouSure() )
+            {
+                if ( PingServer($2) )
+                {
+                    RunCommandLocal("$SCP_BIN $1 $2:$3");
+                }
+            }
+        }
+        else
+        {
+            # If no match, then print a sane error.
+            print("ERROR: No matching group or server hostname found.\n");
+        }
+    }
+    # Copy a local file to the current working server group,
+    # with the remote path specified.
+    elsif ($input =~ /^copy (.*) (.*)\/$/)
+    {
+        print("Copy local file $1 to server group $current_server_group:$2?\n");
+
+            if ( AreYouSure() )
+            {
+                foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+                {
+                    if ( PingServer($server) )
+                    {
+                        system("$SCP_BIN $1 $server:$3");
+                    }
+                }
+            }
+    }
+    # Copy a local file to a specific server group,
+    # with no remote path specified.
+    elsif ($input =~ /^copy (.*) (.*)$/)
+    {
+        print("Copy local file $1 to server group $2:\n");
+
+#            if ( AreYouSure() )
+#            {
+#                foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+#                {
+#                    if ( PingServer($server) )
+#                    {
+#                        system("$SCP_BIN $1 $server:$3");
+#                    }
+#                }
+#            }
     }
     else
     {
         # Invalid syntax.
-        print("ERROR: Invalid run command syntax.\n");
+        print("ERROR: Invalid copy command syntax.\n");
+        print("ERROR: Did you end your remote path with a slash?\n");
     }
 }
 
