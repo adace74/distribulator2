@@ -164,6 +164,7 @@ Change List For v0.6.2 (Language: Python / Status: Shipped)
 Change List For v0.6.3 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * SourceForge bug #845634 fixed.
+* SourecForge bug #853052 fixed.
 - Replacing the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.
 
