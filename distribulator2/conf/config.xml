@@ -33,6 +33,22 @@ $Id$
         </servergroup>
     </environment>
 
+    <!-- Demo Environment -->
+    <environment name="demo">
+        <servergroup name="www" username="apache">
+            <server>www01.eg.orbitz.com</server>
+            <server>www02.eg.orbitz.com</server>
+            <server>www03.eg.orbitz.com</server>
+            <server>www04.eg.orbitz.com</server>
+            <server>www05.eg.orbitz.com</server>
+        </servergroup>
+
+        <servergroup name="app" username="tomcat">
+            <server>app01.eg.orbitz.com</server>
+            <server>app02.eg.orbitz.com</server>
+        </servergroup>
+    </environment>
+
     <!-- Staging -->
     <environment name="staging">
         <servergroup name="admin_www" username="weblogic">

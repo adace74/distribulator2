@@ -78,7 +78,7 @@ class CommandLine:
             except EOFError:
                 print
                 print
-                print("Caught CTRL-D keystroke.  Wrote history.  Dying...")
+                print("INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying...")
                 print
 
                 return
@@ -110,7 +110,7 @@ class CommandLine:
                         try:
                             thisExternalCommand.run()
                         except KeyboardInterrupt:
-                            print "Caught CTRL-C keystroke.  Returning to command prompt..."
+                            print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                         del thisExternalCommand
                         thisFoundIt = True
                         break

@@ -97,7 +97,7 @@ The available options are:
 
 """ % argv[0]
 
-    thisServerEnv = 'sample'
+    thisServerEnv = 'demo'
     thisServerShell = 'ssh'
     thisStartDir = '/tmp'
 

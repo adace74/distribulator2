@@ -29,8 +29,8 @@ class CommandRunner:
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
 
-        #for thisToken in self._commTokens:
-        #    print("DEBUG: Token |" + thisToken + "|")
+        for thisToken in self._commTokens:
+            print("DEBUG: Token |" + thisToken + "|")
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
@@ -52,7 +52,12 @@ class CommandRunner:
                   "'.")
 
     def doAreYouSure(self):
-        thisInput = raw_input("Yes / No> ")
+        try:
+            thisInput = raw_input("Yes / No> ")
+
+        except KeyboardInterrupt:
+            print "INFO:  Caught CTRL-C keystroke."
+            return False
 
         if (thisInput.lower() == 'yes'):
             return True
@@ -106,7 +111,7 @@ class CommandRunner:
                 try:
                     thisExternalCommand.run()
                 except KeyboardInterrupt:
-                    print("Caught CTRL-C keystroke.  Returning to command prompt...")
+                    print("INFO:  Caught CTRL-C keystroke.  Returning to command prompt...")
             else:
                 print("ERROR: No matching server '" + \
                       self._commTokens[1] + "'.")
@@ -116,13 +121,18 @@ class CommandRunner:
     def doRun(self):
         thisFoundIt = False
 
+        # Attempt to retokenize based on syntax and quotes.
+        #
+        #
         if ( len(self._commTokens) < 2 ):
             print("ERROR: Syntax error.  Try 'help run' for usage information.")
             return False
-        # run "uptime"
+        # run "uname -a" [wlx]
+        #
+        # Attempt to retokenize based on syntax and quotes
         elif ( len(self._commTokens) == 2 ):
             self._commTokens.append(self._globalConfig.getCurrentServerGroup().getName())
-        # run "uptime" wlx
+        # run "uname -a" wlx
         if (self._globalConfig.getServerGroupByName(self._commTokens[2]) == False):
             print("ERROR: No matching server group '" + \
                   self._commTokens[2] + "' found.")
