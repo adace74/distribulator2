@@ -6,7 +6,7 @@
 # Description: The Distribulator.
 # A detailed description can be found in the README file.
 #
-# (c) Copyright 2004 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 # Notes: Unfortunately, Python, like other shell-oriented langauges,
@@ -203,7 +203,7 @@ The available options are:
                     myVerboseLevel = opt[1]
                 elif (opt[0] == '--version'):
                     print(__appversion__)
-                    print("(c) Copyright 2004 Adam W. Dace <adam@turing.com>  All Rights Reserved.")
+                    print("(c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.")
                     print
                     print("Please see the LICENSE file for accompanying legalese.")
                     print
