@@ -476,7 +476,7 @@ class GlobalConfig:
     def getCurrentEnvName(self):
         """This is a typical accessor method."""
 
-        return self.getCurrentEnv().getName()
+        return self._currentEnvName
 
 ######################################################################
 
@@ -501,13 +501,13 @@ class GlobalConfig:
 
 ######################################################################
 
-    def getEnvironmentByName(self, PassedServerEnvName):
+    def getEnvironmentByName(self, PassedEnvName):
         """This is a typical accessor method."""
 
-        PassedServerEnvName = PassedServerEnvName.strip()
+        PassedEnvName = PassedEnvName.strip()
 
         for myEnvironment in self._environmentList:
-            if ( myEnvironment.getName() == PassedServerEnvName ):
+            if ( myEnvironment.getName() == PassedEnvName ):
                 return myEnvironment
 
         return False

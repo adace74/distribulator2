@@ -171,31 +171,32 @@ class XMLFileParser:
         # Load environment.
         myEnvironment = engine.data.Environment.Environment()
         myEnvironment.setName(PassedEnvironment.getAttribute('name').strip())
-        self._globalConfig.setCurrentEnv(myEnvironment);
 
         # Load included server groups.
         self.handleServerGroups(
-            PassedEnvironment.getElementsByTagName('servergroup') )
+            myEnvironment, PassedEnvironment.getElementsByTagName('servergroup') )
         if (PassedEnvironment.getAttribute('default')):
             self._globalConfig.setCurrentServerGroup(
-                self._globalConfig.getCurrentEnv().getServerGroupByName(PassedEnvironment.getAttribute('default')))
+                myEnvironment.getServerGroupByName(PassedEnvironment.getAttribute('default')) )
 
         # Check for current environment, set flags accordingly.
-        if ( PassedEnvironment.getAttribute('name') ==
-             self._globalConfig.getCurrentEnvName() ):
+        if ( PassedEnvironment.getAttribute('name') == self._globalConfig.getCurrentEnvName() ):
+            self._globalConfig.setCurrentEnv(myEnvironment)
             self._isEnvFound = True
 
         return myEnvironment
 
 ######################################################################
 
-    def handleServerGroups(self, PassedServerGroups):
+    def handleServerGroups(self, PassedEnvironment, PassedServerGroups):
         """This method branches processing off into sub-methods."""
+
+        self._serverGroupList = []
 
         for ServerGroup in PassedServerGroups:
             self._serverGroupList.append( self.handleServerGroup(ServerGroup) )
 
-        self._globalConfig.getCurrentEnv().setServerGroupList(self._serverGroupList)
+        PassedEnvironment.setServerGroupList(self._serverGroupList)
 
 ######################################################################
 

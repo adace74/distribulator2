@@ -60,6 +60,7 @@ class EnvCommand(Command.Command):
                 return False
             else:
                 self._globalConfig.setCurrentEnv(myEnvironment)
+                self._globalConfig.setCurrentEnvName( self._commTokens[2] )
                 myInfo = "Current environment is now '" + self._commTokens[2] + "'."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                 return True
@@ -101,8 +102,7 @@ class EnvCommand(Command.Command):
             return False
         else:
             # Otherwise, display the server group list given at startup.
-            myTempStr = "Known server groups for environment '" + \
-                        self._globalConfig.getCurrentEnvName() + "'\n"
+            myTempStr = "Known server groups for environment '" + myEnvironment.getName() + "'\n"
             myTempStr = myTempStr + "--------------------------------------------------\n"
 
             for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():

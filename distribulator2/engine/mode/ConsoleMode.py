@@ -76,7 +76,6 @@ class ConsoleMode(Mode.Mode):
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
 
-        myPromptEnv = self._globalConfig.getCurrentEnvName()
         myPromptUser = self._globalConfig.getUsername()
 
         while (1):
@@ -85,6 +84,7 @@ class ConsoleMode(Mode.Mode):
             #
             myFoundIt = False
             myInput = ''
+            myPromptEnv = self._globalConfig.getCurrentEnvName()
             myPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
             myPrompt = 'INPUT|<' + myPromptUser + '@' + myPromptEnv + \
             '[' + myPromptGroup + ']:' + os.getcwd() + '> '
