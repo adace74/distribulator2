@@ -7,10 +7,9 @@
 You have found perhaps the world's only Open Source stand-alone
 distributed server shell command / batch system.
 
-Website Easy URL: http://distribulator.turing.com/
-Website Real URL: http://sourceforge.net/projects/distribulator/
-Announcement Mailing List:
-	distribulator-announce-subscribe@lists.sourceforge.net
+Website--Easy:       http://distribulator.turing.com/
+Website--Real:       http://sourceforge.net/projects/distribulator/
+Pydoc Documentation: http://distribulator.turing.com:8080/
 
 What Is It?
 -----------

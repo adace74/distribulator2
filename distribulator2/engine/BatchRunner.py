@@ -68,20 +68,43 @@ class BatchRunner:
             self._globalConfig.getBatchFile() + "'.")
 
         thisCommandCount = 0
+        thisError = ''
         thisIsMore = False
         thisLineBuffer = ''
+        thisLineCount = 0
         thisTerseMode = False
         thisTimeDuration = 0
         thisTimeStarted = time.time()
         thisTimeFinished = 0
 
         try:
+            # First Pass: Validation
             thisFile = open(self._globalConfig.getBatchFile(), 'r')
 
-            # The Big Loop
+            for thisLine in thisFile:
+                thisLineCount = thisLineCount + 1
+
+                if (thisLine.find('$var1') != -1):
+                    if (len(self._globalConfig.getVar1()) == 0):
+                        thisError = "ERROR: Variable $var1 referenced on line %d, but not defined." % thisLineCount
+                elif (thisLine.find('$var2') != -1):
+                    if (len(self._globalConfig.getVar2()) == 0):
+                        thisError = "ERROR: Variable $var2 referenced on line %d, but not defined." % thisLineCount
+                elif (thisLine.find('$var3') != -1):
+                    if (len(self._globalConfig.getVar3()) == 0):
+                        thisError = "ERROR: Variable $var3 referenced on line %d, but not defined." % thisLineCount
+
+                if (len(thisError) != 0):
+                    print thisError
+                    return False
+
+            thisFile.close()
+
+            # Second Pass: Execution
+            thisFile = open(self._globalConfig.getBatchFile(), 'r')
+
             for thisLine in thisFile:
                 thisFoundIt = False
-
                 #
                 # Pre-processing.
                 # * Strip any linefeeds / CR's.
@@ -93,16 +116,16 @@ class BatchRunner:
                 thisLine = string.replace(thisLine, '\t', ' ')
 
                 # Variable substitution
-                thisLine = string.replace( thisLine, '$env', \
-                                           self._globalConfig.getServerEnv() )
-
-                if ( self._globalConfig.getVar1() ):
+                if ( thisLine.find('$env') != -1 ):
+                    thisLine = string.replace( thisLine, '$env', \
+                                               self._globalConfig.getServerEnv() )
+                if ( thisLine.find('$var1') != -1 ):
                     thisLine = string.replace( thisLine, '$var1',
                                                self._globalConfig.getVar1() )
-                if ( self._globalConfig.getVar2() ):
+                if ( thisLine.find('$var2') != -1 ):
                     thisLine = string.replace( thisLine, '$var2',
                                                self._globalConfig.getVar2() )
-                if ( self._globalConfig.getVar3() ):
+                if ( thisLine.find('$var3') != -1 ):
                     thisLine = string.replace( thisLine, '$var3',
                                                self._globalConfig.getVar3() )
 
