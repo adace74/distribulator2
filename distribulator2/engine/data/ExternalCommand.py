@@ -93,7 +93,7 @@ class ExternalCommand:
 
         for myLine in myOutput.split('\n'):
             self._globalConfig.getMultiLogger().LogMsgInfo(
-                "DATA: " + myLine )
+                "OUT:  " + myLine )
 
         if (myStatus != 0):
             myError = "Local shell returned error state."
