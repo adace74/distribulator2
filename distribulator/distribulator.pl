@@ -202,7 +202,7 @@ while ($TRUE)
     if ($command eq 'ls')
     {
         # Simple shell-passthrough for this one.
-        RunCommandLocal("ls -l");
+        RunCommandLocal("ls -al");
     }
 
     #################### IMPLEMENTED - Custom ####################
@@ -601,8 +601,6 @@ sub ParseRun
                     RunCommandRemote($server,$1);
                 }
             }
-
-            return;
         }
         # If that fails, then check servers.
         elsif ( $temp_str = getMatchingServer($2) )
@@ -611,10 +609,8 @@ sub ParseRun
 
             if ( AreYouSure() )
             {
-                RunCommandRemote($server,$1);
+                RunCommandRemote($temp_str,$1);
             }
-
-            return;
         }
         else
         {
