@@ -138,7 +138,7 @@ Change List For v0.6 (Language: Python / Status: Shipped)
   For details see Sourceforge, there are simply too many to list here.
 * Small LICENSE fixes, also propogated other legalese.
 
-Change List For v0.61 (Language Python / Status: Shipped)
+Change List For v0.61 (Language: Python / Status: Shipped)
 ---------------------------------------------------------
 * Finally got around to parameterizing the application version info.
 * Added source-level documentation to the codebase(pydoc compatible).
@@ -151,11 +151,12 @@ Change List For v0.61 (Language Python / Status: Shipped)
 * SourceForge bug #787445 fixed.
 * SourceForge bug #776080 fixed.
 * SourceForge bug #774953 fixed.
-* Both batch and console mode have been tested pretty extensively.
 
-Change List For v0.62 (Language Python / Status: On Hold)     
----------------------------------------------------------
-- Replace the HostPinger's functionality with a real timeout-capable socket test.
+Change List For v0.62 (Language: Python / Status: In Progress)     
+-------------------------------------------------------------
+- Bug-fixes as a result of daily use / extensive testing.
+- Replacement the HostPinger's functionality with a better,
+  timeout-capable socket conneciton test.
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
@@ -169,16 +170,18 @@ Idea List For v0.7 (A little farther out)
 
 Idea List For v1.0 (Will we ever get here?  Who knows!)
 -------------------------------------------------------
-- Some sort of respectable regression test suite.
-  Can be done using batch files and expect?
+Valid Ideas:
+- A decent install / setup system!  Check into python's distutils.
 - OO design sanity fixes.  Need to start using static methods
   where appropriate.
+- Some sort of respectable regression test suite.
+  Can be done using batch files and expect?
 - A server mode in which the distribulator will check an incoming command
   queue(a file or two?) then run those on what it considers to be its
   siblings.  This would allow commands and files to be routed to
   X number of servers in a speedy fashion.
-- A decent install / setup system!  Perhaps a quick autoconf thingie?
-- Sudo-based remote permissions checking?
+Pie-In-The-Sky Ideas:
+- Sudo-based remote permissions checking ???
 - Integration with ncurses such that one could run a command on 4 servers
-  in parallel, and see the output from each of them?
-- What more could one want?
+  in parallel, and see the output from each of them ???
+- What more could one want ???
