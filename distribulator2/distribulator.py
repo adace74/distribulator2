@@ -301,7 +301,8 @@ The available options are:
 
     except (EOFError, KeyboardInterrupt):
             myError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            mySysLogger.LogMsgError(myError)
+            if (mySysLogger):
+                mySysLogger.LogMsgError(myError)
             if (myVerboseMode):
                 print(myError)
 
