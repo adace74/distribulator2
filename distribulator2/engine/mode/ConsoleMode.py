@@ -81,12 +81,9 @@ class ConsoleMode(Mode.Mode):
         # Save readline history on exit.
         atexit.register(readline.write_history_file, myHistory)
 
-        # Enable TAB filename-completion, instead of Python's default
-        # object completion.
-        #readline.set_completer()
-        readline.set_completer(self.getAttemptedCompletion)
+        # Enable filename completion via the TAB key.
         readline.parse_and_bind("tab: complete")
-        readline.set_completer(self.getAttemptedCompletion)
+        readline.set_completer()
 
         return myCounter
 
