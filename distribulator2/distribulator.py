@@ -224,9 +224,10 @@ The available options are:
             print(thisSeperator)
 
         if (thisGlobalConfig.isBatchMode()):
-            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- batch mode.")
+            thisInfo = "INFO:  Starting The Distribulator v0.60 -- batch mode."
+            thisLogger.LogMsgInfo(thisInfo)
             if (thisTerseMode):
-                print("INFO:  Starting The Distribulator v0.60 -- batch mode.")
+                print(thisInfo)
         else:
             thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- console mode.")
 
@@ -266,12 +267,16 @@ The available options are:
     # The main readline loop.
     if ( thisGlobalConfig.isBatchMode() ):
         if ( thisBatchRunner.invoke() ):
-            thisLogger.LogMsgInfo(
-                "INFO:  Batch command set completed successfully.  Shutting down.")
+            thisInfo = "INFO:  Batch command set completed successfully.  Shutting down."
+            thisLogger.LogMsgInfo(thisInfo)
+            if (thisTerseMode):
+                print(thisInfo)
             sys.exit(0)
         else:
-            thisLogger.LogMsgError(
-                "ERROR: Shutting down as a result of a previous error.")
+            thisError = "ERROR: Shutting down as a result of a previous error."
+            thisLogger.LogMsgError(thisError)
+            if (thisTerseMode):
+                print(thisError)
             sys.exit(1)
     else:
         if ( thisCommLine.invoke() ):
