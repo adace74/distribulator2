@@ -60,7 +60,7 @@ class HostPinger:
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 2
 
-        except gaierror, (errno, strerror):
+        except socket.gaierror, (errno, strerror):
             myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedHostname)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 3
