@@ -73,7 +73,7 @@ class ListMode(Mode.Mode):
                 continue
 
             # Check for server group match.
-            myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
             if (myServerGroup):
                 myServerGroupList.append(myLoopStr)
             else:
@@ -111,7 +111,7 @@ class ListMode(Mode.Mode):
             # If we found server group names, then run with that.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getServerGroupByName(
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(
                     myGroupStr)
 
                 myServerList = myServerGroup.getServerList()
