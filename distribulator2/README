@@ -42,7 +42,7 @@ Currently, the Distribulator has two modes:
   ala shell-script that can be tested in one environment, then handed off
   to a seperate group for implementation in another environment. 
 
-This program shell also attempt to impose some sanity-oriented restructions,
+This program shell also attempts to impose some sanity-oriented restrictions,
 such as environment isolation, in the hopes of avoiding problems that result
 in exclaimations like "Oh crap!  That was production?"  This is otherwise known
 as the "environment blinder" feature.

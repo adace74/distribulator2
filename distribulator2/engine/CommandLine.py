@@ -121,7 +121,7 @@ class CommandLine:
             except KeyboardInterrupt:
                 print
 
-            if (thisInput):
+            if ( len(thisInput.strip()) > 0 ):
                 thisTokens = thisInput.split()
 
                 #

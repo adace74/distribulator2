@@ -86,14 +86,17 @@ class ConfigLoader:
         # Step 2: Load the main XML configuration file.
         #
         thisParser = engine.XMLFileParser.XMLFileParser()
+        self._globalConfig.setCurrentServerGroup(False)
         self._globalConfig = thisParser.parse(self._globalConfig)
 
         if (self._globalConfig.isBatchMode() == False):
             print( "- Global options and settings: %d lines loaded." %
                    (self._globalConfig.getConfigLines()) )
 
-        self._globalConfig.setCurrentServerGroup(
-            self._globalConfig.getServerGroupList()[0] )
+        # If the current server group isn't set, set it.
+        if (self._globalConfig.getCurrentServerGroup() == False):
+            self._globalConfig.setCurrentServerGroup(
+                self._globalConfig.getServerGroupList()[0] )
 
         # Create our pretty output string.
         thisServerGroupStr = '- '

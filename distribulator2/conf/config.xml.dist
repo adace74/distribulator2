@@ -33,8 +33,8 @@
 
     <!-- Server environments, groups, etc. -->
 
-    <!-- Demo Environment -->
-    <environment name="demo">
+    <!-- Demo Environment: Default servergroup set to "www" -->
+    <environment default="www" name="demo">
         <servergroup name="app" username="tomcat">
             <server>app01.somewhere.com</server>
             <server>app02.somewhere.com</server>

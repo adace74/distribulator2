@@ -105,7 +105,7 @@ Change List For v0.53 (Language: Python / Status: Skipped)
   do output.
 
 Change List For v0.6.0 (Language: Python / Status: Shipped)
--------------------------------------------------------------
+-----------------------------------------------------------
 * Goal: The ongoing goal of this release is to provide a "good enough"
   featureset for real-world applications, and to implement a
   feature freeze such that focus can be shifted to stability
@@ -139,7 +139,7 @@ Change List For v0.6.0 (Language: Python / Status: Shipped)
 * Small LICENSE fixes, also propogated other legalese.
 
 Change List For v0.6.1 (Language: Python / Status: Shipped)
----------------------------------------------------------
+-----------------------------------------------------------
 * Finally got around to parameterizing the application version info.
 * Added source-level documentation to the codebase(pydoc compatible).
 * Various clean-up across the codebase.
@@ -154,9 +154,15 @@ Change List For v0.6.1 (Language: Python / Status: Shipped)
 * Standardized version numbering.
 * Added a small script to automate release packaging.
 
-Change List For v0.6.2 (Language: Python / Status: In Progress)     
--------------------------------------------------------------
-- SourecForge bug #805371 fixed.
+Change List For v0.6.2 (Language: Python / Status: Shipped)     
+---------------------------------------------------------------
+* SourecForge bug #805371 fixed.
+* SourceForge bug #815787 fixed.
+* SourceForge bug #815788 fixed.
+* SourceForge bug #815877 fixed.
+
+Change List For v0.6.3 (Language: Python / Status: In Progress)
+---------------------------------------------------------------
 - Replacement the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.
 

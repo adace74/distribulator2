@@ -161,6 +161,9 @@ class XMLFileParser:
             self._isEnvFound = True
             self.handleServerGroups(
                 PassedEnvironment.getElementsByTagName('servergroup') )
+            if (PassedEnvironment.getAttribute('default')):
+                self._globalConfig.setCurrentServerGroup(
+                    self._globalConfig.getServerGroupByName(PassedEnvironment.getAttribute('default')))
 
 ######################################################################
 

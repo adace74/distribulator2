@@ -32,26 +32,26 @@ I personally install this always, as a just-in-case measure.
 Installation
 ------------
 1) Pick a place you'd like to install the program.
-   The default is /promo/distribulator2 probably not where you'd want it...
+   The default is /usr/local/distribulator2
 
-   For example, let's say you'd like to install into /apps/distribulator2.
+   For example, let's say you'd like to install into /usr/local/distribulator2.
 
 2) Go to the subdir of where you'd like it to be:
-   cd /apps/
+   cd /usr/local/
 
 3) Unpack the distribution:
-   tar xfz distribulator-0.50.tar.gz
+   tar xfz distribulator-0.62.tar.gz
 
 4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
-   reflect your installation directory(in this case /apps/distribulator2):
+   reflect your installation directory(in this case /usr/local/distribulator2):
    vi scripts/distribulator
 
 5) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
-   cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh
+   cd /usr/local/bin; ln -s /usr/local/distribulator2/scripts/distribulator.sh
 
 6) Symlink or copy the config.xml.dist file to config.xml.
-   cd /apps/distribulator2/conf; ln -s config.xml.dist config.xml
+   cd /usr/local/distribulator2/conf; ln -s config.xml.dist config.xml
 
 7) Fire it up:
    distribulator
