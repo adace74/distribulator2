@@ -253,6 +253,11 @@ Change List For v0.9.0 (Codename: Final Run / Bloat Factor: 4327 lines / Status:
 * Ability to use regular expressions in the "copy" command.
 * Cleanup: Various console mode output tweaks.
 
+Change List For v0.9.1 (Codename: One More Time / Bloat Factor: ???? lines / Status: In Progress)
+-------------------------------------------------------------------------------------------------
++ Ability to specify a password via "set password"(show password is too...evil)
+  and have it echo'ed to the remote ssh session for either login or sudo use.
+
 Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
