@@ -24,6 +24,7 @@ import time
 ######################################################################
 
 class ExternalCommand:
+    """This class holds data regarding an external command."""
 
     def __init__(self, PassedGlobalConfig):
         """Constructor."""

@@ -196,7 +196,7 @@ The available options are:
         thisBatchRunner = engine.BatchRunner.BatchRunner(thisGlobalConfig)
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
-        thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
+        thisGlobalConfig = thisLoader.load(thisCommLine)
 
         # Set our silly output flag
         if ( thisGlobalConfig.isBatchMode() & \

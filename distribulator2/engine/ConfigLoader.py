@@ -36,7 +36,7 @@ class ConfigLoader:
 
 ######################################################################
 
-    def loadGlobalConfig(self, PassedCommLine):
+    def load(self, PassedCommLine):
         """
         This method is responsible for loading configuration data into the
         engine.data.GlobalConfig object.
