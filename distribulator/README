@@ -44,7 +44,7 @@ Legend For Features Below:
 "+" Indicates a feature that is currently being developed.
 "*" Indicates a feature that is at least 80%(if not 100%) complete.
 
-Feature List For v0.3 (Shipped!):
+Feature List For v0.3 (Shipped):
 
 * Some semblance of a shell, include a useful prompt.
   Now includes 'cat', 'cd', and 'ls' for local server browsing.
@@ -64,17 +64,22 @@ Feature List For v0.3 (Shipped!):
 * Pattern-based group and server name matching for the lazy sysadmin
   in all of us.
 
-Feature List For v0.4 (Coming Soon!):
+Feature List For v0.4-v0.45 (Shipped):
 * Addition of the "login" command.  Basically allows the user to specify
   a server to login to without having to exit the distribulator.
 * Addition of --noping for environments where either a ServerPing is
   undesirable or the installed version of Net::Ping is out-of-date.
+* Addition of the "all" group.  This will allow one to run any command
+  across every group in the started-up environment.
+* Addition of the ability to read in a text-file list of common Unix commands.
+* Addition of the ability to distinguish those commands as external and
+  simply pass them through to the underlying shell via perl's system() call.
 
 Feature List For v0.5 (Coming Soon!):
 
-- Single local server file to single remote server file copy.
+* Single local server file to single remote server file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
-- Single local server file to many remote serveres file copy.
+* Single local server file to many remote serveres file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
 - Single remote server file to single remote server file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)

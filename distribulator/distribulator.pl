@@ -445,6 +445,11 @@ sub getMatchingUserServer
     my($partial) = @_;
     my($group, $sub_string);
 
+    if (!$partial)
+    {
+        return $FALSE;
+    }
+
     foreach $group (sort keys(%groups_userservers_hash) )
     {
         foreach $userserver ( @{$groups_userservers_hash{$group}} )
