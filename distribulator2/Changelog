@@ -163,11 +163,14 @@ Change List For v0.6.2 (Language: Python / Status: Shipped)
 
 Change List For v0.6.3 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
+* SourceForge bug #845634 fixed.
 - Replacing the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.
 
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
+- Implementing the run command parallel keyword,
+  run in background threads, to multiple output files?
 - Single remote server file to single remote server file copy.
 (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.
