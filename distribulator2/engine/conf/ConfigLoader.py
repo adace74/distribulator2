@@ -116,6 +116,10 @@ class ConfigLoader:
         self._globalConfig.setAuditLogger( logging.getLogger('audit') )
         self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
 
+        # If this is batch mode, we default to a higher log level.
+        if ( self._globalConfig.isBatchMode() ):
+            self._globalConfig.getStdoutLogger().setLevel(logging.DEBUG)
+
         # Override the logging.conf loglevel for STDOUT if specified.
         if ( self._globalConfig.getVerboseLevel() != None ):
             if (self._globalConfig.getVerboseLevel() == 'DEBUG'):
@@ -129,9 +133,6 @@ class ConfigLoader:
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
                 self._globalConfig.setExitSuccess(False)
                 return
-
-        if ( self._globalConfig.isBatchMode() ):
-            self._globalConfig.getStdoutLogger().setLevel(logging.DEBUG)
 
         if ( self._globalConfig.isConsoleMode() ):
             print( "- Logging configuration:       %d lines loaded." % myConfigLines )
