@@ -268,6 +268,9 @@ sub getServerList
         }
     }
 
+    # Sort it, why not?
+    @server_list = sort(@server_list);
+
     return(@server_list);
 }
 
