@@ -34,7 +34,7 @@ Change List For v0.4-v0.45 (Language: Perl / Status: Shipped)
   a server to login to without having to exit the distribulator.
 * Addition of --noping for environments where either a ServerPing is
   undesirable or the installed version of Net::Ping is out-of-date.
-* Addition of the "all" group.  This will allow one to run any command
+* Addition of the "all" server group.  This will allow one to run any command
   across every group in the started-up environment.
 * Addition of the ability to read in a text-file list of common Unix commands.
 * Addition of the ability to distinguish those commands as external and
@@ -84,19 +84,25 @@ Change List For v0.51 (Language: Python / Status: Shipped)
 * Lots of documentation updates,
   aiming for the normal INSTALL/README paradigm.
 
-Change List For v0.52 (Language: Python / Status: In Progress):
-* On a bug-hunt for this minor release.
+Change List For v0.52 (Language: Python / Status: In Progress)
 * Fixed inaccuracies found in this Changelog.
 * SourceForge bug #744225 fixed.
 * SourceForge bug #744226 fixed.
 * SourceForge bug #749953 fixed.
 
-Change List For v0.6 (Language: Python / Status: Planning):
+Change List For v0.5? (Language: Python / Status: Planning)
+- Console command syntax improvements:
+  "server-group www" becomes "set server-group www"
+  "server-list www" becomes "show server-group www"
+  "show server-groups" - New command.
+
+Change List For v0.6 (Language: Python / Status: Pondering)
 - A CVS branch will be created for any future v0.5x bug-fixes.
 - OO design sanity fixes / stabilization work.
 - More documentation updates.
 
-Idea List For v0.7 (A little farther out):
+Idea List For v0.7 (A little farther out)
+- Single local server file to multiple server group file copy.
 - Ability to run commands on a remote single server.
 (i.e. ssh awd@www01 "uptime")
 - Single local server file to single remote server file copy.
@@ -104,7 +110,7 @@ Idea List For v0.7 (A little farther out):
 - Single remote server file to single remote server file copy.
 (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 
-Idea List For v1.0 (Will we ever get here?  Who knows!):
+Idea List For v1.0 (Will we ever get here?  Who knows!)
 - Sudo-based remote permissions checking?
 - A decent install / setup system!  Perhaps a quick autoconf thingie?
 - Integration with ncurses such that one could run a command on 4 servers

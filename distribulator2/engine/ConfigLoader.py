@@ -81,6 +81,7 @@ class ConfigLoader:
         self._globalConfig.setCurrentServerGroup(
             self._globalConfig.getServerGroupList()[0] )
 
+        # Create our pretty output string.
         thisServerGroupStr = '- '
         thisTotalServerCount = 0
         thisColumnCount = 0
