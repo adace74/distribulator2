@@ -84,11 +84,11 @@ A data storage class which will hold all relevant information regarding
 the global configuration of the program.  It will hold startup settings,
 binary locations, collections of ServerGroup and Server objects, etc. 
 
-- engine.storage.Server class.
+- engine.data.Server class.
 
 A data storage class which will hold all relevant information regarding a given server.
 
-- engine.storage.ServerGroup class.
+- engine.data.ServerGroup class.
 
 A collection of Server classes representing a server group.
 Should also provide the ability to return Server lists in either a pre-defined
