@@ -4,6 +4,9 @@
 #
 # Name: ConfigLoader.py
 #
+# (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+# Please see the accompanying LICENSE file for license information.
+#
 ######################################################################
 
 # Version tag

@@ -8,6 +8,9 @@
 # Description: The Distribulator.
 # A detailed description can be found in the README file.
 #
+# (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+# Please see the accompanying LICENSE file for license information.
+#
 # Notes: Unfortunately, Python, like other shell-oriented langauges,
 # requires that methods be defined before calling them.
 # As such, main() will always be at the -bottom- of a file.
@@ -47,7 +50,7 @@ import generic.SysLogger
 # Display a nice pretty header.
 def printTitleHeader():
     print
-    print("The Distribulator v0.52 (Python v" + \
+    print("The Distribulator v0.60 (Python v" + \
           sys.version.split()[0] + " / " + sys.platform + ")")
     print("--------------------------------------------------")
     print
@@ -82,11 +85,22 @@ The available options are:
     OPTIONAL
 
     --env=
-    Set the server environment we wish to operate in.
+    The server environment we wish to operate in.
     REQUIRED
 
     --help
     This usage statement.
+
+    --quiet
+    Batch Mode Only: Disable STDOUT, particularly useful when run from cron.
+    OPTIONAL
+
+    --var1=some_string
+    --var2=some_other_string
+    --var3=you_get_the_idea
+    Batch Mode Only: Enables simple string substitution.
+    Up to 3 variables may be defined then referenced in a given batch file
+    as $var1, $Var2, and $var3.
 
     --version
     Print version information.
@@ -115,7 +129,7 @@ The available options are:
                     print(usage)
                     sys.exit(0)
                 elif (opt[0] == '-v') or (opt[0] == '--version'):
-                    print("The Distribulator v0.50")
+                    print("The Distribulator v0.60")
                     print("Please see the LICENSE file for accompanying legalese.")
                     sys.exit(0)
         else:
@@ -178,9 +192,9 @@ The available options are:
         thisLogger.LogMsgInfo(thisSeperator)
 
         if (thisGlobalConfig.isBatchMode()):
-            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.50 -- batch mode.")
+            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- batch mode.")
         else:
-            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.50 -- console mode.")
+            thisLogger.LogMsgInfo("INFO:  Starting The Distribulator v0.60 -- console mode.")
 
         thisLogger.LogMsgInfo("INFO:  Real UID:      " +
                               thisGlobalConfig.getRealUsername())

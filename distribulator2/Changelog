@@ -93,9 +93,22 @@ Change List For v0.52 (Language: Python / Status: Shipped)
 * SourceForge bug #749953 fixed.
 * SourceForge bug #749963 fixed.
 
-Change List For v0.6 (Language: Python / Status: Pondering)
-- A CVS branch will be created for any future v0.5x bug-fixes.
-- OO design sanity fixes / stabilization work.
+Change List For v0.53 (Language: Python / Status: Skipped)
+* Minimal cosmetic fixes in how server-list and server-group
+  do output.
+
+Change List For v0.6 (Language: Python / Status: In Progress)
+* Small LICENSE fixes, also propogated other legalese.
++ Create SourceForge bug, batch files must allow for
+  # == comment
+  \ == line continuation.
+  This should be a really easy fix.
++ Addition of --quiet flag to indicate we don't want output when
+  run in batch mode.  Default is now not quiet.
++ Addition of --var1 and 2 cousins, enable very simply string
+  substitution such that batch files don't have to be
+  completely hard-coded.
+- OO design sanity fixes / stabilization work?
 - More documentation updates.
 
 Idea List For v0.7 (A little farther out)

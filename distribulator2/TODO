@@ -10,15 +10,14 @@ Short-term TODO List
     1) Usage testing.
     2) Bug collection / fixes.
     2) Code refactoring as makes sense.
-    3) Throw a cat at it!
+    3) Throw a baby at it!
 
 * Bugs:
-    1) Currently we log the usage of the "cd" command.
-       This is rather silly...take a close look at CommandLine and CommandRunner,
-       make appropriate changes.
-    2) Review all objects and implement static objects as appropriate(BatchRunner, CommandLine).
-    3) Review object naming, refer to design patterns, and fix them(currently icky-but-works).
-    4) Start using SourceForge's bug tracker.  First one -- copy really should act more like cp
+    1) Review all objects and implement static objects as appropriate
+       (BatchRunner, CommandLine)
+    2) Review object naming, refer to design patterns, and fix them
+       (currently icky-but-works)
+    3) Start using SourceForge's bug tracker.
+       One bug -- copy really should act more like cp
        and take multiple files as arguments.  The current way kinda sucks.
-    5) Another bug is we really should respect the facility setting in config.xml,
-       right now it's hard-coded.
+
