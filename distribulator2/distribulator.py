@@ -48,17 +48,17 @@ except ImportError:
 ######################################################################
 
 # Display a nice pretty header.
-def title_header():
+def printTitleHeader():
     print
     print "The Distribulator v0.10"
     print "-----------------------"
     print
 
-def info_header(server_env, start_dir):
+def printInfoHeader(PassedServerEnv, PassedStartDir):
     print "Python Version:      " + sys.version.split()[0]
     print "Local Hostname:      " + socket.gethostname()
-    print "Current Environment: " + server_env
-    print "Current Directory:   " + start_dir
+    print "Current Environment: " + PassedServerEnv
+    print "Current Directory:   " + PassedStartDir
     print
 
 # Good old main...
@@ -93,11 +93,9 @@ The available options are:
 
 """ % argv[0]
 
-    title_header()
-
-    server_env = 'sample'
-    server_shell = 'ssh'
-    start_dir = '/tmp/'
+    thisServerEnv = 'sample'
+    thisServerShell = 'ssh'
+    thisStartDir = '/tmp'
 
     try:
         if len(argv) < 2:
@@ -110,15 +108,15 @@ The available options are:
         if len(optlist) > 0:
             for opt in optlist:
                 if (opt[0] == '-b') or (opt[0] == '--batch'):
-                    batch_file = opt[1]
+                    thisBatchFile = opt[1]
                 elif (opt[0] == '-d') or (opt[0] == '--directory'):
-                    start_dir = opt[1]
+                    thisStartDir = opt[1]
                 elif (opt[0] == '-e') or (opt[0] == '--env'):
-                    server_env = opt[1]
+                    thiServerEnv = opt[1]
                 elif (opt[0] == '-s') or (opt[0] == '--shell'):
-                    server_shell = opt[1]
+                    thisServerShell = opt[1]
         else:
-            print "ERROR: getopt failure!  This shouldn't even happen!"
+            print "ERROR: getopt failure!  This shouldn't ever happen!"
             print
             raise "CommandLineError"
 
@@ -132,26 +130,28 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
-    info_header(server_env, start_dir)
+    # Future batch check goes here.
+    printTitleHeader()
+    printInfoHeader(thisServerEnv, thisStartDir)
 
-    config_dir = os.path.join(os.getcwd(), 'conf')
+    thisConfigDir = os.path.join(os.getcwd(), 'conf')
 
     # Log our startup.
-    myLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
-    myLogger.LogMsgInfo("Started by user " + getpass.getuser() + '.')
+    thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
+    thisLogger.LogMsgInfo("Started by user " + getpass.getuser() + '.')
 
     # Create CommandLine instance, and pass it through to ConfigLoader.
-    myCommLine = engine.CommandLine.CommandLine()
+    thisCommLine = engine.CommandLine.CommandLine()
 
     # Create ConfigLoader instance and call that method!
-    myLoader = engine.ConfigLoader.ConfigLoader()
-    myPassThruList = myLoader.load(myCommLine, config_dir)
+    thisLoader = engine.ConfigLoader.ConfigLoader()
+    thisPassThruList = thisLoader.loadAll(thisCommLine, thisConfigDir)
 
     # The main readline loop.
-    myCommLine.processInput(myPassThruList)
+    thisCommLine.processInput(thisPassThruList)
 
     # Once it returns, we're done!
-    myLogger.LogMsgInfo("Shutting down...")
+    thisLogger.LogMsgInfo("Shutting down...")
     sys.exit(0)
 
 ######################################################################

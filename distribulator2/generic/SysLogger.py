@@ -17,20 +17,20 @@ import syslog
 class SysLogger:
 
     def __init__(self, PassedFacility):
-        self.myFacility = PassedFacility
+        self.thisFacility = PassedFacility
 
     def LogMsgInfo(self, PassedMessage):
-        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.thisFacility)
         syslog.syslog(syslog.LOG_INFO, PassedMessage)
         syslog.closelog()
 
     def LogMsgWarn(self, PassedMessage):
-        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.thisFacility)
         syslog.syslog(syslog.LOG_WARN, PassedMessage)
         syslog.closelog()
 
     def LogMsgError(self, PassedMessage):
-        syslog.openlog('distribulator.py', syslog.LOG_PID, self.myFacility)
+        syslog.openlog('distribulator.py', syslog.LOG_PID, self.thisFacility)
         syslog.syslog(LOG_ERROR, PassedMessage)
         syslog.closelog()
 

@@ -22,31 +22,32 @@ import engine.CommandLine
 
 class ConfigLoader:
 
-    def load(self, myCommLine, myConfigDir):
+    def loadAll(self, PassedCommLine, PassedConfigDir):
         # Load GNU Readline history.
-        print('Loading config. from ' + myConfigDir)
-        myLinesLoaded = myCommLine.initHistory()
-        print("- Readline history: %d lines loaded." % myLinesLoaded)
+        print('Loading config. from ' + PassedConfigDir)
+        thisLinesLoaded = PassedCommLine.initHistory()
+        print("- Readline history: %d lines loaded." % thisLinesLoaded)
         
         # Load Unix pass-through commands.
-        myPassThruList = []
+        thisPassThruList = []
 
-        myFile = open( os.path.join(myConfigDir, 'pass_through_cmds.txt'), 'r' )
+        thisFile = open( os.path.join(PassedConfigDir, \
+                                      'pass_through_cmds.txt'), 'r' )
 
-        for myLine in myFile:
-            myLine = myLine.strip()
-            myPassThruList.append(myLine)
+        for thisLine in thisFile:
+            thisLine = thisLine.strip()
+            thisPassThruList.append(thisLine)
 
-        myFile.close()
+        thisFile.close()
 
         print( "- Pass-through Unix commands: %d lines loaded." \
-               % len(myPassThruList) )
+               % len(thisPassThruList) )
 
         # Parse XML...ouchies.
         print("- Global options and settings.")
         print("- Entering interactive mode...")
         print
 
-        return myPassThruList
+        return thisPassThruList
 
 ######################################################################

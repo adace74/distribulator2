@@ -24,46 +24,46 @@ import sys
 class CommandLine:
 
     def initHistory(self):
-        myCounter = 0
-        myHistory = os.path.join(os.environ['HOME'], ".dist_history")
+        thisCounter = 0
+        thisHistory = os.path.join(os.environ['HOME'], ".dist_history")
     
         try:
-            myFile = open(myHistory, 'r')
-            for myLine in myFile:
-                myCounter = myCounter + 1
-            myFile.close()
+            thisFile = open(thisHistory, 'r')
+            for thisLine in thisFile:
+                thisCounter = thisCounter + 1
+            thisFile.close()
 
             # Load readline history.
-            readline.read_history_file(myHistory)
+            readline.read_history_file(thisHistory)
         
         except IOError:
             pass
 
         # Save readline history on exit.    
-        atexit.register(readline.write_history_file, myHistory)
+        atexit.register(readline.write_history_file, thisHistory)
 
         # Enable TAB filename-completion, instead of Python's default
         # object completion.
         readline.set_completer()
         readline.parse_and_bind("tab: complete")
 
-        return myCounter
+        return thisCounter
 
     def processInput(self, PassedPassThruList):
-        myPromptEnv = 'sample'
-        myPromptUser = getpass.getuser()
-        myPromptGroup = 'wlx'
-        mySeperator = '============================================================'
+        thisPromptEnv = 'sample'
+        thisPromptUser = getpass.getuser()
+        thisPromptGroup = 'wlx'
+        thisSeperator = '============================================================'
 
         while (1):
 
-            myPrompt = '<' + myPromptUser + '@' + myPromptEnv + \
-            '[' + myPromptGroup + ']:' + os.getcwd() + '> '
+            thisPrompt = '<' + thisPromptUser + '@' + thisPromptEnv + \
+            '[' + thisPromptGroup + ']:' + os.getcwd() + '> '
 
-            myInput = ''
+            thisInput = ''
 
             try:
-                myInput = raw_input(myPrompt)
+                thisInput = raw_input(thisPrompt)
 
             except EOFError:
                 print
@@ -73,32 +73,32 @@ class CommandLine:
                 return
 
             except KeyboardInterrupt:
-                pass
+                print
 
-            if (myInput):
-                myTokens = myInput.split()
+            if (thisInput):
+                thisTokens = thisInput.split()
 
-                if (myTokens[0] == 'exit'):
+                if (thisTokens[0] == 'exit'):
                     print
                     print("Received exit command.  Wrote history.  Dying...")
                     print
                     return
 
                 try:
-                    if (myTokens[0] == 'cd'):
-                        os.chdir(myTokens[1])
+                    if (thisTokens[0] == 'cd'):
+                        os.chdir(thisTokens[1])
 
                 except OSError, (errno, strerror):
-                    print "ERROR: [Errno %s] %s: %s" % (errno, strerror, myTokens[1])
+                    print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
 
-                for myCommand in PassedPassThruList:
-                    if (myTokens[0] == myCommand):
-                        print "EXEC:  " + myInput
-                        myStatus, myOutput = commands.getstatusoutput(myInput)
-                        print myOutput
-                        print mySeperator
+                for thisCommand in PassedPassThruList:
+                    if (thisTokens[0] == thisCommand):
+                        print "EXEC:  " + thisInput
+                        thisStatus, thisOutput = commands.getstatusoutput(thisInput)
+                        print thisOutput
+                        print thisSeperator
 
-                        if (myStatus != 0):
+                        if (thisStatus != 0):
                             print "ERROR: Local shell returned error state."
 
 ######################################################################
