@@ -76,16 +76,23 @@ class ConfigLoader:
 
         self._globalConfig.setCurrentServerGroup( self._globalConfig.getServerGroupList()[0] )
 
-        thisServerGroupStr = ''
+        thisServerGroupStr = '- '
         thisTotalServerCount = 0
-        for thisServerGroup in self._globalConfig.getServerGroupList():
-            thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
-            thisServerGroupStr = thisServerGroupStr + \
-                                 thisServerGroup.getName() + '(%d) ' % \
-                                 thisServerGroup.getServerCount()
+        thisColumnCount = 0
 
-        print("- Available Server Groups:     " + \
-              thisServerGroupStr)
+        for thisServerGroup in self._globalConfig.getServerGroupList():
+            thisColumnCount = thisColumnCount + 1
+            thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
+            thisServerGroupStr = thisServerGroupStr + '%10s (%d) ' % (thisServerGroup.getName(), thisServerGroup.getServerCount())
+
+            if (thisColumnCount == 4):
+                thisColumnCount = 0
+                thisServerGroupStr = thisServerGroupStr + '\n- '
+
+        print("- Available Server Groups:")
+        print("-")
+        print(thisServerGroupStr)
+        
         # Implement the "all" group sometime!
         #+ "all(%d)" % thisTotalServerCount)
         print

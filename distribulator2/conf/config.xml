@@ -9,6 +9,7 @@ $Id$
 <config>
     <!-- System Binaries -->
     <binary>
+        <logname>/usr/bin/logname</logname>
         <scp>/usr/bin/scp -c blowfish</scp>
         <ssh>/usr/bin/ssh -c blowfish</ssh>
     </binary>
@@ -19,15 +20,93 @@ $Id$
     </logging>
 
     <!-- Server environments, groups, etc. -->
+
+    <!-- Alt. Test -->
     <environment>
-        <name>sample</name>
+        <name>at</name>
         <servergroup>
-            <name>www</name>
+            <name>dc</name>
             <username>orbitz</username>
-            <server>www01st.eg.orbitz.com</server>
-            <server>www02st.eg.orbitz.com</server>
-            <server>www03st.eg.orbitz.com</server>
-            <server>www04st.eg.orbitz.com</server>
+            <server>bels01at.eg.orbitz.com</server>
+            <server>beoneg01at.eg.orbitz.com</server>
+            <server>dcls01at.eg.orbitz.com</server>
+            <server>dconeg01at.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>wlx</name>
+            <username>orbitz</username>
+            <server>wlx01at.eg.orbitz.com</server>
+            <server>wlx02at.eg.orbitz.com</server>
+        </servergroup>
+    </environment>
+
+    <!-- Staging -->
+    <environment>
+        <name>staging</name>
+        <servergroup>
+            <name>admin_www</name>
+            <username>weblogic</username>
+            <server>admin01st.eg.orbitz.com</server>
+            <server>admin02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>admin_wlx</name>
+            <username>orbitz</username>
+            <server>adminwlx01st.eg.orbitz.com</server>
+            <server>adminwlx02st.eg.orbitz.com</server>
+            <server>ivrwlx01st.eg.orbitz.com</server>
+            <server>ivrwlx02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>aqua_www</name>
+            <username>orbitz</username>
+            <server>aquagw01st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>burst</name>
+            <username>orbitz</username>
+            <server>burst01st.eg.orbitz.com</server>
+            <server>burst02st.eg.orbitz.com</server>
+            <server>honeg01st.eg.orbitz.com</server>
+            <server>honeg02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>dc</name>
+            <username>orbitz</username>
+            <server>bels01st.eg.orbitz.com</server>
+            <server>bels02st.eg.orbitz.com</server>
+            <server>beoneg01st.eg.orbitz.com</server>
+            <server>beoneg02st.eg.orbitz.com</server>
+            <server>dcls01st.eg.orbitz.com</server>
+            <server>dcls02st.eg.orbitz.com</server>
+            <server>dconeg01st.eg.orbitz.com</server>
+            <server>dconeg02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>lycos_www</name>
+            <username>weblogic</username>
+            <server>lycosgw01st.eg.orbitz.com</server>
+            <server>lycosgw02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>omh_wlx</name>
+            <username>orbitz</username>
+            <server>wlxmh01st.eg.orbitz.com</server>
+            <server>wlxmh02st.eg.orbitz.com</server>
+            <server>wlxmh03st.eg.orbitz.com</server>
+            <server>wlxmh04st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>omh_www</name>
+            <username>orbitz</username>
+            <server>wwwmh01st.eg.orbitz.com</server>
+            <server>wwwmh02st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>part_wlx</name>
+            <username>orbitz</username>
+            <server>partwlx01st.eg.orbitz.com</server>
+            <server>partwlx02st.eg.orbitz.com</server>
         </servergroup>
         <servergroup>
             <name>wlx</name>
@@ -40,6 +119,14 @@ $Id$
             <server>wlx06st.eg.orbitz.com</server>
             <server>wlx07st.eg.orbitz.com</server>
             <server>wlx08st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
+            <name>www</name>
+            <username>orbitz</username>
+            <server>www01st.eg.orbitz.com</server>
+            <server>www02st.eg.orbitz.com</server>
+            <server>www03st.eg.orbitz.com</server>
+            <server>www04st.eg.orbitz.com</server>
         </servergroup>
     </environment>
 </config>
