@@ -135,9 +135,9 @@ sub PingServer
     my($pinger);
 
     # Setup Net::Ping to do a TCP-level ping to remote port 22,
-    # with a 2 second timeout.
-    $pinger = Net::Ping->new("tcp", 2);
-	$pinger->{port_num} = 22;
+    # with a 5 second timeout.
+    $pinger = Net::Ping->new("tcp", 5);
+    $pinger->{port_num} = 22;
 
     if ( $pinger->ping($ping_server) )
     {
