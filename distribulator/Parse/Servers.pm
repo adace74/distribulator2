@@ -81,8 +81,10 @@ sub LoadServers
 
     while( $filename = readdir(MYDIR) )
     {
-        # Filter out . and .. -- we don't want those.
-        if ( !($filename =~ /\./) && !($filename eq 'user') )
+        # Filter out . and .. and CVS -- we don't want those.
+        if ( !($filename =~ /\./) &&
+             !($filename eq 'user') &&
+             !($filename eq 'CVS') )
         {
             # Load the file in.
             open(MYSERVERFILE, "<$env_dir/$filename")
