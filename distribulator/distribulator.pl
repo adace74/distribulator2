@@ -280,7 +280,7 @@ sub catchSigInt
     print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
 
     # Trying to have ReadLine hit the reset button.
-    $term->kill_text();
+    $term->initialize();
     $term->redisplay();
 
     # Internal flag to stop runaway statements.
