@@ -60,13 +60,15 @@ my($env_arg, $help_arg, $noping_arg, $shell_arg, $version_arg) = '';
 my($counter);
 my($command);
 my(@command_tokens);
+my($exec_str);
 my($input);
 my($prompt);
 my($remote_command);
 my($server);
 my($temp_str);
 my($user);
-my($MYDIR, $MYFILE);
+my($userserver);
+my($MYFILE);
 
 #
 # State Tracking Variables
@@ -75,8 +77,7 @@ my($current_server_group) = 'wlx';
 my($environment);
 my(@external_commands);
 my(@server_groups);
-my(%users_groups_hash);
-my(%servers_groups_hash);
+my(%groups_userservers_hash);
 my(@internal_commands) = ( 'cd', 'copy', 'exit', 'help', 'login', 'remote-shell',
 	'run', 'server-group', 'server-list' );
 
@@ -214,7 +215,7 @@ while ($TRUE)
         {
             print("ERROR: No server group given.\n");
         }
-		elsif ( $servers_groups_hash{$temp_str} )
+		elsif ( $groups_userservers_hash{$temp_str} )
 		{
 			$current_server_group = $temp_str;
 			print("NOTE:  Current server group now is '$current_server_group'.\n");
@@ -256,13 +257,11 @@ while ($TRUE)
     {
         $temp_str = shift(@command_tokens);
 
-        if ( $server = getMatchingServer($temp_str) )
+        if ( $userserver = getMatchingUserServer($temp_str) )
         {
-            if ( PingServer($server) )
+            if ( PingUserServer($userserver) )
             {
-                $temp_str = "$SSH_BIN " .
-                    getServerUser($server) .
-                        "\@$server";
+                $temp_str = "$SSH_BIN $userserver";
 
                 print "EXEC:  $temp_str\n";
 
@@ -285,35 +284,22 @@ while ($TRUE)
         # If there's no target, list the current server group.
         if ( !$temp_str )
         {
-            $counter = 0;
+            print("Known user-server pairs in group $current_server_group:\n");
 
-            print("Known servers in group $current_server_group:\n");
-
-            foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+            foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
             {
-                $counter++;
-
-                if ($counter == 3)
-                {
-                    $counter = 0;
-
-                    print("$server\n");                    
-                }
-                else
-                {
-                    print("$server\t");
-                }
+		print("$userserver\n");                    
             }
 
             print("\n");
         }
-		elsif ( $servers_groups_hash{$temp_str} )
+		elsif ( $groups_userservers_hash{$temp_str} )
 		{
             $counter = 0;
 
-            print("Known servers in group $temp_str:\n");
+            print("Known user-server pairs in group $temp_str:\n");
 
-            foreach $server ( @{$servers_groups_hash{$temp_str}} )
+            foreach $userserver ( @{$groups_userservers_hash{$temp_str}} )
             {
                 $counter++;
 
@@ -321,11 +307,11 @@ while ($TRUE)
                 {
                     $counter = 0;
 
-                    print("$server\n");                    
+                    print("$userserver\n");                    
                 }
                 else
                 {
-                    print("$server\t");
+                    print("$userserver\t");
                 }
             }
 
@@ -455,7 +441,7 @@ sub getMatchingGroup
     my($search_group) = @_;
     my($group, $group_server, $sub_string);
 
-    foreach $group (sort keys(%servers_groups_hash) )
+    foreach $group (sort keys(%groups_userservers_hash) )
     {
         if ($search_group eq $group)
         {
@@ -470,20 +456,22 @@ sub getMatchingGroup
 # Take the passed-in string, and do fuzzy matching with
 # existing groups.
 #
-sub getMatchingServer
+sub getMatchingUserServer
 {
     my($partial) = @_;
-    my($group, $group_server, $sub_string);
+    my($group, $sub_string);
 
-    foreach $group (sort keys(%servers_groups_hash) )
+    foreach $group (sort keys(%groups_userservers_hash) )
     {
-        foreach $group_server ( @{$servers_groups_hash{$group}} )
+        foreach $userserver ( @{$groups_userservers_hash{$group}} )
         {
-            $sub_string = substr($group_server, 0, length($partial));
+	    $userserver =~ /(\w*)\@(\w*)/;
+
+            $sub_string = substr($2, 0, length($partial));
 
             if ($partial eq $sub_string)
             {
-                return $group_server;
+                return $userserver;
             }
         }
     }
@@ -499,11 +487,13 @@ sub getServerGroup
     my($find_server) = @_;
     my($group, $group_server);
 
-    foreach $group (sort keys(%servers_groups_hash) )
+    foreach $group (sort keys(%groups_userservers_hash) )
     {
-        foreach $group_server ( @{$servers_groups_hash{$group}} )
+        foreach $userserver ( @{$groups_userservers_hash{$group}} )
         {
-            if ($find_server eq $group_server)
+            $userserver =~ /(\w*)\@(\w*)/;
+
+            if ($find_server eq $2)
             {
                 return $group;
             }
@@ -520,7 +510,10 @@ sub getServerUser
 
     my($group) = getServerGroup($server);
 
-    return $users_groups_hash{$group};
+    $userserver = pop(@{$groups_userservers_hash{$group}});
+    $userserver =~ /(\w*)\@(\w*)/;
+
+    return $1;
 }
 
 #
@@ -530,12 +523,13 @@ sub LoadConfig
 {
     my($filename);
     my($line);
+    my($MYCONFIGDIR, $MYUSERFILE);
 
     # First, read in our list of valid Unix pass-through commands.
-    open(MYDIR, "$CONFIG_DIR/pass-through.conf")
+    open(MYCONFIGDIR, "$CONFIG_DIR/pass-through.conf")
         || die("Failed to open file $CONFIG_DIR/pass-through.config for reading.");
 
-    while(<MYDIR>)
+    while(<MYCONFIGDIR>)
     {
         $filename = $_;
         chomp($filename);
@@ -543,14 +537,14 @@ sub LoadConfig
         push(@external_commands, $filename);
     }
 
-    close(MYDIR);
+    close(MYCONFIGDIR);
 
     # The idea here is to go into the environment directory,
     # and pull in -all- files within that directory.
-    opendir(MYDIR, "$CONFIG_DIR/$environment")
+    opendir(MYCONFIGDIR, "$CONFIG_DIR/$environment")
         || die("Failed to open directory $CONFIG_DIR/$environment for reading.");
 
-    while( $filename = readdir(MYDIR) )
+    while( $filename = readdir(MYCONFIGDIR) )
     {
         # Filter out . and .. -- we don't want those.
         if ( !($filename =~ /\./) && !($filename eq 'user') )
@@ -564,7 +558,21 @@ sub LoadConfig
                 $line = $_;
                 chomp($line);
 
-                push(@{$servers_groups_hash{$filename}}, $line);
+		open(MYUSERFILE, "<$CONFIG_DIR/$environment/user/$filename")
+		    || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
+
+		while(<MYUSERFILE>)
+		{
+		    $user = $_;
+		}
+
+		close(MYUSERFILE);
+
+		chomp($user);
+		$line = "$user\@$line";
+
+		push(@{$groups_userservers_hash{'all'}}, $line);
+                push(@{$groups_userservers_hash{$filename}}, $line);
             }
 
             close(MYFILE);
@@ -573,57 +581,20 @@ sub LoadConfig
         }
     }
 
-    closedir(MYDIR);
+    closedir(MYCONFIGDIR);
 
+    push(@server_groups, 'all');
     @server_groups = sort(@server_groups);
 
-    # The idea here is to go into the environment/user directory,
-    # and pull in -all- files within that directory.
-    opendir(MYDIR, "$CONFIG_DIR/$environment/user")
-        || die("Failed to open directory $CONFIG_DIR/$environment/user for reading.");
-
-    while( $filename = readdir(MYDIR) )
-    {
-        # Filter out . and .. -- we don't want those.
-        if ( !($filename =~ /\./) )
-        {
-            # Load the file in.
-            open(MYFILE, "<$CONFIG_DIR/$environment/user/$filename")
-                || die("Failed to open file $CONFIG_DIR/$environment/user/$filename for reading.");
-
-            while(<MYFILE>)
-            {
-                $line = $_;
-                chomp($line);
-
-                $users_groups_hash{$filename} = $line;
-            }
-
-            close(MYFILE);
-        }
-    }
-
-    closedir(MYDIR);
-
 ######################################################################
-#    foreach my $group (sort keys(%servers_groups_hash) )
+#    foreach my $group (sort keys(%groups_userservers_hash) )
 #    {
 #        print("Group: $group\n");
 #
-#        foreach my $server ( @{$servers_groups_hash{$group}} )
+#        foreach my $userserver ( @{$groups_userservers_hash{$group}} )
 #        {
-#            print("     Server: $server\n");
+#            print("     User-Server: $userserver\n");
 #        }
-#    }
-#
-#    print ("----------\n");
-#
-#    foreach my $group (sort keys(%users_groups_hash) )
-#    {
-#        print("Group: $group\n");
-#        print ("     User: " .
-#               $users_groups_hash{$group} .
-#               "\n");
 #    }
 #
 ######################################################################
@@ -699,8 +670,6 @@ sub ParseCopy
     # EXAMPLE: copy /tmp/test.out wlx01st:/usr/local/tmp/
     if ( $input =~ /^copy (.*) (\w*):(.*\/)$/ )
     {
-        print("Entering if block\n");
-
         if ( !stat($1) )
         {
             print("ERROR: Local file $1 is not accessible.\n");
@@ -715,29 +684,29 @@ sub ParseCopy
 
             if ( AreYouSure() )
             {
-                foreach $server ( @{$servers_groups_hash{$2}} )
+                foreach $userserver ( @{$groups_userservers_hash{$2}} )
                 {
-                    if ( PingServer($server) )
+                    if ( PingUserServer($userserver) )
                     {
-			print("EXEC:  $SCP_BIN $1 $server:$3\n");
+			print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
 
-                        system("$SCP_BIN $1 $server:$3");
+                        system("$SCP_BIN $1 $userserver:$3");
                     }
                 }
             }
         }
         # If that fails, then check servers.
-        elsif ( $server = getMatchingServer($2) )
+        elsif ( $userserver = getMatchingUserServer($2) )
         {
-            print("Copy local file $1 to server $server, remote directory $3?\n");
+            print("Copy local file $1 to userserver $userserver, remote directory $3?\n");
 
             if ( AreYouSure() )
             {
-                if ( PingServer($2) )
+                if ( PingUserServer($userserver) )
                 {
-		    print("EXEC:  $SCP_BIN $1 $server:$3\n");
+		    print("EXEC:  $SCP_BIN $1 $userserver:$3\n");
 
-                    system("$SCP_BIN $1 $server:$3");
+                    system("$SCP_BIN $1 $userserver:$3");
                 }
             }
         }
@@ -766,13 +735,13 @@ sub ParseCopy
 
             if ( AreYouSure() )
             {
-                foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+                foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
                 {
-                    if ( PingServer($server) )
+                    if ( PingUserServer($userserver) )
                     {
-                        print("EXEC:  $SCP_BIN $1 $server:$2\n");
+                        print("EXEC:  $SCP_BIN $1 $userserver:$2\n");
 
-                        system("$SCP_BIN $1 $server:$2");
+                        system("$SCP_BIN $1 $userserver:$2");
                     }
                 }
             }
@@ -812,9 +781,9 @@ sub ParseRun
         
         if ( AreYouSure() )
         {
-            foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+            foreach $userserver ( @{$groups_userservers_hash{$current_server_group}} )
             {
-                RunCommandRemote($server,$1);
+                RunCommandRemote($userserver,$1);
             }
         }
 
@@ -833,20 +802,20 @@ sub ParseRun
 
             if ( AreYouSure() )
             {
-                foreach $server ( @{$servers_groups_hash{$2}} )
+                foreach $userserver ( @{$groups_userservers_hash{$2}} )
                 {
-                    RunCommandRemote($server,$1);
+                    RunCommandRemote($userserver,$1);
                 }
             }
         }
         # If that fails, then check servers.
-        elsif ( $server = getMatchingServer($2) )
+        elsif ( $userserver = getMatchingUserServer($2) )
         {
-            print("Run $1 on server $server?\n");
+            print("Run $1 on userserver $userserver?\n");
 
             if ( AreYouSure() )
             {
-                RunCommandRemote($server,$1);
+                RunCommandRemote($userserver,$1);
             }
         }
         else
@@ -865,9 +834,9 @@ sub ParseRun
 #
 # Ping each server before we attempt to run remote commands on it.
 #
-sub PingServer
+sub PingUserServer
 {
-    my($host) = @_;
+    my($userserver) = @_;
     my($pinger);
 
     if ($noping_arg)
@@ -878,13 +847,15 @@ sub PingServer
     {
         $pinger = Net::Ping->new("tcp", 22);
 
-        if ($pinger->ping($host))
+        $userserver =~ /(\w*)\@(\w*)/;
+
+        if ($pinger->ping($2))
         {
             return $TRUE;
         }
         else
         {
-            print("ERROR: Host $host appears to be down.\n");
+            print("ERROR: Host $2 appears to be down.\n");
 
             return $FALSE;
         }
@@ -944,15 +915,13 @@ sub RunCommandLocal
 #
 sub RunCommandRemote
 {
-    my($remote_server, $remote_command) = @_;
+    my($remote_userserver, $remote_command) = @_;
     my(@command_output, $output_line);
     my($exec_line);
 
-    if ( PingServer($remote_server) )
+    if ( PingUserServer($remote_userserver) )
     {
-        $exec_line = "$SSH_BIN " .
-            getServerUser($remote_server) .
-                "\@$remote_server $remote_command";
+        $exec_line = "$SSH_BIN $remote_userserver $remote_command";
 
         print "EXEC:  $exec_line\n";
 
