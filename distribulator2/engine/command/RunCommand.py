@@ -80,19 +80,19 @@ class RunCommand(Command.Command):
         else:
             myFlagStr = ''
 
-        # Check for the 'reverse' keyword.
-        if (mySuffixStr.find(' reverse') != -1):
-            isReverse = True
-            mySuffixStr = mySuffixStr[:mySuffixStr.find(' reverse')]
-        else:
-            isReverse = False
-
         # Check for the 'single' keyword.
         if (mySuffixStr.find(' single') != -1):
+            isReverse = False
             isSingle = True
             mySuffixStr = mySuffixStr[:mySuffixStr.find(' single')]
         else:
             isSingle = False
+            # Check for the 'reverse' keyword.
+            if (mySuffixStr.find(' reverse') != -1):
+                isReverse = True
+                mySuffixStr = mySuffixStr[:mySuffixStr.find(' reverse')]
+            else: 
+                isReverse = False
 
         #
         # Step 2: Try to determine what the target of the command is

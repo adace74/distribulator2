@@ -116,12 +116,18 @@ Test Case:       run "uptime" on www reverse
 Expected Result: Runs the "uptime" command on 'www' server group,
                  in reverse sort order.
 
+Test Case:       run "uptime" on www single
+Expected Result: Runs the "uptime" command on a single server in the 'www' server group,  
+
 Test Case:       run "uptime" on app,db,www
 Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups.
 
 Test Case:       run "uptime" on app,db,www reverse
 Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups,
                  in reverse sort order.
+
+Test Case:       run "uptime" on app,db,www single
+Expected Result: Runs the "uptime" command on a single server in the 'app', 'db', and 'www' server groups.
 
 Test Case:       run "uptime" on www01
 Expected Result: Runs the "uptime" command on a server matching 'www01'.
