@@ -116,6 +116,9 @@ class ConfigLoader:
         self._globalConfig.setAuditLogger( logging.getLogger('audit') )
         self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
 
+        if ( self._globalConfig.isBatchMode() ):
+            self._globalConfig.getStdoutLogger.setLevel(logging.DEBUG)
+
         if ( self._globalConfig.isConsoleMode() ):
             print( "- Logging configuration:       %d lines loaded." % myConfigLines )
 

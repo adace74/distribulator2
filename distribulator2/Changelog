@@ -227,11 +227,15 @@ Change List For v0.7.5 (Language: Python / Status: Shipped)
 * Ability to have two permutations of list mode.
   The first returns only hostnames, the second returns username@hostname pairs.
 
-Change List For v0.8.0 (Language: Python / Status: In Progress)
+Change List For v0.8.0 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * Ability to ignore username information in config.xml via --nouser command-line flag.
 * Ability to skip the are-you-sure questions via the "now" keyword.
-* Ability to use logging module's configuration file for uber-dynamic logging setup.
+* Ability to use logging module's configuration file for ultra-flexible logging setup.
+  As a result of this change, the --quiet flag has been replaced by the --verbose flag.
+
+Change List For v0.8.1 (Language: Python / Status: Planning)
+---------------------------------------------------------------
 - Ability to use hostname(s), servergroup name(s), or regular expression in "copy" and "run" commands.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)

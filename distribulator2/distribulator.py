@@ -81,7 +81,6 @@ def main(argv):
                     'list=',
                     'list2=',
                     'nouser',
-                    'quiet',
                     'var1=',
                     'var2=',
                     'var3=',
