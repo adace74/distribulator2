@@ -217,7 +217,7 @@ class XMLFileParser:
             myServerGroup.setUsername( self._globalConfig.getUsername() )
 
         if ( len(PassedServerGroup.getAttribute('flags').strip()) > 0 ):
-            myServerGroup.setFlags(
+            myServerGroup.setFlags( ' ' + \
                 PassedServerGroup.getAttribute('flags').strip() )
         else:
             myServerGroup.setFlags('')
