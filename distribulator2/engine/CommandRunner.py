@@ -228,7 +228,7 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
-        # Just Do It.
+        # Run the expanded shell command(s).
         for thisGroupStr in thisServerGroupList:
             thisServerGroup = self._globalConfig.getServerGroupByName(
                 thisGroupStr)
@@ -314,6 +314,7 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
+        # Check for server name.
         if ( len(self._commTokens) > 1):
             if ( self._globalConfig.getServerByName(self._commTokens[1]) ):
                 thisServer = self._globalConfig.getServerByName(self._commTokens[1])
@@ -327,6 +328,7 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
+        # Run the expanded shell command.
         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
         thisExternalCommand.setCommand( \
             self._globalConfig.getSshBinary() + " -l " + \
@@ -344,9 +346,11 @@ class CommandRunner:
     def doRun(self):
         thisServerGroupList = []
         thisServerNameList = []
+        thisRunTarget = '';
 
         #
-        # Attempt to retokenize our command based on appropriate syntax.
+        # Step 1:  Create our own tokens, and check for SSH flags and
+        #          the 'reverse' keyword.
         #
         if ( self._commString.find('"') == -1 ):
             thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
@@ -356,7 +360,6 @@ class CommandRunner:
         # Get substr indexes.
         thisFirstQuoteIndex = self._commString.find('"')
         thisLastQuoteIndex = self._commString.rfind('"')
-
         thisPrefixStr = self._commString[0:thisFirstQuoteIndex]
         thisBodyStr = self._commString[thisFirstQuoteIndex:(thisLastQuoteIndex + 1)]
         thisSuffixStr = self._commString[thisLastQuoteIndex + 1:]
@@ -374,70 +377,99 @@ class CommandRunner:
             thisSuffixStr = thisSuffixStr[:thisSuffixStr.find(' reverse')]
         else:
             isReverse = False
-
-        # run "uptime"
-        # run -t "uptime"
+        #
+        # Step 2: Try to determine what the target of the run command
+        #         truly is, and set a state-tracking variable accordingly.
+        # 
         if (len(thisSuffixStr) == 0):
-            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
-            thisServerGroupList.append( thisGroupStr.strip() )
+            # run "uptime"
+            # run -t "uptime"
+            thisRunTarget = 'current_server_group';
+        # Check for syntax errors.
+        elif (thisSuffixStr.find(' on ') == -1):
+            thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
+            self.handleError(thisError)
+            return False
+        elif (thisSuffixStr.find(',') == -1):
+            # run "uptime" on app
+            # run -t "uptime" on app
+            # run "uptime" on app01
+            # run -t "uptime" on app01
+            thisRunTarget = 'single_server_group';
         else:
-            # Sanity syntax check.
-            if (thisSuffixStr.find(' on ') == -1):
-                thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
-                self.handleError(thisError)
-                return False
+            # run "uptime" on app, www
+            # run -t "uptime" on app, www
+            # run "uptime" on app01, www01
+            # run -t "uptime" on app01, www01
+            thisRunTarget = 'multiple_server_group';
 
-            thisSuffixStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
+        # Assuming no error up until this point we can now
+        # throw out the " on " part of our command.
+        thisGroupStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
 
-            if (thisSuffixStr.find(',') == -1):
-                # run "uptime" on app
-                # run -t "uptime" on app
-                # run "uptime" on app01
-                # run -t "uptime" on app01
-                thisSpaceIndex = thisSuffixStr.rfind(' ')
-                thisGroupStr = thisSuffixStr[thisSpaceIndex + 1:]
+        print("Group Str:  " + thisGroupStr);
+        print("Run Target: " + thisRunTarget);
+        #
+        # Step 3: Assemble two lists based on command syntax.
+        #
+        # thisServerNameList will contain a list of server names.
+        # -or-
+        # thisServerGroupList will contain a list of server groups.
+        #
+        if (thisRunTarget == 'current_server_group'):
+            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            thisServerGroupList.append(thisGroupStr)
+        #
+        elif (thisRunTarget == 'single_server_group'):
+            # Check for server name match.
+            thisServer = self._globalConfig.getServerByName(thisGroupStr)
 
+            if (thisServer):
+                thisServerNameList.append(thisServer.getName())
+            else:
+                # Check for server group match.
+                thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+                # Validate.
+                if (thisServerGroup == False):
+                    thisError = "ERROR: No matching server name or group '" + \
+                                thisGroupStr + "'."
+                    self.handleError(thisError)
+                    return False
+                else:
+                    thisServerGroupList.append(thisGroupStr.strip())
+        #
+        elif (thisRunTarget == 'multiple_server_group'):
+            thisGroupList = thisGroupStr.split(',')
+
+            for thisLoopStr in thisGroupList:
+                print ("LoopStr: " + thisLoopStr)
                 # Check for server name match.
-                thisServer = self._globalConfig.getServerByName(thisGroupStr)
+                thisServer = self._globalConfig.getServerByName(thisLoopStr)
 
                 if (thisServer):
-                    thisServerNameList.append( thisServer.getName() )
+                    thisServerNameList.append(thisServer.getName())
+                    continue
+
+                # Check for server group match.
+                thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
+                if (thisServerGroup):
+                    thisServerGroupList.append(thisLoopStr.strip())
                 else:
-                    # Check for server group match.
-                    thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
-
-                    # Validate.
-                    if (thisServerGroup == False):
-                        thisError = "ERROR: No matching server name or group '" + \
-                                    thisGroupStr + "'."
-                        self.handleError(thisError)
-                        return False
-                    else:
-                        thisServerGroupList.append( thisGroupStr.strip() )
-            else:
-                # run "uptime" on app, www
-                # run -t "uptime" on app, www
-                # run "uptime" on app01, www01
-                # run -t "uptime" on app01, www01
-                thisGroupList = thisSuffixStr.split(',')
-
-                for thisGroupStr in thisGroupList:
-                    # Check for server name match.
-                    thisServer = self._globalConfig.getServerByName(thisGroupStr)
-
-                    if (thisServer):
-                        thisServerNameList.append( thisServer.getName() )
-                    else:
-                        thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
-                        if (thisServerGroup):
-                            thisServerGroupList.append( thisGroupStr.strip() )
-                        else:
-                            thisError = "ERROR: No matching server name or group '" + \
-                                        thisGroupStr.strip() + "'."
-                            self.handleError(thisError)
-                            return False
-
-        # Back to main logic path.
+                    thisError = "ERROR: No matching server name or group '" + \
+                                thisLoopStr.strip() + "'."
+                    self.handleError(thisError)
+                    return False
+        #
+        # Step 4: Make sure noone's trying to mix
+        # server hostnames and server group names together.
+        #
+        if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
+            thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
+            self.handleError(thisError)
+            return False
+        #
+        # Step 5: Must make sure...are you sure you're sure?
+        #
         if (self._globalConfig.isBatchMode() == False):
             thisDisplayStr = ''
 
@@ -467,8 +499,9 @@ class CommandRunner:
                     thisInfo = "INFO:  Aborting command."
                     self.handleInfo(thisInfo)
                     return False
-
-        # If we found server hostnames, then run with that.
+        #
+        # Step 6: If we found server name(s), then run with that.
+        # Otherwise, do the same with the server group(s) given.
         #
         # Slightly nasty hack.  Since lists can only be sorted in-place,
         # and copying objects in Python isn't super-easy, we do the
@@ -588,7 +621,7 @@ class CommandRunner:
                 print("Current server group is now '" + self._commTokens[1] + "'.")
                 return True
         else:
-            # Otherwise, print the server group list given at startup.
+            # Otherwise, display the server group list given at startup.
             thisServerGroupStr = "Known server groups for environment '" + \
                                  self._globalConfig.getServerEnv() + "'\n"
             thisServerGroupStr = thisServerGroupStr + \
@@ -607,10 +640,11 @@ class CommandRunner:
                     thisColumnCount = 0
                     thisServerGroupStr = thisServerGroupStr + '\n'
 
-            # Print it!
             print(thisServerGroupStr)
 
             return True
+
+######################################################################
 
     def doServerList(self):
         # Check for batch mode.
@@ -619,16 +653,20 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
+        # If given a server group name, display servers in that group.
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( \
                 self._commTokens[1] )
         else:
+            # Otherwise, display servers in the current working server group.
             thisServerGroup = self._globalConfig.getCurrentServerGroup()
 
+        # Check for errors.
         if (thisServerGroup == False):
             thisError = "ERROR: No matching server group '" + \
                         self._commTokens[1] + "'."
             self.handleError(thisError)
+
             return False
         else:
             print("Known servers for group '" + thisServerGroup.getName() + "'")
@@ -636,8 +674,7 @@ class CommandRunner:
             # Actual server list goes here.
             thisTempStr = ''
 
-            for thisServer in \
-                    thisServerGroup.getServerList():
+            for thisServer in thisServerGroup.getServerList():
                 if ( len(thisTempStr) > 0 ):
                     print (thisTempStr + "\t" + thisServer.getName())
                     thisTempStr = ''
