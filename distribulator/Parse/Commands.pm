@@ -255,13 +255,25 @@ sub ParseCopy
 
             if ( AreYouSure() )
             {
-                foreach $copy_server ( @{$groups_servers_hash{$2}} )
+                foreach $copy_server ( getServerList($2) )
                 {
                     if ( PingServer($copy_server) )
                     {
                         $copy_user = getServerUser($copy_server);
 
-                        RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$3");
+                        if ( !isUserAborting() )
+                        {
+                            RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$3");
+
+                            # Sleep 1/4 second.
+                            select(undef, undef, undef, 0.25);
+                        }
+                        else
+                        {
+                            print("NOTE:  CTRL-C detected, aborting command.\n");
+                            setUserAborting($FALSE);
+                            last;
+                        }
                     }
                 }
             }
@@ -306,13 +318,25 @@ sub ParseCopy
 
         if ( AreYouSure() )
         {
-            foreach $copy_server ( @{$groups_servers_hash{$current_server_group}} )
+            foreach $copy_server ( getServerList($current_server_group) )
             {
                 if ( PingServer($copy_server) )
                 {
                     $copy_user = getServerUser($copy_server);
 
-                    RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$2");
+                    if ( !isUserAborting() )
+                    {
+                        RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$2");
+                    
+                        # Sleep 1/4 second.
+                        select(undef, undef, undef, 0.25);
+                    }
+                    else
+                    {
+                        print("NOTE:  CTRL-C detected, aborting command.\n");
+                        setUserAborting($FALSE);
+                        last;
+                    }
                 }
             }
         }
