@@ -16,13 +16,19 @@ a copy of the following:
 
 The usual suspects.  *BSD, Linux, Solaris, etc.
 
-- Python v2.2.2+ (http://www.python.org/) accessible via /usr/local/bin/python
+FYI, the author currently tests on both FreeBSD 4.x and Linux(RedHat) environments.
+
+- GNU Readline v4.3 (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
+
+Nothing special here, readline just Makes Life Easier.
+
+- Python v2.2.2 or later (http://www.python.org/) accessible via /usr/local/bin/python
 
 In theory the distribulator might work on earlier(i.e. v1.5.2) versions
 of Python, but I wouldn't bet on it.  Also if you don't have a symlink for python
 in /usr/local/bin/, either put on there or hack the distribulator.py first line.
 
-- PyXML v0.8.2+ (http://pyxml.sourceforge.net/)
+- PyXML v0.8.2 or later (http://pyxml.sourceforge.net/)
 
 Oddly enough, some installations seem to load the XML parser
 without this package, but in other cases this simply doesn't work.
@@ -40,7 +46,7 @@ Installation
    cd /usr/local/
 
 3) Unpack the distribution:
-   tar xfz distribulator-0.6.2.tar.gz
+   tar xfz distribulator-X.X.X.tar.gz
 
 4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
    reflect your installation directory(in this case /usr/local/distribulator2):
