@@ -64,6 +64,11 @@ $Id$
             <server>aquagw01st.eg.orbitz.com</server>
         </servergroup>
         <servergroup>
+            <name>aqua_wlx</name>
+            <username>orbitz</username>
+            <server>aquawlx01st.eg.orbitz.com</server>
+        </servergroup>
+        <servergroup>
             <name>burst</name>
             <username>dc</username>
             <server>burst01st.eg.orbitz.com</server>
