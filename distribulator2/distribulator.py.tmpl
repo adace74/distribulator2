@@ -304,7 +304,7 @@ The available options are:
             myGlobalConfig.setRealUsername( getpass.getuser() )
 
         # Some silly hacks to keep sppamy debug out of console mode.  Please excuse the mess.
-        if (not myGlobalConfig.isConsoleMode()):
+        if (myGlobalConfig.isBatchMode()):
             myMultiLogger.LogMsgDebugSeperator()
         else:
             myGlobalConfig.getAuditLogger().debug( myGlobalConfig.getSeperator() )
