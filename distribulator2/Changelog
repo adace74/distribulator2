@@ -104,7 +104,7 @@ Change List For v0.53 (Language: Python / Status: Skipped)
 * Minimal cosmetic fixes in how server-list and server-group
   do output.
 
-Change List For v0.6 (Language: Python / Status: Shipped)
+Change List For v0.6.0 (Language: Python / Status: Shipped)
 -------------------------------------------------------------
 * Goal: The ongoing goal of this release is to provide a "good enough"
   featureset for real-world applications, and to implement a
