@@ -163,7 +163,7 @@ Change List For v0.6.2 (Language: Python / Status: Shipped)
 
 Change List For v0.6.3 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
-- Replacement the HostPinger's functionality with a better,
+- Replacing the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.
 
 Idea List For v0.7 (A little farther out)
