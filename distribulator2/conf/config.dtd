@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
 <!--
    *
    * $Id$
@@ -11,32 +13,36 @@
    *
   -->
 
-<?xml version="1.0" encoding="us-ascii"?>
+<!-- Define the "config" document type. -->
 
-<!-- The "config" tag. -->
-<!ELEMENT config (binary+,logging?,environment+)>
+<!DOCTYPE config [
 
-<!-- The "binary" tag. -->
-<!ELEMENT binary>
-<!ATTLIST binary
-    name CDATA #IMPLIED
-    value CDATA #IMPLIED>
+    <!-- The "config" tag. -->
+    <!ELEMENT config (binary+, logging?, environment+)>
 
-<!-- The "logging" tag. -->
-<!ELEMENT logging>
-<!ATTLIST logging
-    facility CDATA #IMPLIED>
+        <!-- The "binary" tag. -->
+        <!ELEMENT binary>
+        <!ATTLIST binary
+            name CDATA #IMPLIED
+            value CDATA #IMPLIED>
 
-<!-- The "environment" tag. -->
-<!ELEMENT environment (servergroup+)>
-<!ATTLIST environment
-    name CDATA #IMPLIED>
+        <!-- The "logging" tag. -->
+        <!ELEMENT logging>
+        <!ATTLIST logging
+            facility CDATA #IMPLIED>
 
-<!-- The "servergroup" tag. -->
-<!ELEMENT servergroup (server+)>
-<!ATTLIST servergroup
-    name CDATA #IMPLIED
-    username CDATA #IMPLIED>
+        <!-- The "environment" tag. -->
+        <!ELEMENT environment (servergroup+)>
+        <!ATTLIST environment
+            name CDATA #IMPLIED>
 
-<!-- The "server" tag. -->
-<!ELEMENT server #PCDATA>
+            <!-- The "servergroup" tag. -->
+            <!ELEMENT servergroup (server+)>
+            <!ATTLIST servergroup
+                name CDATA #IMPLIED
+                username CDATA #IMPLIED>
+
+                <!-- The "server" tag. -->
+                <!ELEMENT server #PCDATA>
+
+]>
