@@ -93,12 +93,11 @@ class CommandLine:
                 thisInput = raw_input(thisPrompt)
 
             except EOFError:
+                thisInfo = "INFO: Caught CTRL-D keystroke.  Wrote history.  Dying..."
                 print
-                print
-                thisInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
                 print(thisInfo)
-                self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
                 print
+                self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
                 return True
 
@@ -110,12 +109,14 @@ class CommandLine:
 
                 #
                 # Step 1 - Handle both "cd" and "exit" from this chunk of code.
-                # Should probably be moved into the parser proper,
+                # Should probably be moved into the parser proper.
                 #
                 if (thisTokens[0] == 'exit'):
+                    thisInfo = "INFO: Received exit command.  Wrote history.  Dying..."
                     print
-                    print("Received exit command.  Wrote history.  Dying...")
+                    print(thisInfo)
                     print
+                    self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
                     return True
                 #
@@ -129,7 +130,7 @@ class CommandLine:
                         try:
                             thisExternalCommand.run()
                         except KeyboardInterrupt:
-                            thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            thisInfo = "INFO: Caught CTRL-C keystroke.  Returning to command prompt..."
                             print(thisInfo)
                             self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
                         del thisExternalCommand

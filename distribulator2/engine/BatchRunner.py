@@ -47,6 +47,22 @@ class BatchRunner:
             "INFO: Attempting command run using file '" + \
             self._globalConfig.getBatchFile() + "'.")
 
+        try:
+            thisFile = open(self._globalConfig.getBatchFile(), 'r')
+            
+            for thisLine in thisFile:
+                thisLine = thisLine.strip()
+                print "LINE: " + thisLine
+
+            thisFile.close()
+
+        except IOError, (errno, strerror):
+            thisError = "ERROR:[Errno %s] %s: %s" % \
+                        (errno, strerror, thisFilename)
+            print(thisError)
+            self._globalConfig.getSysLogger().LogMsgError(thisError)
+            sys.exit(1)
+
         return True
 
 ######################################################################

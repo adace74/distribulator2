@@ -90,7 +90,7 @@ class CommandRunner:
             thisInput = raw_input("Yes / No> ")
 
         except (EOFError, KeyboardInterrupt):
-            thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
+            thisInfo = "INFO: Caught CTRL-C / CTRL-D keystroke."
             self.handleInfo(thisInfo)
             return False
 
@@ -152,7 +152,7 @@ class CommandRunner:
             print("on server group " + thisGroupStr + "?")
 
             if (self.doAreYouSure() == False):
-                thisInfo = "INFO:  Aborting command."
+                thisInfo = "INFO: Aborting command."
                 self.handleInfo(thisInfo)
                 return False
             else:
@@ -193,7 +193,7 @@ class CommandRunner:
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                thisInfo = "INFO: Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
 
         return True
@@ -241,7 +241,7 @@ class CommandRunner:
                 try:
                     thisExternalCommand.run()
                 except (EOFError, KeyboardInterrupt):
-                    thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+                    thisInfo = "INFO: Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
                     self.handleInfo(thisInfo)
             else:
                 thisError = "ERROR:No matching server '" + \
@@ -338,7 +338,7 @@ class CommandRunner:
             print("Run command " + thisBodyStr + " on server group(s) " + \
                   thisDisplayStr + "?")
             if (self.doAreYouSure() == False):
-                thisInfo = "INFO:  Aborting command."
+                thisInfo = "INFO: Aborting command."
                 self.handleInfo(thisInfo)
                 return False
 
@@ -373,7 +373,7 @@ class CommandRunner:
             except EOFError:
                 noop
             except KeyboardInterrupt:
-                thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                thisInfo = "INFO: Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
 
         return True
