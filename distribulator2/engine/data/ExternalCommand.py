@@ -83,7 +83,7 @@ class ExternalCommand:
         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         if (myStatus != 0):
-            self._globalConfig.getMultiLogger().LogMsgWarn("Local shell returned error state.")
+            self._globalConfig.getMultiLogger().LogMsgError("Local shell returned error state.")
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
