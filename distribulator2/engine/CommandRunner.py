@@ -235,8 +235,32 @@ class CommandRunner:
                 else:
                     thisServerGroupList.append(thisGroupStr)
         elif (thisCopyTarget == 'multiple_server_group'):
-            print("ERROR: This feature not implemented...today.")
-            return False
+            # copy /tmp/blah app,www:/tmp/
+            thisGroupStr = self._commTokens[2]
+            thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
+            thisGroupList = thisGroupStr.split(',')
+            thisRemotePath = self._commTokens[2]
+            thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
+
+            for thisLoopStr in thisGroupList:
+                thisLoopStr = thisLoopStr.strip()
+
+                # Check for server name match.
+                thisServer = self._globalConfig.getServerByName(thisLoopStr)
+
+                if (thisServer):
+                    thisServerNameList.append(thisServer.getName())
+                    continue
+
+                # Check for server group match.
+                thisServerGroup = self._globalConfig.getServerGroupByName(thisLoopStr)
+                if (thisServerGroup):
+                    thisServerGroupList.append(thisLoopStr)
+                else:
+                    thisError = "ERROR: No matching server name or group '" + \
+                                thisLoopStr + "'."
+                    self.handleError(thisError)
+                    return False
 
         #
         # Step 4: Make sure noone's trying to mix
