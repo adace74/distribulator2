@@ -24,7 +24,7 @@ import string
 import sys
 
 # Custom modules
-import engine.command.AllCommand
+import engine.command.Dispatcher
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
 import engine.mode.Mode
@@ -152,12 +152,12 @@ class CommandMode(engine.mode.Mode.Mode):
                 #
                 myInternalCommand = engine.data.InternalCommand.InternalCommand()
                 myInternalCommand.setCommand(myInput)
-                myAllCommand = engine.command.AllCommand.AllCommand(self._globalConfig)
-                myAllCommand.run(myInternalCommand)
+                myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
+                myDispatcher.invoke(myInternalCommand)
 
                 # Free up some memory.
                 del myInternalCommand
-                del myAllCommand
+                del myDispatcher
 
                 # Icky flow-control hack.
                 if (myTokens[0] == 'exit'):

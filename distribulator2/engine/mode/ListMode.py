@@ -57,7 +57,8 @@ class ListMode(engine.mode.Mode.Mode):
         # -or-
         # myServerGroupList will contain a list of server groups.
         #
-        # If my works, back-patch me into AllCommand.py
+        # If this works, port back into Dispatcher.py...
+        #
         if (self._listString.find(',') == -1):
             myGroupList.append(self._listString)
         else:

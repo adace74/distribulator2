@@ -11,7 +11,7 @@
 """
 This class is responsible for doing the actual reading of a given
 batch file, and pre-processing the input before calling the
-AllCommand for command expansion work.
+Dispatcher for command expansion work.
 """
 
 # Version tag
@@ -20,13 +20,14 @@ __version__= '$Revision$'[11:-2]
 # Standard modules
 import os
 import os.path
+import socket
 import stat
 import string
 import sys
 import time
 
 # Custom modules
-import engine.command.AllCommand
+import engine.command.Dispatcher
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
 import engine.mode.Mode
@@ -35,7 +36,7 @@ class BatchMode(engine.mode.Mode.Mode):
     """
     This class is responsible for doing the actual reading of a given
     batch file, and pre-processing the input before calling the
-    AllCommand for command expansion work.
+    Dispatcher for command expansion work.
     """
 
     def __init__(self, PassedGlobalConfig):
@@ -127,16 +128,19 @@ class BatchMode(engine.mode.Mode.Mode):
                 # Variable substitution
                 if ( myLine.find('$env') != -1 ):
                     myLine = string.replace( myLine, '$env', \
-                                               self._globalConfig.getServerEnv() )
+                                             self._globalConfig.getServerEnv() )
+                if ( myLine.find('$hostname') != -1 ):
+                    myLine = string.replace( myLine, '$hostname', \
+                                             socket.gethostname() )
                 if ( myLine.find('$var1') != -1 ):
                     myLine = string.replace( myLine, '$var1',
-                                               self._globalConfig.getVar1() )
+                                             self._globalConfig.getVar1() )
                 if ( myLine.find('$var2') != -1 ):
                     myLine = string.replace( myLine, '$var2',
-                                               self._globalConfig.getVar2() )
+                                             self._globalConfig.getVar2() )
                 if ( myLine.find('$var3') != -1 ):
                     myLine = string.replace( myLine, '$var3',
-                                               self._globalConfig.getVar3() )
+                                             self._globalConfig.getVar3() )
 
                 #
                 # Step 1: Check to see if my is an empty line.
@@ -222,11 +226,11 @@ class BatchMode(engine.mode.Mode.Mode):
                 #
                 myInternalCommand = engine.data.InternalCommand.InternalCommand()
                 myInternalCommand.setCommand(myLine)
-                myAllCommand = engine.command.AllCommand.AllCommand(self._globalConfig)
+                myDispatcher = engine.command.Dispatcher.Dispatcher(self._globalConfig)
                 myCommandCount = myCommandCount + \
-                                   myAllCommand.run(myInternalCommand)
+                                   myDispatcher.invoke(myInternalCommand)
                 del myInternalCommand
-                del myAllCommand
+                del myDispatcher
 
             myFile.close()
 

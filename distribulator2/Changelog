@@ -177,13 +177,16 @@ Change List For v0.7.0 (Language: Python / Status: In Progress)
 * Cleanup: Restructured and "split up" code such that it adheres to a more
   OO way of thinking.  No real definition of dynamic versus static classes,
   but at least there are less monolithic classfiles now.
-- Cleanup: Take a look at the various modes the distribulator now supports
-  and verify if the "VerboseMode" internal flags are still truly necessary.
+* Add $hostname as a built-in variable, referencing the local hostname of the server
+  this software is running on.
+
+Change List For v0.7.5 (Language: Python / Status: Not Started)
+---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background threads in parallel.
   Output will be spooled to one file per server in a standard output directory.
 
-Idea List For v0.7.x (Language: Python / Status: Not Started)
+Idea List For v0.8.0 (Language: Python / Status: Not Started)
 -------------------------------------------------------------
 - Supplement the HostPinger's functionality with a better,
   timeout-capable socket conneciton test.
