@@ -86,16 +86,17 @@ Usage: %s [options] --env=environment
 
 The available options are:
 
-    --batch=filename
+    --batch=batch_filename
     Enables batch mode processing, requires a readable input file.
     OPTIONAL
 
-    --config=filename
+    --config=config_filename
     Specifies the location of the global XML-based configuraiton file.
-
-    --directory=start_dir
-    Allows the wrapper script to pass in the user's real cwd.
     OPTIONAL
+
+    --directory=install_dir
+    Allows the wrapper script to pass in the install location.
+    REQUIRED
 
     --env=env_name
     The server environment we wish to operate in.
@@ -103,6 +104,7 @@ The available options are:
 
     --help
     This usage statement.
+    OPTIONAL
 
     --quiet
     Batch Mode Only: Disable STDOUT, particularly useful when run from cron.
@@ -114,6 +116,7 @@ The available options are:
     Batch Mode Only: Enables simple string substitution.
     Up to 3 variables may be defined then referenced in a given batch file
     as $var1, $var2, and $var3.
+    OPTIONAL
 
     --version
     Print version information.
@@ -121,9 +124,9 @@ The available options are:
 
     thisBatchFile = ''
     thisConfigFile = ''
+    thisInstallDir = '/tmp'
     thisQuietMode = False
     thisServerEnv = 'demo'
-    thisStartDir = '/tmp'
     thisVar1 = ''
     thisVar2 = ''
     thisVar3 = ''
@@ -143,7 +146,7 @@ The available options are:
                 elif (opt[0] == '--config'):
                     thisConfigFile = opt[1]
                 elif (opt[0] == '--directory'):
-                    thisStartDir = opt[1]
+                    thisInstallDir = opt[1]
                 elif (opt[0] == '--env'):
                     thisServerEnv = opt[1]
                 elif (opt[0] == '--help'):
@@ -176,8 +179,6 @@ The available options are:
         sys.exit(True)
 
     try:
-        thisHelpDir = os.path.join(os.getcwd(), 'doc')
-
         # Load up our GlobalConfig object.
         thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
@@ -190,12 +191,17 @@ The available options are:
         if ( len(thisConfigFile) > 0 ):
             thisGlobalConfig.setConfigFile(thisConfigFile)
         else:
-            thisGlobalConfig.setConfigFile( os.path.join(os.getcwd(), 'conf/config.xml') )
+            thisGlobalConfig.setConfigFile( os.path.join(thisInstallDir, 'conf/config.xml') )
 
         thisGlobalConfig.setExitSuccess(True)
-        thisGlobalConfig.setHelpDir(thisHelpDir)
-        thisGlobalConfig.setPassThruFile(os.path.join( os.getcwd(), 'conf/pass_through_cmds.txt') )
-        thisGlobalConfig.setQuietMode(thisQuietMode)
+        thisGlobalConfig.setHelpDir( os.path.join(thisInstallDir, 'doc') )
+        thisGlobalConfig.setPassThruFile( os.path.join(thisInstallDir, 'conf/pass_through_cmds.txt') )
+
+        if ( thisGlobalConfig.isBatchMode() ):
+            thisGlobalConfig.setQuietMode(thisQuietMode)
+        else:
+            thisGlobalConfig.setQuietMode(False)
+
         thisGlobalConfig.setServerEnv(thisServerEnv)
         thisGlobalConfig.setUsername( getpass.getuser() )
         thisGlobalConfig.setVar1(thisVar1)
@@ -263,15 +269,6 @@ The available options are:
                 print(thisError)
 
             sys.exit(True)
-
-    # Try to chdir() to thisStartDir if possible.
-    try:
-        os.chdir(thisStartDir)
-
-    except OSError, (errno, strerror):
-        thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
-        print(thisError)
-        thisSysLogger.LogMsgError(thisError)
 
     # Batch mode.
     if ( thisGlobalConfig.isBatchMode() ):
