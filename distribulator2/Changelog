@@ -248,8 +248,8 @@ Change List For v0.8.6 (Language: Python / Status: In Progress / Codename: Final
 * Cleanup: Replaced all highly unreadable "&" "|" characters with keyword equivalents.
 * Cleanup: replaced all less readable "foo == FALSE" clauses with "not foo" equivalents.
 * Cleanup: Added logic to pre-check config.xml for well-formedness before actual parsing.
-- Ability to use regular expressions in the "copy" command.
 + Ability to load all environments at startup, then switch environments at runtime via "set environment".
+- Ability to use regular expressions in the "copy" command.
 
 Change List For v1.0.0 (Language: Python / Status: Not Started / Codename: Optimator)
 -------------------------------------------------------------------------------------
@@ -259,8 +259,8 @@ Change List For v1.0.0 (Language: Python / Status: Not Started / Codename: Optim
 - Ability to use a "set concurrency X" command to set the concurrency
   for parallel run.  Also XML config directives for global defaults.
 
-Change List For v1.1.0 (Language: Python / Status: Not Started / Codename: ???)
---------------------------------------------------------------------------------------
+Change List For v1.1.0 (Language: Python / Status: Not Started / Codename: Status???)
+-------------------------------------------------------------------------------------
 ? Ability to have "pluggable" transports whereby one can at least use the "copy" and "run" commands
   via rsh, ssh, SSL, multicast, etc.  Will most likely use command-line as interface.
 

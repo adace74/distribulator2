@@ -51,7 +51,7 @@ class ServerCommand(Command.Command):
 
         # If given a group name, set it.
         if ( len(self._commTokens) > 2 ):
-            myServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[2] )
+            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName( self._commTokens[2] )
 
             if (not myServerGroup):
                 myError = "No matching server group '" + \
@@ -89,7 +89,7 @@ class ServerCommand(Command.Command):
 
         # If given a server group name, display servers in that group.
         if ( len(self._commTokens) > 2 ):
-            myServerGroup = self._globalConfig.getServerGroupByName( \
+            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName( \
                 self._commTokens[2] )
 
             # Check for errors.
@@ -116,7 +116,7 @@ class ServerCommand(Command.Command):
                         self._globalConfig.getCurrentEnvName() + "'\n"
             myTempStr = myTempStr + "--------------------------------------------------\n"
    
-            for myServerGroup in self._globalConfig.getServerGroupList():
+            for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():
                 myColumnCount = myColumnCount + 1
                 myTempStr = myTempStr + "%10s (%2d) " % \
                             (myServerGroup.getName(), myServerGroup.getServerCount())

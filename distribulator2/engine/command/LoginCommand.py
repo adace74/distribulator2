@@ -52,8 +52,8 @@ class LoginCommand(Command.Command):
 
         # Check for server name.
         if ( len(self._commTokens) > 1):
-            if ( self._globalConfig.getServerByName(self._commTokens[1]) ):
-                myServer = self._globalConfig.getServerByName(self._commTokens[1])
+            if ( self._globalConfig.getCurrentEnv().getServerByName(self._commTokens[1]) ):
+                myServer = self._globalConfig.getCurrentEnv().getServerByName(self._commTokens[1])
             else:
                 myError = "No matching server '" + \
                             self._commTokens[1] + "'."

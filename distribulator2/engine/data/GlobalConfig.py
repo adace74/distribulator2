@@ -487,14 +487,14 @@ class GlobalConfig:
 
 ######################################################################
 
-    def getCurrentEnvironment(self):
+    def getCurrentEnv(self):
         """This is a typical accessor method."""
 
         return self._currentEnvironment
 
 ######################################################################
 
-    def setCurrentEnvironment(self, PassedEnvironment):
+    def setCurrentEnv(self, PassedEnvironment):
         """This is a typical accessor method."""
 
         self._currentEnvironment = PassedEnvironment
@@ -582,59 +582,5 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._currentServerGroup = PassedServerGroup
-
-######################################################################
-
-    def getServerGroupList(self):
-        """This is a typical accessor method."""
-
-        return self._serverGroupList
-
-######################################################################
-
-    def setServerGroupList(self, PassedServerGroupList):
-        """This is a typical accessor method."""
-
-        self._serverGroupList = PassedServerGroupList
-
-######################################################################
-
-    def addServerGroup(self, PassedServerGroup):
-        """This is a typical accessor method."""
-
-        self._serverGroupList.append(PassedServerGroup)
-
-######################################################################
-
-    def getServerByName(self, PassedServerName):
-        """This is a typical accessor method, including some search logic."""
-
-        PassedServerName = PassedServerName.strip()
-
-        for myServerGroup in self._serverGroupList:
-            if ( myServerGroup.getServerByName(PassedServerName) ):
-                return myServerGroup.getServerByName(PassedServerName)
-
-        return False
-
-######################################################################
-
-    def getServerGroupByName(self, PassedServerGroupName):
-        """This is a typical accessor method, including some search logic."""
-
-        PassedServerGroupName = PassedServerGroupName.strip()
-
-	reggie = re.compile(r'(.*):r\'(.*)\'')
-	maggie = reggie.match(PassedServerGroupName)
-	if maggie != None:
-		for myServerGroup in self._serverGroupList:
-		    if (maggie.group(1) == myServerGroup.getName()):
-			return myServerGroup
-	else:
-		for myServerGroup in self._serverGroupList:
-		    if (PassedServerGroupName == myServerGroup.getName()):
-			return myServerGroup
-
-        return False
 
 ######################################################################

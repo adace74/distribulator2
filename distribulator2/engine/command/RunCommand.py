@@ -142,13 +142,13 @@ class RunCommand(Command.Command):
         #
         elif (myRunTarget == 'single_server_group'):
             # Check for server name match.
-            myServer = self._globalConfig.getServerByName(myGroupStr)
+            myServer = self._globalConfig.getCurrentEnv().getServerByName(myGroupStr)
 
             if (myServer):
                 myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match.
-                myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                 # Validate.
                 if (not myServerGroup):
                     myError = "No matching server name or group '" + \
@@ -164,14 +164,14 @@ class RunCommand(Command.Command):
             for myLoopStr in myGroupList:
                 myLoopStr = myLoopStr.strip()
                 # Check for server name match.
-                myServer = self._globalConfig.getServerByName(myLoopStr)
+                myServer = self._globalConfig.getCurrentEnv().getServerByName(myLoopStr)
 
                 if (myServer):
                     myServerNameList.append(myServer.getName())
                     continue
 
                 # Check for server group match.
-                myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
                 if (myServerGroup):
                     myServerGroupList.append(myLoopStr)
                 else:
@@ -243,7 +243,7 @@ class RunCommand(Command.Command):
 
             try:
                 for myNameStr in myServerNameList:
-                    myServer = self._globalConfig.getServerByName(myNameStr)
+                    myServer = self._globalConfig.getCurrentEnv().getServerByName(myNameStr)
                     myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
 
                     if (myPinger.ping(myNameStr) == 0):
@@ -303,7 +303,7 @@ class RunCommand(Command.Command):
             # 3) Forward-sort the list, hopefully back to its original state.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getServerGroupByName(
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(
                     myGroupStr)
 
 		reggie=re.compile(r'(.*):r\'(.*)\'')

@@ -44,6 +44,21 @@ class Environment:
         self._name = PassedName
 
 ######################################################################
+# Servers.
+######################################################################
+
+    def getServerByName(self, PassedServerName):
+        """This is a typical accessor method, including some search logic."""
+
+        PassedServerName = PassedServerName.strip()
+
+        for myServerGroup in self._serverGroupList:
+            if ( myServerGroup.getServerByName(PassedServerName) ):
+                return myServerGroup.getServerByName(PassedServerName)
+
+        return False
+
+######################################################################
 # ServerGroups.
 ######################################################################
 
@@ -61,16 +76,30 @@ class Environment:
 
 ######################################################################
 
-    def getServerGroupByName(self, PassedServerGroupName):
+    def setServerGroupList(self, PassedServerGroupList):
         """This is a typical accessor method."""
+
+        self._serverGroupList = PassedServerGroupList
+
+######################################################################
+
+    def getServerGroupByName(self, PassedServerGroupName):
+        """This is a typical accessor method, including some search logic."""
 
         PassedServerGroupName = PassedServerGroupName.strip()
 
-        for myServerGroup in self._serverGroupList:
+        # Handle regex.
+        reggie = re.compile(r'(.*):r\'(.*)\'')
+        maggie = reggie.match(PassedServerGroupName)
 
-	    # Match by name.
-	    if (PassedServerGroupName == myServerGroup.getName()):
-		return myServerGroup
+        if maggie != None:
+            for myServerGroup in self._serverGroupList:
+                if (maggie.group(1) == myServerGroup.getName()):
+                     return myServerGroup
+        else:
+            for myServerGroup in self._serverGroupList:
+                if (PassedServerGroupName == myServerGroup.getName()):
+                     return myServerGroup
 
         return False
 

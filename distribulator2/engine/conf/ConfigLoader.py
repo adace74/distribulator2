@@ -158,7 +158,7 @@ class ConfigLoader:
         # If the current server group isn't set, set it.
         if (self._globalConfig.getCurrentServerGroup() == False):
             self._globalConfig.setCurrentServerGroup(
-                self._globalConfig.getServerGroupList()[0] )
+                self._globalConfig.getCurrentEnv().getServerGroupList()[0] )
 
         # Create our pretty output string.
         myServerGroupStr = '- '
@@ -169,7 +169,7 @@ class ConfigLoader:
         for myEnvironment in self._globalConfig.getEnvironmentList():
             myTotalEnvironmentCount = myTotalEnvironmentCount + 1;
 
-        for myServerGroup in self._globalConfig.getServerGroupList():
+        for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():
             myColumnCount = myColumnCount + 1
             myTotalServerCount = myTotalServerCount + \
                                    myServerGroup.getServerCount()

@@ -171,18 +171,18 @@ class XMLFileParser:
         # Load environment.
         myEnvironment = engine.data.Environment.Environment()
         myEnvironment.setName(PassedEnvironment.getAttribute('name').strip())
+        self._globalConfig.setCurrentEnv(myEnvironment);
 
         # Load included server groups.
         self.handleServerGroups(
             PassedEnvironment.getElementsByTagName('servergroup') )
         if (PassedEnvironment.getAttribute('default')):
             self._globalConfig.setCurrentServerGroup(
-                self._globalConfig.getServerGroupByName(PassedEnvironment.getAttribute('default')))
+                self._globalConfig.getCurrentEnv().getServerGroupByName(PassedEnvironment.getAttribute('default')))
 
         # Check for current environment, set flags accordingly.
         if ( PassedEnvironment.getAttribute('name') ==
              self._globalConfig.getCurrentEnvName() ):
-            self._globalConfig.setCurrentEnvironment(myEnvironment);
             self._isEnvFound = True
 
         return myEnvironment
@@ -195,7 +195,7 @@ class XMLFileParser:
         for ServerGroup in PassedServerGroups:
             self._serverGroupList.append( self.handleServerGroup(ServerGroup) )
 
-        self._globalConfig.setServerGroupList(self._serverGroupList)
+        self._globalConfig.getCurrentEnv().setServerGroupList(self._serverGroupList)
 
 ######################################################################
 

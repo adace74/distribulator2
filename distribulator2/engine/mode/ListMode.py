@@ -66,7 +66,7 @@ class ListMode(Mode.Mode):
         for myLoopStr in myGroupList:
             myLoopStr = myLoopStr.strip()
             # Check for server name match.
-            myServer = self._globalConfig.getServerByName(myLoopStr)
+            myServer = self._globalConfig.getCurrentEnv().getServerByName(myLoopStr)
 
             if (myServer):
                 myServerNameList.append(myServer.getName())
@@ -99,7 +99,7 @@ class ListMode(Mode.Mode):
 
         if ( len(myServerNameList) > 0 ):
             for myNameStr in myServerNameList:
-                myServer = self._globalConfig.getServerByName(myNameStr)
+                myServer = self._globalConfig.getCurrentEnv().getServerByName(myNameStr)
 
                 if (myPinger.ping(myNameStr) == 0):
                     if ( self._globalConfig.isPrintUsername() ):

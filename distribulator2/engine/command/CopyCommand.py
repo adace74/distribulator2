@@ -119,13 +119,13 @@ class CopyCommand(Command.Command):
             myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
 
             # Check for server name match.
-            myServer = self._globalConfig.getServerByName(myGroupStr)
+            myServer = self._globalConfig.getCurrentEnv().getServerByName(myGroupStr)
 
             if (myServer):
                 myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match.
-                myServerGroup = self._globalConfig.getServerGroupByName(myGroupStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                 # Validate.
                 if (not myServerGroup):
                     myError = "No matching server name or group '" + \
@@ -146,14 +146,14 @@ class CopyCommand(Command.Command):
                 myLoopStr = myLoopStr.strip()
 
                 # Check for server name match.
-                myServer = self._globalConfig.getServerByName(myLoopStr)
+                myServer = self._globalConfig.getCurrentEnv().getServerByName(myLoopStr)
 
                 if (myServer):
                     myServerNameList.append(myServer.getName())
                     continue
 
                 # Check for server group match.
-                myServerGroup = self._globalConfig.getServerGroupByName(myLoopStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
                 if (myServerGroup):
                     myServerGroupList.append(myLoopStr)
                 else:
@@ -223,7 +223,7 @@ class CopyCommand(Command.Command):
         if ( len(myServerNameList) > 0 ):
             try:
                 for myNameStr in myServerNameList:
-                    myServer = self._globalConfig.getServerByName(myNameStr)
+                    myServer = self._globalConfig.getCurrentEnv().getServerByName(myNameStr)
                     myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
 
                     if (myPinger.ping(myNameStr) == 0):
@@ -270,7 +270,7 @@ class CopyCommand(Command.Command):
             # Server group version of the above.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getServerGroupByName(
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(
                     myGroupStr)
                 myServerList = myServerGroup.getServerList()
 
