@@ -1,15 +1,15 @@
 Group Command Syntax & Examples
 -------------------------------
 
-Syntax: group server_group
+Syntax: server-group server_group
 
 Description:  Sets the current working server group.
 
 Examples:
-	group www	-- Sets the current server group as "www".
+	server-group www	-- Sets the current server group as "www".
 
 Notes:
-	Defaults to "wlx" for personal reasons.
+	Defaults to first server group specified in configuration.
 
 ----------------------------------------------------------------------
 $Id$

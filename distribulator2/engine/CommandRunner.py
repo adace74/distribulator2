@@ -90,9 +90,27 @@ class CommandRunner:
         print("Server-Group")
 
     def doServerList(self):
-        print("Known servers for group '" +
-              self.thisGlobalConfig.getCurrentServerGroup().getName() + "'")
+
+        if ( len(self.thisCommTokens) > 1 ):
+            thisServerGroup = self.thisGlobalConfig.getServerGroupByName( \
+                self.thisCommTokens[1] )
+        else:
+            thisServerGroup = self.thisGlobalConfig.getCurrentServerGroup()
+
+        print("Known servers for group '" + thisServerGroup.getName() + "'")
         print("----------------------------------------")
         # Actual server list goes here.
+        thisTempStr = ''
+
+        for thisServer in \
+                thisServerGroup.getServerList():
+            if ( len(thisTempStr) > 0 ):
+                print (thisTempStr + "\t" + thisServer.getName())
+                thisTempStr = ''
+            else:
+                thisTempStr = thisServer.getName()
+
+        if ( len(thisTempStr) > 0 ):
+            print(thisTempStr)
 
 ######################################################################
