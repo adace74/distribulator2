@@ -65,6 +65,9 @@ my($FALSE) = 0;
 $current_server_group = 'wlx';
 %groups_servers_hash;
 
+#
+# Misc. Variables
+#
 my($flag, $group, $server, $sub_string, $user);
 my(@server_user);
 my($server_user_temp);
@@ -83,13 +86,7 @@ sub RunCommandLocal
 
     print "EXEC:  $local_command\n";
 
-    @command_output = qx/$local_command 2>&1/;
-
-    foreach $output_line (@command_output)
-    {
-        chomp($output_line);
-        print "$output_line\n";
-    }
+    system($local_command);
 
     if ($? != 0)
     {

@@ -45,6 +45,7 @@ BEGIN
     # Initialize subroutines immediately so their contents
     # can be used in the 'use vars' below.
     @EXPORT = qw(@external_commands @internal_commands
+                 &isUserAborting &setUserAborting
                  &isValidExternalCommand &isValidInternalCommand
                  &LoadCommands &ParseCopy &ParseLogin &ParseRun
                  &ParseServerGroup &ParseServerList
@@ -63,6 +64,9 @@ use vars @EXPORT, @EXPORT_OK;
 @internal_commands = ( 'cd', 'copy', 'exit', 'help', 'login',
                        'remote-shell', 'run', 'server-group',
                        'server-list' );
+
+# Attempt to do state-tracking for cancelled commands.
+my($user_aborting) = $FALSE;
 
 ######################################################################
 # Initialization & Functionality
@@ -130,6 +134,27 @@ sub PrintHelpFile
 ######################################################################
 # Validation.
 ######################################################################
+
+# A little experiment...
+sub setUserAborting
+{
+    # Variable Scope Hack -- Not Sure Why?
+    my($TempVar) = @_;
+
+    $user_aborting = $TempVar;
+}
+
+sub isUserAborting
+{
+    if ($user_aborting)
+    {
+        return $TRUE;
+    }
+    else
+    {
+        return $FALSE;
+    }
+}
 
 #
 # Simple validation logic.
@@ -230,9 +255,7 @@ sub ParseCopy
                     {
                         $copy_user = getServerUser($copy_server);
 
-                        print("EXEC:  $SCP_BIN $1 $copy_user\@$copy_server:$3\n");
-
-                        system("$SCP_BIN $1 $copy_user\@$copy_server:$3");
+                        RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$3");
                     }
                 }
             }
@@ -248,9 +271,7 @@ sub ParseCopy
                 {
                     $copy_user = getServerUser($copy_server);
 
-                    print("EXEC:  $SCP_BIN $1 $copy_user\@$copy_server:$3\n");
-
-                    system("$SCP_BIN $1 $copy_user\@$copy_server:$3");
+                    RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$3");
                 }
             }
         }
@@ -285,9 +306,7 @@ sub ParseCopy
                 {
                     $copy_user = getServerUser($copy_server);
 
-                    print("EXEC:  $SCP_BIN $1 $copy_user\@$copy_server:$2\n");
-
-                    system("$SCP_BIN $1 $copy_user\@$copy_server:$2");
+                    RunCommandLocal("$SCP_BIN $1 $copy_user\@$copy_server:$2");
                 }
             }
         }
@@ -358,12 +377,22 @@ sub ParseRun
     if ($input =~ /^run (\".*\")$/)
     {
         print("Run $1 on server group $current_server_group?\n");
-        
+
         if ( AreYouSure() )
         {
             foreach $run_server ( @{$groups_servers_hash{$current_server_group}} )
             {
-                RunCommandRemote($run_server,$1);
+                if ( !isUserAborting() )
+                {
+                    RunCommandRemote($run_server,$1);
+
+                    # Sleep 1/4 second.
+                    sleep(0.25);
+                }
+                else
+                {
+                    last;
+                }
             }
         }
 

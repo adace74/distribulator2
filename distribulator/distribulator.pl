@@ -141,11 +141,15 @@ print("\n");
 #
 while ($TRUE)
 {
+    # Setting up our state.
     $command = '';
     $prompt = "<$prompt_user\@$prompt_env\[wlx\]:" .
         cwd() . "> ";
+    setUserAborting($FALSE);
+
     $input = $term->readline($prompt);
 
+    # Parsing magic.
     @command_tokens = split(' ', $input);
     $command = shift(@command_tokens);
 
@@ -275,6 +279,9 @@ sub catchSigInt
 {
     print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
 
+    setUserAborting($TRUE);
+
+    # Do we really need this?
     print "$prompt";
 }
 
