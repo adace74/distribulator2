@@ -72,7 +72,7 @@ class CommandRunner:
 
     def doChdir(self):
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
 
         try:
@@ -89,7 +89,7 @@ class CommandRunner:
         thisServerGroupList = []
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
         
         # Sanity check.
@@ -182,7 +182,7 @@ class CommandRunner:
         thisFoundIt = False
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
 
         if ( len(self._commTokens) > 1):
@@ -216,7 +216,7 @@ class CommandRunner:
         thisServerGroupList = []
 
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
 
         #
@@ -334,7 +334,7 @@ class CommandRunner:
     
     def doServerGroup(self):
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
 
         if ( len(self._commTokens) > 1 ):
@@ -351,7 +351,7 @@ class CommandRunner:
 
     def doServerList(self):
         # Log It.
-        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+        self._globalConfig.getSysLogger().LogMsgInfo("INPUT: " + \
                                                      self._commString)
 
         if ( len(self._commTokens) > 1 ):
