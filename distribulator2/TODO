@@ -12,10 +12,3 @@ Short-term TODO List
     3) Code refactoring as makes sense.
     4) Throw a baby at it!
     5) Automated regression functionality test system.
-
-* Design Fixage:
-    1) Review all objects and implement static objects as appropriate.
-       (BatchRunner, CommandLine)
-    2) Review object naming, refer to design patterns, and fix them.
-       (currently icky-but-works)
-

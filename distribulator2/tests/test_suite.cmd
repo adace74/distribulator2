@@ -3,7 +3,9 @@
 #
 ######################################################################
 #
-# Run / single group
+# Name: The Distribulator Batch Test Suite
+#
+# Description: Quick'n'dirty batch file to test various ways things can fail.
 #
 ######################################################################
 run "uptime" on app
@@ -20,13 +22,3 @@ run "uptime" on app,db,www
 # The following should produce errors and not execute at all.
 #
 ######################################################################
-help
-login www01
-
-run "uptime" on app
-
-
-run "uptime" on db
-run "uptime" on www
-
-
