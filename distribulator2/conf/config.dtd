@@ -14,7 +14,7 @@
 <?xml version="1.0" encoding="us-ascii"?>
 
 <!-- The "config" tag. -->
-<!ELEMENT config (binary+, logging?, environment+)>
+<!ELEMENT config (binary+,logging?,environment+)>
 
 <!-- The "binary" tag. -->
 <!ELEMENT binary>
