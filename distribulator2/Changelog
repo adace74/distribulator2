@@ -138,7 +138,7 @@ Change List For v0.6 (Language: Python / Status: Shipped)
   For details see Sourceforge, there are simply too many to list here.
 * Small LICENSE fixes, also propogated other legalese.
 
-Change List For v0.61 (Language: Python / Status: Shipped)
+Change List For v0.6.1 (Language: Python / Status: Shipped)
 ---------------------------------------------------------
 * Finally got around to parameterizing the application version info.
 * Added source-level documentation to the codebase(pydoc compatible).
@@ -151,8 +151,9 @@ Change List For v0.61 (Language: Python / Status: Shipped)
 * SourceForge bug #787445 fixed.
 * SourceForge bug #776080 fixed.
 * SourceForge bug #774953 fixed.
+* Standardized version numbering.
 
-Change List For v0.62 (Language: Python / Status: In Progress)     
+Change List For v0.6.2 (Language: Python / Status: In Progress)     
 -------------------------------------------------------------
 - Bug-fixes as a result of daily use / extensive testing.
 - Replacement the HostPinger's functionality with a better,

@@ -21,7 +21,7 @@
 # File version tag
 __version__ = '$Revision$'[11:-2]
 # Application version tag
-__appversion__ = 'The Distribulator v0.61'
+__appversion__ = 'The Distribulator v0.6.1'
 
 # Standard modules
 import commands
@@ -50,7 +50,7 @@ def printTitleHeader():
     print
     print(__appversion__ + " (Python v" + \
           sys.version.split()[0] + " / " + sys.platform + ")")
-    print("--------------------------------------------------")
+    print("---------------------------------------------------")
     print
 
 ######################################################################
