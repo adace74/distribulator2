@@ -49,7 +49,7 @@ class CommandLine:
 
         return thisCounter
 
-    def processInput(self, PassedPassThruList):
+    def processInput(self, thisGlobalConfig):
         thisPromptEnv = 'sample'
         thisPromptUser = getpass.getuser()
         thisPromptGroup = 'wlx'
@@ -91,7 +91,7 @@ class CommandLine:
                 except OSError, (errno, strerror):
                     print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
 
-                for thisCommand in PassedPassThruList:
+                for thisCommand in thisGlobalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
                         print "EXEC:  " + thisInput
                         thisStatus, thisOutput = commands.getstatusoutput(thisInput)

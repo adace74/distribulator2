@@ -17,20 +17,32 @@ import sys
 
 # Custom modules
 import engine.CommandLine
+import engine.data.GlobalConfig
 
 ######################################################################
 
 class ConfigLoader:
 
-    def loadAll(self, PassedCommLine, PassedConfigDir):
+    def getGlobalConfig(self, PassedCommLine, PassedConfigDir):
         # Load GNU Readline history.
         print('Loading config. from ' + PassedConfigDir)
         thisLinesLoaded = PassedCommLine.initHistory()
+        #
+        # Try to print status -after- actions so as to be
+        # more accurate.
+        #
         print("- Readline history: %d lines loaded." % thisLinesLoaded)
         
-        # Load Unix pass-through commands.
-        thisPassThruList = []
+        #
+        # Create GlobalConfig object.
+        #
+        thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
+        #
+        # Unix "pass through" commands.
+        #
+        thisPassThruList = []
+        
         thisFile = open( os.path.join(PassedConfigDir, \
                                       'pass_through_cmds.txt'), 'r' )
 
@@ -40,6 +52,9 @@ class ConfigLoader:
 
         thisFile.close()
 
+        thisGlobalConfig.setPassThruList(thisPassThruList)
+
+        # Status.
         print( "- Pass-through Unix commands: %d lines loaded." \
                % len(thisPassThruList) )
 
@@ -48,6 +63,6 @@ class ConfigLoader:
         print("- Entering interactive mode...")
         print
 
-        return thisPassThruList
+        return thisGlobalConfig
 
 ######################################################################

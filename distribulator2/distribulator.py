@@ -39,6 +39,7 @@ try:
     # Custom modules
     import engine.CommandLine
     import engine.ConfigLoader
+    import engine.data.GlobalConfig
     import generic.SysLogger
 
 except ImportError:
@@ -145,10 +146,10 @@ The available options are:
 
     # Create ConfigLoader instance and call that method!
     thisLoader = engine.ConfigLoader.ConfigLoader()
-    thisPassThruList = thisLoader.loadAll(thisCommLine, thisConfigDir)
+    thisGlobalConfig = thisLoader.getGlobalConfig(thisCommLine, thisConfigDir)
 
     # The main readline loop.
-    thisCommLine.processInput(thisPassThruList)
+    thisCommLine.processInput(thisGlobalConfig)
 
     # Once it returns, we're done!
     thisLogger.LogMsgInfo("Shutting down...")

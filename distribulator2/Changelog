@@ -94,6 +94,7 @@ Change List For v0.7 (A little farther out):
 
 Change List For v1.0 (Will we ever get here?  Who knows!):
 
+- A decent install / setup system!  Perhaps a quick autoconf thingie?
 - Integration with ncurses such that one could run a command on 4 servers
   in parallel, and see the output from each of them?
 - Auditing capabilities via syslog?
