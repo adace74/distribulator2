@@ -77,7 +77,7 @@ if ($help_arg)
 # Give the user a banner, no matter what.
 #
 print("\n");
-print("The Distribulator v0.47\n");
+print("The Distribulator v0.48\n");
 print("-----------------------\n");
 print("\n");
 #

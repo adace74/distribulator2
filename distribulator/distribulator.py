@@ -12,11 +12,21 @@
 # requires that methods be defined before calling them.
 # As such, main() will always be at the -bottom- of a file.
 #
+# Flow:
+# 1) Fire up / validation
+# 2) Load up Server / ServerGroup objectsets.
+# 3) Report Load Summary
+# 4) Interactive Mode (Parser object, Command objects?)
+#
+# Server object -- contains server hostname, username
+# ServerGroup object -- contains many Server objects
 ######################################################################
 
 # Import modules we'll need.
 try:
     import getopt
+    import os
+    import os.path
     import socket
     import sys
 
@@ -24,15 +34,28 @@ except ImportError:
     print "An error occured while loading Python modules, exiting..."
     exit(1)
 
+# Define global variables(how global are they?)
+install_dir = os.getcwd()
+install_conf = os.path.join(os.getcwd(), 'conf')
+server_shell = 'ssh'
+
 # Display a nice pretty header.
 def title_header():
+    print
     print "The Distribulator v0.10"
     print "-----------------------"
     print
 
-def info_header():
-    print "Python Version: " + sys.version
-    print "Local Hostname: " + socket.gethostname()
+def info_header(server_env):
+    print "Python Version:      " + sys.version.split()[0]
+    print "Local Install Dir:   " + install_dir
+    print "Local Config Dir:    " + install_conf
+    print "Local Hostname:      " + socket.gethostname()
+    print "Current Environment: " + server_env
+    print
+    print "Internal Commands: 0"
+    print "External Commands: 0"
+    print "Server Groups: all"
 
 # Good old main...
 def main(argv):
@@ -64,10 +87,6 @@ The available options are:
         optlist, args = getopt.getopt(sys.argv[1:], short_options, long_options)
 
         if len(optlist) > 0:
-            # Set the sane defaults
-            server_env=''
-            server_shell='ssh'
-
             for opt in optlist:
                 if (opt[0] == '-e') or (opt[0] == '--env'):
                     server_env = opt[1]
@@ -89,7 +108,7 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
-    info_header()
+    info_header(server_env)
 #
 # If called from the command line, invoke thyself!
 #
