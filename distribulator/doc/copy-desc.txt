@@ -1,0 +1,12 @@
+Copy Command Syntax & Examples
+-----------------------------
+
+Syntax: copy <server_copy>
+
+Description:  This command is not yet implemented.
+
+Examples:
+
+Notes:
+
+$Id$

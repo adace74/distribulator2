@@ -1,10 +1,14 @@
-#
-# $Id$
-#
-######################################################################
-
 The Distribulator Help Screen
 -----------------------------
 
-Some day this file will have more information in it.
-For now, it just kinda sucks.
+Valid Commands:
+	* copy  -- Copies files among servers.
+	* exit  -- Exits the Distribulator.
+	* group -- Sets current servergroup.
+	* help  -- This command.
+	* run   -- Run remote commands.
+	* shell -- Change remote shell type.
+
+For more detailed help, try "help <command>".
+
+$Id$

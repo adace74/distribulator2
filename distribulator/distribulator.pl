@@ -28,20 +28,26 @@ use Term::ReadLine;
 # Constant Variables (Fix Me!)
 #
 my($CONF_DIR) = '/usr/local/ops/environ';
+my($FALSE) = 0;
+my($TRUE) = 1;
 #
-# Runtime Variables
+# Runtime Arg/Temp Variables
 #
 my($config_arg, $env_arg, $help_arg, $shell_arg, $version_arg) = '';
 my(@command_tokens);
-my($command_tokens_count);
-my($current_group) = 'wlx';
-my(@current_servers);
-my($environment);
+my($error_state);
 my($remote_command);
 my($server);
+my($temp_str);
 my($MYFILE);
 
+#
+# State Tracking Variables
+my($current_server_group) = 'wlx';
+my($environment);
+my(@server_groups);
 my(%servers_groups_hash);
+my(@valid_commands) = ( 'copy', 'exit', 'group', 'help', 'run', 'shell' );
 
 GetOptions("config=s" => \$config_arg,
            "env=s" => \$env_arg,
@@ -61,25 +67,25 @@ if ($help_arg)
 #
 if ($version_arg)
 {
-    print "\n";
-    print "The Distribulator v0.1\n";
-    print "\n";
-    print "(c) Copyright 2002 Adam W. Dace.\n";
-    print "The Distribulator may be copied only under the terms of the BSD License,\n";
-    print "a copy of which can be found with The Distribulator distribution kit.\n";
-    print "\n";
-    print "Specify the --help option for further information about The Distribulator.\n";
-    print "\n";
+    print("\n");
+    print("The Distribulator v0.1\n");
+    print("\n");
+    print("(c) Copyright 2002 Adam W. Dace.\n");
+    print("The Distribulator may be copied only under the terms of the BSD License,\n");
+    print("a copy of which can be found with The Distribulator distribution kit.\n");
+    print("\n");
+    print("Specify the --help option for further information about The Distribulator.\n");
+    print("\n");
 
     exit(0);
 }
 #
 # Give the user a banner, no matter what.
 #
-print "\n";
-print "The Distribulator v0.1\n";
-print "----------------------\n";
-print "\n";
+print("\n");
+print("The Distribulator v0.1\n");
+print("----------------------\n");
+print("\n");
 #
 # Validate our command-line arguments.
 #
@@ -110,77 +116,182 @@ $term->ornaments(0,0,0,0);
 #
 # Print a little intro.
 #
-print "\n";
-print "You Are On Server               : $hostname\n";
-print "You Can Run Distributed Stuff In: $environment\n";
-print "\n";
-print "Prompt Description -- <user\@environment[current_group]:local_dir>\n";
-print "\n";
+print("\n");
+print("Your Client Host:         $hostname\n");
+print("Your Current Environment: $environment\n");
+print("\n");
+print("Prompt Description -- <user\@environment[current_server_group]:local_dir>\n");
+print("\n");
 #
 # The Never Ending Loop...
 #
-while (true)
+while ($TRUE)
 {
 	$command = '';
-	$prompt = "<$user\@$environment\[$current_group\]:$dir> ";
+	$error_state = $TRUE;
+	$prompt = "<$user\@$environment\[$current_server_group\]:$dir> ";
 	$input = $term->readline($prompt);
 
-	# Argh, how to detect CTRL-D?
-	if ( ($input eq 'exit') || ($input eq 'quit') )
+	@command_tokens = split(' ', $input);
+	$command = shift(@command_tokens);
+
+    # If the command isn't found in the array.
+    if (!isValidCommand($command))
+    {
+		print("ERROR: Unknown Command: $command\n");
+
+        next;
+    }
+
+    #################### IMPLEMENTED ####################
+
+    # Exit
+    if ( ($command eq 'exit') )
 	{
-		print "Received exit/quit command.  See ya later!\n\n";
+		print "Received exit command.  See ya later!\n\n";
 
 		exit(0);
 	}
 
-	@command_tokens = split(' ', $input);
-	$command_tokens_count = scalar @command_tokens;
-
-	$command = shift(@command_tokens);
-
-	print "Input:          $input\n";
-	print "Command Tokens: @command_tokens\n";
-	print "Token Count:    $command_tokens_count\n";
-	print "Command:        $command\n";
 	#
 	# Idea -- We should create a hashtable of command name and
 	# maximum number of args, would be good for validation.
 	#
 	# How do we see if the user hit CTRL-D?
 	#
+	# Group
 	if ($command eq 'group')
 	{
-		$current_group = shift(@command_tokens);
-	}
-    elsif ($command eq 'help')
-    {
-        PrintHelpFile();
-    }
-	elsif ($command eq 'run')
-	{
-		$remote_command = join(' ', @command_tokens);
+		$error_state = $FALSE;
+		$temp_str = shift(@command_tokens);
 
-		print "Run $remote_command on server group $current_group?\n";
-
-		if ( $term->readline("Yes / No> ") =~ /^[Yy]/ )
+        if ( !$temp_str )
+        {
+            print("ERROR: No server group given.\n");
+        }
+		elsif ( $servers_groups_hash{$temp_str} )
 		{
-			print "Want to run it!\n";
-
-			foreach $server (@current_servers)
-			{
-				print "ssh $server $remote_command\n";
-			}
+			$current_server_group = $temp_str;
+			print("NOTE:  Current server group now is '$current_server_group'.\n");
 		}
 		else
 		{
-			print "Okay, not running the command.\n";
+			print("ERROR: Unknown server group $temp_str.\n");
 		}
+	}
 
-		#RunCommandRemote($remote_command, $current_group);
+	# Help
+	if ($command eq 'help')
+	{
+		$error_state = $FALSE;
+		$temp_str = shift(@command_tokens);
+
+        # If the next argument is a valid command, show help for it.
+		if ( isValidCommand($temp_str) )
+		{
+			if ( !PrintHelpFile("$temp_str-desc.txt") )
+			{
+				print("ERROR: Problem displaying $temp_str-desc.txt file.\n");
+			}
+		}
+        else
+        {
+			if ( !PrintHelpFile('help.txt') )
+            {
+                print("ERROR: Problem displaying help.txt file.\n");
+            }
+        }
+	}
+
+	# Run
+	if ($command eq 'run')
+	{
+		# Run command on server group
+		if ( $input =~ /^run (\".*\") on group (.*)/ )
+		{
+			# Parsing logic.
+			print("Run $1 on $2 server group?\n");
+
+			# Validate Me!
+			if ( AreYouSure() )
+			{
+				foreach my $server ( @{$servers_groups_hash{$2}} )
+				{
+					print("ssh $server $1\n");
+				}
+			}
+            else
+            {
+                print "Okay, NOT running the command.\n";
+            }
+
+			$error_state = $FALSE;
+		}
+        # Run command on server host
+        if ($input =~ /^run (\".*\") on server (.*)/)
+        {
+            # Parsing logic.
+            print("Run $1 on $2 server?\n");
+
+			# Validate Me!
+            if ( AreYouSure() )
+            {
+                print("ssh $2 $1\n");
+            }
+            else
+            {
+                print "Okay, NOT running the command.\n";
+            }
+
+			$error_state = $FALSE;
+        }
+		# Run command on current group.
+		elsif ($input =~ /^run (\".*\")/)
+		{
+			print("Run $1 on server group $current_server_group?\n");
+
+			if ( AreYouSure() )
+			{
+				foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+				{
+					print("ssh $server $1\n");
+				}
+			}
+			else
+			{
+				print "Okay, NOT running the command.\n";
+			}
+
+			$error_state = $FALSE;
+		}
+		# Invalid syntax.
+		else
+		{
+			print("ERROR: Invalid syntax.\n");
+		}
+	}
+
+    #################### NOT IMPLEMENTED ####################
+
+    if ($command eq 'copy' || $command eq 'shell')
+    {
+		$error_state = $FALSE;
+        print("ERROR: This command is not yet implemented.\n");
+    }
+}
+
+#
+# Ask the ever-necessary "Are You Sure?" question.
+#
+sub AreYouSure
+{
+	if ( $term->readline("Yes / No> ") =~ /^[Yy]/ )
+	{
+		return $TRUE;
 	}
 	else
 	{
-		print "ERROR: Unknown Command: $command\n";
+		return $FALSE;
 	}
 }
 
@@ -207,7 +318,7 @@ sub LoadConfig
             open(MYFILE, "<$CONF_DIR/$environment/$filename")
                 || die("Failed to open file $CONF_DIR/$environment/$filename for reading.");
 
-            print "Loading hostnames for $filename server group...";
+            print("Loading hostnames for $filename server group...");
 
             while(<MYFILE>)
             {
@@ -219,23 +330,47 @@ sub LoadConfig
 
             close(MYFILE);
 
+	    push(@server_groups, $filename);
+
             print "Done.\n";
         }
     }
 
     closedir(MYDIR);
 
-    print "\n";
+    print("\n");
+
+    # Debug / summary
+    print("Known Server Groups: @server_groups\n");
 
     foreach my $group (sort keys(%servers_groups_hash) )
     {
-        print "Group: $group\n";
+        print("Group: $group\n");
 
         foreach my $server ( @{$servers_groups_hash{$group}} )
         {
-            print "     Server: $server\n";
+            print("     Server: $server\n");
         }
     }
+}
+
+#
+# Simple validation logic.
+#
+sub isValidCommand
+{
+    my($validate_me) = @_;
+    my($command_str);
+
+    foreach $command_str (@valid_commands)
+    {
+        if ($validate_me eq $command_str)
+        {
+            return $TRUE;
+        }
+    }
+
+    return $FALSE;
 }
 
 #
@@ -245,7 +380,7 @@ sub PingServer
 {
 #    use Net::Ping;
 
-	return 1;
+	return($TRUE);
 }
 
 #
@@ -253,19 +388,23 @@ sub PingServer
 #
 sub PrintHelpFile
 {
-        print "\n";
+	my ($filename) = @_;
 
-        open(MYFILE, "<./doc/help.txt") ||
-            die("Cannot find the help file in ./doc!");
+    open(MYFILE, "<./doc/$filename") ||
+	    return($FALSE);
 
-        while(<MYFILE>)
-        {
-            print $_;
-        }
+    print "\n";
 
-        close(MYFILE);
+    while(<MYFILE>)
+    {
+        print($_);
+    }
 
-        print "\n";
+    close(MYFILE);
+
+    print "\n";
+
+	return($TRUE);
 }
 
 #
@@ -285,7 +424,7 @@ sub ValidateArgs
     }
     else
     {
-        die ('Invalid arguments given.  See --help for required flags.');
+        die('Invalid arguments given.  See --help for required flags.');
     }
 }
 

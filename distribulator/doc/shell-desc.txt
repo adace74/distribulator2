@@ -1,0 +1,14 @@
+Shell Command Syntax & Examples
+-------------------------------
+
+Syntax: shell <remote_shellname>
+
+Description:  Sets the remote shell type.
+
+Examples:
+	shell nsh	-- Sets the remote shell type to "nsh".
+
+Notes:
+	Defaults to 'ssh'.
+
+$Id$
