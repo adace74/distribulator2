@@ -60,7 +60,7 @@ def printInfoHeader(PassedServerEnv, PassedConfigDir):
 
 # Good old main...
 def main(argv):
-    short_options = ':b:d:e:h:s:v:'
+    #short_options = ':b:d:e:h:s:v:'
     long_options = ['batch=',
                     'directory=',
                     'env=',
@@ -68,28 +68,28 @@ def main(argv):
                     'shell=',
                     'version']
 
-    usage = """Usage: %s [options] --env=environment
+    usage = """
+Usage: %s [options] --env=environment
 
 The available options are:
 
-    -b / --batch=filename
+    --batch=filename
     Enables batch mode processing, requires a readable input file.
     OPTIONAL
 
-    -d / --directory=start_dir
+    --directory=start_dir
     Allows the wrapper script to pass in the user's real cwd.
     OPTIONAL
 
-    -e / --env=
+    --env=
     Set the server environment we wish to operate in.
     REQUIRED
 
-    -h / --help
+    --help
     This usage statement.
 
-    -v / --version
+    --version
     Print version information.
-
 """ % argv[0]
 
     thisBatchFile = ''
@@ -99,10 +99,9 @@ The available options are:
     try:
         if len(argv) < 2:
             print("ERROR: I need to know which environment I am to use!")
-            print
             raise "CommandLineError"
 
-        optlist, args = getopt.getopt(sys.argv[1:], short_options, long_options)
+        optlist, args = getopt.getopt(sys.argv[1:], None, long_options)
 
         if len(optlist) > 0:
             for opt in optlist:
@@ -113,7 +112,7 @@ The available options are:
                 elif (opt[0] == '-e') or (opt[0] == '--env'):
                     thisServerEnv = opt[1]
                 elif (opt[0] == '-h') or (opt[0] == '--help'):
-                    sys.stdout.write(usage)
+                    print(usage)
                     sys.exit(0)
                 elif (opt[0] == '-v') or (opt[0] == '--version'):
                     print("The Distribulator v0.50")
@@ -125,13 +124,12 @@ The available options are:
             raise "CommandLineError"
 
     except "CommandLineError":
-        sys.stderr.write(usage)
+        print(usage)
         sys.exit(1)
 
     except getopt.GetoptError:
         print("ERROR: Erroneous flag(s) given.  Please check your syntax.")
-        print
-        sys.stderr.write(usage)
+        print(usage)
         sys.exit(1)
 
     try:

@@ -5,7 +5,7 @@
 ######################################################################
 
 You have found perhaps the world's only Open Source stand-alone
-distributed server shell / batch system.
+distributed server shell command / batch system.
 
 Website Easy URL: http://distribulator.turing.com/
 Website Real URL: http://sourceforge.net/projects/distribulator/
@@ -21,9 +21,9 @@ that many employees total -- much less just to maintain servers!
 Unfortunately life's daily busywork has kept most everyone from having
 the time in the office to develop longer-term solutions.
 
-If completed, the Distribulator will have two modes:
+Currently, the Distribulator has two modes:
 
-* Shell: A console interface designed to "wrap" around SSH,
+* Console: A console interface designed to "wrap" around SSH,
   but will also allow local commands to be run.  The idea here is to provide
   people who have to do "fire fights" in a production environment with the best
   common toolset available.
@@ -40,14 +40,30 @@ What Will It Do?
 ----------------
 Please see the file "Changelog" located in this directory.
 
+How might I install this?
+-------------------------
+1) Pick a place you'd like to install the program(the default is /promo/distribulator2,
+   probably nothing like where you'd want it!).
+
+   For example, let's say you'd like to install it in /apps/distribulator2.
+2) Go there:
+	cd /apps/
+3) Unpack the distribution:
+	tar xfz distribulator-0.50.tar.gz (the distribulator2 dir is included in the tarball)
+4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
+   reflect your installation directory:
+	vi distribulator2/scripts/distribulator
+5) Create a symlink from /usr/local/bin/ (or your path-happy location of choice):
+	cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator
+6) Fire it up:
+	distribulator
+7) Play around, read README.config, attempt to comprehend this funky program.
+
 Where can I read more extensive documentation?
 ----------------------------------------------
 Uh...the source code?  Sorry, but for the moment the most extensive
-documentation is from running the Perl version like so:
-"distribulator.pl --help"
-
-The Python rewrite / improvement effort is being focused on for the time
-being -- once I have a reasonable release to document I'll do so.
+documentation is from running "distribulator.py --help" and the "help" command
+once the console mode has started properly.
 
 Who Is Working On It?
 ---------------------

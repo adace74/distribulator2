@@ -4,12 +4,21 @@
 #
 ######################################################################
 
-TODO List
----------
-* Testing / stabilization -- Leave it be for a while, find bugs,
-  and fix them!
-* Run command  -- Add the ability to run a single command on a single host.
-* Copy command -- Add the ability to copy from a single host to a single
-  server group.
-* Copy command -- Other permutations.
+Short-term TODO List
+--------------------
+* Stabilization / testing:
+    1) Usage testing.
+    2) Bug collection / fixes.
+    2) Code refactoring as makes sense.
+    3) Throw a cat at it!
 
+* Bugs:
+    1) Currently we log the usage of the "cd" command.
+       This is rather silly...take a close look at CommandLine and CommandRunner,
+       make appropriate changes.
+    2) Review all objects and implement static objects as appropriate(BatchRunner, CommandLine).
+    3) Review object naming, refer to design patterns, and fix them(currently icky-but-works).
+    4) Start using SourceForge's bug tracker.  First one -- copy really should act more like cp
+       and take multiple files as arguments.  The current way kinda sucks.
+    5) Another bug is we really should respect the facility setting in config.xml,
+       right now it's hard-coded.

@@ -10,7 +10,6 @@ Legend For Changes Below:
 "*" Indicates a change that is at least 80%(if not 100%) complete.
 
 Change List For v0.3 (Shipped):
-
 * Some semblance of a shell, include a useful prompt.
   Now includes 'cat', 'cd', and 'ls' for local server browsing.
 * Ability to load in text-based lists of servers, representing
@@ -30,7 +29,6 @@ Change List For v0.3 (Shipped):
   in all of us.
 
 Change List For v0.4-v0.45 (Shipped):
-
 * Addition of the "login" command.  Basically allows the user to specify
   a server to login to without having to exit the distribulator.
 * Addition of --noping for environments where either a ServerPing is
@@ -39,10 +37,9 @@ Change List For v0.4-v0.45 (Shipped):
   across every group in the started-up environment.
 * Addition of the ability to read in a text-file list of common Unix commands.
 * Addition of the ability to distinguish those commands as external and
-  simply pass them through to the underlying shell via perl's system() call.
+  simply pass them through to the underlying shell via the system() call.
 
 Spontaneous Change List For v0.47 (Shipped):
-
 * Modularized codebase.  Still not all that generic, but at least
   broken out by functionality.  There's still way too many
   inter-dependancies, but it's at least more manageable.
@@ -60,40 +57,43 @@ Spontaneous Change List For v0.47 (Shipped):
 * Improved testing process, thus improved stability.
 
 Spontaneous Change List For v0.48 (Shipped):
-
 * Fixed a silly bug where the command-line prompt wasn't being updated with
-  the current server group. --Perl
+  the current server group.
 * Added a -t flag to the run command.  This will allow one to specify
   whether a remote tty is required for a given command.  This has caused
   much pain within my work environment lately.  Use with caution, some
   programs/scripts require -t (i.e. vi) and some will utterly break on
-  Linux if given -t (i.e. some custom startup scripts).  --Perl
+  Linux if given -t (i.e. some custom startup scripts).
 * Fixed the included wrapper script such that it stores the user's
   pwd on startup, then passes it along to the distribulator such that
-  the module directory magic going is transparent.  --Perl
-* Fixed code to ignore 'CVS' directories.  --Perl
-* Utterly annoyed with the current organization of code / objects,
-  a lets-do-it-better version written in Python has begun.  --Python
+  the module directory magic going is transparent.
+* Fixed code to ignore 'CVS' directories.
 
-Change List For v0.5 (Coming Soon!):
-
+Change List For v0.5 (Shipped):
+* First 100% Python release.  Enjoying the benefits of a more
+  natively object-oriented language than Perl.
+* Auditing implemented.
+* Batch mode implemented.
 * Single local server file to single remote server file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
 * Single local server file to many remote serveres file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
+
+Change List For v0.6 (Coming as soon as it's ready):
+* Stabilization work / bug fixes.
+
+Change List For v0.7 (A little farther out):
+- Ability to run commands on a remote single server.
+(i.e. ssh adace@remote01 "uptime")
 - Single remote server file to single remote server file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)
 - Single remote server file to many remote serveres file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
 
-Change List For v0.7 (A little farther out):
-
+Change List For v1.0 (Will we ever get here?  Who knows!):
 - Regular expression support in server hostnames.
 - Sudo-based remote permissions checking.
 - Other random pie-in-the-sky dreamsicle features.
-
-Change List For v1.0 (Will we ever get here?  Who knows!):
-
 - A decent install / setup system!  Perhaps a quick autoconf thingie?
 - Integration with ncurses such that one could run a command on 4 servers
   in parallel, and see the output from each of them?
