@@ -170,14 +170,19 @@ The available options are:
         thisGlobalConfig.getLognameBinary())
 
     if ( len(thisOutput) > 1 ):
-        thisGlobalConfig.setUsername(thisOutput)
-    else:
+        thisGlobalConfig.setRealUsername(thisOutput)
         thisGlobalConfig.setUsername( getpass.getuser() )
-    
+    else:
+        thisGlobalConfig.setRealUsername( getpass.getuser() )
+        thisGlobalConfig.setUsername( getpass.getuser() )
+
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
     thisGlobalConfig.setSysLogger(thisLogger)
-    thisLogger.LogMsgInfo("INFO: Started by user " + \
-                          thisGlobalConfig.getUsername() + '.')
+    thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50.")
+    thisLogger.LogMsgInfo("INFO: Real UID:      " +
+                          thisGlobalConfig.getRealUsername())
+    thisLogger.LogMsgInfo("INFO: Effective UID: " + \
+                          thisGlobalConfig.getUsername())
 
     # Try to chdir() to thisStartDir if possible.
     try:
@@ -190,7 +195,7 @@ The available options are:
     thisCommLine.invoke()
 
     # Once it returns, we're done!
-    thisLogger.LogMsgInfo("INFO: User requested exit, shutting down...")
+    thisLogger.LogMsgInfo("INFO: User requested exit, shutting down.")
     sys.exit(0)
 
 ######################################################################

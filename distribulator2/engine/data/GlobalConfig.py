@@ -110,6 +110,14 @@ class GlobalConfig:
     def setUsername(self, PassedUsername):
         self._username = PassedUsername
     #
+    # Local effective Unix username.
+    #
+    def getRealUsername(self):
+        return self._realUsername
+
+    def setRealUsername(self, PassedRealUsername):
+        self._realUsername = PassedRealUsername
+    #
     # Servers and ServerGroups
     #
     def getCurrentServerGroup(self):
