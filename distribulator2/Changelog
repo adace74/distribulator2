@@ -237,7 +237,8 @@ Change List For v0.8.0 (Language: Python / Bloat Factor: 3953 lines / Status: Sh
 Change List For v0.8.1 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to run multiple commands using typical shell-style semicolon delimiter.
-- Ability to use hostname(s), servergroup name(s), or regular expression in "copy" and "run" commands.
+- Ability to list servers who run a particular service.  Config file tags, etc.
+- Ability to use regular expressions in "copy" and "run" commands.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
