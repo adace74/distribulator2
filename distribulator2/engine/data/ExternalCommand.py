@@ -53,7 +53,7 @@ class ExternalCommand:
         """This method is responsible for running a given command in console mode."""
 
         if ( self._globalConfig.isBatchMode() ):
-            self._globalConfig.getLogger().error(
+            self._globalConfig.getMultiLogger().LogMsgError(
                 "ExternalCommand.run() called in batch mode." )
             return False
 
