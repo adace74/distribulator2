@@ -79,9 +79,13 @@ Change List For v0.5 (Shipped):
 * Single local server file to many remote serveres file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote[01-10]:/some/other/path)
 
-Change List For v0.51 - v0.6 (Coming as soon as it's ready):
+Change List For v0.51 (Shipped):
+* Documentation updates, aiming for the normal INSTALL/README
+  paradigm.
+
+Change List For v0.6 (Coming as soon as it's ready):
 * Bug fixes / OO design sanity fixes / stabilization work.
-* Documentation updates.
+* More documentation updates.
 
 Change List For v0.7 (A little farther out):
 - Ability to run commands on a remote single server.
