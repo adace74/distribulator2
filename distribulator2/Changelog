@@ -74,8 +74,8 @@ Change List For v0.48 (Language: Perl / Status: Shipped)
   the module directory magic going is transparent.
 * Fixed code to ignore 'CVS' directories.
 
-Change List For v0.5 (Language: Python / Status: Shipped)
----------------------------------------------------------
+Change List For v0.5 (Language: Python / Bloat Factor: 1787 lines / Status: Shipped)
+------------------------------------------------------------------------------------
 * First 100% Python release.  Enjoying the benefits of a more
   natively object-oriented language than Perl.
 * All previous Perl features implemeneted, some better than before.
@@ -85,13 +85,13 @@ Change List For v0.5 (Language: Python / Status: Shipped)
 * Single local server file to single group server file copy.
 (i.e. scp awd@localhost:/tmp/blah awd@app:/some/other/path)
 
-Change List For v0.51 (Language: Python / Status: Shipped)
-----------------------------------------------------------
+Change List For v0.51 (Language: Python / Bloat Factor: 1787 lines / Status: Shipped)
+-------------------------------------------------------------------------------------
 * Lots of documentation updates,
   aiming for the normal INSTALL/README paradigm.
 
-Change List For v0.52 (Language: Python / Status: Shipped)
-----------------------------------------------------------
+Change List For v0.52 (Language: Python / Bloat Factor: 1819 lines / Status: Shipped)
+-------------------------------------------------------------------------------------
 * Changed command "server-group" with no arguments to print
   a server-group list similar to that at startup.
 * Fixed inaccuracies found in this Changelog.
@@ -100,13 +100,13 @@ Change List For v0.52 (Language: Python / Status: Shipped)
 * SourceForge bug #749953 fixed.
 * SourceForge bug #749963 fixed.
 
-Change List For v0.53 (Language: Python / Status: Skipped)
-----------------------------------------------------------
+Change List For v0.53 (Language: Python / Bloat Factor: Unknown / Status: Skipped)
+----------------------------------------------------------------------------------
 * Minimal cosmetic fixes in how server-list and server-group
   do output.
 
-Change List For v0.6.0 (Language: Python / Status: Shipped)
------------------------------------------------------------
+Change List For v0.6.0 (Language: Python / Bloat Factor: 2503 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Goal: The ongoing goal of this release is to provide a "good enough"
   featureset for real-world applications, and to implement a
   feature freeze such that focus can be shifted to stability
@@ -139,8 +139,8 @@ Change List For v0.6.0 (Language: Python / Status: Shipped)
   For details see Sourceforge, there are simply too many to list here.
 * Small LICENSE fixes, also propogated other legalese.
 
-Change List For v0.6.1 (Language: Python / Status: Shipped)
------------------------------------------------------------
+Change List For v0.6.1 (Language: Python / Bloat Factor: 2940 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Finally got around to parameterizing the application version info.
 * Added source-level documentation to the codebase(pydoc compatible).
 * Various clean-up across the codebase.
@@ -155,15 +155,15 @@ Change List For v0.6.1 (Language: Python / Status: Shipped)
 * Standardized version numbering.
 * Added a small script to automate release packaging.
 
-Change List For v0.6.2 (Language: Python / Status: Shipped)     
----------------------------------------------------------------
+Change List For v0.6.2 (Language: Python / Bloat Factor: 2951 lines / Status: Shipped)     
+--------------------------------------------------------------------------------------
 * SourecForge bug #805371 fixed.
 * SourceForge bug #815787 fixed.
 * SourceForge bug #815788 fixed.
 * SourceForge bug #815877 fixed.
 
-Change List For v0.6.3 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.6.3 (Language: Python / Bloat Factor: 3157 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * SourceForge bug #845634 fixed.
 * SourecForge bug #853052 fixed.
 * Ability to simply echo any given set of hosts or server groups to STDOUT
@@ -172,8 +172,8 @@ Change List For v0.6.3 (Language: Python / Status: Shipped)
 * Cleanup: Renaming instance variables with a naming convention less lame than
   thisThing, thisOtherThing, etc.
 
-Change List For v0.7.0 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.7.0 (Language: Python / Bloat Factor: 3478 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Cleanup: Restructured and "split up" code such that it adheres to a more
   OO way of thinking.  No real definition of dynamic versus static classes,
   but at least there are less monolithic classfiles now.
@@ -183,8 +183,8 @@ Change List For v0.7.0 (Language: Python / Status: Shipped)
 * Testing: Improved the existing manual test suite.
 * Batch Mode: Added $hostname as a built-in variable, referencing the local server hostname.
 
-Change List For v0.7.1 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.7.1 (Language: Python / Bloat Factor: 3646 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Ability to "ping" servers via internal TCP check logic.
   Options include TCP port, timeout in secs, and a banner string contains "foo" check.
   NOTE: This appears to have sped up overall speed significantly.  Nice!
@@ -196,17 +196,17 @@ Change List For v0.7.1 (Language: Python / Status: Shipped)
 * Cleanup: Added a generic error message to the XMLConfigParser,
   should avoid some raw stack traces on missing XML tags.
 
-Change List For v0.7.2 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.7.2 (Language: Python / Bloat Factor: 3655 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Update all code to be functional with Python v2.3.X.
 * Cleanup: Updated the accompanying config.dtd with the "ping" XML tag.
 * Cleanup: Disable GNU readline history when running in batch mode.
 
-Change List For v0.7.3 (Language: Python / Status: Skipped)
----------------------------------------------------------------
+Change List For v0.7.3 (Language: Python / Bloat Factor: 3642 lines / Status: Skipped)
+--------------------------------------------------------------------------------------
 
-Change List For v0.7.4 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.7.4 (Language: Python / Bloat Factor: 3773 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Ability to specify per-servergroup SSH version for use with both
   "copy" and "run" commands.  If no version is specified, no extra flags are added.
 * Cleanup: Moved CTRL-C state info into GlobalConfig.py.
@@ -214,8 +214,8 @@ Change List For v0.7.4 (Language: Python / Status: Shipped)
 * Cleanup: Added code to batch mode to close STDIN, should help with backgrounding.
 * Cleanup: Made the batch mode header and footer output more concise.
 
-Change List For v0.7.5 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.7.5 (Language: Python / Bloat Factor: 3963 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Cleanup: Changed exception handling for socket timeout to avoid stack trace dump.
 * Cleanup: Changed readline code to filename-only tab completion.
 * Cleanup: Disabled "copy" command local filesystem check so regular expressions can be used.
@@ -227,8 +227,8 @@ Change List For v0.7.5 (Language: Python / Status: Shipped)
 * Ability to have two permutations of list mode.
   The first returns only hostnames, the second returns username@hostname pairs.
 
-Change List For v0.8.0 (Language: Python / Status: Shipped)
----------------------------------------------------------------
+Change List For v0.8.0 (Language: Python / Bloat Factor: 3953 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Ability to ignore username information in config.xml via --nouser command-line flag.
 * Ability to skip the are-you-sure questions via the "now" keyword.
 * Ability to use logging module's configuration file for ultra-flexible logging setup.
