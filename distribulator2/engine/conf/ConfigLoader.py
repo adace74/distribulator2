@@ -185,7 +185,7 @@ class ConfigLoader:
             print("-")
             print(myServerGroupStr)        
             print("-")
-            print("- Total: %d servers in %d environments loaded." % (myTotalServerCount, myTotalEnvironmentCount))
+            print("- Total: %d server(s) in %d environment(s) loaded." % (myTotalServerCount, myTotalEnvironmentCount))
             print
             print("Confused?  Need help?  Try typing 'help' and see what happens!")
             print

@@ -476,7 +476,7 @@ class GlobalConfig:
     def getCurrentEnvName(self):
         """This is a typical accessor method."""
 
-        return self._currentEnvName
+        return self.getCurrentEnv().getName()
 
 ######################################################################
 
@@ -507,7 +507,7 @@ class GlobalConfig:
         PassedServerEnvName = PassedServerEnvName.strip()
 
         for myEnvironment in self._environmentList:
-            if ( myEnvironment.name == PassedServerEnvName ):
+            if ( myEnvironment.getName() == PassedServerEnvName ):
                 return myEnvironment
 
         return False
@@ -569,6 +569,13 @@ class GlobalConfig:
 #
 # Servers and ServerGroups handlers
 #
+######################################################################
+
+    def getCurrentServerGroupName(self):
+        """This is a typical accessor method."""
+
+        return self.getCurrentServerGroup.getName()
+
 ######################################################################
 
     def getCurrentServerGroup(self):
