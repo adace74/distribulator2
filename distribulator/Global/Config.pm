@@ -192,7 +192,7 @@ sub ResetTermAndExit
 
     system("reset");
 
-    print "\nReceived exit command.  Reset terminal.  Dying...\n\n";
+    print "\nReceived exit command.  Wrote history.  Reset terminal.  Dying...\n\n";
 
     exit(0);
 }

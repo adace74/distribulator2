@@ -80,7 +80,7 @@ sub AreYouSure
     }
     else
     {
-        print "Okay, NOT running the command.\n";
+        print("NOTE:  Not executing command.\n");
 
         return $FALSE;
     }
