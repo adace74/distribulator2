@@ -192,8 +192,6 @@ class BatchRunner:
             thisTerseMode = True
 
         self._globalConfig.getSysLogger().LogMsgInfo(thisSeperator)
-        if (thisTerseMode):
-            print(thisSeperator)
 
         thisInfo = "INFO:  Commands Run:      %d commands" % \
               thisCommandCount
