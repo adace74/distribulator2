@@ -147,6 +147,7 @@ while ($TRUE)
     $command = '';
     setReadLinePrompt("<$prompt_user\@$prompt_env\[wlx\]:" .
         cwd() . "> ");
+    setUserAborting($FALSE);
 
     $input = $term->readline( getReadLinePrompt() );
 
