@@ -22,18 +22,15 @@ FYI, the author currently tests on both FreeBSD 4.x and Linux(RedHat) environmen
 
 Nothing special here, readline just Makes Life Easier.
 
-- Python v2.2.X (http://www.python.org/) accessible via /usr/local/bin/python
+- Python v2.3.X (http://www.python.org/) accessible via /usr/local/bin/python
 
-I've yet to test this with Python v2.3.X, so I'm not entirely sure how the changes
-to implement timeoutsocket within the language itself will affect the code.
+Code changes were required for the conversion to v2.3.3,
+so I'm not altogether sure if it'll run on an earlier version anymore.
 
 Also, if you don't have a symlink for python in /usr/local/bin/,
 either put on there or hack the distribulator.py first line.
 
-- PyXML v0.8.X (http://pyxml.sourceforge.net/)
-
-Due to a bug in Python v2.2.X, the built-in XML parser is not always found.
-The simple workaround is to install PyXML as a just-in-case measure.
+Thankfully, PyXML is no longer required as an add-on package!
 
 Installation
 ------------
