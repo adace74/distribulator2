@@ -181,7 +181,7 @@ class CommandRunner:
                             thisServer.getName() + ":" + \
                             self._commTokens[2] )
                         # Log It.
-                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
                                                                      thisExternalCommand.getCommand())
                         # Run It.
                         thisExternalCommand.run()
@@ -236,7 +236,7 @@ class CommandRunner:
                 thisExternalCommand.setCommand( \
                     self._globalConfig.getSshBinary() + " -l " + \
                     thisServer.getUsername() + " " + thisServer.getName() )
-                self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
                                                              thisExternalCommand.getCommand())
                 try:
                     thisExternalCommand.run()
@@ -360,7 +360,7 @@ class CommandRunner:
                             thisServer.getName() + " " + \
                             thisBodyStr )
                         # Log It.
-                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
                                                                      thisExternalCommand.getCommand())
                         # Run It.
                         thisExternalCommand.run()
