@@ -27,7 +27,7 @@ import sys
 # Custom modules
 import Command
 import engine.data.ExternalCommand
-import generic.HostPinger
+import engine.misc.HostPinger
 
 ######################################################################
 
@@ -231,8 +231,7 @@ class RunCommand(Command.Command):
             try:
                 for myNameStr in myServerNameList:
                     myServer = self._globalConfig.getServerByName(myNameStr)
-                    myPinger = generic.HostPinger.HostPinger(
-                        self._globalConfig.getPingBinary() )
+                    myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
 
                     if (myPinger.ping(myNameStr) == 0):
                         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
@@ -282,8 +281,7 @@ class RunCommand(Command.Command):
 
                 try:
                     for myServer in myServerList:
-                        myPinger = generic.HostPinger.HostPinger(
-                            self._globalConfig.getPingBinary() )
+                        myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
 
                         if (myPinger.ping(myServer.getName()) == 0):
                             myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)

@@ -2,13 +2,13 @@ The Distribulator Help Screen
 -----------------------------
 
 Valid Commands:
-    copy         -- Copies files among servers.
-    exit         -- Exits the Distribulator.
-    help         -- This command.
-    login        -- Remotely logs into a given server.
-    run          -- Run remote commands.
-    server-group -- Sets current server group.
-    server-list  -- List servers in a given or current working server group.
+    copy               -- Copies files among servers.
+    exit               -- Exits the Distribulator.
+    help               -- This command.
+    login              -- Remotely logs into a given server.
+    run                -- Run remote commands.
+    set server-group   -- Sets current server group.
+    show server-group  -- List servers in a given or current working server group.
 
 For more detailed help, try "help <command>".
 

@@ -261,20 +261,6 @@ class GlobalConfig:
 
 ######################################################################
 
-    def getPingBinary(self):
-        """This is a typical accessor method."""
-
-        return self._pingBinary
-
-######################################################################
-
-    def setPingBinary(self, PassedPingBinary):
-        """This is a typical accessor method."""
-
-        self._pingBinary = PassedPingBinary
-
-######################################################################
-
     def getScpBinary(self):
         """This is a typical accessor method."""
 
@@ -332,6 +318,50 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._sysLogger = PassedSysLogger
+
+######################################################################
+# Ping Options.
+######################################################################
+
+    def getPingBanner(self):      
+        """This is a typical accessor method."""
+
+        return self._pingBanner
+
+######################################################################
+
+    def setPingBanner(self, PassedPingBanner):
+        """This is a typical accessor method."""
+
+        self._pingBanner = PassedPingBanner
+
+######################################################################
+
+    def getPingPort(self):
+        """This is a typical accessor method."""
+
+        return self._pingPort
+
+######################################################################
+
+    def setPingPort(self, PassedPingPort):
+        """This is a typical accessor method."""
+
+        self._pingPort = PassedPingPort
+
+######################################################################
+
+    def getPingTimeout(self):      
+        """This is a typical accessor method."""
+
+        return self._pingTimeout
+
+######################################################################
+
+    def setPingTimeout(self, PassedPingTimeout):
+        """This is a typical accessor method."""
+
+        self._pingTimeout = PassedPingTimeout
 
 ######################################################################
 # MultiLogger Object.

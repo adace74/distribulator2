@@ -101,6 +101,7 @@ class XMLFileParser:
 
         self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
         self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
+        self.handlePing(PassedConfig.getElementsByTagName('ping')[0])
         self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
 
 ######################################################################
@@ -122,8 +123,6 @@ class XMLFileParser:
         myValue = PassedBinary.getAttribute('value')
         if (myName == 'logname'):
             self._globalConfig.setLognameBinary(myValue)
-        elif (myName == 'ping'):
-            self._globalConfig.setPingBinary(myValue)
         elif (myName == 'scp'):
             self._globalConfig.setScpBinary(myValue)
         elif (myName == 'ssh'):
@@ -138,6 +137,28 @@ class XMLFileParser:
 
         self._globalConfig.setSyslogFacility(
             eval("syslog.LOG_" + PassedLogging.getAttribute('facility').strip()) )
+
+######################################################################
+# Ping options.
+######################################################################
+
+    def handlePing(self, PassedPing):
+        """This method handles a single <Ping> tag."""
+
+        if (PassedPing.getAttribute('banner')):
+            self._globalConfig.setPingBanner(PassedPing.getAttribute('banner'))
+        else:
+            self._globalConfig.setPingBanner('')
+
+        if (PassedPing.getAttribute('port')):
+            self._globalConfig.setPingPort( int(PassedPing.getAttribute('port').strip()) )
+        else:
+            self._globalConfig.setPingPort(22)
+
+        if (PassedPing.getAttribute('timeout')):
+            self._globalConfig.setPingTimeout( int(PassedPing.getAttribute('timeout').strip()) )
+        else:
+            self._globalConfig.setPingTimeout(10)
 
 ######################################################################
 # Server environments, groups, and individual servers.

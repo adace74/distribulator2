@@ -21,7 +21,6 @@ __version__= '$Revision$'[11:-2]
 import Command
 import engine.data.ExternalCommand
 import generic.FilePrinter
-import generic.HostPinger
 
 ######################################################################
 

@@ -39,7 +39,7 @@ class ConsoleMode(Mode.Mode):
 
         self._globalConfig = PassedGlobalConfig
         self._commList = [ 'copy', 'exit', 'help', 'login', 'run',
-                           'server-group' ]
+                           'set', 'show' ]
 
 ######################################################################
 

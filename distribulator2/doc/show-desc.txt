@@ -1,0 +1,19 @@
+Server List Command Syntax & Examples
+-------------------------------------
+
+Syntax: show server-group [server_group]
+
+Description: Lists known servers in a given group,
+             or the current working group if none is specified.
+
+Examples:
+    show server-group         -- Displays servers in current working group.
+    show server-group www     -- Displays servers in the 'www' group.
+
+Notes:
+    The "current working server group" defaults to the first server group       
+    specified in XML configuration.
+
+----------------------------------------------------------------------
+$Id$
+----------------------------------------------------------------------

@@ -15,6 +15,6 @@ engine.command.Dispatcher    - Responsible for dispatching the a given command's
 engine.command.LoginCommand  - Implementation class representing the "login" command.
 engine.command.MiscCommand   - Implementation class representing the "cd", "exit" and "help" commands.
 engine.command.RunCommand    - Implementation class representing the "run" command.
-engine.command.ServerCommand - Implementation class representing the "server-group" and "server-list" commands.
+engine.command.ServerCommand - Implementation class representing the "set server-group" and "show server-group" commands.
 
 ######################################################################

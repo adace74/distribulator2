@@ -180,22 +180,38 @@ Change List For v0.7.0 (Language: Python / Status: Shipped)
 * Cleanup: Examined all source files, eliminated extraneous imports
   where possible.
 * Cleanup: Updated pydoc-based documentation to reflect above changes.
-* Testing: Improved the existing manual test suite,
-  beginnings of a sane batch file test suite.
+* Testing: Improved the existing manual test suite.
 * Batch Mode: Added $hostname as a built-in variable, referencing the local server hostname.
 
-Change List For v0.7.1 (Language: Python / Status: Not Started)
+Change List For v0.7.1 (Language: Python / Status: In Progress)
+---------------------------------------------------------------
+* Ability to "ping" servers via internal TCP check logic.
+  Options should include banner checking, port option, timeout,
+  etc.
+* Rename "server-group" command to "set server-group"
+  and "server-list" command to "list server-group".
+- Ability to use a new run command keyword: "single".
+  This will copy or run a command to a single server within a group,
+  skipping failed servers as necessary.
+
+Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
-  This will run the given command in background threads in parallel.
+  This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
-- Cleanup: Provide a larger set of example files.
-- Testing: Completion of a comprehensive batch file test suite.
+- Ability to use a "set concurrency X" command to set the concurrency
+  for parallel run.
+- Cleanup: Provide a larger set of example files.  Double-check doc.  Test like crazy.
 
-Idea List For v0.8.0 (Language: Python / Status: Not Started)
--------------------------------------------------------------
-- Supplement the HostPinger's functionality with a better,
-  timeout-capable socket conneciton test.
+Idea List For v0.8.1 (Language: Python / Status: Not Started)
+---------------------------------------------------------------
+- Testing: Completion of a comprehensive batch file test suite.
+  (Yes, this has been delayed often.  So far sheer simplicity has been enough.)
+- Ability to give a small summary report of which servers appeared to be down
+  during a given run.
+
+Idea List For v0.8.5 (Language: Python / Status: Not Started)
+---------------------------------------------------------------
 - Ability to use regular expressions to match server names.
 - Single remote server file to single remote server file copy.
   (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
@@ -215,6 +231,7 @@ Valid Ideas:
   queue(a file or two?) then run those on what it considers to be its
   siblings.  This would allow commands and files to be routed to
   X number of servers in a speedy fashion.
+
 Pie-In-The-Sky Ideas:
 - Sudo-based remote permissions checking ???
 - Integration with ncurses such that one could run a command on 4 servers

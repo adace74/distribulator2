@@ -60,38 +60,46 @@ class Dispatcher:
             if ( self._globalConfig.isQuietMode() == False ):
                 print("CMD:   " + self._commString)
 
-        # Cheezy branching logic.  Works well, though.
-        if (self._commTokens[0] == 'cd'):
-            myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
-            myCommandCount = myCommand.doChdir(self._commString)
-        elif (self._commTokens[0] == 'copy'):
-            myCommand = engine.command.CopyCommand.CopyCommand(self._globalConfig)
-            myCommandCount = myCommand.doCopy(self._commString)
-        elif (self._commTokens[0] == 'exit'):
-            myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
-            myCommandCount = myCommand.doExit(self._commString)
-        elif (self._commTokens[0] == 'help'):
-            myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
-            myCommandCount = myCommand.doHelp(self._commString)
-        elif (self._commTokens[0] == 'login'):
-            myCommand = engine.command.LoginCommand.LoginCommand(self._globalConfig)
-            myCommandCount = myCommand.doLogin(self._commString)
-        elif (self._commTokens[0] == 'run'):
-            myCommand = engine.command.RunCommand.RunCommand(self._globalConfig)
-            myCommandCount = myCommand.doRun(self._commString)
-        elif (self._commTokens[0] == 'server-group'):
-            myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)
-            myCommandCount = myCommand.doServerGroup(self._commString)
-        elif (self._commTokens[0] == 'server-list'):
-            myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)
-            myCommandCount = myCommand.doServerList(self._commString)
-        else:
+        try:
+            # Cheezy branching logic.  Works well, though.
+            if (self._commTokens[0] == 'cd'):
+                myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
+                myCommandCount = myCommand.doChdir(self._commString)
+            elif (self._commTokens[0] == 'copy'):
+                myCommand = engine.command.CopyCommand.CopyCommand(self._globalConfig)
+                myCommandCount = myCommand.doCopy(self._commString)
+            elif (self._commTokens[0] == 'exit'):
+                myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
+                myCommandCount = myCommand.doExit(self._commString)
+            elif (self._commTokens[0] == 'help'):
+                myCommand = engine.command.MiscCommand.MiscCommand(self._globalConfig)
+                myCommandCount = myCommand.doHelp(self._commString)
+            elif (self._commTokens[0] == 'login'):
+                myCommand = engine.command.LoginCommand.LoginCommand(self._globalConfig)
+                myCommandCount = myCommand.doLogin(self._commString)
+            elif (self._commTokens[0] == 'run'):
+                myCommand = engine.command.RunCommand.RunCommand(self._globalConfig)
+                myCommandCount = myCommand.doRun(self._commString)
+            elif (self._commTokens[1] == 'server-group'):
+                if (self._commTokens[0] == 'set'):
+                    myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)
+                    myCommandCount = myCommand.doSetServerGroup(self._commString)
+                elif (self._commTokens[0] == 'show'):
+                    myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)
+                    myCommandCount = myCommand.doShowServerGroup(self._commString)
+            else:
+                myError = "ERROR: Unknown Command: '" + \
+                                self._commString + "'."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                return False
+
+            del myCommand
+
+        except (IndexError):
             myError = "ERROR: Unknown Command: '" + \
-                            self._commTokens[0] + "'."
+                            self._commString + "'."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
-
-        del myCommand
 
         return myCommandCount
 
