@@ -39,6 +39,7 @@ my(@command_tokens);
 my($remote_command);
 my($server);
 my($temp_str);
+my($user);
 my($MYFILE);
 
 #
@@ -46,6 +47,7 @@ my($MYFILE);
 my($current_server_group) = 'wlx';
 my($environment);
 my(@server_groups);
+my(%users_groups_hash);
 my(%servers_groups_hash);
 my(@valid_commands) = ( 'copy', 'exit', 'group', 'help', 'run', 'shell' );
 
@@ -231,6 +233,38 @@ sub AreYouSure
 }
 
 #
+# Lookup which group this server belongs to.
+#
+sub getServerGroup
+{
+    my($find_server) = @_;
+    my($group, $group_server);
+
+    foreach $group (sort keys(%servers_groups_hash) )
+    {
+        foreach $group_server ( @{$servers_groups_hash{$group}} )
+        {
+            if ($find_server eq $group_server)
+            {
+                return $group;
+            }
+        }
+    }
+}
+
+#
+# Lookup which user we need to connect as.
+#
+sub getServerUser
+{
+    my($server) = @_;
+
+    my($group) = getServerGroup($server);
+
+    return $users_groups_hash{$group};
+}
+
+#
 # Load server group configuration from files.
 #
 sub LoadConfig
@@ -247,7 +281,7 @@ sub LoadConfig
     while( $filename = readdir(MYDIR) )
     {
         # Filter out . and .. -- we don't want those.
-        if ( !($filename =~ /\./) )
+        if ( !($filename =~ /\./) && !($filename eq 'user') )
         {
             # Load the file in.
             open(MYFILE, "<$CONF_DIR/$environment/$filename")
@@ -256,8 +290,8 @@ sub LoadConfig
             while(<MYFILE>)
             {
                 $line = $_;
-
                 chomp($line);
+
                 push(@{$servers_groups_hash{$filename}}, $line);
             }
 
@@ -271,6 +305,34 @@ sub LoadConfig
 
     @server_groups = sort(@server_groups);
 
+    # The idea here is to go into the environment/user directory,
+    # and pull in -all- files within that directory.
+    opendir(MYDIR, "$CONF_DIR/$environment/user")
+        || die("Failed to open directory $CONF_DIR/$environment/user for reading.");
+
+    while( $filename = readdir(MYDIR) )
+    {
+        # Filter out . and .. -- we don't want those.
+        if ( !($filename =~ /\./) )
+        {
+            # Load the file in.
+            open(MYFILE, "<$CONF_DIR/$environment/user/$filename")
+                || die("Failed to open file $CONF_DIR/$environment/user/$filename for reading.");
+
+            while(<MYFILE>)
+            {
+                $line = $_;
+                chomp($line);
+
+                $users_groups_hash{$filename} = $line;
+            }
+
+            close(MYFILE);
+        }
+    }
+
+    closedir(MYDIR);
+
     print("Loaded Server Groups:     @server_groups\n");
 
 ######################################################################
@@ -283,6 +345,17 @@ sub LoadConfig
 #            print("     Server: $server\n");
 #        }
 #    }
+#
+#    print ("----------\n");
+#
+#    foreach my $group (sort keys(%users_groups_hash) )
+#    {
+#        print("Group: $group\n");
+#        print ("     User: " .
+#               $users_groups_hash{$group} .
+#               "\n");
+#    }
+#
 ######################################################################
 
 }
@@ -416,12 +489,16 @@ sub RunCommandRemote
 {
     my($remote_server, $remote_command) = @_;
     my(@command_output, $output_line);
-    my($exec_line) =
-        "ssh $remote_server $remote_command";
+    my($exec_line);
 
     if ( PingServer($remote_server) )
     {
-        print "Exec: $exec_line";
+        # Super magic.
+        $exec_line = "ssh " .
+            getServerUser($remote_server) .
+                "\@$remote_server $remote_command";
+
+        print "EXEC:  $exec_line";
 
         @command_output = qx/$exec_line 2>&1/;
 
