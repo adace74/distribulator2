@@ -21,6 +21,7 @@ $|=1;
 use strict;
 use Cwd;
 use Getopt::Long;
+use Net::Ping;
 use Pod::Usage;
 use Sys::Hostname;
 use Term::ReadLine;
@@ -35,7 +36,6 @@ my($TRUE) = 1;
 #
 my($config_arg, $env_arg, $help_arg, $shell_arg, $version_arg) = '';
 my(@command_tokens);
-my($error_state);
 my($remote_command);
 my($server);
 my($temp_str);
@@ -116,7 +116,6 @@ $term->ornaments(0,0,0,0);
 #
 # Print a little intro.
 #
-print("\n");
 print("Your Client Host:         $hostname\n");
 print("Your Current Environment: $environment\n");
 print("\n");
@@ -128,7 +127,6 @@ print("\n");
 while ($TRUE)
 {
 	$command = '';
-	$error_state = $TRUE;
 	$prompt = "<$user\@$environment\[$current_server_group\]:$dir> ";
 	$input = $term->readline($prompt);
 
@@ -162,7 +160,6 @@ while ($TRUE)
 	# Group
 	if ($command eq 'group')
 	{
-		$error_state = $FALSE;
 		$temp_str = shift(@command_tokens);
 
         if ( !$temp_str )
@@ -183,7 +180,6 @@ while ($TRUE)
 	# Help
 	if ($command eq 'help')
 	{
-		$error_state = $FALSE;
 		$temp_str = shift(@command_tokens);
 
         # If the next argument is a valid command, show help for it.
@@ -206,76 +202,13 @@ while ($TRUE)
 	# Run
 	if ($command eq 'run')
 	{
-		# Run command on server group
-		if ( $input =~ /^run (\".*\") on group (.*)/ )
-		{
-			# Parsing logic.
-			print("Run $1 on $2 server group?\n");
-
-			# Validate Me!
-			if ( AreYouSure() )
-			{
-				foreach my $server ( @{$servers_groups_hash{$2}} )
-				{
-					print("ssh $server $1\n");
-				}
-			}
-            else
-            {
-                print "Okay, NOT running the command.\n";
-            }
-
-			$error_state = $FALSE;
-		}
-        # Run command on server host
-        if ($input =~ /^run (\".*\") on server (.*)/)
-        {
-            # Parsing logic.
-            print("Run $1 on $2 server?\n");
-
-			# Validate Me!
-            if ( AreYouSure() )
-            {
-                print("ssh $2 $1\n");
-            }
-            else
-            {
-                print "Okay, NOT running the command.\n";
-            }
-
-			$error_state = $FALSE;
-        }
-		# Run command on current group.
-		elsif ($input =~ /^run (\".*\")/)
-		{
-			print("Run $1 on server group $current_server_group?\n");
-
-			if ( AreYouSure() )
-			{
-				foreach $server ( @{$servers_groups_hash{$current_server_group}} )
-				{
-					print("ssh $server $1\n");
-				}
-			}
-			else
-			{
-				print "Okay, NOT running the command.\n";
-			}
-
-			$error_state = $FALSE;
-		}
-		# Invalid syntax.
-		else
-		{
-			print("ERROR: Invalid syntax.\n");
-		}
+        ParseRun();
 	}
 
     #################### NOT IMPLEMENTED ####################
 
     if ($command eq 'copy' || $command eq 'shell')
     {
-		$error_state = $FALSE;
         print("ERROR: This command is not yet implemented.\n");
     }
 }
@@ -291,6 +224,8 @@ sub AreYouSure
 	}
 	else
 	{
+        print "Okay, NOT running the command.\n";
+
 		return $FALSE;
 	}
 }
@@ -318,8 +253,6 @@ sub LoadConfig
             open(MYFILE, "<$CONF_DIR/$environment/$filename")
                 || die("Failed to open file $CONF_DIR/$environment/$filename for reading.");
 
-            print("Loading hostnames for $filename server group...");
-
             while(<MYFILE>)
             {
                 $line = $_;
@@ -330,28 +263,28 @@ sub LoadConfig
 
             close(MYFILE);
 
-	    push(@server_groups, $filename);
-
-            print "Done.\n";
+            push(@server_groups, $filename);
         }
     }
 
     closedir(MYDIR);
 
-    print("\n");
+    @server_groups = sort(@server_groups);
 
-    # Debug / summary
-    print("Known Server Groups: @server_groups\n");
+    print("Loaded Server Groups:     @server_groups\n");
 
-    foreach my $group (sort keys(%servers_groups_hash) )
-    {
-        print("Group: $group\n");
+######################################################################
+#    foreach my $group (sort keys(%servers_groups_hash) )
+#    {
+#        print("Group: $group\n");
+#
+#        foreach my $server ( @{$servers_groups_hash{$group}} )
+#        {
+#            print("     Server: $server\n");
+#        }
+#    }
+######################################################################
 
-        foreach my $server ( @{$servers_groups_hash{$group}} )
-        {
-            print("     Server: $server\n");
-        }
-    }
 }
 
 #
@@ -373,14 +306,83 @@ sub isValidCommand
     return $FALSE;
 }
 
+sub isValidServer
+{
+    return $TRUE;
+}
+
+#
+# Parse & execute the "run" command.
+#
+sub ParseRun
+{
+    # Run command on server group
+    if ( $input =~ /^run (\".*\") on group (.*)/ )
+    {
+        # Parsing logic.
+        print("Run $1 on $2 server group?\n");
+
+        # Validate Me!
+        if ( AreYouSure() )
+        {
+            foreach my $server ( @{$servers_groups_hash{$2}} )
+            {
+                RunCommandRemote($server,$1);
+            }
+        }
+    }
+    # Run command on server host
+    if ($input =~ /^run (\".*\") on server (.*)/)
+    {
+        # Parsing logic.
+        print("Run $1 on $2 server?\n");
+        
+        # Validate Me!
+        if ( AreYouSure() )
+        {
+            RunCommandRemote($server,$1);
+        }
+    }
+    # Run command on current group.
+    elsif ($input =~ /^run (\".*\")/)
+    {
+        print("Run $1 on server group $current_server_group?\n");
+        
+        if ( AreYouSure() )
+        {
+            foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+            {
+                RunCommandRemote($server,$1);
+            }
+        }
+    }
+    # Invalid syntax.
+    else
+    {
+        print("ERROR: Invalid run command syntax.\n");
+    }
+}
+
 #
 # Ping each server before we attempt to run remote commands on it.
 #
 sub PingServer
 {
-#    use Net::Ping;
+    my($host) = @_;
+    my($pinger);
 
-	return($TRUE);
+    $pinger = Net::Ping->new("tcp", 22);
+
+    if ($pinger->ping($host))
+    {
+        return $TRUE;
+    }
+    else
+    {
+        print("ERROR: Host $host appears to be down.\n");
+
+        return $FALSE;
+    }
 }
 
 #
@@ -408,6 +410,35 @@ sub PrintHelpFile
 }
 
 #
+# Run a command remotely.
+#
+sub RunCommandRemote
+{
+    my($remote_server, $remote_command) = @_;
+    my(@command_output, $output_line);
+    my($exec_line) =
+        "ssh $remote_server $remote_command";
+
+    if ( PingServer($remote_server) )
+    {
+        print "Exec: $exec_line";
+
+        @command_output = qx/$exec_line 2>&1/;
+
+        foreach $output_line (@command_output)
+        {
+            chomp($output_line);
+            print "$output_line\n";
+        }
+
+        if ($? != 0)
+        {
+            print("ERROR: Remote shell returned error state.\n");
+        }
+    }
+}
+
+#
 # Validate incoming arguments.  Dump user out if in error.
 #
 sub ValidateArgs
@@ -427,17 +458,6 @@ sub ValidateArgs
         die('Invalid arguments given.  See --help for required flags.');
     }
 }
-
-#$group_servers{$current_group} = \@server_array;
-#foreach my $id (sort keys(%to_run) ) {
-#        print "$id\n";
-#        foreach my $machine (@{$to_run{$id}}) {
-#          $remote_file =~ s/\/$//g;
-#          my $command = "$ssh $id\@$machine \"$remote_command\"";
-#          print "Running: $command\n";                             
-#          system("$command");
-#        }
-#}
 
 __END__
 ######################################################################
