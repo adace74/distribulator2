@@ -150,7 +150,7 @@ print("Local Host:              $hostname\n");
 print("Current Environment:     $environment\n");
 print("\n");
 print("Shell Commands Loaded:   " .
-    scalar (@external_commands) . "\n");
+      scalar (@external_commands) . "\n");
 print("Available Server Groups: @server_groups\n");
 print("\n");
 print("Prompt Description:      <user\@environment[current_server_group]:local_dir>\n");
@@ -224,7 +224,7 @@ while ($TRUE)
 			print("ERROR: Unknown server group $temp_str.\n");
 		}
 
-                next;
+        next;
 	}
 
 	# Help
@@ -247,7 +247,8 @@ while ($TRUE)
                 print("ERROR: Problem displaying help.txt file.\n");
             }
         }
-	next;
+
+        next;
 	}
 
     # Login
@@ -270,7 +271,7 @@ while ($TRUE)
         }
         else
         {
-            print("ERROR: No matching server hostname found.\n");
+            print("ERROR: No server hostname matching '$temp_str' found.\n");
         }
 
         next;
@@ -332,10 +333,10 @@ while ($TRUE)
 		}
 		else
 		{
-			print("ERROR: Unknown server group $temp_str.\n");
+			print("ERROR: No server group matching '$temp_str' found.\n");
 		}
 
-	next;
+        next;
 	}
 
 	# Run
@@ -343,7 +344,7 @@ while ($TRUE)
 	{
         ParseRun();
 
-	next;
+        next;
 	}
 
     #################### IMPLEMENTED - External ####################
@@ -351,7 +352,7 @@ while ($TRUE)
     # Unix-style change directory
     if ($command eq 'cd')
     {
-                $temp_str = shift(@command_tokens);
+        $temp_str = shift(@command_tokens);
 
         if ( !chdir($temp_str) )
         {
@@ -451,12 +452,12 @@ sub getBinaryLocations
 #
 sub getMatchingGroup
 {
-    my($partial) = @_;
+    my($search_group) = @_;
     my($group, $group_server, $sub_string);
 
     foreach $group (sort keys(%servers_groups_hash) )
     {
-        if ($partial eq $group)
+        if ($search_group eq $group)
         {
             return $group;
         }
@@ -532,11 +533,11 @@ sub LoadConfig
 
     # First, read in our list of valid Unix pass-through commands.
     open(MYDIR, "$CONFIG_DIR/pass-through.conf")
-	|| die("Failed to open file $CONFIG_DIR/pass-through.config for reading.");
+        || die("Failed to open file $CONFIG_DIR/pass-through.config for reading.");
 
     while(<MYDIR>)
     {
-	$filename = $_;
+        $filename = $_;
         chomp($filename);
 
         push(@external_commands, $filename);
@@ -645,8 +646,6 @@ sub isValidExternalCommand
         }
     }
 
-    print("ValidExt returning false...\n");
-
     return $FALSE;
 }
 
@@ -675,20 +674,44 @@ sub isValidInternalCommand
 sub ParseCopy
 {
     # Validation TODO:
-    # * All remote filepath should end in /
-    # * All local files should exist.
     # * Need a subroutine that will seperate the file element from the
     # the path element.
     #
-    # Copy from a local file to a remote server group or single server,
-    # with remote path specified.
-    # Example: 
-    if ($input =~ /^copy (.*) (.*):(.*)\/$/)
+    # Copy a local file to the current working server group,
+    # with the remote path specified.
+    # EXAMPLE: copy /tmp/test.out wlx
+    # EXAMPLE: copy /tmp/test.out wlx01st
+    if ( $input =~ /^copy (.*) (\w*)$/ )
     {
+        if ( !stat($1) )
+        {
+             print("ERROR: Local file $1 is not accessible.\n");
+        }
+
+	print("ERROR: This syntax of the copy command is currently incomplete.\n");
+
+	return;
+    }
+
+    # Copy from a local file to a specified server group or single server,
+    # with remote path specified.
+    # EXAMPLE: copy /tmp/test.out wlx:/usr/local/tmp/
+    # EXAMPLE: copy /tmp/test.out wlx01st:/usr/local/tmp/
+    if ( $input =~ /^copy (.*) (\w*):(.*\/)$/ )
+    {
+        print("Entering if block\n");
+
+        if ( !stat($1) )
+        {
+            print("ERROR: Local file $1 is not accessible.\n");
+
+	    return;
+        }
+
         # Check groups first, they get priority.
         if ( getMatchingGroup($2) )
         {
-            print("Copy local file $1 to server group $2:$3?\n");
+            print("Copy local file $1 to server group $2, remote directory $3?\n");
 
             if ( AreYouSure() )
             {
@@ -696,35 +719,50 @@ sub ParseCopy
                 {
                     if ( PingServer($server) )
                     {
+			print("EXEC:  $SCP_BIN $1 $server:$3\n");
+
                         system("$SCP_BIN $1 $server:$3");
                     }
                 }
             }
         }
         # If that fails, then check servers.
-        elsif ( $temp_str = getMatchingServer($2) )
+        elsif ( $server = getMatchingServer($2) )
         {
-            print("Copy local file $1 to server $temp_str?\n");
+            print("Copy local file $1 to server $server, remote directory $3?\n");
 
             if ( AreYouSure() )
             {
                 if ( PingServer($2) )
                 {
-                    RunCommandLocal("$SCP_BIN $1 $2:$3");
+		    print("EXEC:  $SCP_BIN $1 $server:$3\n");
+
+                    system("$SCP_BIN $1 $server:$3");
                 }
             }
         }
         else
         {
             # If no match, then print a sane error.
-            print("ERROR: No matching group or server hostname found.\n");
+            print("ERROR: No server hostname or group matching '$temp_str' found.\n");
         }
+
+	return;
     }
+
     # Copy a local file to the current working server group,
     # with the remote path specified.
-    elsif ($input =~ /^copy (.*) (.*)\/$/)
+    # EXAMPLE: copy /tmp/test.out /usr/local/tmp/
+    if ( $input =~ /^copy (.*) (.*\/)$/ )
     {
-        print("Copy local file $1 to server group $current_server_group:$2?\n");
+        if ( !stat($1) )
+        {
+             print("ERROR: Local file $1 is not accessible.\n");
+
+             return;
+        }
+
+        print("Copy local file $1 to server group $current_server_group, remote directory $2?\n");
 
             if ( AreYouSure() )
             {
@@ -732,34 +770,19 @@ sub ParseCopy
                 {
                     if ( PingServer($server) )
                     {
-                        system("$SCP_BIN $1 $server:$3");
+                        print("EXEC:  $SCP_BIN $1 $server:$2\n");
+
+                        system("$SCP_BIN $1 $server:$2");
                     }
                 }
             }
-    }
-    # Copy a local file to a specific server group,
-    # with no remote path specified.
-    elsif ($input =~ /^copy (.*) (.*)$/)
-    {
-        print("Copy local file $1 to server group $2:\n");
 
-#            if ( AreYouSure() )
-#            {
-#                foreach $server ( @{$servers_groups_hash{$current_server_group}} )
-#                {
-#                    if ( PingServer($server) )
-#                    {
-#                        system("$SCP_BIN $1 $server:$3");
-#                    }
-#                }
-#            }
+        return;
     }
-    else
-    {
-        # Invalid syntax.
-        print("ERROR: Invalid copy command syntax.\n");
-        print("ERROR: Did you end your remote path with a slash?\n");
-    }
+
+    # Fall-through logic, invalid syntax error.
+    print("ERROR: Invalid copy command syntax.\n");
+    print("ERROR: Did you end your remote path with a slash?\n");
 }
 
 #
@@ -772,7 +795,17 @@ sub ParseCopy
 #
 sub ParseRun
 {
-    # Run command on current group.
+    # Run command on local host
+    # EXAMPLE: run "uptime" local
+    if ( $input =~ /^run (\".*\") local$/ )
+    {
+        RunCommandLocal($1);
+
+        return;
+    }
+
+    # Run command on current server group.
+    # EXAMPLE: run "uptime"
     if ($input =~ /^run (\".*\")$/)
     {
         print("Run $1 on server group $current_server_group?\n");
@@ -784,16 +817,14 @@ sub ParseRun
                 RunCommandRemote($server,$1);
             }
         }
-    }
-    # Run command on localhost -- run "uptime" local
-    elsif ( $input =~ /^run (\".*\") local$/ )
-    {
-        RunCommandLocal($1);
 
-        return;
+	return;
     }
-    # Run command on ambiguous target -- run "uptime" on wlx01st
-    elsif ( $input =~ /^run (\".*\") (\w*)$/ )
+
+    # Run command on a specific server or group.
+    # EXAMPLE: run "uptime" wlx
+    # EXAMPLE: run "uptime" wlx01st
+    if ( $input =~ /^run (\".*\") (\w*)$/ )
     {
         # Check groups first, they get priority.
         if ( getMatchingGroup($2) )
@@ -809,26 +840,26 @@ sub ParseRun
             }
         }
         # If that fails, then check servers.
-        elsif ( $temp_str = getMatchingServer($2) )
+        elsif ( $server = getMatchingServer($2) )
         {
-            print("Run $1 on server $temp_str?\n");
+            print("Run $1 on server $server?\n");
 
             if ( AreYouSure() )
             {
-                RunCommandRemote($temp_str,$1);
+                RunCommandRemote($server,$1);
             }
         }
         else
         {
             # If no match, then print a sane error.
-            print("ERROR: No matching group or server hostname found.\n");
+            print("ERROR: No server hostname or group matching '$temp_str' found.\n");
         }
+
+	return;
     }
-    else
-    {
-        # Invalid syntax.
-        print("ERROR: Invalid run command syntax.\n");
-    }
+
+    # Fall-through logic, invalid syntax error.
+    print("ERROR: Invalid run command syntax.\n");
 }
 
 #
