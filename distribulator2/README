@@ -9,17 +9,17 @@ distributed server shell command / batch system.
 
 Websites
 --------
-Website--Easy:              http://distribulator.turing.com/
-Website--Real:              http://sourceforge.net/projects/distribulator/
+Website:                    http://sourceforge.net/projects/distribulator/
 Pydoc Documentation:        http://distribulator.turing.com:8080/
 
-Mailing Lists (preferred)
--------------------------
-Announcement Email List:    distribulator-announce@turing.com
-User Discussion Email List: distribulator-users@turing.com
-
-NOTE:  SourceForge.net's mailing lists are also available,
-       but they respond -very- slowly to subscribe/unsubscribe requests.
+Email Mailing Lists
+-------------------
+Announcement Email List Subscription:
+	distribulator-announce-subscribe@turing.com
+User Discussion / Support List Subscription:
+	distribulator-users-subscribe@turing.com
+User Discussion / Support Main List:
+	distribulator-users@turing.com
 
 What Is It?
 -----------
