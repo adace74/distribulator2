@@ -301,6 +301,7 @@ class CopyCommand(Command.Command):
                             if ( myServer.getVersion() != None ):
                                 myExternalCommand.setCommand( \
                                 self._globalConfig.getScpBinary() + " " + \
+                                "-oProtocol=" + myServer.getVersion() + " " + \
                                 myLocalPath + " " + \
                                 myServer.getUsername() + "@" + \
                                 myServer.getName() + ":" + \
@@ -308,7 +309,6 @@ class CopyCommand(Command.Command):
                             else:
                                 myExternalCommand.setCommand( \
                                 self._globalConfig.getScpBinary() + " " + \
-                                "-oProtocol=" + myServer.getVersion() + " " + \
                                 myLocalPath + " " + \
                                 myServer.getUsername() + "@" + \
                                 myServer.getName() + ":" + \
