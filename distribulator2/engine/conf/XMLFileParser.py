@@ -219,6 +219,8 @@ class XMLFileParser:
         if ( len(PassedServerGroup.getAttribute('version').strip()) > 0 ):
             myServerGroup.setVersion( ' ' + \
                 PassedServerGroup.getAttribute('version').strip() )
+        else:
+            myServerGroup.setVersion(None)
 
         myServerGroup = self.handleServers( myServerGroup,
                                               PassedServerGroup.getElementsByTagName('server') )
@@ -236,7 +238,6 @@ class XMLFileParser:
             myServerGroup.addServer( self.handleServer(myServer) )
 
         for myServer in myServerGroup.getServerList():
-            if (myServerGroup.getVersion()):
                 myServer.setVersion( myServerGroup.getVersion() )
 
         for myServer in myServerGroup.getServerList():
