@@ -16,9 +16,6 @@ the standard syslog module.
 # Version tag
 __version__= '$Revision$'[11:-2]
 
-# Standard modules
-import generic.SysLogger
-
 ######################################################################
 
 class MultiLogger:

@@ -20,14 +20,14 @@ __version__= '$Revision$'[11:-2]
 # Standard modules
 
 # Custom modules
-import engine.command.Command
+import Command
 import engine.data.ExternalCommand
 import generic.FilePrinter
 import generic.HostPinger
 
 ######################################################################
 
-class LoginCommand(engine.command.Command.Command):
+class LoginCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
     expanding a given distribulator command into a set of 

@@ -24,11 +24,11 @@ import string
 import sys
 
 # Custom modules
-import engine.command.CopyCommand
-import engine.command.LoginCommand
-import engine.command.MiscCommand
-import engine.command.RunCommand
-import engine.command.ServerCommand
+import CopyCommand
+import LoginCommand
+import MiscCommand
+import RunCommand
+import ServerCommand
 import engine.data.ExternalCommand
 
 ######################################################################

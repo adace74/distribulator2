@@ -24,13 +24,13 @@ import string
 import sys
 
 # Custom modules
+import Mode
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
-import engine.mode.Mode
 
 ######################################################################
 
-class ListMode(engine.mode.Mode.Mode):
+class ListMode(Mode.Mode):
     """This class is responsible for handling the list mode of the application."""
 
     def __init__(self, PassedGlobalConfig):

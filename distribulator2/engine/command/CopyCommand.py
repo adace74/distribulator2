@@ -25,13 +25,13 @@ import string
 import sys
 
 # Custom modules
-import engine.command.Command
+import Command
 import engine.data.ExternalCommand
 import generic.HostPinger
 
 ######################################################################
 
-class CopyCommand(engine.command.Command.Command):
+class CopyCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
     expanding a given distribulator command into a set of 

@@ -20,12 +20,12 @@ __version__= '$Revision$'[11:-2]
 # Standard modules
 
 # Custom modules
-import engine.command.Command
+import Command
 import engine.data.ExternalCommand
 
 ######################################################################
 
-class ServerCommand(engine.command.Command.Command):
+class ServerCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
     expanding a given distribulator command into a set of 

@@ -27,12 +27,12 @@ import sys
 import time
 
 # Custom modules
+import Mode
 import engine.command.Dispatcher
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
-import engine.mode.Mode
 
-class BatchMode(engine.mode.Mode.Mode):
+class BatchMode(Mode.Mode):
     """
     This class is responsible for doing the actual reading of a given
     batch file, and pre-processing the input before calling the

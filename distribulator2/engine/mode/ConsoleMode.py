@@ -24,14 +24,14 @@ import string
 import sys
 
 # Custom modules
+import Mode
 import engine.command.Dispatcher
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
-import engine.mode.Mode
 
 ######################################################################
 
-class ConsoleMode(engine.mode.Mode.Mode):
+class ConsoleMode(Mode.Mode):
     """This class is responsible for handling the console mode of the application."""
 
     def __init__(self, PassedGlobalConfig):
