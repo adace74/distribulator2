@@ -116,12 +116,12 @@ The available options are:
 
     thisBatchFile = ''
     thisQuietMode = False
-    thisTerseMode = False
     thisServerEnv = 'demo'
     thisStartDir = '/tmp'
     thisVar1 = ''
     thisVar2 = ''
     thisVar3 = ''
+    thisVerboseMode = False
 
     try:
         if len(argv) < 2:
@@ -181,6 +181,7 @@ The available options are:
             thisGlobalConfig.setBatchMode(False)
 
         thisGlobalConfig.setConfigDir(thisConfigDir)
+        thisGlobalConfig.setExitSuccess(True)
         thisGlobalConfig.setHelpDir(thisHelpDir)
         thisGlobalConfig.setQuietMode(thisQuietMode)
         thisGlobalConfig.setServerEnv(thisServerEnv)
@@ -200,7 +201,7 @@ The available options are:
         # Set our silly output flag
         if ( thisGlobalConfig.isBatchMode() & \
              (thisGlobalConfig.isQuietMode() == False) ):
-            thisTerseMode = True
+            thisVerboseMode = True
 
         # Setup syslog.
         thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility(), 'distribulator.py')
@@ -220,40 +221,34 @@ The available options are:
         # Define a pretty seperator.
         thisSeperator = '----------------------------------------------------------------------'
         thisLogger.LogMsgInfo(thisSeperator)
-        if (thisTerseMode):
+        if (thisVerboseMode):
             print(thisSeperator)
 
         if (thisGlobalConfig.isBatchMode()):
-            thisInfo = "INFO:  Starting " + __appversion__ + " -- batch mode."
-            if (thisTerseMode):
+            thisInfo = "INFO:  " + __appversion__ + " (batch mode) START"
+            if (thisVerboseMode):
                 print(thisInfo)
         else:
-            thisInfo = "INFO:  Starting " + __appversion__ + " -- console mode."
+            thisInfo = "INFO:  " + __appversion__ + " (console mode) START"
         thisLogger.LogMsgInfo(thisInfo)
 
-        thisLogger.LogMsgInfo("INFO:  Real UID:      " +
-                              thisGlobalConfig.getRealUsername())
-        thisLogger.LogMsgInfo("INFO:  Effective UID: " + \
-                              thisGlobalConfig.getUsername())
-        thisLogger.LogMsgInfo("INFO:  Environment:   " + \
-                              thisServerEnv)
-        if (thisTerseMode):
-            print("INFO:  Real UID:      " +
-                                  thisGlobalConfig.getRealUsername())
-            print("INFO:  Effective UID: " + \
-                                  thisGlobalConfig.getUsername())
-            print("INFO:  Environment:   " + \
-                                  thisServerEnv)
+        thisInfo = "INFO:  Real UID: " + thisGlobalConfig.getRealUsername() + \
+                   " | " + \
+                   "Effective UID: " + thisGlobalConfig.getUsername() + \
+                   " | " + \
+                   "Environment: " + thisServerEnv
 
-        thisLogger.LogMsgInfo(thisSeperator)
-        if (thisTerseMode):
-            print(thisSeperator)
+        thisLogger.LogMsgInfo(thisInfo)
+        if (thisVerboseMode):
+            print(thisInfo)
 
     except (EOFError, KeyboardInterrupt):
             thisError = "ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            print(thisError)
             thisLogger.LogMsgError(thisError)
-            sys.exit(1)
+            if (thisVerboseMode):
+                print(thisError)
+
+            sys.exit(-1)
 
     # Try to chdir() to thisStartDir if possible.
     try:
@@ -264,28 +259,35 @@ The available options are:
         print(thisError)
         thisLogger.LogMsgError(thisError)
 
-    # The main readline loop.
+    # Batch mode.
     if ( thisGlobalConfig.isBatchMode() ):
-        if ( thisBatchRunner.invoke() ):
-            thisInfo = "INFO:  Batch command set completed successfully.  Shutting down."
-            thisLogger.LogMsgInfo(thisInfo)
-            if (thisTerseMode):
-                print(thisInfo)
-            sys.exit(0)
-        else:
-            thisError = "ERROR: Shutting down as a result of a previous error."
-            thisLogger.LogMsgError(thisError)
-            if (thisTerseMode):
-                print(thisError)
-            sys.exit(1)
+        thisBatchRunner.invoke()
+
+        thisInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
+        thisLogger.LogMsgInfo(thisInfo)
+        if (thisVerboseMode):
+            print(thisInfo)
+
+        thisLogger.LogMsgInfo(thisSeperator)
+        if (thisVerboseMode):
+            print(thisSeperator)
+    # Console mode.
     else:
-        if ( thisCommLine.invoke() ):
-            thisLogger.LogMsgInfo("INFO:  Console user requested exit.  Shutting down.")
-            sys.exit(0)
-        else:
-            thisLogger.LogMsgError(
-                "ERROR: Shutting down as a result of a previous error.")
-            sys.exit(1)
+        thisCommLine.invoke()
+
+        thisInfo = "INFO:  " + __appversion__ + " (console mode) EXIT"
+        thisLogger.LogMsgInfo(thisInfo)
+        if (thisVerboseMode):
+            print(thisInfo)
+
+        thisLogger.LogMsgInfo(thisSeperator)
+        if (thisVerboseMode):
+            print(thisSeperator)
+
+    if ( thisGlobalConfig.isExitSuccess() ):
+        sys.exit(0)
+    else:
+        sys.exit(-1)
 
 ######################################################################
 # If called from the command line, invoke thyself!

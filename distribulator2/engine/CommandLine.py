@@ -116,7 +116,7 @@ class CommandLine:
                 print(thisInfo)
                 self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
-                return True
+                return
 
             except KeyboardInterrupt:
                 print
@@ -133,7 +133,7 @@ class CommandLine:
                         thisExternalCommand.setCommand(thisInput)
                         # Wrap it just in case.
                         try:
-                            thisExternalCommand.run()
+                            thisExternalCommand.runConsole()
                         except KeyboardInterrupt:
                             thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                             print(thisInfo)
@@ -160,6 +160,6 @@ class CommandLine:
 
                 # Icky flow-control hack.
                 if (thisTokens[0] == 'exit'):
-                    return True
+                    return
 
 ######################################################################

@@ -51,14 +51,15 @@ class ExternalCommand:
 # Only to be used in console mode.
 ######################################################################
 
-    def run(self, isLoggable=False):
-        """This method is responsible for running a given command."""
+    def runConsole(self, isLoggable=False):
+        """This method is responsible for running a given command in console mode."""
 
         if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 "ERROR:ExternalCommand.run() called in batch mode." )
             return False
 
+        # This could be a pass-through command, no need to log that.
         if (isLoggable):
             self._globalConfig.getSysLogger().LogMsgInfo(
                 "EXEC:  " + self._command )
@@ -80,34 +81,30 @@ class ExternalCommand:
 # Only to be used for batch mode.
 ######################################################################
 
-    def runAtomic(self):
-        if ( self._globalConfig.isQuietMode() ):
-            self._globalConfig.getSysLogger().LogMsgInfo(
-                "EXEC:  " + self._command )
-        else:
+    def runBatch(self):
+        """This method is responsible for running a given command in batch mode."""
+
+        self._globalConfig.getSysLogger().LogMsgInfo(
+            "EXEC:  " + self._command )
+        if (self._globalConfig.isQuietMode() == False):
             print("EXEC:  " + self._command)
-            self._globalConfig.getSysLogger().LogMsgInfo(
-                "EXEC:  " + self._command )
 
         thisStatus, thisOutput = commands.getstatusoutput(self._command)
 
         for thisLine in thisOutput.split('\n'):
-            if ( self._globalConfig.isQuietMode() ):
-                self._globalConfig.getSysLogger().LogMsgInfo(
-                    "OUTPUT:" + thisLine )
-            else:
+            self._globalConfig.getSysLogger().LogMsgInfo(
+                "OUTPUT:" + thisLine )
+            if (self._globalConfig.isQuietMode() == False):
                 print(thisLine)
-                self._globalConfig.getSysLogger().LogMsgInfo(
-                    "OUTPUT:" + thisLine )
 
         if (thisStatus != 0):
             thisError = "ERROR: Local shell returned error state."
 
-            if ( self._globalConfig.isQuietMode() ):
-                self._globalConfig.getSysLogger().LogMsgError(thisError)
-            else:
+            self._globalConfig.getSysLogger().LogMsgError(thisError)
+            if ( self._globalConfig.isQuietMode() == False):
                 print(thisError)
-                self._globalConfig.getSysLogger().LogMsgError(thisError)
+
+            self._globalConfig.setExitSuccess(False)
 
         if (self._globalConfig.isQuietMode() == False):
             print(self._seperator)

@@ -81,17 +81,17 @@ class GlobalConfig:
 # Our exit code.
 ######################################################################
 
-    def getExitCode(self):
+    def isExitSuccess(self):
         """This is a typical accessor method."""
 
-        return self._exitCode
+        return self._exitSuccess
 
 ######################################################################
 
-    def setExitCode(self, PassedExitCode):
+    def setExitSuccess(self, PassedExitSuccess):
         """This is a typical accessor method."""
 
-        self._exitCode = PassedExitCode
+        self._exitSuccess = PassedExitSuccess
 
 ######################################################################
 # Our helpfiles path.
