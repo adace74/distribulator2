@@ -23,16 +23,22 @@ except ImportError:
 ######################################################################
 
 class GlobalConfig:
-
     #
     # Global settings.
     #
+    # Our configuration directory path.
+    #
+    def getConfigDir(self):
+        return self.thisConfigDir
+
+    def setConfigDir(self, PassedConfigDir):
+        self.thisConfigDir = PassedConfigDir
     #
     # Unix command "pass through" list.
     #
     def getPassThruList(self):
         return self.thisPassThruList
-    
+
     def setPassThruList(self, PassedPassThruList):
         self.thisPassThruList = PassedPassThruList
     #

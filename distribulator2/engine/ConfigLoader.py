@@ -18,6 +18,7 @@ try:
 
     # Custom modules
     import engine.CommandLine
+    import engine.XMLFileParser
     import engine.data.GlobalConfig
 
 except ImportError:
@@ -43,20 +44,27 @@ class ConfigLoader:
         # Create GlobalConfig object.
         #
         thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+        thisGlobalConfig.setConfigDir(PassedConfigDir)
 
         #
         # Unix "pass through" commands.
         #
         thisPassThruList = []
         
-        thisFile = open( os.path.join(PassedConfigDir, \
-                                      'pass_through_cmds.txt'), 'r' )
+        try:
+            thisFilename = os.path.join(thisGlobalConfig.getConfigDir(), \
+                                        'pass_through_cmds.txt')
+            thisFile = open(thisFilename, 'r')
+            
+            for thisLine in thisFile:
+                thisLine = thisLine.strip()
+                thisPassThruList.append(thisLine)
 
-        for thisLine in thisFile:
-            thisLine = thisLine.strip()
-            thisPassThruList.append(thisLine)
+            thisFile.close()
 
-        thisFile.close()
+        except IOError, (errno, strerror):
+            print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename)
+            sys.exit(1)
 
         thisGlobalConfig.setPassThruList(thisPassThruList)
 
@@ -65,6 +73,8 @@ class ConfigLoader:
                % len(thisPassThruList) )
 
         # Parse XML...ouchies.
+        thisParser = engine.XMLFileParser.XMLFileParser()
+        thisParser.parse(thisGlobalConfig)
         print("- Global options and settings.")
         print("- Entering interactive mode...")
         print
