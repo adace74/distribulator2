@@ -272,7 +272,13 @@ while ($TRUE)
 
         if ($server = getMatchingServer($temp_str))
         {
-            RunCommandRemote($server, '');
+            $temp_str = "ssh " .
+                getServerUser($server) .
+                    "\@$server";
+
+            print "EXEC:  $temp_str\n";
+
+            qx/$temp_str/;
         }
         else
         {
@@ -735,18 +741,9 @@ sub RunCommandRemote
 
     if ( PingServer($remote_server) )
     {
-        if ($remote_command)
-        {
-            $exec_line = "ssh " .
-                getServerUser($remote_server) .
-                    "\@$remote_server $remote_command";
-        }
-        else
-        {
-            $exec_line = "ssh " .
-                getServerUser($remote_server) .
-                    "\@$remote_server";
-        }
+        $exec_line = "ssh " .
+            getServerUser($remote_server) .
+                "\@$remote_server $remote_command";
 
         print "EXEC:  $exec_line\n";
 
