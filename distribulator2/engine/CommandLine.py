@@ -34,7 +34,7 @@ class CommandLine:
     def __init__(self, PassedGlobalConfig):
         self._globalConfig = PassedGlobalConfig
         self._commList = [ 'copy', 'exit', 'help', 'login', 'run',
-                           'server-group', 'server-list' ]
+                           'server-group' ]
 
 ######################################################################
 
