@@ -135,7 +135,7 @@ class CommandRunner:
 
         if ( self._commString.find(':') == -1 ):
             # copy /tmp/blah.txt /tmp/
-            # TODO:  Check remote path for ending slash!
+            # Validate local file.
             try:
                 if ( stat.S_ISREG(os.stat(
                     self._commTokens[1])[stat.ST_MODE]) == False):
@@ -150,8 +150,17 @@ class CommandRunner:
                 return False
 
             thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            thisLocalPath = self._commTokens[1]
             thisRemotePath = self._commTokens[2]
-            print("Copy local file '" + self._commTokens[1] +
+
+            # Validate remote path.
+            if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
+                thisError = "ERROR: Remote path '" + thisRemotePath + \
+                            "' must end with a slash."
+                self.handleError(thisError)
+                return False
+
+            print("Copy local file '" + thisLocalPath + \
             "' to remote directory '" + thisRemotePath + "'")
             print("on server group " + thisGroupStr + "?")
 
@@ -163,7 +172,7 @@ class CommandRunner:
                 thisServerGroupList.append( thisGroupStr )
         elif (self._commTokens[1].find(':') == -1):
             # copy /tmp/blah.txt www:/tmp/
-            # TODO:  Check remote path for ending slash!
+            # Validate local file.
             try:
                 if ( stat.S_ISREG(os.stat(
                     self._commTokens[1])[stat.ST_MODE]) == False):
@@ -179,18 +188,26 @@ class CommandRunner:
 
             thisGroupStr = self._commTokens[2]
             thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
+            thisLocalPath = self._commTokens[1]
             thisRemotePath = self._commTokens[2]
             thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
             thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
 
-            # Validate.
+            # Validate remote path.
+            if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
+                thisError = "ERROR: Remote path '" + thisRemotePath + \
+                            "' must end with a slash."
+                self.handleError(thisError)
+                return False
+
+            # Validate server group.
             if (thisServerGroup == False):
                 thisError = "ERROR: No matching server group '" + \
                             thisGroupStr + "'."
                 self.handleError(thisError)
                 return False
 
-            print("Copy local file '" + self._commTokens[1] +
+            print("Copy local file '" + thisLocalPath + \
             "' to remote directory '" + thisRemotePath + "'")
             print("on server group " + thisGroupStr + "?")
 
@@ -200,6 +217,10 @@ class CommandRunner:
                 return False
             else:
                 thisServerGroupList.append( thisGroupStr.strip() )
+        else:
+            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self.handleError(thisError)
+            return False
 
         # Just Do It.
         for thisGroupStr in thisServerGroupList:
