@@ -29,14 +29,16 @@ class ConfigLoader:
 
     def loadGlobalConfig(self, PassedCommLine):
         # Load GNU Readline history.
-        print('Loading configuration...')
+        if (self._globalConfig.isBatchMode() == False):
+            print('Loading configuration...')
 
         thisLinesLoaded = PassedCommLine.initHistory()
         #
         # Try to print status -after- actions so as to be
         # more accurate.
         #
-        print("- GNU Readline history:        %d lines loaded." % thisLinesLoaded)
+        if (self._globalConfig.isBatchMode() == False):
+            print("- GNU Readline history:        %d lines loaded." % thisLinesLoaded)
         #
         # Unix "pass through" commands.
         #
@@ -60,14 +62,16 @@ class ConfigLoader:
         self._globalConfig.setPassThruList(thisPassThruList)
 
         # Status.
-        print( "- Unix pass-through commands:  %d lines loaded." \
-               % len(thisPassThruList) )
+        if (self._globalConfig.isBatchMode() == False):
+            print( "- Unix pass-through commands:  %d lines loaded." \
+                   % len(thisPassThruList) )
 
         # Parse XML...ouchies.
         thisParser = engine.XMLFileParser.XMLFileParser()
         self._globalConfig = thisParser.parse(self._globalConfig)
 
-        print("- Global options and settings: %d lines loaded." % self._globalConfig.getConfigLines())
+        if (self._globalConfig.isBatchMode() == False):
+            print("- Global options and settings: %d lines loaded." % self._globalConfig.getConfigLines())
 
         self._globalConfig.setCurrentServerGroup( self._globalConfig.getServerGroupList()[0] )
 
@@ -84,15 +88,13 @@ class ConfigLoader:
                 thisColumnCount = 0
                 thisServerGroupStr = thisServerGroupStr + '\n- '
 
-        print("- Available Server Groups:")
-        print("-")
-        print(thisServerGroupStr)
-        
-        # Implement the "all" group sometime!
-        #+ "all(%d)" % thisTotalServerCount)
-        print
-        print("Confused?  Need help?  Try typing 'help' and see what happens!")
-        print
+        if (self._globalConfig.isBatchMode() == False):
+            print("- Available Server Groups:")
+            print("-")
+            print(thisServerGroupStr)        
+            print
+            print("Confused?  Need help?  Try typing 'help' and see what happens!")
+            print
 
         return self._globalConfig
 

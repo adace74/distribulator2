@@ -97,6 +97,7 @@ The available options are:
 
 """ % argv[0]
 
+    thisBatchFile = ''
     thisServerEnv = 'demo'
     thisServerShell = 'ssh'
     thisStartDir = '/tmp'
@@ -141,19 +142,22 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
-    # Future batch check goes here.
-    printTitleHeader()
-
     thisConfigDir = os.path.join(os.getcwd(), 'conf')
     thisHelpDir = os.path.join(os.getcwd(), 'doc')
 
-    printInfoHeader(thisServerEnv, thisConfigDir)
-
     # Load up our GlobalConfig object.
     thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+    if ( len(thisBatchFile) > 0 ):
+        thisGlobalConfig.setBatchMode(True)
+    else:
+        thisGlobalConfig.setBatchMode(False)
     thisGlobalConfig.setConfigDir(thisConfigDir)
     thisGlobalConfig.setHelpDir(thisHelpDir)
     thisGlobalConfig.setServerEnv(thisServerEnv)
+
+    if ( thisGlobalConfig.isBatchMode() == False):
+        printTitleHeader()
+        printInfoHeader(thisServerEnv, thisConfigDir)
 
     thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
     thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
@@ -172,7 +176,12 @@ The available options are:
 
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
     thisGlobalConfig.setSysLogger(thisLogger)
-    thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50.")
+
+    if (thisGlobalConfig.isBatchMode()):
+        thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- batch mode.")
+    else:
+        thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- console mode.")
+
     thisLogger.LogMsgInfo("INFO: Real UID:      " +
                           thisGlobalConfig.getRealUsername())
     thisLogger.LogMsgInfo("INFO: Effective UID: " + \
@@ -186,7 +195,11 @@ The available options are:
         print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1]))
 
     # The main readline loop.
-    thisCommLine.invoke()
+    if (thisGlobalConfig.isBatchMode()):
+        print("ERROR: Batch mode not yet implemented!")
+        sys.exit(1)
+    else:
+        thisCommLine.invoke()
 
     # Once it returns, we're done!
     thisLogger.LogMsgInfo("INFO: User requested exit, shutting down.")

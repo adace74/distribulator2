@@ -198,17 +198,18 @@ class CommandRunner:
                     else:
                         thisServerGroupList.append( thisGroupStr.strip() )
 
-        thisDisplayStr = ''
-        for thisGroupStr in thisServerGroupList:
-            thisDisplayStr = thisDisplayStr + thisGroupStr + ','
-        thisDisplayStr = thisDisplayStr.rstrip(',')
+        if (self._globalConfig.isBatchMode() == False):
+            # Verify.
+            thisDisplayStr = ''
+            for thisGroupStr in thisServerGroupList:
+                thisDisplayStr = thisDisplayStr + thisGroupStr + ','
+            thisDisplayStr = thisDisplayStr.rstrip(',')
 
-        # Verify.
-        print "Run command " + thisBodyStr + " on server group(s) " + \
-              thisDisplayStr + "?"
-        if (self.doAreYouSure() == False):
-            print("INFO:  Aborting command.")
-            return False
+            print "Run command " + thisBodyStr + " on server group(s) " + \
+                  thisDisplayStr + "?"
+            if (self.doAreYouSure() == False):
+                print("INFO:  Aborting command.")
+                return False
 
         # Just Do It.
         for thisGroupStr in thisServerGroupList:
