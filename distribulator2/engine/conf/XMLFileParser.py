@@ -168,11 +168,6 @@ class XMLFileParser:
     def handleEnvironment(self, PassedEnvironment):
         """This method handles a specific <Environment> tag."""
 
-        # Load all environments into memory.
-        if ( PassedEnvironment.getAttribute('name') ==
-             self._globalConfig.getCurrentEnvName() ):
-            self._isEnvFound = True
-
         # Load environment.
         myEnvironment = engine.data.Environment.Environment()
         myEnvironment.setName(PassedEnvironment.getAttribute('name').strip())
@@ -183,6 +178,12 @@ class XMLFileParser:
         if (PassedEnvironment.getAttribute('default')):
             self._globalConfig.setCurrentServerGroup(
                 self._globalConfig.getServerGroupByName(PassedEnvironment.getAttribute('default')))
+
+        # Check for current environment, set flags accordingly.
+        if ( PassedEnvironment.getAttribute('name') ==
+             self._globalConfig.getCurrentEnvName() ):
+            self._globalConfig.setCurrentEnvironment(myEnvironment);
+            self._isEnvFound = True
 
         return myEnvironment
 

@@ -162,8 +162,12 @@ class ConfigLoader:
 
         # Create our pretty output string.
         myServerGroupStr = '- '
+        myTotalEnvironmentCount = 0
         myTotalServerCount = 0
         myColumnCount = 0
+
+        for myEnvironment in self._globalConfig.getEnvironmentList():
+            myTotalEnvironmentCount = myTotalEnvironmentCount + 1;
 
         for myServerGroup in self._globalConfig.getServerGroupList():
             myColumnCount = myColumnCount + 1
@@ -181,7 +185,7 @@ class ConfigLoader:
             print("-")
             print(myServerGroupStr)        
             print("-")
-            print("- Total: %d servers loaded." % myTotalServerCount)
+            print("- Total: %d servers in %d environments loaded." % (myTotalServerCount, myTotalEnvironmentCount))
             print
             print("Confused?  Need help?  Try typing 'help' and see what happens!")
             print
