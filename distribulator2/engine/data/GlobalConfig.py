@@ -24,7 +24,9 @@ class GlobalConfig:
         pass
 
 ######################################################################
-# Which mode we're operating in.
+#
+# Application state flags.
+#
 ######################################################################
 
     def isBatchMode(self):
@@ -40,7 +42,19 @@ class GlobalConfig:
         self._isbatchflag = PassedBatchMode
 
 ######################################################################
-# Which mode we're operating in.
+
+    def isBreakState(self):
+        """This is a typical accessor method."""
+    
+        return self._breakState
+
+######################################################################
+
+    def setBreakState(self, PassedBreakState):
+        """This is a typical accessor method."""
+    
+        self._breakState = PassedBreakState
+
 ######################################################################
 
     def isConsoleMode(self):
@@ -56,7 +70,19 @@ class GlobalConfig:
         self._isconsoleflag = PassedConsoleMode
 
 ######################################################################
-# Which mode we're operating in.
+
+    def isExitSuccess(self):
+        """This is a typical accessor method."""
+
+        return self._exitSuccess
+
+######################################################################
+
+    def setExitSuccess(self, PassedExitSuccess):
+        """This is a typical accessor method."""
+
+        self._exitSuccess = PassedExitSuccess
+
 ######################################################################
 
     def isListMode(self):
@@ -72,39 +98,37 @@ class GlobalConfig:
         self._islistflag = PassedListMode
 
 ######################################################################
-# Batch file name, if applicable.
-######################################################################
 
-    def getBatchFile(self):
+    def isLoadUsername(self):
         """This is a typical accessor method."""
 
-        return self._batchFile
+        return self._isLoadUsername
 
 ######################################################################
 
-    def setBatchFile(self, PassedBatchFile):
+    def setLoadUsername(self, PassedLoadUsername):
         """This is a typical accessor method."""
 
-        self._batchFile = PassedBatchFile
+        self._isLoadUsername = PassedLoadUsername
 
 ######################################################################
-# Our break state.
-######################################################################
 
-    def isBreakState(self):
+    def isPrintUsername(self):
         """This is a typical accessor method."""
-    
-        return self._breakState
+
+        return self._isPrintUsername
 
 ######################################################################
 
-    def setBreakState(self, PassedBreakState):
+    def setPrintUsername(self, PassedPrintUsername):
         """This is a typical accessor method."""
-    
-        self._breakState = PassedBreakState   
+
+        self._isPrintUsername = PassedPrintUsername
 
 ######################################################################
-# Our app-level and logging configuration files.
+#
+# Application filename storage.
+#
 ######################################################################
 
     def getAppConfigFile(self):
@@ -121,52 +145,18 @@ class GlobalConfig:
 
 ######################################################################
 
-    def getLoggingConfigFile(self):
-        """This is a typical accessor method."""
-    
-        return self._loggingConfigFile
-
-######################################################################
-
-    def setLoggingConfigFile(self, PassedLoggingConfigFile):
-        """This is a typical accessor method."""
-    
-        self._loggingConfigFile = PassedLoggingConfigFile
-
-######################################################################
-# Our global delay between remote commands.
-######################################################################
-
-    def getDelaySecs(self):
+    def getBatchFile(self):
         """This is a typical accessor method."""
 
-        return self._delaySecs
+        return self._batchFile
 
 ######################################################################
 
-    def setDelaySecs(self, PassedDelaySecs):
+    def setBatchFile(self, PassedBatchFile):
         """This is a typical accessor method."""
 
-        self._delaySecs = PassedDelaySecs
+        self._batchFile = PassedBatchFile
 
-######################################################################
-# Our exit code.
-######################################################################
-
-    def isExitSuccess(self):
-        """This is a typical accessor method."""
-
-        return self._exitSuccess
-
-######################################################################
-
-    def setExitSuccess(self, PassedExitSuccess):
-        """This is a typical accessor method."""
-
-        self._exitSuccess = PassedExitSuccess
-
-######################################################################
-# Our helpfiles path.
 ######################################################################
 
     def getHelpDir(self):
@@ -182,23 +172,19 @@ class GlobalConfig:
         self._helpDir = PassedHelpDir
 
 ######################################################################
-# Our load-usernames-or-not boolean flag.
-######################################################################
 
-    def isLoadUsername(self):
+    def getLoggingConfigFile(self):
         """This is a typical accessor method."""
-
-        return self._isLoadUsername
+    
+        return self._loggingConfigFile
 
 ######################################################################
 
-    def setLoadUsername(self, PassedLoadUsername):
+    def setLoggingConfigFile(self, PassedLoggingConfigFile):
         """This is a typical accessor method."""
+    
+        self._loggingConfigFile = PassedLoggingConfigFile
 
-        self._isLoadUsername = PassedLoadUsername
-
-######################################################################
-# Our pass-through file path.
 ######################################################################
 
     def getPassThruFile(self):
@@ -214,20 +200,22 @@ class GlobalConfig:
         self._passThruFile = PassedPassThruFile
 
 ######################################################################
-# Our print-username-or-not boolean flag.
+#
+# Application runtime user settings
+#
 ######################################################################
 
-    def isPrintUsername(self):
+    def getDelaySecs(self):
         """This is a typical accessor method."""
 
-        return self._isPrintUsername
+        return self._delaySecs
 
 ######################################################################
 
-    def setPrintUsername(self, PassedPrintUsername):
+    def setDelaySecs(self, PassedDelaySecs):
         """This is a typical accessor method."""
 
-        self._isPrintUsername = PassedPrintUsername
+        self._delaySecs = PassedDelaySecs
 
 ######################################################################
 # Requested server or server group list, if applicable.
@@ -288,22 +276,6 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._var3 = PassedVar3
-
-######################################################################
-# Number of config lines loaded.
-######################################################################
-
-    def getConfigLines(self):
-        """This is a typical accessor method."""
-
-        return self._configLines
-
-######################################################################
-
-    def setConfigLines(self, PassedConfigLines):
-        """This is a typical accessor method."""
-
-        self._configLines = PassedConfigLines
 
 ######################################################################
 # System binary locations.
@@ -438,6 +410,22 @@ class GlobalConfig:
         self._pingTimeout = PassedPingTimeout
 
 ######################################################################
+# Config lines loaded.
+######################################################################
+
+    def getConfigLines(self):
+        """This is a typical accessor method."""
+
+        return self._configLines
+
+######################################################################
+
+    def setConfigLines(self, PassedConfigLines):
+        """This is a typical accessor method."""
+
+        self._configLines = PassedConfigLines
+
+######################################################################
 # MultiLogger Object.
 ######################################################################
 
@@ -452,6 +440,31 @@ class GlobalConfig:
         """This is a typical accessor method."""
 
         self._multiLogger = PassedMultiLogger
+
+######################################################################
+# Local effective Unix username.
+######################################################################
+
+    def getRealUsername(self):
+        """This is a typical accessor method."""
+
+        return self._realUsername
+
+######################################################################
+
+    def setRealUsername(self, PassedRealUsername):
+        """This is a typical accessor method."""
+
+        self._realUsername = PassedRealUsername
+
+######################################################################
+# Seperator bar.
+######################################################################
+
+    def getSeperator(self):
+        """This is a typical accessor method."""
+
+        return '----------------------------------------------------------------------'
 
 ######################################################################
 # Server Environment.
@@ -502,32 +515,9 @@ class GlobalConfig:
         self._username = PassedUsername
 
 ######################################################################
-# Local effective Unix username.
-######################################################################
-
-    def getRealUsername(self):
-        """This is a typical accessor method."""
-
-        return self._realUsername
-
-######################################################################
-
-    def setRealUsername(self, PassedRealUsername):
-        """This is a typical accessor method."""
-
-        self._realUsername = PassedRealUsername
-
-######################################################################
-# Global seperator bar.
-######################################################################
-
-    def getSeperator(self):
-        """This is a typical accessor method."""
-
-        return '----------------------------------------------------------------------'
-
-######################################################################
-# Servers and ServerGroups
+#
+# Servers and ServerGroups handlers
+#
 ######################################################################
 
     def getCurrentServerGroup(self):
