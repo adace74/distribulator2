@@ -40,7 +40,7 @@ Installation
    cd /usr/local/
 
 3) Unpack the distribution:
-   tar xfz distribulator-0.62.tar.gz
+   tar xfz distribulator-0.6.2.tar.gz
 
 4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
    reflect your installation directory(in this case /usr/local/distribulator2):
