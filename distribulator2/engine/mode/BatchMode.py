@@ -258,7 +258,7 @@ class BatchMode(Mode.Mode):
         self._globalConfig.getSysLogger().LogMsgInfo(self._globalConfig.getSeperator())
 
         if (self._globalConfig.isBreakState()):
-            myInfo = "INFO:  Summary: Not available due to aborted batch run."
+            myInfo = "INFO:  Summary: Batch run successfully aborted, shutting down..."
         else:
             myInfo = "INFO:  Summary: %d commands run / " % \
                   myCommandCount
