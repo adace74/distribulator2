@@ -151,7 +151,7 @@ class CommandRunner:
                         print("ERROR: Server '" + thisServer.getName() + \
                               "' appears to be down.  Continuing...")
                         self._globalConfig.getSysLogger().LogMsgInfo(
-                            "ERROR: Server '" + thisServer.getName() + \
+                            "ERROR:Server '" + thisServer.getName() + \
                             "' appears to be down.  Continuing.." )
 
             except EOFError:
@@ -324,7 +324,7 @@ class CommandRunner:
                         print("ERROR: Server '" + thisServer.getName() + \
                               "' appears to be down.  Continuing...")
                         self._globalConfig.getSysLogger().LogMsgInfo(
-                            "ERROR: Server '" + thisServer.getName() + \
+                            "ERROR:Server '" + thisServer.getName() + \
                             "' appears to be down.  Continuing.." )
 
             except EOFError:
