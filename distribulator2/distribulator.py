@@ -283,7 +283,7 @@ The available options are:
         # These three really should be pinned to an interface.
         myBatchMode = engine.mode.BatchMode.BatchMode(myGlobalConfig)
         myCommLine = engine.mode.ConsoleMode.ConsoleMode(myGlobalConfig)
-        myListModeer = engine.mode.ListMode.ListMode(myGlobalConfig)
+        myListMode = engine.mode.ListMode.ListMode(myGlobalConfig)
 
         # Load up app-level config, logging config, and readline history.
         myLoader = engine.conf.ConfigLoader.ConfigLoader(myGlobalConfig)

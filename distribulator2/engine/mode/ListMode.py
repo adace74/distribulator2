@@ -124,7 +124,7 @@ class ListMode(Mode.Mode):
                         myOutput = myOutput + myServer.getName() + " "
 
         myOutput = myOutput.strip()
-        self._globalConfig.LogMsgInfo(myOutput)
+        print myOutput
 
         return
 
