@@ -164,13 +164,13 @@ The available options are:
     myVerboseLevel = ''
 
     try:
-        if len(argv) < 2:
+        if (len(argv) < 2):
             print("ERROR: I need to know which environment I am to use!")
             raise "CommandLineError"
 
         optlist, args = getopt.getopt(sys.argv[1:], short_options, long_options)
 
-        if len(optlist) > 0:
+        if (len(optlist) > 0):
             for opt in optlist:
                 if (opt[0] == '--batch'):
                     myBatchFile = opt[1]
@@ -227,7 +227,7 @@ The available options are:
         myGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
         # Batch mode.
-        if ( len(myBatchFile) > 0 ):
+        if (len(myBatchFile) > 0):
             myGlobalConfig.setBatchMode(True)
             myGlobalConfig.setBatchFile(myBatchFile)
 
@@ -237,7 +237,7 @@ The available options are:
             myGlobalConfig.setBatchMode(False)
 
         # List mode.
-        if ( len(myRequestedList) > 0 ):
+        if (len(myRequestedList) > 0):
             myGlobalConfig.setListMode(True)
             myGlobalConfig.setPrintUsername(myPrintUsername)
             myGlobalConfig.setRequestedList(myRequestedList)
@@ -251,14 +251,14 @@ The available options are:
             myGlobalConfig.setConsoleMode(False)
 
         # Config file locations.
-        if ( len(myAppConfigFile) > 0 ):
+        if (len(myAppConfigFile) > 0):
             myGlobalConfig.setAppConfigFile(myAppConfigFile)
         else:
             myGlobalConfig.setAppConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
 
         myGlobalConfig.setLoggingConfigFile( os.path.join(myInstallDir, 'conf/logging.conf') )
 
-        if ( len(myVerboseLevel) > 0):
+        if (len(myVerboseLevel) > 0):
             myGlobalConfig.setVerboseLevel(myVerboseLevel)
         else:
             myGlobalConfig.setVerboseLevel(None)
@@ -313,14 +313,12 @@ The available options are:
         myMultiLogger.LogMsgDebug(myDebug)
 
         myDebug = "UID: " + myGlobalConfig.getRealUsername() + \
-                   " | " + \
-                   "EUID: " + myGlobalConfig.getUsername() + \
-                   " | " + \
-                   "Env: " + myServerEnv + \
-                   " | " + \
-                   "File: " + myBatchFile
-
+                   " | " + "EUID: " + myGlobalConfig.getUsername() + \
+                   " | " + "Env: " + myServerEnv
         myMultiLogger.LogMsgDebug(myDebug)
+
+        if (len(myBatchFile) > 0):
+            myMultiLogger.LogMsgDebug("Batch File: " + myBatchFile)
 
     except (EOFError, KeyboardInterrupt):
             print("ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting...")
