@@ -17,19 +17,29 @@ import readline
 import sys
 
 def initHistory():
-    print "Loading readline history..."
-    histfile = os.path.join(os.environ["HOME"], ".dist_history")
+    myHistory = os.path.join(os.environ["HOME"], ".dist_history")
     
     try:
-        readline.read_history_file(histfile)
+        readline.read_history_file(myHistory)
         
     except IOError:
         pass
     
-    atexit.register(readline.write_history_file, histfile)
+    atexit.register(readline.write_history_file, myHistory)
 
 def processInput():
     while (1):
-        tempvar = raw_input("This is your prompt> ")
-        print "You typed: " + tempvar
+        myPromptEnv = 'sample'
+        myPromptUser = 'awd'
+        myPromptGroup = 'wlx'
+        myPrompt = "<" + myPromptUser + "@" + myPromptEnv + "[" + myPromptGroup + "]:" + os.getcwd() + "> "
+
+        myInput = raw_input(myPrompt)
+        print "You typed: " + myInput
         print "*****"
+
+        if (myInput == "exit"):
+            print
+            print("Received exit command.  Wrote history.  Dying...")
+            print
+            sys.exit(0)

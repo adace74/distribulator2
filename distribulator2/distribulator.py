@@ -36,6 +36,7 @@ try:
 
     # Custom modules
     import engine.CommandLine
+    import engine.ConfigLoader
 
 except ImportError:
     print "An error occured while loading Python modules, exiting..."
@@ -44,10 +45,6 @@ except ImportError:
 # Handy constants.
 false = 0
 true = 1
-
-# Define global variables(how global are they?)
-install_dir = os.getcwd()
-install_conf = os.path.join(os.getcwd(), 'conf')
 
 # Display a nice pretty header.
 def title_header():
@@ -62,9 +59,6 @@ def info_header(server_env, start_dir):
     print "Current Environment: " + server_env
     print "Current Directory:   " + start_dir
     print
-    print "Internal Commands: 0"
-    print "External Commands: 0"
-    print "Server Groups: all"
 
 # Good old main...
 def main(argv):
@@ -133,7 +127,8 @@ The available options are:
 
     info_header(server_env, start_dir)
 
-    engine.CommandLine.initHistory()
+    config_dir = os.path.join(os.getcwd(), 'conf')
+    engine.ConfigLoader.load(config_dir)
     engine.CommandLine.processInput()
 #
 # If called from the command line, invoke thyself!

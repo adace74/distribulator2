@@ -15,10 +15,9 @@
 #
 # Server groups
 #
-<Environment at>
-    <Servergroup wlx>
-        <User orbitz/>
-        <Server wlx01at.eg.orbitz.com/>
-        <Server wlx02at.eg.orbitz.com/>
-    </Servergroup>
+<Environment name="at">
+    <ServerGroup name="wlx" username="orbitz">
+        <Server name="wlx01at.eg.orbitz.com"/>
+        <Server name="wlx02at.eg.orbitz.com"/>
+    </ServerGroup>
 </Environment>
