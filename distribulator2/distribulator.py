@@ -21,7 +21,7 @@
 # File version tag
 __version__ = '$Revision$'[11:-2]
 # Application version tag
-__appversion__ = 'The Distribulator v0.7.2'
+__appversion__ = 'The Distribulator v0.7.3'
 
 # Standard modules
 import commands
@@ -133,7 +133,7 @@ The available options are:
     Print version information.
 """ % argv[0]
 
-    myBatchFile = ''
+    myBatchFile = 'None'
     myConfigFile = ''
     myInstallDir = '/tmp'
     myQuietMode = False
@@ -202,7 +202,7 @@ The available options are:
         # Load up our GlobalConfig object.
         myGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
 
-        if ( len(myBatchFile) > 0 ):
+        if ( myBatchFile.find('None') == -1 ):
             myGlobalConfig.setBatchMode(True)
             myGlobalConfig.setBatchFile(myBatchFile)
         else:
@@ -214,7 +214,7 @@ The available options are:
         else:
             myGlobalConfig.setListMode(False)
 
-        if ( (len(myBatchFile) == 0) & \
+        if ( (myBatchFile.find('None') != -1) & \
              (len(myRequestedList) == 0) ):
             myGlobalConfig.setConsoleMode(True)
         else:
@@ -225,21 +225,17 @@ The available options are:
         else:
             myGlobalConfig.setConfigFile( os.path.join(myInstallDir, 'conf/config.xml') )
 
+        # More with the loading of the GlobalConfig object.
         myGlobalConfig.setExitSuccess(True)
         myGlobalConfig.setHelpDir( os.path.join(myInstallDir, 'doc') )
         myGlobalConfig.setPassThruFile( os.path.join(myInstallDir, 'conf/pass_through_cmds.txt') )
-
-        if ( myGlobalConfig.isBatchMode() ):
-            myGlobalConfig.setQuietMode(myQuietMode)
-        else:
-            myGlobalConfig.setQuietMode(False)
-
+        myGlobalConfig.setQuietMode(myQuietMode)
         myGlobalConfig.setServerEnv(myServerEnv)
         myGlobalConfig.setUsername( getpass.getuser() )
         myGlobalConfig.setVar1(myVar1)
         myGlobalConfig.setVar2(myVar2)
         myGlobalConfig.setVar3(myVar3)
-    
+
         if ( myGlobalConfig.isConsoleMode() ):
             printTitleHeader()
             printInfoHeader(myServerEnv, myGlobalConfig.getConfigFile())
@@ -281,19 +277,19 @@ The available options are:
 
         if (myGlobalConfig.isBatchMode()):
             myInfo = "INFO:  " + __appversion__ + " (batch mode) START"
-            if (myVerboseMode):
-                print(myInfo)
         elif (myGlobalConfig.isListMode()):
             myInfo = "INFO:  " + __appversion__ + " (list mode) START"
         else:
             myInfo = "INFO:  " + __appversion__ + " (console mode) START"
         mySysLogger.LogMsgInfo(myInfo)
 
-        myInfo = "INFO:  Real UID: " + myGlobalConfig.getRealUsername() + \
+        myInfo = "INFO:  UID: " + myGlobalConfig.getRealUsername() + \
                    " | " + \
-                   "Effective UID: " + myGlobalConfig.getUsername() + \
+                   "EUID: " + myGlobalConfig.getUsername() + \
                    " | " + \
-                   "Environment: " + myServerEnv
+                   "Env: " + myServerEnv + \
+                   " | " + \
+                   "File: " + myBatchFile
 
         mySysLogger.LogMsgInfo(myInfo)
         if (myVerboseMode):
@@ -311,8 +307,6 @@ The available options are:
 
         myInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
         mySysLogger.LogMsgInfo(myInfo)
-        if (myVerboseMode):
-            print(myInfo)
 
         mySysLogger.LogMsgInfo(mySeperator)
         if (myVerboseMode):

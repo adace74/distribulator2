@@ -71,9 +71,6 @@ class BatchMode(Mode.Mode):
             return
 
         # Let everyone know what we're doing.        
-        myInfo = "INFO:  Batch File: " + \
-            self._globalConfig.getBatchFile()
-        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
         self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
 
         myCommandCount = 0
@@ -252,24 +249,20 @@ class BatchMode(Mode.Mode):
         #
         # Output our "footer" for batch mode.
         #
-        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+        self._globalConfig.getSysLogger().LogMsgInfo(self._globalConfig.getSeperator())
 
-        myInfo = "INFO:  Commands Run:      %d commands" % \
+        myInfo = "INFO:  Summary: %d commands run / " % \
               myCommandCount
-        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
         myTimeFinished = time.time()
         myTimeDuration = myTimeFinished - myTimeStarted
 
-        myInfo = "INFO:  Run Time:          %.2f seconds" % \
-              myTimeDuration
-        self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+        myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
 
         if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
-            myInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
-                  (myTimeDuration / myCommandCount)
+            myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s per command"
         else:
-            myInfo = "INFO:  Avg. Command Time: 0 seconds"
+            myInfo = myInfo + "0s per command"
 
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 

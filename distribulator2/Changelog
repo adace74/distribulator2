@@ -202,6 +202,10 @@ Change List For v0.7.2 (Language: Python / Status: Shipped)
 * Cleanup: Updated the accompanying config.dtd with the "ping" XML tag.
 * Cleanup: Disable GNU readline history when running in batch mode.
 
+Change List For v0.7.3 (Language: Python / Status: Shipped)
+---------------------------------------------------------------
+* Cleanup: Making the batch mode header and footer output more concise.
+
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
