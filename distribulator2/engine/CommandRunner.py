@@ -407,8 +407,6 @@ class CommandRunner:
         # throw out the " on " part of our command.
         thisGroupStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
 
-        print("Group Str:  " + thisGroupStr);
-        print("Run Target: " + thisRunTarget);
         #
         # Step 3: Assemble two lists based on command syntax.
         #
@@ -618,7 +616,7 @@ class CommandRunner:
                 return False
             else:
                 self._globalConfig.setCurrentServerGroup(thisServerGroup)
-                print("Current server group is now '" + self._commTokens[1] + "'.")
+                print("INFO:  Current server group is now '" + self._commTokens[1] + "'.")
                 return True
         else:
             # Otherwise, display the server group list given at startup.
