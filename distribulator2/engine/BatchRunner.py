@@ -78,6 +78,9 @@ class BatchRunner:
                 thisLine = string.replace(thisLine, '\t', ' ')
 
                 # Variable substitution
+                thisLine = string.replace( thisLine, '$env', \
+                                           self._globalConfig.getServerEnv() )
+
                 if ( self._globalConfig.getVar1() ):
                     thisLine = string.replace( thisLine, '$var1',
                                                self._globalConfig.getVar1() )
