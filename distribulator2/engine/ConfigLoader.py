@@ -77,11 +77,15 @@ class ConfigLoader:
         self.thisGlobalConfig.setCurrentServerGroup( self.thisGlobalConfig.getServerGroupList()[0] )
 
         thisServerGroupStr = ''
+        thisTotalServerCount = 0
         for thisServerGroup in self.thisGlobalConfig.getServerGroupList():
+            thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
             thisServerGroupStr = thisServerGroupStr + \
-                                 thisServerGroup.getName() + ' '
+                                 thisServerGroup.getName() + '(%d) ' % \
+                                 thisServerGroup.getServerCount()
 
-        print("- Available Server Groups:     all " + thisServerGroupStr)
+        print("- Available Server Groups:     " + \
+              thisServerGroupStr + "all(%d)" % thisTotalServerCount)
         print
         print("Confused?  Need help?  Try typing 'help' and see what happens!")
         print

@@ -119,7 +119,7 @@ class XMLFileParser:
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
         thisServerGroup.setName( self.handleGroupName(PassedServerGroup.getElementsByTagName("name")[0]) )
         thisServerGroup.setUsername( self.handleUsername(PassedServerGroup.getElementsByTagName("username")[0]) )
-        thisServerGroup.setServerList( self.handleServers(thisServerGroup, PassedServerGroup.getElementsByTagName("server")) )
+        thisServerGroup = self.handleServers( thisServerGroup, PassedServerGroup.getElementsByTagName("server") )
 
         return thisServerGroup
 

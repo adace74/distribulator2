@@ -27,6 +27,7 @@ class ServerGroup:
     # Constructor.
     #
     def __init__(self):
+        self.thisServerCount = 0
         self.thisServerList = []
     #
     # Name.
@@ -47,13 +48,14 @@ class ServerGroup:
     #
     # Servers.
     #
+    def getServerCount(self):
+        return self.thisServerCount
+
     def getServerList(self):
         return self.thisServerList
 
-    def setServerList(self, PassedServerList):
-        self.thisServerList = PassedServerList
-
     def addServer(self, PassedServer):
+        self.thisServerCount = self.thisServerCount + 1
         self.thisServerList.append(PassedServer)
 
     def getServerByName(self, PassedServerName):
