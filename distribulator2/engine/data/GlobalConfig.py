@@ -17,7 +17,7 @@ try:
     import sys
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
@@ -33,6 +33,14 @@ class GlobalConfig:
 
     def setConfigDir(self, PassedConfigDir):
         self.thisConfigDir = PassedConfigDir
+    #
+    # Our helpfiles path.
+    #
+    def getHelpDir(self):
+        return self.thisHelpDir
+
+    def setHelpDir(self, PassedHelpDir):
+        self.thisHelpDir = PassedHelpDir
     #
     # Number of config lines loaded.
     #
@@ -82,6 +90,12 @@ class GlobalConfig:
     #
     # Servers and ServerGroups
     #
+    def getCurrentServerGroup(self):
+        return self.thisCurrentServerGroup
+
+    def setCurrentServerGroup(self, PassedServerGroup):
+        self.thisCurrentServerGroup = PassedServerGroup
+
     def getServerGroupList(self):
         return self.thisServerGroupList
 

@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# Name: Server.py
+# Name: FilePrinter.py
 #
 ######################################################################
 
@@ -11,9 +11,6 @@ __version__= '$Revision$'[11:-2]
 
 try:
     # Standard modules
-    import os
-    import os.path
-    import string
     import sys
 
 except ImportError:
@@ -22,22 +19,20 @@ except ImportError:
 
 ######################################################################
 
-class Server:
-    #
-    # Name.
-    #
-    def getName(self):
-        return self.thisName
+class FilePrinter:
 
-    def setName(self, PassedName):
-        self.thisName = PassedName
-    #
-    # Username.
-    #
-    def getUsername(self):
-        return self.thisUsername
+    def printFile(self, PassedFilename):
+        try:
+            thisFile = open(PassedFilename, 'r')
+            
+            for thisLine in thisFile:
+                thisLine = thisLine.strip()
+                print(thisLine)
 
-    def setUsername(self, PassedUsername):
-        self.thisUsername = PassedUsername
+            thisFile.close()
+
+        except IOError, (errno, strerror):
+            print("ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedFilename))
+            sys.exit(1)
 
 ######################################################################

@@ -23,7 +23,7 @@ try:
     import engine.data.ServerGroup
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
@@ -51,7 +51,7 @@ class XMLFileParser:
             thisDom = xml.dom.minidom.parse(thisFilename)
 
         except IOError, (errno, strerror):
-            print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename)
+            print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename))
             sys.exit(1)
 
         self.handleConfig(thisDom)

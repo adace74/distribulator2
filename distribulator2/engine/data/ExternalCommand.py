@@ -18,7 +18,7 @@ try:
     import sys
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
@@ -29,7 +29,7 @@ class ExternalCommand:
     # Constructor.
     #
     def __init__(self):
-        self.thisSeperator = '============================================================'
+        self.thisSeperator = '----------------------------------------------------------------------'
 
     #
     # Unix command line string.
@@ -43,12 +43,12 @@ class ExternalCommand:
     # Function methods.
     #
     def run(self):
+        print("EXEC:  " + self.thisCommand)
         thisStatus, thisOutput = commands.getstatusoutput(self.thisCommand)
-        print self.thisSeperator
-        print thisOutput
-        print self.thisSeperator
+        print(thisOutput)
+        print(self.thisSeperator)
 
         if (thisStatus != 0):
-            print "ERROR: Local shell returned error state."
+            print("ERROR: Local shell returned error state.")
 
 ######################################################################

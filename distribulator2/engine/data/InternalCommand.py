@@ -17,18 +17,12 @@ try:
     import sys
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
 
 class InternalCommand:
-    #
-    # Constructor.
-    #
-    def __init__(self):
-        self.thisCommandList = [ 'copy', 'help', 'login', 'remote-shell',
-                                 'run', 'server-group', 'server-list' ]
     #
     # Unix command line string.
     #
@@ -37,11 +31,5 @@ class InternalCommand:
     
     def setCommand(self, PassedCommand):
         self.thisCommand = PassedCommand
-    #
-    # Function methods.
-    #
-    def parse(self):
-        self.thisTokens = self.thisCommand.split()
-        print "ERROR: Command '" + self.thisTokens[0] + "' unknown."
 
 ######################################################################

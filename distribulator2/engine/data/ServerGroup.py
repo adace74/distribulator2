@@ -17,7 +17,7 @@ try:
     import sys
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
@@ -49,7 +49,7 @@ class ServerGroup:
     #
     def getServerList(self):
         return self.thisServerList
-    
+
     def setServerList(self, PassedServerList):
         self.thisServerList = PassedServerList
 
@@ -58,7 +58,7 @@ class ServerGroup:
 
     def getServerByName(self, PassedServerName):
         for thisServer in self.thisServerList:
-            if (PassedServerName == thisServer.getName()):
+            if ( PassedServerName == thisServer.getName() ):
                 return thisServer
 
 ######################################################################

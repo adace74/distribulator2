@@ -21,16 +21,20 @@ try:
     import sys
 
     # Custom modules
+    import engine.CommandRunner
     import engine.data.ExternalCommand
     import engine.data.InternalCommand
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
 
 class CommandLine:
+
+    def __init__(self, PassedGlobalConfig):
+        self.thisGlobalConfig = PassedGlobalConfig
 
     def initHistory(self):
         thisCounter = 0
@@ -58,11 +62,11 @@ class CommandLine:
 
         return thisCounter
 
-    def invoke(self, PassedGlobalConfig):
+    def invoke(self):
 
-        thisPromptEnv = 'sample'
+        thisPromptEnv = self.thisGlobalConfig.getServerEnv()
         thisPromptUser = getpass.getuser()
-        thisPromptGroup = 'wlx'
+        thisPromptGroup = self.thisGlobalConfig.getCurrentServerGroup()
 
         while (1):
             #
@@ -81,6 +85,7 @@ class CommandLine:
                 print
                 print("Caught CTRL-D keystroke.  Wrote history.  Dying...")
                 print
+
                 return
 
             except KeyboardInterrupt:
@@ -97,20 +102,12 @@ class CommandLine:
                     print
                     print("Received exit command.  Wrote history.  Dying...")
                     print
+
                     return
-
-                try:
-                    if (thisTokens[0] == 'cd'):
-                        os.chdir(thisTokens[1])
-                        continue
-
-                except OSError, (errno, strerror):
-                    print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
-                    continue
                 #
                 # Step 2 - Check for Unix "pass through" commands.
                 #
-                for thisCommand in PassedGlobalConfig.getPassThruList():
+                for thisCommand in self.thisGlobalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
                         thisExternalCommand.setCommand(thisInput)
@@ -124,11 +121,13 @@ class CommandLine:
                     continue
                 #
                 # Step 3 - Create InternalCommand object and fire up
-                # the parser.
+                #          the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisInput)
-                thisInternalCommand.parse()
+                thisCommandRunner = engine.CommandRunner.CommandRunner(self.thisGlobalConfig)
+                thisCommandRunner.run(thisInternalCommand)
                 del thisInternalCommand
+                del thisCommandRunner
 
 ######################################################################

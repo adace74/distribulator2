@@ -43,7 +43,7 @@ try:
     import generic.SysLogger
 
 except ImportError:
-    print "An error occured while loading Python modules, exiting..."
+    print("An error occured while loading Python modules, exiting...")
     sys.exit(1)
 
 ######################################################################
@@ -51,25 +51,26 @@ except ImportError:
 # Display a nice pretty header.
 def printTitleHeader():
     print
-    print "The Distribulator v0.10"
-    print "-----------------------"
+    print("The Distribulator v0.50")
+    print("-----------------------")
     print
 
 def printInfoHeader(PassedServerEnv, PassedConfigDir):
-    print "Python Version:      " + sys.version.split()[0]
-    print "Local Hostname:      " + socket.gethostname()
-    print "Current Environment: " + PassedServerEnv
-    print "Config Directory:    " + PassedConfigDir
+    print("Python Version:      " + sys.version.split()[0])
+    print("Local Hostname:      " + socket.gethostname())
+    print("Current Environment: " + PassedServerEnv)
+    print("Config Directory:    " + PassedConfigDir)
     print
 
 # Good old main...
 def main(argv):
-    short_options = ':b:d:e:h:s:'
+    short_options = ':b:d:e:h:s:v:'
     long_options = ['batch=',
                     'directory=',
                     'env=',
                     'help',
-                    'shell=']
+                    'shell=',
+                    'version']
 
     usage = """Usage: %s [options] --env=environment
 
@@ -96,6 +97,9 @@ The available options are:
     Not yet implemented.
     OPTIONAL
 
+    -v / --version
+    Print version information.
+
 """ % argv[0]
 
     thisServerEnv = 'sample'
@@ -104,7 +108,7 @@ The available options are:
 
     try:
         if len(argv) < 2:
-            print "ERROR: I need to know which environment I am to use!"
+            print("ERROR: I need to know which environment I am to use!")
             print
             raise "CommandLineError"
 
@@ -123,8 +127,12 @@ The available options are:
                     sys.exit(0)
                 elif (opt[0] == '-s') or (opt[0] == '--shell'):
                     thisServerShell = opt[1]
+                elif (opt[0] == '-v') or (opt[0] == '--version'):
+                    print("The Distribulator v0.50")
+                    print("Please see the LICENSE file for accompanying legalese.")
+                    sys.exit(0)
         else:
-            print "ERROR: getopt failure!  This shouldn't ever happen!"
+            print("ERROR: getopt failure!  This shouldn't ever happen!")
             print
             raise "CommandLineError"
 
@@ -133,7 +141,7 @@ The available options are:
         sys.exit(1)
 
     except getopt.GetoptError:
-        print "ERROR: Erroneous flag(s) given.  Please check your syntax."
+        print("ERROR: Erroneous flag(s) given.  Please check your syntax.")
         print
         sys.stderr.write(usage)
         sys.exit(1)
@@ -142,19 +150,19 @@ The available options are:
     printTitleHeader()
 
     thisConfigDir = os.path.join(os.getcwd(), 'conf')
+    thisHelpDir = os.path.join(os.getcwd(), 'doc')
 
     printInfoHeader(thisServerEnv, thisConfigDir)
 
-    # Create CommandLine instance, and pass it through to ConfigLoader.
-    thisCommLine = engine.CommandLine.CommandLine()
-
-    # Create ConfigLoader instance and call that method!
-    thisLoader = engine.ConfigLoader.ConfigLoader()
+    # Load up our GlobalConfig object.
     thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
     thisGlobalConfig.setConfigDir(thisConfigDir)
+    thisGlobalConfig.setHelpDir(thisHelpDir)
     thisGlobalConfig.setServerEnv(thisServerEnv)
 
-    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine, thisGlobalConfig)
+    thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
+    thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
+    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
 
     # Log our startup.
     thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
@@ -165,10 +173,10 @@ The available options are:
         os.chdir(thisStartDir)
 
     except OSError, (errno, strerror):
-        print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
+        print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1]))
 
     # The main readline loop.
-    thisCommLine.invoke(thisGlobalConfig)
+    thisCommLine.invoke()
 
     # Once it returns, we're done!
     thisLogger.LogMsgInfo("Shutting down...")
