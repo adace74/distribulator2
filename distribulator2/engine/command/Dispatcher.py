@@ -10,7 +10,7 @@
 # Pydoc comments
 """
 This class is responsible for dispatching the job of
-a given command to the appropriate Command subclass.
+a given command to the appropriate subclass.
 """
 
 # Version tag
@@ -36,7 +36,7 @@ import engine.data.ExternalCommand
 class Dispatcher:
     """
     This class is responsible for dispatching the job of
-    a given command to the appropriate Command subclass.
+    a given command to the appropriate subclass.
     """
 
     def __init__(self, PassedGlobalConfig):
