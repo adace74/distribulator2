@@ -4,14 +4,43 @@
 #
 ######################################################################
 
-Credits
--------
+1. Direct Contributors (code, design, doc)
+
+Adam "Tweek" Dace <adam@turing.com> / Chief Python Hacker
+Brian Dols / Python Hacker
+
+2. Indirect Contributors (Orbitz management support, ideas/suggestions, related software) 
+
+Name			| Contribution
+------------------------+----------------------------------
+Ruben Areyzaga		| Suggestions and Usage
+Warren Breitenbach	| Management Support, Suggestions & Usage
+Justin Grudzien		| Salt Monger & General Nay-Sayer
+Chris Hjelm		| Management Support
+Ryan Huber		| Suggestions and Extension(?)
+Russ Kieckhafer		| Management Support
+Cal Lott		| Management Support, Suggestions & Usage
+Charles Marshall	| Suggestions and Usage
+David Masters		| Suggestions and Usage
+Eric Mathiasen		| Suggestions and Usage
+Rob Malchow		| Suggestions and Usage
+Jason Rohwedder		| Suggestions
+Ben Schmitz		| Suggestions and Usage
+Dan Shannon		| Suggestions and Usage
+Steve Turner		| Management Support
+Andrew Uhm		| Suggestions and Usage
+------------------------+----------------------------------
+
+Orbitz NOC Team Past & Present:  Uhh...everything?
+
+P.S. Please bug Adam if you should be on this list but are not...
+
+3. Dedication
+
 This software is dedicated to those individuals behind Internet sites everywhere --
-Those working frantically behind-the-scenes to implement, test, and attempt to
-keep it all running in a world where a "store" that's only open from
-9:00 AM to 5:00 PM, in any time zone, is a "store" that's out of business.
+working frantically behind-the-scenes to implement, test, and operate their site
+in a world where a "store" that's only open from 9:00 AM to 5:00 PM, in any time zone,
+is a "store" that's out of business.
 
-I'd like to especially thank those in the Operations department of Orbitz, Inc.
+I'd like to especially thank those in the Technology department of Orbitz, Inc.
 without whose patience and support this project simply would not be possible.
-
-May this be another fine addition of Open Source Software to your collection.

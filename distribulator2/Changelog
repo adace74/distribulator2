@@ -238,51 +238,45 @@ Change List For v0.8.5 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * Cleanup: Changed logging.conf to utilize in-memory buffering for high-volume logging.
 * Cleanup: Reordered the global config object, attempted to organize variables better.
-- Ability to have batch mode report back with names of servers down and how many during a given run.
-- Ability to use "set password", along with password echo with or without remote sudo functionality.
+- Cleanup: Transfer of all copyright notices from personal to Orbitz corporate.
 - Ability to use regular expressions in "copy" and "run" commands.
-? Ability to run multiple commands using typical shell-style semicolon delimiter.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
-- Ability to list servers who run a particular service.  Config file tags, etc.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
 - Ability to use a "set concurrency X" command to set the concurrency
   for parallel run.  Also XML config directives for global defaults.
+
+Change List For v0.9.5 (Language: Python / Status: Not Started)
+---------------------------------------------------------------
+? Ability to have "pluggable" transports whereby one can at least use the "copy" and "run" commands
+  via rsh, ssh, SSL, multicast, etc.  Will most likely use command-line as interface.
+
+Small Feature TODO
+------------------
 - Cleanup: Provide a larger set of example files.  Double-check doc.  Test like crazy.
+- Ability to have batch mode report back with names of servers down and how many during a given run.
+- Ability to run multiple commands using typical shell-style semicolon delimiter.
 
-Idea List For v0.9.1 (Language: Python / Status: Not Started)
----------------------------------------------------------------
-- Testing: Completion of a comprehensive batch file test suite.
-  (Yes, this has been delayed often.  So far sheer simplicity has been enough.)
-- Ability to give a small summary report of which servers appeared to be down
-  during a given run.
-
-Idea List For v0.9.5 (Language: Python / Status: Not Started)
----------------------------------------------------------------
+Large Feature TODO
+------------------
+- Ability to use "set password", along with password echo with or without remote sudo functionality.
+- Ability to list servers who run a particular service.  Config file tags, etc.
+- Installer: Using python's distuitls package, create a sane installer.
+- Multiple remote server file to local file copy.  This would have to somehow
+  rename the files as it copies them down, perhaps based on hostname prefix.
+  (i.e. scp awd@www01,www02,www03:/tmp/blah .)
 - Single remote server file to single remote server file copy.
   (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.
   (i.e. scp awd@www01:/tmp/blah awd@www01,www02,www03:/some/other/path/)
-- Multiple remote server file to local file copy.  This would have to somehow
-  rename the files as it copies them down, perhaps based on hostname prefix.
-  (i.e. scp awd@www01,www02,www03:/tmp/blah .)
+- Testing: Completion of a comprehensive batch file test suite.
 
-Idea List For v1.0 (Will we ever get here?  Who knows!)
--------------------------------------------------------
-Valid Ideas:
-- A decent install / setup system!  Check into python's distutils.
-- Some sort of respectable regression test suite.
-  Can be done using batch files and expect?
+Other Ideas
+-----------
 - A server mode in which the distribulator will check an incoming command
   queue(a file or two?) then run those on what it considers to be its
   siblings.  This would allow commands and files to be routed to
   X number of servers in a speedy fashion.
-
-Pie-In-The-Sky Ideas:
-- Sudo-based remote permissions checking ???
-- Integration with ncurses such that one could run a command on 4 servers
-  in parallel, and see the output from each of them ???
-- What more could one want ???
