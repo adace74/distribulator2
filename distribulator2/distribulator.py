@@ -47,7 +47,7 @@ import generic.SysLogger
 def printTitleHeader():
     print
     print("The Distribulator v0.50 (Python v" + \
-          sys.version.split()[0] + "/" + sys.platform + ")")
+          sys.version.split()[0] + " / " + sys.platform + ")")
     print("--------------------------------------------------")
     print
 

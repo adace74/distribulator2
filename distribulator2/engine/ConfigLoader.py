@@ -78,7 +78,7 @@ class ConfigLoader:
         for thisServerGroup in self._globalConfig.getServerGroupList():
             thisColumnCount = thisColumnCount + 1
             thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
-            thisServerGroupStr = thisServerGroupStr + '%10s (%3d) ' % (thisServerGroup.getName(), thisServerGroup.getServerCount())
+            thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % (thisServerGroup.getName(), thisServerGroup.getServerCount())
 
             if (thisColumnCount == 4):
                 thisColumnCount = 0

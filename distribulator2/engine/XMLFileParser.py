@@ -54,44 +54,42 @@ class XMLFileParser:
         if (self._isEnvFound):
             return self._globalConfig
         else:
-            print("ERROR: No matching tags found for environment '" + self._globalConfig.getServerEnv() + "' in config.xml!")
+            print("ERROR: No matching tags found for environment '" +
+                  self._globalConfig.getServerEnv() + "' in config.xml!")
             sys.exit(1)
 
     # Gotta clean this up some day...
     def getText(self, nodelist):
-        rc = ""
+        rc = ''
         for node in nodelist:
             if node.nodeType == node.TEXT_NODE:
                 rc = rc + node.data
                 return rc
 
     def handleConfig(self, PassedConfig):
-        self.handleBinary(PassedConfig.getElementsByTagName("binary")[0])
-        self.handleLogging(PassedConfig.getElementsByTagName("logging")[0])
-        self.handleEnvironments(PassedConfig.getElementsByTagName("environment"))
+        self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
+        self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
+        self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
 
     # Binary locations.
+    def handleBinaries(self, PassedBinaries):
+        for Binary in PassedBinaries:
+            self.handleBinary(Binary)
+
     def handleBinary(self, PassedBinary):
-        self.handleLogname(PassedBinary.getElementsByTagName("logname")[0])
-        self.handleScp(PassedBinary.getElementsByTagName("scp")[0])
-        self.handleSsh(PassedBinary.getElementsByTagName("ssh")[0])
-
-    def handleLogname(self, PassedLogname):
-        self._globalConfig.setLognameBinary( \
-            self.getText(PassedLogname.childNodes) )
-
-    def handleScp(self, PassedScp):
-        self._globalConfig.setScpBinary( self.getText(PassedScp.childNodes) )
-
-    def handleSsh(self, PassedSsh):
-        self._globalConfig.setSshBinary( self.getText(PassedSsh.childNodes) )
+        thisName = PassedBinary.getAttribute('name')
+        thisValue = PassedBinary.getAttribute('value')
+        if (thisName == 'logname'):
+            self._globalConfig.setLognameBinary(thisValue)
+        elif (thisName == 'scp'):
+            self._globalConfig.setScpBinary(thisValue)
+        elif (thisName == 'ssh'):
+            self._globalConfig.setSshBinary(thisValue)
 
     # Logging options.
     def handleLogging(self, PassedLogging):
-        self.handleFacility(PassedLogging.getElementsByTagName("facility")[0])
-
-    def handleFacility(self, PassedFacility):
-        self._globalConfig.setSyslogFacility( self.getText(PassedFacility.childNodes) )
+        self._globalConfig.setSyslogFacility(
+            PassedLogging.getAttribute('facility') )
 
     # Server environments, groups, and individual servers.
     def handleEnvironments(self, PassedEnvironments):
@@ -99,15 +97,12 @@ class XMLFileParser:
             self.handleEnvironment(Environment)
 
     def handleEnvironment(self, PassedEnvironment):
-        if (self.handleEnvName(PassedEnvironment.getElementsByTagName("name")[0])):
+        # Only load the environment specified on startup.
+        if ( PassedEnvironment.getAttribute('name') ==
+             self._globalConfig.getServerEnv() ):
             self._isEnvFound = True
-            self.handleServerGroups(PassedEnvironment.getElementsByTagName("servergroup"))
-
-    def handleEnvName(self, PassedEnvName):
-        if ( self._globalConfig.getServerEnv() == self.getText(PassedEnvName.childNodes) ):
-            return True
-        else:
-            return False
+            self.handleServerGroups(
+                PassedEnvironment.getElementsByTagName('servergroup') )
 
     def handleServerGroups(self, PassedServerGroups):
         for ServerGroup in PassedServerGroups:
@@ -117,17 +112,13 @@ class XMLFileParser:
 
     def handleServerGroup(self, PassedServerGroup):
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
-        thisServerGroup.setName( self.handleGroupName(PassedServerGroup.getElementsByTagName("name")[0]) )
-        thisServerGroup.setUsername( self.handleUsername(PassedServerGroup.getElementsByTagName("username")[0]) )
-        thisServerGroup = self.handleServers( thisServerGroup, PassedServerGroup.getElementsByTagName("server") )
+        thisServerGroup.setName( PassedServerGroup.getAttribute('name') )
+        thisServerGroup.setUsername(
+            PassedServerGroup.getAttribute('username') )
+        thisServerGroup = self.handleServers( thisServerGroup,
+                                              PassedServerGroup.getElementsByTagName('server') )
 
         return thisServerGroup
-
-    def handleGroupName(self, PassedGroupName):
-        return self.getText(PassedGroupName.childNodes)
-
-    def handleUsername(self, PassedUsername):
-        return self.getText(PassedUsername.childNodes)
 
     def handleServers(self, PassedServerGroup, PassedServers):
         thisServerGroup = PassedServerGroup
