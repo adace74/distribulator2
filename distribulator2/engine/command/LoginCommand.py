@@ -80,7 +80,7 @@ class LoginCommand(Command.Command):
         try:
             myExternalCommand.runConsole(True)
         except (EOFError, KeyboardInterrupt):
-            myInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+            myInfo = "Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
         return True

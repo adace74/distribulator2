@@ -214,7 +214,7 @@ class CopyCommand(Command.Command):
                 print("on server(s) " + myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    myInfo = "INFO:  Aborting command."
+                    myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
             else:
@@ -229,7 +229,7 @@ class CopyCommand(Command.Command):
                 print("on server group(s) " + myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    myInfo = "INFO:  Aborting command."
+                    myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
 
@@ -279,7 +279,7 @@ class CopyCommand(Command.Command):
             except EOFError:
                 pass
             except KeyboardInterrupt:
-                myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                 self._globalConfig.setBreakState(True)
                 return myCommandCount
@@ -332,7 +332,7 @@ class CopyCommand(Command.Command):
                 except EOFError:
                     pass
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                    myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     self._globalConfig.setBreakState(True)
                     return myCommandCount

@@ -206,7 +206,7 @@ class BatchMode(Mode.Mode):
                             myExternalCommand.runBatch()
 
                         except KeyboardInterrupt:
-                            myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                            myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                             self._globalConfig.setBreakState(True)
                             break
@@ -236,7 +236,7 @@ class BatchMode(Mode.Mode):
                     del myDispatcher
 
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                    myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     self._globalConfig.setBreakState(True)
 
@@ -255,9 +255,9 @@ class BatchMode(Mode.Mode):
         self._globalConfig.getLogger().info(self._globalConfig.getSeperator())
 
         if (self._globalConfig.isBreakState()):
-            myInfo = "INFO:  Summary: Batch run successfully aborted.  No statistics available."
+            myInfo = "Summary: Batch run successfully aborted.  No statistics available."
         else:
-            myInfo = "INFO:  Summary: %d commands run / " % \
+            myInfo = "Summary: %d commands run / " % \
                   myCommandCount
 
             myTimeFinished = time.time()

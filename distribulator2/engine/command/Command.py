@@ -44,7 +44,7 @@ class Command:
             myInput = myInput.strip()
 
         except (EOFError, KeyboardInterrupt):
-            myInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
+            myInfo = "Caught CTRL-C / CTRL-D keystroke."
             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
             return False
 

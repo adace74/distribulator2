@@ -59,7 +59,7 @@ class Dispatcher:
                                                          self._commString)
             # If we're not being quiet, print it.
             if ( self._globalConfig.isQuietMode() == False ):
-                print("CMD: " + self._commString)
+                print("INFO: CMD: " + self._commString)
 
         try:
             # Cheezy branching logic.  Works well, though.

@@ -202,7 +202,7 @@ class RunCommand(Command.Command):
                       myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    myInfo = "INFO:  Aborting command."
+                    myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
             else:
@@ -216,7 +216,7 @@ class RunCommand(Command.Command):
                       myDisplayStr + "?")
 
                 if (self.doAreYouSure() == False):
-                    myInfo = "INFO:  Aborting command."
+                    myInfo = "Aborting command."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     return False
 
@@ -277,7 +277,7 @@ class RunCommand(Command.Command):
             except EOFError:
                 pass
             except KeyboardInterrupt:
-                myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                 self._globalConifg.setBreakState(True)
                 return False
@@ -344,7 +344,7 @@ class RunCommand(Command.Command):
                 except EOFError:
                     pass
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
+                    myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     self._globalConfig.setBreakState(True)
                     return False

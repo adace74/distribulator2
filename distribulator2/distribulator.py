@@ -305,7 +305,7 @@ The available options are:
 
         myLogger.info(myInfo)
         if (myVerboseMode):
-            print(myInfo)
+            print("INFO: " + myInfo)
 
     except (EOFError, KeyboardInterrupt):
             print("ERROR: Caught CTRL-C / CTRL-D keystroke.  Exiting...")

@@ -117,8 +117,8 @@ class ConsoleMode(Mode.Mode):
                         try:
                             myExternalCommand.runConsole()
                         except KeyboardInterrupt:
-                            myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
-                            print(myInfo)
+                            myInfo = "Caught CTRL-C keystroke.  Returning to command prompt..."
+                            print("INFO: " + myInfo)
                             self._globalConfig.getLogger().info(myInfo)
                         del myExternalCommand
                         myFoundIt = True
@@ -141,7 +141,7 @@ class ConsoleMode(Mode.Mode):
                     del myDispatcher
 
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    myInfo = "Caught CTRL-C keystroke.  Returning to command prompt..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 # Icky flow-control hack.
