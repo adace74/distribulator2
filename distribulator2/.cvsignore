@@ -1,4 +1,5 @@
 autom4te*
 config.log
 config.status
+distribulator.py
 *.pyc
