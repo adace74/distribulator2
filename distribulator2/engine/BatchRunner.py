@@ -92,18 +92,25 @@ class BatchRunner:
                     thisLine = string.replace( thisLine, '$var3',
                                                self._globalConfig.getVar3() )
 
-                thisTokens = thisLine.split()
-
                 #
-                # Step 1: Check to see if this is a comment line.
+                # Step 1: Check to see if this is an empty line.
                 #         If so, skip it.
                 #
+                if (len(thisLine) == 0):
+                    continue
+
+                #
+                # Step 2: Check to see if this is a comment line.
+                #         If so, skip it.
+                #
+                thisTokens = thisLine.split()
+
                 if (thisTokens[0].find('#') == 0):
                     thisIsMore = False
                     continue
 
                 #
-                # Step 2: If the line contains a backslash indicating
+                # Step 3: If the line contains a backslash indicating
                 #         logical line continuation, honor it.
                 #
                 # The last line ended with a \
@@ -131,7 +138,7 @@ class BatchRunner:
                         continue
 
                 #
-                # Step 3: Handle "exit" from this chunk of code.
+                # Step 4: Handle "exit" from this chunk of code.
                 #
                 if (thisTokens[0] == 'exit'):
                     thisInfo = "INFO:  Received exit command.  Wrote history.  Dying..."
@@ -139,7 +146,7 @@ class BatchRunner:
                     break
 
                 #
-                # Step 4: Check for Unix "pass through" commands.
+                # Step 5: Check for Unix "pass through" commands.
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
@@ -162,7 +169,7 @@ class BatchRunner:
                     continue
 
                 #
-                # Step 5: Create InternalCommand object and fire up
+                # Step 6: Create InternalCommand object and fire up
                 #         the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
@@ -208,7 +215,7 @@ class BatchRunner:
         if (thisTerseMode):
             print(thisInfo)
 
-        if (int(thisTimeDuration) > 0):
+        if ( (int(thisTimeDuration) > 0) & (int(thisCommandCount) > 0) ):
             thisInfo = "INFO:  Avg. Command Time: %.2f seconds" % \
                   (thisTimeDuration / thisCommandCount)
         else:
