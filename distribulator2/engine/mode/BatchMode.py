@@ -22,7 +22,6 @@ import os
 import socket
 import stat
 import string
-import sys
 import time
 
 # Custom modules
@@ -60,9 +59,6 @@ class BatchMode(Mode.Mode):
 
                 self._globalConfig.setExitSuccess(False)
                 return
-
-            # Turn off STDIN, we really don't need it anymore.
-            sys.stdin.close()
 
         except OSError, (errno, strerror):
             myError = "ERROR: [Errno %s] %s: %s" % ( errno, strerror, \

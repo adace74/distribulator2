@@ -205,6 +205,9 @@ The available options are:
         if ( myBatchFile.find('None') == -1 ):
             myGlobalConfig.setBatchMode(True)
             myGlobalConfig.setBatchFile(myBatchFile)
+
+            # Turn off STDIN, we really don't need it anymore.
+            sys.stdin.close()
         else:
             myGlobalConfig.setBatchMode(False)
 
