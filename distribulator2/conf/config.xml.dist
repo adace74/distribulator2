@@ -28,7 +28,7 @@
     <binary name="ssh" value="/usr/bin/ssh"/>
 
     <!-- Logging Options -->
-    <logging filename="/var/log/commandlog"/>
+    <logging filename="/var/log/commands"/>
     <logging level="DEBUG"/>
 
     <!-- Ping Options -->
