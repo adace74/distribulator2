@@ -278,7 +278,7 @@ while ($TRUE)
 
             print "EXEC:  $temp_str\n";
 
-            qx/$temp_str/;
+	    system($temp_str);
         }
         else
         {
