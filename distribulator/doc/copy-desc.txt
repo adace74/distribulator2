@@ -6,6 +6,8 @@ Syntax: copy <server_copy>
 Description:  This command is not yet implemented.
 
 Examples:
+	copy myfile.tar.gz to group wlx:/usr/local/blah
+	copy wlx01st:/tmp/myfile.tar.gz group wlx:/usr/local/blah
 
 Notes:
 

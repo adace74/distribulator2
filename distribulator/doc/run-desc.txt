@@ -6,13 +6,14 @@ Syntax: run <command> [on] [group|server] [group_or_server_name]
 Description: Runs a given command across multiple servers, or on a particular server.
 
 Examples:
-	run "uptime"			-- Runs uptime on current server group.
-	run "uptime" on group www	-- Runs uptime on www server group.
-	run "uptime" on server www01	-- Runs uptime on www01 server.
+	run "uptime"		-- Runs uptime on current server group.
+	run "uptime" local	-- Runs uptime on local server.
+	run "uptime" on www	-- Runs uptime on www server group.
+	run "uptime" on www01	-- Runs uptime on www01 server.
 
 Notes:
-	Will attempt to do partial-string matching on server hostname,
-	so you don't have to give a FQDN.
+	No does priority-based partial-string matching on
+	server group name, then on server hostname.
 
 ----------------------------------------------------------------------
 $Id$

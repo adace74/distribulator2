@@ -1,0 +1,15 @@
+List Command Syntax & Examples
+------------------------------
+
+Syntax: list <server_group>
+
+Description:  Lists known servers in a given group,
+              or the current working group if none is specified.
+
+Examples:
+	list		-- Lists servers in current working group.
+	list www	-- Lists servers in the 'www' group.
+
+----------------------------------------------------------------------
+$Id$
+----------------------------------------------------------------------

@@ -2,14 +2,21 @@ The Distribulator Help Screen
 -----------------------------
 
 Valid Commands:
+	* cd    -- Unix-style change directory.
 	* copy  -- Copies files among servers.
 	* exit  -- Exits the Distribulator.
-	* group -- Sets current servergroup.
+	* group -- Sets current server group.
 	* help  -- This command.
+	* list  -- List servers in a given or current working server group.
+	* ls    -- Unix-style list directory.
 	* run   -- Run remote commands.
 	* shell -- Change remote shell type.
 
 For more detailed help, try "help <command>".
+
+TODO:
+	* run "uptime" concurrent 5 log
+	* read log wlx01
 
 ----------------------------------------------------------------------
 $Id$

@@ -54,6 +54,7 @@ my($TRUE) = 1;
 # Runtime Arg/Temp Variables
 #
 my($env_arg, $help_arg, $shell_arg, $version_arg) = '';
+my($counter);
 my(@command_tokens);
 my($remote_command);
 my($server);
@@ -69,7 +70,8 @@ my($environment);
 my(@server_groups);
 my(%users_groups_hash);
 my(%servers_groups_hash);
-my(@valid_commands) = ( 'copy', 'exit', 'group', 'help', 'run', 'shell' );
+my(@valid_commands) = ( 'cd', 'copy', 'exit', 'group', 'help',
+                        'list', 'ls', 'run', 'shell' );
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
@@ -121,7 +123,6 @@ LoadConfig();
 # Auto-detection Magic.
 #
 my($user) = getlogin() || getpwuid($<);
-my($dir) = cwd();
 my($hostname) = Sys::Hostname::hostname();
 #
 # Variable Definitions
@@ -146,13 +147,17 @@ print("Available Server Groups: @server_groups\n");
 print("\n");
 print("Prompt Description:      <user\@environment[current_server_group]:local_dir>\n");
 print("\n");
+print("Confused?  Need help?  Try typing \'help\' and see what happens!\n");
+print("\n");
+
 #
 # The Never Ending Loop...
 #
 while ($TRUE)
 {
 	$command = '';
-	$prompt = "<$user\@$environment\[$current_server_group\]:$dir> ";
+	$prompt = "<$user\@$environment\[$current_server_group\]:" .
+        cwd() . "> ";
 	$input = $term->readline($prompt);
 
 	@command_tokens = split(' ', $input);
@@ -174,10 +179,27 @@ while ($TRUE)
 
     #################### IMPLEMENTED ####################
 
+    # Unix-style change directory
+    if ($command eq 'cd')
+    {
+		$temp_str = shift(@command_tokens);
+
+        if ( !chdir($temp_str) )
+        {
+            print("ERROR: Directory $temp_str not found.\n");
+        }
+    }
+
+    # Copy
+    if ($command eq 'copy')
+    {
+        print("ERROR: This command is not yet implemented.\n");
+    }
+
     # Exit
     if ( ($command eq 'exit') )
 	{
-		print "Received exit command.  See ya later!\n\n";
+		print "Received exit command.  Dying...\n\n";
 
 		exit(0);
 	}
@@ -230,6 +252,71 @@ while ($TRUE)
         }
 	}
 
+	# List
+	if ($command eq 'list')
+	{
+		$temp_str = shift(@command_tokens);
+
+        # If there's no target, list the current server group.
+        if ( !$temp_str )
+        {
+            $counter = 0;
+
+            print("Known servers in group $current_server_group:\n");
+
+            foreach $server ( @{$servers_groups_hash{$current_server_group}} )
+            {
+                $counter++;
+
+                if ($counter == 3)
+                {
+                    $counter = 0;
+
+                    print("$server\n");                    
+                }
+                else
+                {
+                    print("$server\t");
+                }
+            }
+
+            print("\n");
+        }
+		elsif ( $servers_groups_hash{$temp_str} )
+		{
+            print("Known servers in group $temp_str:\n");
+
+            foreach $server ( @{$servers_groups_hash{$temp_str}} )
+            {
+                $counter++;
+
+                if ($counter == 3)
+                {
+                    $counter = 0;
+
+                    print("$server\n");                    
+                }
+                else
+                {
+                    print("$server\t");
+                }
+            }
+
+            print("\n");
+		}
+		else
+		{
+			print("ERROR: Unknown server group $temp_str.\n");
+		}
+	}
+
+    # Unix-style list directory
+    if ($command eq 'ls')
+    {
+        # Simple shell-passthrough for this one.
+        RunCommandLocal($input);
+    }
+
 	# Run
 	if ($command eq 'run')
 	{
@@ -238,7 +325,7 @@ while ($TRUE)
 
     #################### NOT IMPLEMENTED ####################
 
-    if ($command eq 'copy' || $command eq 'shell')
+    if ($command eq 'shell')
     {
         print("ERROR: This command is not yet implemented.\n");
     }
@@ -262,7 +349,52 @@ sub AreYouSure
 }
 
 #
-# Lookup which group this server belongs to.
+# Take the passed-in string, and do fuzzy matching with
+# existing groups.
+#
+sub getMatchingGroup
+{
+    my($partial) = @_;
+    my($group, $group_server, $sub_string);
+
+    foreach $group (sort keys(%servers_groups_hash) )
+    {
+        if ($partial eq $group)
+        {
+            return $group;
+        }
+    }
+
+    return $FALSE;
+}
+
+#
+# Take the passed-in string, and do fuzzy matching with
+# existing groups.
+#
+sub getMatchingServer
+{
+    my($partial) = @_;
+    my($group, $group_server, $sub_string);
+
+    foreach $group (sort keys(%servers_groups_hash) )
+    {
+        foreach $group_server ( @{$servers_groups_hash{$group}} )
+        {
+            $sub_string = substr($group_server, 0, length($partial));
+
+            if ($partial eq $sub_string)
+            {
+                return $group_server;
+            }
+        }
+    }
+
+    return $FALSE;
+}
+
+#
+# Find one of the groups this server belongs to.
 #
 sub getServerGroup
 {
@@ -412,39 +544,24 @@ sub isValidServer
 }
 
 #
+# Parse & execute the "copy" command.
+#
+sub ParseCopy
+{
+}
+
+#
 # Parse & execute the "run" command.
+#
+# TODO: run "uptime" on wlx01st,wlx02st,wlx05st
+#       run "uptime" on wlx concurrent 5
+#       run "uptime" on wlx log
+#       run "uptime" on wlx concurrent 5 log
 #
 sub ParseRun
 {
-    # Run command on server group
-    if ( $input =~ /^run (\".*\") on group (.*)/ )
-    {
-        # Parsing logic.
-        print("Run $1 on $2 server group?\n");
-
-        # Validate Me!
-        if ( AreYouSure() )
-        {
-            foreach my $server ( @{$servers_groups_hash{$2}} )
-            {
-                RunCommandRemote($server,$1);
-            }
-        }
-    }
-    # Run command on server host
-    if ($input =~ /^run (\".*\") on server (.*)/)
-    {
-        # Parsing logic.
-        print("Run $1 on $2 server?\n");
-        
-        # Validate Me!
-        if ( AreYouSure() )
-        {
-            RunCommandRemote($server,$1);
-        }
-    }
     # Run command on current group.
-    elsif ($input =~ /^run (\".*\")/)
+    if ($input =~ /^run (\".*\")$/)
     {
         print("Run $1 on server group $current_server_group?\n");
         
@@ -456,9 +573,52 @@ sub ParseRun
             }
         }
     }
-    # Invalid syntax.
+    # Run command on localhost -- run "uptime" local
+    elsif ( $input =~ /^run (\".*\") local$/ )
+    {
+        RunCommandLocal($1);
+
+        return;
+    }
+    # Run command on ambiguous target -- run "uptime" on wlx01st
+    elsif ( $input =~ /^run (\".*\") on (\w*)$/ )
+    {
+        # Check groups first, they get priority.
+        if ( getMatchingGroup($2) )
+        {
+            print("Run $1 on server group $2?\n");
+
+            if ( AreYouSure() )
+            {
+                foreach $server ( @{$servers_groups_hash{$2}} )
+                {
+                    RunCommandRemote($server,$1);
+                }
+            }
+
+            return;
+        }
+        # If that fails, then check servers.
+        elsif ( $temp_str = getMatchingServer($2) )
+        {
+            print("Run $1 on server $temp_str?\n");
+
+            if ( AreYouSure() )
+            {
+                RunCommandRemote($server,$1);
+            }
+
+            return;
+        }
+        else
+        {
+            # If no match, then print a sane error.
+            print("ERROR: No matching group or server found.\n");
+        }
+    }
     else
     {
+        # Invalid syntax.
         print("ERROR: Invalid run command syntax.\n");
     }
 }
@@ -507,6 +667,30 @@ sub PrintHelpFile
     print "\n";
 
 	return($TRUE);
+}
+
+#
+# Run a command locally.
+#
+sub RunCommandLocal
+{
+    my($local_command) = @_;
+    my(@command_output, $output_line);
+
+    print "EXEC:  $local_command\n";
+
+    @command_output = qx/$local_command 2>&1/;
+
+    foreach $output_line (@command_output)
+    {
+        chomp($output_line);
+        print "$output_line\n";
+    }
+
+    if ($? != 0)
+    {
+        print("ERROR: Local shell returned error state.\n");
+    }
 }
 
 #
