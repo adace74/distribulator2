@@ -39,9 +39,10 @@ Legend For Features Below:
 "+" Indicates a feature that is currently being developed.
 "*" Indicates a feature that is at least 80%(if not 100%) complete.
 
-Feature List For v0.5 (Coming Soon!):
+Feature List For v0.3 (Shipped!):
 
 * Some semblance of a shell, include a useful prompt.
+  Now includes 'cat', 'cd', and 'ls' for local server browsing.
 * Ability to load in text-based lists of servers, representing
   server sets.
 * Ability to load in different remote usernames for different server sets
@@ -54,9 +55,12 @@ Feature List For v0.5 (Coming Soon!):
   This health-check prevents "session hang" that can occur by running
   ssh alone.
 * Single remote server command execution.
-- Pattern-based hostname matching for use with single remote server
-  command execution.
 * Multiple set-based remote server command execution.
+* Pattern-based group and server name matching for the lazy sysadmin
+  in all of us.
+
+Feature List For v0.5 (Coming Soon!):
+
 - Single local server file to single remote server file copy.
 (i.e. scp adace@localhost:/tmp/blah adace@remote01:/some/other/path)
 - Single local server file to many remote serveres file copy.

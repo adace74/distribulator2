@@ -70,8 +70,8 @@ my($environment);
 my(@server_groups);
 my(%users_groups_hash);
 my(%servers_groups_hash);
-my(@valid_commands) = ( 'cd', 'copy', 'exit', 'group', 'help',
-                        'list', 'ls', 'run', 'shell' );
+my(@valid_commands) = ( 'cat', 'cd', 'copy', 'exit', 'group',
+                        'help', 'list', 'ls', 'run', 'shell' );
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
@@ -164,6 +164,7 @@ while ($TRUE)
 	$command = shift(@command_tokens);
 
     # If the user just hit ENTER, simply give them another prompt.
+    # How can we possibly detect CTRL-D?
     if ($input eq '')
     {
         next;
@@ -177,7 +178,14 @@ while ($TRUE)
         next;
     }
 
-    #################### IMPLEMENTED ####################
+    #################### IMPLEMENTED - Unix Style ####################
+
+    # Unix-style list directory
+    if ($command eq 'cat')
+    {
+        # Simple shell-passthrough for this one.
+        RunCommandLocal($input);
+    }
 
     # Unix-style change directory
     if ($command eq 'cd')
@@ -189,6 +197,15 @@ while ($TRUE)
             print("ERROR: Directory $temp_str not found.\n");
         }
     }
+
+    # Unix-style list directory
+    if ($command eq 'ls')
+    {
+        # Simple shell-passthrough for this one.
+        RunCommandLocal("ls -l");
+    }
+
+    #################### IMPLEMENTED - Custom ####################
 
     # Copy
     if ($command eq 'copy')
@@ -204,12 +221,6 @@ while ($TRUE)
 		exit(0);
 	}
 
-	#
-	# Idea -- We should create a hashtable of command name and
-	# maximum number of args, would be good for validation.
-	#
-	# How do we see if the user hit CTRL-D?
-	#
 	# Group
 	if ($command eq 'group')
 	{
@@ -309,13 +320,6 @@ while ($TRUE)
 			print("ERROR: Unknown server group $temp_str.\n");
 		}
 	}
-
-    # Unix-style list directory
-    if ($command eq 'ls')
-    {
-        # Simple shell-passthrough for this one.
-        RunCommandLocal($input);
-    }
 
 	# Run
 	if ($command eq 'run')
