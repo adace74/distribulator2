@@ -27,61 +27,61 @@ except ImportError:
 
 class CommandRunner:
     def __init__(self, PassedGlobalConfig):
-        self.thisGlobalConfig = PassedGlobalConfig
+        self._globalConfig = PassedGlobalConfig
 
     def run(self, PassedInternalCommand):
-        self.thisCommTokens = PassedInternalCommand.getCommand().split()
+        self._commTokens = PassedInternalCommand.getCommand().split()
 
-        for thisToken in self.thisCommTokens:
+        for thisToken in self._commTokens:
             print("DEBUG: Token |" + thisToken + "|")
 
         # Cheezy branching logic.  Works well, though.
-        if (self.thisCommTokens[0] == 'cd'):
+        if (self._commTokens[0] == 'cd'):
             self.doChdir()
-        elif (self.thisCommTokens[0] == 'copy'):
+        elif (self._commTokens[0] == 'copy'):
             self.doCopy()
-        elif (self.thisCommTokens[0] == 'help'):
+        elif (self._commTokens[0] == 'help'):
             self.doHelp()
-        elif (self.thisCommTokens[0] == 'login'):
+        elif (self._commTokens[0] == 'login'):
             self.doLogin()
-        elif (self.thisCommTokens[0] == 'run'):
+        elif (self._commTokens[0] == 'run'):
             self.doRun()
-        elif (self.thisCommTokens[0] == 'server-group'):
+        elif (self._commTokens[0] == 'server-group'):
             self.doServerGroup()
-        elif (self.thisCommTokens[0] == 'server-list'):
+        elif (self._commTokens[0] == 'server-list'):
             self.doServerList()
         else:
-            print("ERROR: Unknown Command: '" + self.thisCommTokens[0] + \
+            print("ERROR: Unknown Command: '" + self._commTokens[0] + \
                   "'")
 
     def doChdir(self):
         try:
-            if (self.thisCommTokens[0] == 'cd'):
-                os.chdir(self.thisCommTokens[1])
+            if (self._commTokens[0] == 'cd'):
+                os.chdir(self._commTokens[1])
 
         except OSError, (errno, strerror):
             print( "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
-                                                self.thisCommTokens[1]) )
+                                                self._commTokens[1]) )
 
     def doCopy(self):
         print("Copy")
 
     def doHelp(self):
-        if ( len(self.thisCommTokens) > 1 ):
-            thisFileName = os.path.join(self.thisGlobalConfig.getHelpDir(), \
-                                        self.thisCommTokens[1] + '-desc.txt')
+        if ( len(self._commTokens) > 1 ):
+            thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
+                                        self._commTokens[1] + '-desc.txt')
         else:
-            thisFileName = os.path.join(self.thisGlobalConfig.getHelpDir(), \
+            thisFileName = os.path.join(self._globalConfig.getHelpDir(), \
                                         'help.txt')
 
         thisFilePrinter = generic.FilePrinter.FilePrinter()
 
         if (thisFilePrinter.printFile(thisFileName) == False):
             print "ERROR: Cannot find help for specified command '" + \
-            self.thisCommTokens[1] + "'"
+            self._commTokens[1] + "'"
 
     def doLogin(self):
-        print("ERROR: No Matching Server '" + self.thisCommTokens[1] + "'")
+        print("ERROR: No Matching Server '" + self._commTokens[1] + "'")
 
     def doRun(self):
         print("Run")
@@ -91,11 +91,11 @@ class CommandRunner:
 
     def doServerList(self):
 
-        if ( len(self.thisCommTokens) > 1 ):
-            thisServerGroup = self.thisGlobalConfig.getServerGroupByName( \
-                self.thisCommTokens[1] )
+        if ( len(self._commTokens) > 1 ):
+            thisServerGroup = self._globalConfig.getServerGroupByName( \
+                self._commTokens[1] )
         else:
-            thisServerGroup = self.thisGlobalConfig.getCurrentServerGroup()
+            thisServerGroup = self._globalConfig.getCurrentServerGroup()
 
         print("Known servers for group '" + thisServerGroup.getName() + "'")
         print("----------------------------------------")

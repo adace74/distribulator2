@@ -34,7 +34,7 @@ except ImportError:
 class CommandLine:
 
     def __init__(self, PassedGlobalConfig):
-        self.thisGlobalConfig = PassedGlobalConfig
+        self._globalConfig = PassedGlobalConfig
 
     def initHistory(self):
         thisCounter = 0
@@ -64,9 +64,9 @@ class CommandLine:
 
     def invoke(self):
 
-        thisPromptEnv = self.thisGlobalConfig.getServerEnv()
+        thisPromptEnv = self._globalConfig.getServerEnv()
         thisPromptUser = getpass.getuser()
-        thisPromptGroup = self.thisGlobalConfig.getCurrentServerGroup().getName()
+        thisPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
 
         while (1):
             #
@@ -107,7 +107,7 @@ class CommandLine:
                 #
                 # Step 2 - Check for Unix "pass through" commands.
                 #
-                for thisCommand in self.thisGlobalConfig.getPassThruList():
+                for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
                         thisExternalCommand.setCommand(thisInput)
@@ -125,7 +125,7 @@ class CommandLine:
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisInput)
-                thisCommandRunner = engine.CommandRunner.CommandRunner(self.thisGlobalConfig)
+                thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
                 thisCommandRunner.run(thisInternalCommand)
                 del thisInternalCommand
                 del thisCommandRunner

@@ -27,9 +27,9 @@ class InternalCommand:
     # Unix command line string.
     #
     def getCommand(self):
-        return self.thisCommand
+        return self._command
     
     def setCommand(self, PassedCommand):
-        self.thisCommand = PassedCommand
+        self._command = PassedCommand
 
 ######################################################################

@@ -27,17 +27,17 @@ class Server:
     # Name.
     #
     def getName(self):
-        return self.thisName
+        return self._name
 
     def setName(self, PassedName):
-        self.thisName = PassedName
+        self._name = PassedName
     #
     # Username.
     #
     def getUsername(self):
-        return self.thisUsername
+        return self._username
 
     def setUsername(self, PassedUsername):
-        self.thisUsername = PassedUsername
+        self._username = PassedUsername
 
 ######################################################################

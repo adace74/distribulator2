@@ -30,7 +30,7 @@ except ImportError:
 class ConfigLoader:
 
     def __init__(self, PassedGlobalConfig):
-        self.thisGlobalConfig = PassedGlobalConfig
+        self._globalConfig = PassedGlobalConfig
 
     def loadGlobalConfig(self, PassedCommLine):
         # Load GNU Readline history.
@@ -48,7 +48,7 @@ class ConfigLoader:
         thisPassThruList = []
         
         try:
-            thisFilename = os.path.join(self.thisGlobalConfig.getConfigDir(), \
+            thisFilename = os.path.join(self._globalConfig.getConfigDir(), \
                                         'pass_through_cmds.txt')
             thisFile = open(thisFilename, 'r')
             
@@ -62,7 +62,7 @@ class ConfigLoader:
             print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename))
             sys.exit(1)
 
-        self.thisGlobalConfig.setPassThruList(thisPassThruList)
+        self._globalConfig.setPassThruList(thisPassThruList)
 
         # Status.
         print( "- Unix pass-through commands:  %d lines loaded." \
@@ -70,15 +70,15 @@ class ConfigLoader:
 
         # Parse XML...ouchies.
         thisParser = engine.XMLFileParser.XMLFileParser()
-        self.thisGlobalConfig = thisParser.parse(self.thisGlobalConfig)
+        self._globalConfig = thisParser.parse(self._globalConfig)
 
-        print("- Global options and settings: %d lines loaded." % self.thisGlobalConfig.getConfigLines())
+        print("- Global options and settings: %d lines loaded." % self._globalConfig.getConfigLines())
 
-        self.thisGlobalConfig.setCurrentServerGroup( self.thisGlobalConfig.getServerGroupList()[0] )
+        self._globalConfig.setCurrentServerGroup( self._globalConfig.getServerGroupList()[0] )
 
         thisServerGroupStr = ''
         thisTotalServerCount = 0
-        for thisServerGroup in self.thisGlobalConfig.getServerGroupList():
+        for thisServerGroup in self._globalConfig.getServerGroupList():
             thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
             thisServerGroupStr = thisServerGroupStr + \
                                  thisServerGroup.getName() + '(%d) ' % \
@@ -90,6 +90,6 @@ class ConfigLoader:
         print("Confused?  Need help?  Try typing 'help' and see what happens!")
         print
 
-        return self.thisGlobalConfig
+        return self._globalConfig
 
 ######################################################################

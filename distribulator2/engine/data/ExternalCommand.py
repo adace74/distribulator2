@@ -29,24 +29,24 @@ class ExternalCommand:
     # Constructor.
     #
     def __init__(self):
-        self.thisSeperator = '----------------------------------------------------------------------'
+        self._seperator = '----------------------------------------------------------------------'
 
     #
     # Unix command line string.
     #
     def getCommand(self):
-        return self.thisCommand
+        return self._command
     
     def setCommand(self, PassedCommand):
-        self.thisCommand = PassedCommand
+        self._command = PassedCommand
     #
     # Function methods.
     #
     def run(self):
-        print("EXEC:  " + self.thisCommand)
-        thisStatus, thisOutput = commands.getstatusoutput(self.thisCommand)
+        print("EXEC:  " + self._command)
+        thisStatus, thisOutput = commands.getstatusoutput(self._command)
         print(thisOutput)
-        print(self.thisSeperator)
+        print(self._seperator)
 
         if (thisStatus != 0):
             print("ERROR: Local shell returned error state.")

@@ -31,11 +31,11 @@ except ImportError:
 class XMLFileParser:
 
     def parse(self, PassedGlobalConfig):
-        self.thisGlobalConfig = PassedGlobalConfig
-        self.thisFoundEnv = False
-        self.thisServerGroupList = []
+        self._globalConfig = PassedGlobalConfig
+        self._isEnvFound = False
+        self._serverGroupList = []
 
-        thisFilename = os.path.join(self.thisGlobalConfig.getConfigDir(), \
+        thisFilename = os.path.join(self._globalConfig.getConfigDir(), \
                                     'config.xml')
 
         try:
@@ -46,7 +46,7 @@ class XMLFileParser:
                 thisConfigLines = thisConfigLines + 1
             thisFile.close()
 
-            self.thisGlobalConfig.setConfigLines(thisConfigLines)
+            self._globalConfig.setConfigLines(thisConfigLines)
             
             thisDom = xml.dom.minidom.parse(thisFilename)
 
@@ -56,10 +56,10 @@ class XMLFileParser:
 
         self.handleConfig(thisDom)
 
-        if (self.thisFoundEnv):
-            return self.thisGlobalConfig
+        if (self._isEnvFound):
+            return self._globalConfig
         else:
-            print("ERROR: No matching tags found for environment '" + self.thisGlobalConfig.getServerEnv() + "' in config.xml!")
+            print("ERROR: No matching tags found for environment '" + self._globalConfig.getServerEnv() + "' in config.xml!")
             sys.exit(1)
 
     # Gotta clean this up some day...
@@ -81,17 +81,17 @@ class XMLFileParser:
         self.handleSsh(PassedBinary.getElementsByTagName("ssh")[0])
 
     def handleScp(self, PassedScp):
-        self.thisGlobalConfig.setScpBinary( self.getText(PassedScp.childNodes) )
+        self._globalConfig.setScpBinary( self.getText(PassedScp.childNodes) )
 
     def handleSsh(self, PassedSsh):
-        self.thisGlobalConfig.setSshBinary( self.getText(PassedSsh.childNodes) )
+        self._globalConfig.setSshBinary( self.getText(PassedSsh.childNodes) )
 
     # Logging options.
     def handleLogging(self, PassedLogging):
         self.handleFacility(PassedLogging.getElementsByTagName("facility")[0])
 
     def handleFacility(self, PassedFacility):
-        self.thisGlobalConfig.setSyslogFacility( self.getText(PassedFacility.childNodes) )
+        self._globalConfig.setSyslogFacility( self.getText(PassedFacility.childNodes) )
 
     # Server environments, groups, and individual servers.
     def handleEnvironments(self, PassedEnvironments):
@@ -100,20 +100,20 @@ class XMLFileParser:
 
     def handleEnvironment(self, PassedEnvironment):
         if (self.handleEnvName(PassedEnvironment.getElementsByTagName("name")[0])):
-            self.thisFoundEnv = True
+            self._isEnvFound = True
             self.handleServerGroups(PassedEnvironment.getElementsByTagName("servergroup"))
 
     def handleEnvName(self, PassedEnvName):
-        if ( self.thisGlobalConfig.getServerEnv() == self.getText(PassedEnvName.childNodes) ):
+        if ( self._globalConfig.getServerEnv() == self.getText(PassedEnvName.childNodes) ):
             return True
         else:
             return False
 
     def handleServerGroups(self, PassedServerGroups):
         for ServerGroup in PassedServerGroups:
-            self.thisServerGroupList.append( self.handleServerGroup(ServerGroup) )
+            self._serverGroupList.append( self.handleServerGroup(ServerGroup) )
 
-        self.thisGlobalConfig.setServerGroupList(self.thisServerGroupList)
+        self._globalConfig.setServerGroupList(self._serverGroupList)
 
     def handleServerGroup(self, PassedServerGroup):
         thisServerGroup = engine.data.ServerGroup.ServerGroup()

@@ -29,84 +29,84 @@ class GlobalConfig:
     # Our configuration directory path.
     #
     def getConfigDir(self):
-        return self.thisConfigDir
+        return self._configDir
 
     def setConfigDir(self, PassedConfigDir):
-        self.thisConfigDir = PassedConfigDir
+        self._configDir = PassedConfigDir
     #
     # Our helpfiles path.
     #
     def getHelpDir(self):
-        return self.thisHelpDir
+        return self._helpDir
 
     def setHelpDir(self, PassedHelpDir):
-        self.thisHelpDir = PassedHelpDir
+        self._helpDir = PassedHelpDir
     #
     # Number of config lines loaded.
     #
     def getConfigLines(self):
-        return self.thisConfigLines
+        return self._configLines
 
     def setConfigLines(self, PassedConfigLines):
-        self.thisConfigLines = PassedConfigLines
+        self._configLines = PassedConfigLines
     #
     # System binary locations.
     #
     def getScpBinary(self):
-        return self.thisScpBinary
+        return self._scpBinary
 
     def setScpBinary(self, PassedScpBinary):
-        self.thisScpBinary = PassedScpBinary
+        self._scpBinary = PassedScpBinary
 
     def getSshBinary(self):
-        return self.thisSshBinary
+        return self._sshBinary
 
     def setSshBinary(self, PassedSshBinary):
-        self.thisSshBinary = PassedSshBinary
+        self._sshBinary = PassedSshBinary
     #
     # Syslog Facility.
     #
     def getSyslogFacility(self):
-        return self.thisSyslogFacility
+        return self._syslogFacility
 
     def setSyslogFacility(self, PassedSyslogFacility):
-        self.thisSyslogFacility = PassedSyslogFacility
+        self._syslogFacility = PassedSyslogFacility
     #
     # Server Environment.
     #
     def getServerEnv(self):
-        return self.thisServerEnv
+        return self._serverEnv
 
     def setServerEnv(self, PassedServerEnv):
-        self.thisServerEnv = PassedServerEnv
+        self._serverEnv = PassedServerEnv
     #
     # Unix command "pass through" list.
     #
     def getPassThruList(self):
-        return self.thisPassThruList
+        return self._passThruList
 
     def setPassThruList(self, PassedPassThruList):
-        self.thisPassThruList = PassedPassThruList
+        self._passThruList = PassedPassThruList
     #
     # Servers and ServerGroups
     #
     def getCurrentServerGroup(self):
-        return self.thisCurrentServerGroup
+        return self._currentServerGroup
 
     def setCurrentServerGroup(self, PassedServerGroup):
-        self.thisCurrentServerGroup = PassedServerGroup
+        self._currentServerGroup = PassedServerGroup
 
     def getServerGroupList(self):
-        return self.thisServerGroupList
+        return self._serverGroupList
 
     def setServerGroupList(self, PassedServerGroupList):
-        self.thisServerGroupList = PassedServerGroupList
+        self._serverGroupList = PassedServerGroupList
 
     def addServerGroup(self, PassedServerGroup):
-        self.thisServerGroupList.append(PassedServerGroup)
+        self._serverGroupList.append(PassedServerGroup)
 
     def getServerGroupByName(self, PassedServerGroupName):
-        for thisServerGroup in self.thisServerGroupList:
+        for thisServerGroup in self._serverGroupList:
             if (PassedServerGroupName == thisServerGroup.getName()):
                 return thisServerGroup
 
