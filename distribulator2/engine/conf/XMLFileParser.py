@@ -216,6 +216,12 @@ class XMLFileParser:
         else:
             myServerGroup.setUsername( self._globalConfig.getUsername() )
 
+        if ( len(PassedServerGroup.getAttribute('flags').strip()) > 0 ):
+            myServerGroup.setFlags(
+                PassedServerGroup.getAttribute('flags').strip() )
+        else:
+            myServerGroup.setFlags('')
+
         myServerGroup = self.handleServers( myServerGroup,
                                               PassedServerGroup.getElementsByTagName('server') )
 
@@ -230,6 +236,9 @@ class XMLFileParser:
 
         for myServer in PassedServers:
             myServerGroup.addServer( self.handleServer(myServer) )
+
+        for myServer in myServerGroup.getServerList():
+            myServer.setFlags( myServerGroup.getFlags() )
 
         for myServer in myServerGroup.getServerList():
             myServer.setUsername( myServerGroup.getUsername() )

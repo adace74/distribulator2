@@ -21,7 +21,7 @@
 # File version tag
 __version__ = '$Revision$'[11:-2]
 # Application version tag
-__appversion__ = 'The Distribulator v0.7.3'
+__appversion__ = 'The Distribulator v0.7.4'
 
 # Standard modules
 import commands

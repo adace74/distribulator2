@@ -67,7 +67,8 @@ class LoginCommand(Command.Command):
         # Run the expanded shell command.
         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
         myExternalCommand.setCommand( \
-            self._globalConfig.getSshBinary() + " -l " + \
+            self._globalConfig.getSshBinary() + \
+            myServer.getFlags + " -l " + \
             myServer.getUsername() + " " + myServer.getName() )
         try:
             myExternalCommand.runConsole(True)

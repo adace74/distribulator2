@@ -24,8 +24,8 @@
 <config>
     <!-- System Binaries -->
     <binary name="logname" value="/usr/bin/logname"/>
-    <binary name="scp" value="/usr/bin/scp -c blowfish"/>
-    <binary name="ssh" value="/usr/bin/ssh -c blowfish"/>
+    <binary name="scp" value="/usr/bin/scp"/>
+    <binary name="ssh" value="/usr/bin/ssh"/>
 
     <!-- Logging Options -->
     <logging facility="LOCAL0"/>
@@ -37,7 +37,8 @@
 
     <!-- Demo Environment: Default servergroup set to "www" -->
     <environment default="www" name="demo">
-        <servergroup name="app" username="tomcat">
+        <!-- SSH v1 Group -->
+        <servergroup name="app" username="tomcat" flags="-1">
             <server>app01.somewhere.com</server>
             <server>app02.somewhere.com</server>
             <server>app03.somewhere.com</server>
@@ -45,7 +46,8 @@
             <server>app05.somewhere.com</server>
         </servergroup>
 
-        <servergroup name="db" username="postgres">
+        <!-- SSH v2 Group -->
+        <servergroup name="db" username="postgres" flags="-2">
             <server>db01.somewhere.com</server>
             <server>db02.somewhere.com</server>
             <server>db03.somewhere.com</server>
@@ -53,7 +55,8 @@
             <server>db05.somewhere.com</server>
         </servergroup>
 
-        <servergroup name="www" username="apache">
+        <!-- SSH v1 Group -->
+        <servergroup name="www" username="apache" flags="-1">
             <server>www01.somewhere.com</server>
             <server>www02.somewhere.com</server>
             <server>www03.somewhere.com</server>

@@ -45,7 +45,8 @@
 <!ELEMENT servergroup (server+)>
 <!ATTLIST servergroup
     name CDATA #REQUIRED
-    username CDATA #IMPLIED>
+    username CDATA #IMPLIED
+    flags CDATA #IMPLIED>
 
 <!-- The "server" tag. -->
 <!ELEMENT server (#PCDATA)>

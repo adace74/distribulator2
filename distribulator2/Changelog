@@ -206,6 +206,11 @@ Change List For v0.7.3 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * Cleanup: Making the batch mode header and footer output more concise.
 
+Change List For v0.7.4 (Language: Python / Status: Shipped)
+---------------------------------------------------------------
+* Ability to specify per-servergroup SSH flags to be passed-through when
+  expanded into SSH commands.
+
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".

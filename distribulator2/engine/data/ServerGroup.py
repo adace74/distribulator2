@@ -57,6 +57,22 @@ class ServerGroup:
         self._username = PassedUsername
 
 ######################################################################
+# SSH Flags.
+######################################################################
+
+    def getFlags(self):
+        """This is a typical accessor method."""
+
+        return self._flags
+
+######################################################################
+
+    def setFlags(self, PassedFlags):
+        """This is a typical accessor method."""
+
+        self._flags = PassedFlags
+
+######################################################################
 # Servers.
 ######################################################################
 
