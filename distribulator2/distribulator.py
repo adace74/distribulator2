@@ -116,14 +116,14 @@ The available options are:
     --list=[host1, host2, ...] | [servergroup1, servergroup2, ...]
     Enables serer list mode, requires a valid set of hosts or server groups.
     This version pings all servers, then returns a space-delimited list of hostnames.
-    One can then iterate over this list from within a perl, shell or other script.
+    One can then iterate over this list from within a perl, shell, or other script.
     OPTIONAL
 
     --list2=[host1, host2, ...] | [servergroup1, servergroup2, ...]
     Enables serer list mode, requires a valid set of hosts or server groups.
     This version pings all servers, then returns a space-delimited list of
     username@hostname pairs(if username is applicable).
-    One can then iterate over this list from within a perl, shell or other script. 
+    One can then iterate over this list from within a perl, shell, or other script. 
     OPTIONAL
 
     Enables serer "listing", outputs all given username@hostname pairs
