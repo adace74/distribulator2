@@ -104,7 +104,7 @@ class ConfigLoader:
             thisColumnCount = thisColumnCount + 1
             thisTotalServerCount = thisTotalServerCount + \
                                    thisServerGroup.getServerCount()
-            thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % \
+            thisServerGroupStr = thisServerGroupStr + '%10s (%3d) ' % \
                                  (thisServerGroup.getName(), thisServerGroup.getServerCount())
 
             if (thisColumnCount == 4):
