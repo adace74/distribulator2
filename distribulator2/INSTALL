@@ -48,7 +48,7 @@ Installation
 
 5) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
-   cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator
+   cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh
 
 6) Symlink or copy the config.xml.dist file to config.xml.
    cd /apps/distribulator2/conf; ln -s config.xml.dist config.xml
