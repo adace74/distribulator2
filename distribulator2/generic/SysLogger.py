@@ -9,8 +9,13 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
-# Standard modules
-import syslog
+try:
+    # Standard modules
+    import syslog
+
+except ImportError:
+    print "An error occured while loading Python modules, exiting..."
+    sys.exit(1)
 
 ######################################################################
 
