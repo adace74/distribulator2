@@ -70,7 +70,7 @@ class XMLFileParser:
             return self._globalConfig
         else:
             myError = "ERROR: No matching tags found for environment '" + \
-                        self._globalConfig.getServerEnv() + "' in config.xml!"
+                        self._globalConfig.getCurrentEnvName() + "' in config.xml!"
             print(myError)
             sys.exit(True)
 

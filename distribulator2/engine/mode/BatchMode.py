@@ -122,7 +122,7 @@ class BatchMode(Mode.Mode):
                 # Variable substitution
                 if ( myLine.find('$env') != -1 ):
                     myLine = string.replace( myLine, '$env', \
-                                             self._globalConfig.getServerEnv() )
+                                             self._globalConfig.getCurrentEnvName() )
                 if ( myLine.find('$hostname') != -1 ):
                     myLine = string.replace( myLine, '$hostname', \
                                              socket.gethostname() )

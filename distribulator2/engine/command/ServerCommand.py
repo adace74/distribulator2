@@ -113,7 +113,7 @@ class ServerCommand(Command.Command):
         else:
             # Otherwise, display the server group list given at startup.
             myTempStr = "Known server groups for environment '" + \
-                        self._globalConfig.getServerEnv() + "'\n"
+                        self._globalConfig.getCurrentEnvName() + "'\n"
             myTempStr = myTempStr + "--------------------------------------------------\n"
    
             for myServerGroup in self._globalConfig.getServerGroupList():
