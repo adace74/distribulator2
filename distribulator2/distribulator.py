@@ -37,14 +37,11 @@ try:
     # Custom modules
     import engine.CommandLine
     import engine.ConfigLoader
+    import generic.SysLogger
 
 except ImportError:
     print "An error occured while loading Python modules, exiting..."
     sys.exit(1)
-
-# Handy constants.
-false = 0
-true = 1
 
 # Display a nice pretty header.
 def title_header():
@@ -125,11 +122,28 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
+    except getopt.GetoptError:
+        print "ERROR: Erroneous flag(s) given.  Please check your syntax."
+        print
+        sys.stderr.write(usage)
+        sys.exit(1)
+
     info_header(server_env, start_dir)
 
     config_dir = os.path.join(os.getcwd(), 'conf')
-    engine.ConfigLoader.load(config_dir)
-    engine.CommandLine.processInput()
+
+    # Create CommandLine instance, and pass it through to ConfigLoader.
+    myCommLine = engine.CommandLine.CommandLine()
+
+    # Create ConfigLoader instance and call that method!
+    myLoader = engine.ConfigLoader.ConfigLoader()
+    myLoader.load(myCommLine, config_dir)
+
+    # Example functional class.
+    #myLogger = generic.SysLogger.SysLogger()
+    #myLogger.hello()
+
+    myCommLine.processInput()
 #
 # If called from the command line, invoke thyself!
 #

@@ -19,10 +19,19 @@ import sys
 # Custom modules
 import engine.CommandLine
 
-def load(myConfigDir):
-    print("Loading configuration:")
-    engine.CommandLine.initHistory()
-    print("- Readline history.")
-    print("- Pass-through Unix commands.")
-    print("- Application settings and server lists.")
-    print
+class ConfigLoader:
+
+    def load(self, myCommLine, myConfigDir):
+        # Load GNU Readline history.
+        print("Loading config. from " + myConfigDir + ":")
+        myCommLine.initHistory()
+        print("- Readline history.")
+        
+        # Load Unix pass-through commands.
+
+        print("- Pass-through Unix commands.")
+
+        # Parse XML...ouchies.
+        print("- Application settings and server lists.")
+        print("- Entering interactive mode...")
+        print
