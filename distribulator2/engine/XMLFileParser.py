@@ -9,22 +9,17 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
-try:
-    # Standard modules
-    import os
-    import os.path
-    import string
-    import sys
-    import xml.dom.minidom
+# Standard modules
+import os
+import os.path
+import string
+import sys
+import xml.dom.minidom
 
-    # Custom modules
-    import engine.data.GlobalConfig
-    import engine.data.Server
-    import engine.data.ServerGroup
-
-except ImportError:
-    print("An error occured while loading Python modules, exiting...")
-    sys.exit(1)
+# Custom modules
+import engine.data.GlobalConfig
+import engine.data.Server
+import engine.data.ServerGroup
 
 ######################################################################
 

@@ -9,24 +9,19 @@
 # Version tag
 __version__= '$Revision$'[11:-2]
 
-try:
-    # Standard modules
-    import atexit
-    import getpass
-    import os
-    import os.path
-    import readline
-    import string
-    import sys
+# Standard modules
+import atexit
+import getpass
+import os
+import os.path
+import readline
+import string
+import sys
 
-    # Custom modules
-    import engine.CommandRunner
-    import engine.data.ExternalCommand
-    import engine.data.InternalCommand
-
-except ImportError:
-    print("An error occured while loading Python modules, exiting...")
-    sys.exit(1)
+# Custom modules
+import engine.CommandRunner
+import engine.data.ExternalCommand
+import engine.data.InternalCommand
 
 ######################################################################
 

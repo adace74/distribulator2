@@ -25,27 +25,21 @@
 # Version tag
 __version__ = '$Revision$'[11:-2]
 
-# Import modules
-try:
-    # Standard modules
-    import commands
-    import getopt
-    import getpass
-    import os
-    import os.path
-    import socket
-    import sys
-    import syslog
+# Standard modules
+import commands
+import getopt
+import getpass
+import os
+import os.path
+import socket
+import sys
+import syslog
 
-    # Custom modules
-    import engine.CommandLine
-    import engine.ConfigLoader
-    import engine.data.GlobalConfig
-    import generic.SysLogger
-
-except ImportError:
-    print("An error occured while loading Python modules, exiting...")
-    sys.exit(1)
+# Custom modules
+import engine.CommandLine
+import engine.ConfigLoader
+import engine.data.GlobalConfig
+import generic.SysLogger
 
 ######################################################################
 

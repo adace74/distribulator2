@@ -65,7 +65,7 @@ $Id$
         </servergroup>
         <servergroup>
             <name>burst</name>
-            <username>hburst</username>
+            <username>dc</username>
             <server>burst01st.eg.orbitz.com</server>
             <server>burst02st.eg.orbitz.com</server>
             <server>honeg01st.eg.orbitz.com</server>
