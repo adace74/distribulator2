@@ -256,10 +256,7 @@ class CopyCommand(Command.Command):
                                 myRemotePath )
 
                         # Run It.
-                        if ( self._globalConfig.isBatchMode() ):
-                            myExternalCommand.run()
-                        else:
-                            myExternalCommand.run(True)
+                        myExternalCommand.run()
                         myCommandCount = myCommandCount + 1
                     else:
                         myError = "Server '" + myServer.getName() + \
@@ -308,10 +305,7 @@ class CopyCommand(Command.Command):
                                 myRemotePath )
 
                             # Run It.
-                            if ( self._globalConfig.isBatchMode() ):
-                                myExternalCommand.run()
-                            else:
-                                myExternalCommand.run(True)
+                            myExternalCommand.run()
                             myCommandCount = myCommandCount + 1
                         else:
                             myError = "Server '" + myServer.getName() + \
