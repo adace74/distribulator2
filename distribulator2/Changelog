@@ -208,8 +208,8 @@ Change List For v0.7.3 (Language: Python / Status: Shipped)
 
 Change List For v0.7.4 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
-* Ability to specify per-servergroup SSH flags for use with the "run" command.
-  Left the "copy" command alone, in the hopes on not breaking rcp/rsh compatability.
+* Ability to specify per-servergroup SSH version for use with both
+  "copy" and "run" commands.  If no version is specified, no extra flags are added.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
