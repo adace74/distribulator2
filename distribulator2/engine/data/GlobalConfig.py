@@ -34,6 +34,20 @@ class GlobalConfig:
     def setConfigDir(self, PassedConfigDir):
         self.thisConfigDir = PassedConfigDir
     #
+    # System binary locations.
+    #
+    def getScpBinary(self):
+        return self.thisScpBinary
+
+    def setScpBinary(self, PassedScpBinary):
+        self.thisScpBinary = PassedScpBinary
+
+    def getSshBinary(self):
+        return self.thisSshBinary
+
+    def setSshBinary(self, PassedSshBinary):
+        self.thisSshBinary = PassedSshBinary
+    #
     # Unix command "pass through" list.
     #
     def getPassThruList(self):

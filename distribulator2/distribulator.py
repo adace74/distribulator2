@@ -154,7 +154,7 @@ The available options are:
 
     # Create ConfigLoader instance and call that method!
     thisLoader = engine.ConfigLoader.ConfigLoader()
-    thisGlobalConfig = thisLoader.getGlobalConfig(thisCommLine, thisConfigDir)
+    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine, thisConfigDir)
 
     # Try to chdir() to thisStartDir if possible.
     try:

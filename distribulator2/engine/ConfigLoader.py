@@ -29,7 +29,7 @@ except ImportError:
 
 class ConfigLoader:
 
-    def getGlobalConfig(self, PassedCommLine, PassedConfigDir):
+    def loadGlobalConfig(self, PassedCommLine, PassedConfigDir):
         # Load GNU Readline history.
         print('Loading configuration...')
 
@@ -74,7 +74,7 @@ class ConfigLoader:
 
         # Parse XML...ouchies.
         thisParser = engine.XMLFileParser.XMLFileParser()
-        thisParser.parse(thisGlobalConfig)
+        thisGlobalConfig = thisParser.parse(thisGlobalConfig)
         print("- Global options and settings.")
         print("- Entering interactive mode...")
         print

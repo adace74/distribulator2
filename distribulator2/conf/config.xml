@@ -6,7 +6,9 @@ $Id$
 
 <!-- System Binaries -->
 
-<binaries>
-    <scp>/usr/bin/scp -c blowfish</scp>
-    <ssh>/usr/bin/ssh -c blowfish</ssh>
-</binaries>
+<config>
+    <binary>
+        <scp>/usr/bin/scp -c blowfish</scp>
+        <ssh>/usr/bin/ssh -c blowfish</ssh>
+    </binary>
+</config>

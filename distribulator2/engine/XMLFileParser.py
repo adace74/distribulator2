@@ -29,8 +29,9 @@ except ImportError:
 class XMLFileParser:
 
     def parse(self, PassedGlobalConfig):
+        self.thisGlobalConfig = PassedGlobalConfig
 
-        thisFilename = os.path.join(PassedGlobalConfig.getConfigDir(), \
+        thisFilename = os.path.join(self.thisGlobalConfig.getConfigDir(), \
                                     'config.xml')
 
         try:
@@ -40,8 +41,11 @@ class XMLFileParser:
             print "ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename)
             sys.exit(1)
 
-        #handleConfig(thisDom)
+        self.handleConfig(thisDom)
 
+        return self.thisGlobalConfig
+
+    # Gotta clean this up some day...
     def getText(self, nodelist):
         rc = ""
         for node in nodelist:
@@ -50,9 +54,16 @@ class XMLFileParser:
                 return rc
 
     def handleConfig(self, PassedConfig):
-        handleBinaries(PassedConfig.getElementsByTagName("binaries")[0])
+        self.handleBinary(PassedConfig.getElementsByTagName("binary")[0])
 
-    def handleBinaries(self, PassedBinaries):
-        print "Blah"
+    def handleBinary(self, PassedBinary):
+        self.handleScp(PassedBinary.getElementsByTagName("scp")[0])
+        self.handleSsh(PassedBinary.getElementsByTagName("ssh")[0])
+
+    def handleScp(self, PassedScp):
+        self.thisGlobalConfig.setScpBinary( self.getText(PassedScp.childNodes) )
+
+    def handleSsh(self, PassedSsh):
+        self.thisGlobalConfig.setSshBinary( self.getText(PassedSsh.childNodes) )
 
 ######################################################################
