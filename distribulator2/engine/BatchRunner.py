@@ -101,8 +101,8 @@ class BatchRunner:
             return
 
         # Let everyone know what we're doing.        
-        thisInfo = "INFO:  Attempting batch command run using file '" + \
-            self._globalConfig.getBatchFile() + "'."
+        thisInfo = "INFO:  Batch File: " + \
+            self._globalConfig.getBatchFile()
         self.outputInfo(thisInfo)
 
         thisCommandCount = 0

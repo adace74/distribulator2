@@ -148,6 +148,10 @@ Change List For v0.61 (Language Python / Status: Shipped)
 * SourceForge bug #774953 fixed.
 * Both batch and console mode have been tested pretty extensively.
 
+Change List For v0.62 (Language Python / Status: In Progress)     
+---------------------------------------------------------
+- Replace the HostPinger's functionality with a real timeout-capable socket test.
+
 Idea List For v0.7 (A little farther out)
 -----------------------------------------
 - Single remote server file to single remote server file copy.
