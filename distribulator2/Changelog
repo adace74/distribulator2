@@ -152,6 +152,7 @@ Change List For v0.6.1 (Language: Python / Status: Shipped)
 * SourceForge bug #776080 fixed.
 * SourceForge bug #774953 fixed.
 * Standardized version numbering.
+* Added a small script to automate release packaging.
 
 Change List For v0.6.2 (Language: Python / Status: In Progress)     
 -------------------------------------------------------------
