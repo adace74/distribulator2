@@ -69,7 +69,7 @@ class BatchMode(Mode.Mode):
             return
 
         # Let everyone know what we're doing.        
-        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
+        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         myCommandCount = 0
         myError = ''
