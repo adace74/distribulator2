@@ -25,10 +25,24 @@ use Net::Ping;
 use Pod::Usage;
 use Sys::Hostname;
 use Term::ReadLine;
+
+######################################################################
+# USER CONFIGURABLE SETTINGS
+#
+my($HOME_DIR) = '/usr/local/novo/distribulator';
+my($CONF_DIR) = "/usr/local/ops/environ/";
+#
+#
+######################################################################
+
+######################################################################
+# NON-USER CONFIGURABLE SETTINGS
+#
+# Unless you know what you're doing, don't go here!
+######################################################################
 #
 # Constant Variables (Fix Me!)
 #
-my($CONF_DIR) = '/usr/local/ops/environ';
 my($FALSE) = 0;
 my($TRUE) = 1;
 #
@@ -465,7 +479,7 @@ sub PrintHelpFile
 {
 	my ($filename) = @_;
 
-    open(MYFILE, "<./doc/$filename") ||
+    open(MYFILE, "<$HOME_DIR/doc/$filename") ||
 	    return($FALSE);
 
     print "\n";
