@@ -175,18 +175,18 @@ class CommandRunner:
                         self._globalConfig.getPingBinary() )
 
                     if (thisPinger.ping(thisServer.getName()) == 0):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                         thisExternalCommand.setCommand( \
                             self._globalConfig.getScpBinary() + " " + \
                             self._commTokens[1] + " " + \
                             thisServer.getUsername() + "@" + \
                             thisServer.getName() + ":" + \
                             self._commTokens[2] )
-                        # Log It.
-                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
-                                                                     thisExternalCommand.getCommand())
                         # Run It.
-                        thisExternalCommand.run()
+                        if ( self._globalConfig.isBatchMode() ):
+                            thisExternalCommand.runAtomic()
+                        else:
+                            thisExternalCommand.run()
                     else:
                         thisError = "ERROR: Server '" + thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
@@ -246,12 +246,10 @@ class CommandRunner:
                     thisFoundIt = True
 
             if (thisFoundIt):
-                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                 thisExternalCommand.setCommand( \
                     self._globalConfig.getSshBinary() + " -l " + \
                     thisServer.getUsername() + " " + thisServer.getName() )
-                self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
-                                                             thisExternalCommand.getCommand())
                 try:
                     thisExternalCommand.run()
                 except (EOFError, KeyboardInterrupt):
@@ -367,17 +365,17 @@ class CommandRunner:
                         self._globalConfig.getPingBinary() )
 
                     if (thisPinger.ping(thisServer.getName()) == 0):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                         thisExternalCommand.setCommand( \
                             self._globalConfig.getSshBinary() + thisFlagStr + \
                             " -l " + thisServer.getUsername() + " " + \
                             thisServer.getName() + " " + \
                             thisBodyStr )
-                        # Log It.
-                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC:  " + \
-                                                                     thisExternalCommand.getCommand())
                         # Run It.
-                        thisExternalCommand.run()
+                        if ( self._globalConfig.isBatchMode() ):
+                            thisExternalCommand.runAtomic()
+                        else:
+                            thisExternalCommand.run()
                     else:
                         thisError = "ERROR: Server '" + \
                                     thisServer.getName() + \

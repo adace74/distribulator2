@@ -125,7 +125,7 @@ class CommandLine:
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
-                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                         thisExternalCommand.setCommand(thisInput)
                         # Wrap it just in case.
                         try:
