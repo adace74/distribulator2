@@ -50,7 +50,6 @@ class XMLFileParser:
             thisError = "ERROR: [Errno %s] %s: %s" % \
                         (errno, strerror, thisFilename)
             print(thisError)
-            self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
         self.handleConfig(thisDom)
@@ -61,7 +60,8 @@ class XMLFileParser:
             thisError = "ERROR: No matching tags found for environment '" + \
                         self._globalConfig.getServerEnv() + "' in config.xml!"
             print(thisError)
-            self._globalConfig.getSysLogger().LogMsgError(thisError)
+            # NOTE: Would be nice to syslog, but This just isn't
+            # possible until the config is fully loaded.
             sys.exit(1)
 
     # Gotta clean this up some day...

@@ -91,6 +91,7 @@ Change List For v0.52 (Language: Python / Status: In Progress)
 * SourceForge bug #744225 fixed.
 * SourceForge bug #744226 fixed.
 * SourceForge bug #749953 fixed.
+* SourceForge bug #749963 fixed.
 
 Change List For v0.6 (Language: Python / Status: Pondering)
 - A CVS branch will be created for any future v0.5x bug-fixes.
