@@ -19,8 +19,7 @@ import os
 import os.path
 
 # XML Well-formedness recipe modules.
-from xml.sax.handler import ContentHandler
-from xml.sax import make_parser
+import xml.parsers.expat
 from glob import glob
 import sys
 
@@ -47,11 +46,8 @@ class XMLFileChecker:
         myFilename = self._globalConfig.getAppConfigFile()
 
         try:
-            parser = make_parser()
-
-            parser.setContentHandler(ContentHandler())
-
-            parser.parse(myFilename)
+            parser = xml.parsers.expat.ParserCreate()
+            parser.ParseFile(open(myFilename, "r"))
 
         except IOError, (errno, strerror):
             print("ERROR: [Errno %s] %s: %s" % (errno, strerror, myFilename))
