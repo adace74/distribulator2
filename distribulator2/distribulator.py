@@ -121,7 +121,7 @@ The available options are:
                 elif (opt[0] == '-d') or (opt[0] == '--directory'):
                     thisStartDir = opt[1]
                 elif (opt[0] == '-e') or (opt[0] == '--env'):
-                    thiServerEnv = opt[1]
+                    thisServerEnv = opt[1]
                 elif (opt[0] == '-h') or (opt[0] == '--help'):
                     sys.stdout.write(usage)
                     sys.exit(0)
