@@ -40,11 +40,14 @@ $FIND_BIN $CVSWORK_DIR/$PROJECT_DIR -name '*~' | $XARGS_BIN $RM_BIN
 #
 # Step 3: Clean up the config.xml symlink.
 #
-$RM_BIN $CVSWORK_DIR/$PROJECT_DIR/conf/config.xml
+if [ -f $CVSWORK_DIR/$PROJECT_DIR/conf/config.xml ]; then
+	$RM_BIN $CVSWORK_DIR/$PROJECT_DIR/conf/config.xml
+fi
 #
 # Step 4: Create the distribution tar/gzip archive.
 #
-$TAR_BIN --create --gzip --file $PROJECT_NAME-$1.tar.gz \
+cd $CVSWORK_DIR
+$TAR_BIN --create --gzip --exclude CVS* --file $CVSWORK_DIR/archive/$PROJECT_NAME-$1.tar.gz \
 	$PROJECT_DIR
 #
 #
