@@ -34,7 +34,7 @@ import sys
 
 # Custom modules
 import engine.mode.BatchMode
-import engine.mode.CommandMode
+import engine.mode.ConsoleMode
 import engine.mode.ListMode
 import engine.conf.ConfigLoader
 import engine.data.GlobalConfig
@@ -246,7 +246,7 @@ The available options are:
 
         # These three really should be pinned to an interface.
         myBatchMode = engine.mode.BatchMode.BatchMode(myGlobalConfig)
-        myCommLine = engine.mode.CommandMode.CommandMode(myGlobalConfig)
+        myCommLine = engine.mode.ConsoleMode.ConsoleMode(myGlobalConfig)
         myListModeer = engine.mode.ListMode.ListMode(myGlobalConfig)
 
         myLoader = engine.conf.ConfigLoader.ConfigLoader(myGlobalConfig)
