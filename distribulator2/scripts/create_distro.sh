@@ -1,4 +1,5 @@
 #!/bin/sh
+######################################################################
 #
 # $Id$
 #
@@ -6,6 +7,8 @@
 #
 # (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
+#
+######################################################################
 #
 # Sourcecode location.
 #
@@ -50,7 +53,5 @@ cd $CVSWORK_DIR
 $TAR_BIN --create --gzip --exclude CVS* --exclude .cvsignore \
 	--file $CVSWORK_DIR/archive/$PROJECT_NAME-$1.tar.gz \
 	$PROJECT_DIR
-#
-#
-#
+
 echo "INFO:  All done!"

@@ -1,0 +1,117 @@
+#
+# $Id$
+#
+# Description: Autoconf script for distribulator installation.
+#
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
+# Please see the accompanying LICENSE file for license information.
+#
+######################################################################
+
+#
+# Autoconf setup.
+#
+define([AC_CACHE_LOAD], )#
+define([AC_CACHE_SAVE], )#
+#
+# Required autoconf initialization routine
+#
+AC_INIT(build/version)
+#
+# Set directory containing accessory scripts for manual configurations
+#
+AC_CONFIG_AUX_DIR(build)
+#
+# Set autoconf version requirement
+#
+AC_PREREQ(2.13)
+
+#
+# Echo header.
+#
+echo
+echo "============================================================"
+echo "configure.in"
+echo "Autoconf script for Distribulator installation."
+echo
+echo "(c) Copyright 2004 Orbitz, Inc.  All Rights Reserved."
+echo "Please see the accompanying LICENSE file for license information."
+echo "============================================================"
+echo
+echo "Configuring The Distribulator..."
+echo
+
+# Determine system type; set 'build', 'host', and 'target' 
+AC_CANONICAL_SYSTEM()
+
+#
+# Python binary location.
+#
+AC_ARG_WITH(python, 
+[  --with-python=BIN       Python binary location (default: /usr/local/bin/python)],
+[PYTHON_BIN=${withval}])
+
+#
+# If the user did not specify locations, use defaults.
+#
+test "$prefix" = NONE && prefix=/usr/local/distribulator2
+test "$PYTHON_BIN" = "" && PYTHON_BIN=/usr/local/bin/python
+
+#
+# Validate settings.
+#
+if test ! -d $prefix;
+then
+    echo "ERROR: Install directory $prefix is not accessible.  Aborting..."
+    exit 1
+fi
+
+if test ! -f $PYTHON_BIN;
+then
+    echo "ERROR: Python binary $PYTHON_BIN is not accessible.  Aborting..."
+    exit 1
+fi
+
+DIST_HOME=$prefix
+
+echo "checking install dir... |$DIST_HOME|"
+echo "checking python binary... |$PYTHON_BIN|"
+
+#
+# Template magic.
+#
+AC_SUBST(PYTHON_BIN)
+AC_SUBST(DIST_HOME)
+
+OUTPUT_FILES="
+distribulator.py:distribulator.py.tmpl
+conf/logging.conf:conf/logging.conf.tmpl
+scripts/distribulator.sh:scripts/distribulator.sh.tmpl
+"
+
+AC_OUTPUT([ ${OUTPUT_FILES} ])
+
+#
+# Make sure everything is executable that should be.
+#
+chmod 755 distribulator.py
+chmod 755 scripts/distribulator.sh
+
+#
+# Create a symlink for the default config.xml file.
+#
+if test ! -f conf/config.xml;
+then
+    cd conf
+    ln -s config.xml.dist config.xml
+    cd ..
+fi
+
+#
+# Echo footer.
+#
+echo
+echo "Congratulations!"
+echo
+echo "The Distribulator has been configured and should now be ready for use."
+echo
