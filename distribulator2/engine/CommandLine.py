@@ -34,12 +34,16 @@ class CommandLine:
                            'server-group', 'server-list' ]
 
     def getAttemptedCompletion(self, thisString, thisIndex):
-        if ( (thisIndex == 0) & (len(thisString) > 0) ):
-            for thisCommStr in self._commList:
-                if (string.find(thisCommStr, thisString) != -1):
-                    return thisCommStr + ' '
-        else: 
-            return None
+        # Don't ask me exactly how, but this seems to work well.
+        if ( (thisIndex == 0) & (readline.get_begidx() == 0) ):
+            if (len(thisString) > 0):
+                for thisCommStr in self._commList:
+                    if (string.find(thisCommStr, thisString) != -1):
+                        return thisCommStr + ' '
+            else:
+                return 'help '
+
+        return None
 
     def initHistory(self):
         thisCounter = 0
