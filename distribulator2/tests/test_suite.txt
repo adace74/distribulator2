@@ -201,3 +201,25 @@ Test Case:       show delay
 Expected Result: Listing of server groups in current environment.
 
 ######################################################################
+
+Commands: set environment and show environment
+
+Test Case:       set environment
+Expected Result: Error.
+
+Test Case:       set environment bogus
+Expected Result: Error.
+
+Test Case:       set environment demo2
+Expected Result: Sets current environment to 'demo2'.
+
+Test Case:       show environment
+Expected Result: Listing of server groups in current environment.
+
+Test Case:       show environment bogus
+Expected Result: Error.
+
+Test Case:       show environment demo
+Expected Result: Listing of server groups in 'demo' environment.
+
+######################################################################
