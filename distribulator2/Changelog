@@ -227,7 +227,7 @@ Change List For v0.7.5 (Language: Python / Bloat Factor: 3963 lines / Status: Sh
 * Ability to have two permutations of list mode.
   The first returns only hostnames, the second returns username@hostname pairs.
 
-Change List For v0.8.0 (Language: Python / Bloat Factor: 3953 lines / Status: Shipped)
+Change List For v0.8.0 (Language: Python / Bloat Factor: 3944 lines / Status: Shipped)
 --------------------------------------------------------------------------------------
 * Ability to ignore username information in config.xml via --nouser command-line flag.
 * Ability to skip the are-you-sure questions via the "now" keyword.
@@ -238,6 +238,7 @@ Change List For v0.8.1 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
 - Ability to run multiple commands using typical shell-style semicolon delimiter.
 - Ability to list servers who run a particular service.  Config file tags, etc.
+- Ability to use remote sudo to run root-level commands in a semi-secure fashion.
 - Ability to use regular expressions in "copy" and "run" commands.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
