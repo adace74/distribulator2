@@ -9,16 +9,13 @@ Required Perl Modules
 This program does require certain Perl modules to run properly,
 and in some cases requires updating Perl's internal modules.
 
-* Cwd            -- Perl Built-in Module
-* Getopt::Long   -- No particular version required.
-* Net::Ping      -- v2.25 or later REQUIRED.
-  If you're getting lots of errors that your servers are down
-  when they in fact are not, try installing this module version
-  "over" your existing Perl module.  Versions of this
-  module included with Perl v5.00x appear to be buggy.
-* Pod::Usage     -- No particular version required.
-* Sys::Hostname  -- Perl Built-in Module
-* Term::ReadLine -- Perl Built-in Module
+* Cwd                 -- Perl Built-in Module
+* Getopt::Long        -- Perl Built-in Module
+* Net::Ping           -- Perl Built-in Module
+* Pod::Usage          -- Perl Built-in Module
+* Sys::Hostname       -- Perl Built-in Module
+* Term::ReadLine::GNU -- No particular version required.
+                         It sure is necessary, though!
 
 Quick-Hack Install Directions
 -----------------------------
