@@ -58,8 +58,9 @@ class CommandRunner:
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
 
-        # Log It.
+        # Log it and print it.
         if (self._commTokens[0] != 'cd'):
+            print("CMD:   " + self._commString)
             self._globalConfig.getSysLogger().LogMsgInfo("CMD:   " + \
                                                          self._commString)
 

@@ -50,17 +50,63 @@ class BatchRunner:
             "INFO:  Attempting command run using file '" + \
             self._globalConfig.getBatchFile() + "'.")
 
+        thisIsMore = False
+        thisLineBuffer = ''
+
         try:
             thisFile = open(self._globalConfig.getBatchFile(), 'r')
             
-            for thisInput in thisFile:
+            for thisLine in thisFile:
                 thisFoundIt = False
 
-                thisInput = thisInput.strip()
-                thisTokens = thisInput.split()
+                #
+                # Pre-processing.
+                # * Strip any linefeeds / CR's.
+                # * Turn tabs into spaces.
+                #
+                thisLine = thisLine.strip()
+                thisLine = string.replace(thisLine, '\t', ' ')
+
+                thisTokens = thisLine.split()
 
                 #
-                # Step 1 - Handle "exit" from this chunk of code.
+                # Step 1 -- Check to see if this is a comment line.
+                # If so, skip it.
+                #
+                if (thisTokens[0].find('#') == 0):
+                    thisIsMore = False
+                    continue
+
+                #
+                # Step 2 -- If the line contains a backslash indicating
+                # logical line continuation, honor it.
+                #
+                # The last line ended with a \
+                if (thisIsMore):
+                    # And this line ends with another.
+                    if ( thisLine.find('\\') == (len(thisLine) - 1) ):
+                        # Strip the \ before concatenating.
+                        thisLineBuffer = thisLineBuffer + \
+                                         string.replace(thisLine, '\\', '')
+                        continue
+                    # If not, concatenate and continue.
+                    else:
+                        # Add the last of the line, and reset variables.
+                        thisLine = thisLineBuffer + thisLine
+                        thisIsMore = False
+                        thisLineBuffer = ''
+                else:
+                    # This line ends with a \.
+                    if ( thisLine.find('\\') == (len(thisLine) - 1) ):
+                        # Strip the \ before concatenating.
+                        thisLineBuffer = thisLineBuffer + \
+                                         string.replace(thisLine, '\\', '')
+                        # Set our state flag.
+                        thisIsMore = True
+                        continue
+
+                #
+                # Step 3 - Handle "exit" from this chunk of code.
                 # It should probably be moved into the parser proper.
                 #
                 if (thisTokens[0] == 'exit'):
@@ -69,12 +115,12 @@ class BatchRunner:
                     break
 
                 #
-                # Step 2 - Check for Unix "pass through" commands.
+                # Step 4 - Check for Unix "pass through" commands.
                 #
                 for thisCommand in self._globalConfig.getPassThruList():
                     if (thisTokens[0] == thisCommand):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
-                        thisExternalCommand.setCommand(thisInput)
+                        thisExternalCommand.setCommand(thisLine)
                         # Wrap it just in case.
                         try:
                             thisExternalCommand.run()
@@ -90,11 +136,11 @@ class BatchRunner:
                     continue
 
                 #
-                # Step 3 - Create InternalCommand object and fire up
+                # Step 5 - Create InternalCommand object and fire up
                 #          the parser.
                 #
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
-                thisInternalCommand.setCommand(thisInput)
+                thisInternalCommand.setCommand(thisLine)
                 thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
                 thisCommandRunner.run(thisInternalCommand)
                 del thisInternalCommand
