@@ -58,10 +58,13 @@ class ServerGroup:
 
     def getServerByName(self, PassedServerName):
         for thisServer in self._serverList:
-            thisIndex = string.find(thisServer.getName(), PassedServerName)
+            thisDotIndex = thisServer.getName().find('.')
 
-            if (thisIndex != -1):
-                return thisServer
+            # Match by hostname prefix.
+            # i.e. 'app01' will match app01.somewhere.com
+            if (thisDotIndex != -1):
+                if (PassedServerName == thisServer.getName()[:thisDotIndex]):
+                    return thisServer
 
         return False
 
