@@ -234,15 +234,17 @@ Change List For v0.8.0 (Language: Python / Bloat Factor: 3944 lines / Status: Sh
 * Ability to use logging module's configuration file for ultra-flexible logging setup.
   As a result of this change, the --quiet flag has been replaced by the --verbose flag.
 
-Change List For v0.8.5 (Language: Python / Status: In Progress)
----------------------------------------------------------------
+Change List For v0.8.5 (Language: Python / Bloat Factor: 3983 lines / Status: Shipped)
+--------------------------------------------------------------------------------------
 * Cleanup: Changed logging.conf to utilize in-memory buffering for high-volume logging.
 * Cleanup: Reordered the global config object, attempted to organize variables better.
 * Transfer of all copyright notices from personal to Orbitz corporate.
-* Ability to use regular expressions in "run" command.
+* Ability to use regular expressions in the "run" command.
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
+- Ability to use regular expressions in the "copy" command.
+- Ability to load all environments at startup, then switch environments at runtime.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
@@ -257,7 +259,6 @@ Change List For v0.9.5 (Language: Python / Status: Not Started)
 Small Feature TODO
 ------------------
 - Server groups of server groups.
-- On-the-fly environment switching(load them all at once???).
 - Cleanup: Provide a larger set of example files.  Double-check doc.  Test like crazy.
 - Ability to have batch mode report back with names of servers down and how many during a given run.
 - Ability to run multiple commands using typical shell-style semicolon delimiter.
