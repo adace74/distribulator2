@@ -62,6 +62,7 @@ Feature List For v0.5:
 (i.e. scp adace@remote01:/tmp/blah adace@remote02:/some/other/path/)
 - Single remote box file to many remote boxes file copy.
 (i.e. scp adace@remote01:/tmp/blah adace@remote[01-10]:/some/other/path)
+- ssh-agent support?
 
 Feature List For v0.7:
 
@@ -87,6 +88,6 @@ Currently there's just me.  However, I'd appreciate all the help I can get!
 Whatever company you might work for, your efforts are welcome here.
 Just send me an email, feel free to put something akin to
 "DISTRIBULATOR CODER NEEDS ACCESS" in the subject line lest I confuse
-legitamite email with spam.
+legit email with spam.
 
 --Adam W. Dace <adam@turing.com>

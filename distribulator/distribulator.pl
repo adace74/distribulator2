@@ -25,10 +25,13 @@ use Pod::Usage;
 use Sys::Hostname;
 use Term::ReadLine;
 #
-# Local Argument Variables
+# Constant Variables (Fix Me!)
+#
+my($CONF_DIR) = '/usr/local/ops/environ';
+#
+# Runtime Variables
 #
 my($config_arg, $env_arg, $help_arg, $shell_arg, $version_arg) = '';
-
 my(@command_tokens);
 my($command_tokens_count);
 my($current_group) = 'wlx';
@@ -36,26 +39,16 @@ my(@current_servers);
 my($environment);
 my($remote_command);
 my($server);
+my($MYFILE);
 
-my(%group_servers);
+my(%servers_groups_hash);
 
 GetOptions("config=s" => \$config_arg,
-	   "env=s" => \$env_arg,
-	   "help" => \$help_arg,
-	   "shell=s" => \$shell_arg,
-	   "version" => \$version_arg) ||
+           "env=s" => \$env_arg,
+           "help" => \$help_arg,
+           "shell=s" => \$shell_arg,
+           "version" => \$version_arg) ||
 	pod2usage(-exitstatus => 0, -verbose => 2);
-#
-# Give the user a banner, no matter what.
-#
-print "\n";
-print "The Distribulator v0.1\n";
-print "----------------------\n";
-print "\n";
-#
-# Validate our command-line arguments.
-#
-ValidateArgs();
 #
 # Check for --help
 #
@@ -80,7 +73,17 @@ if ($version_arg)
 
     exit(0);
 }
-
+#
+# Give the user a banner, no matter what.
+#
+print "\n";
+print "The Distribulator v0.1\n";
+print "----------------------\n";
+print "\n";
+#
+# Validate our command-line arguments.
+#
+ValidateArgs();
 #
 # Load server group configuration from appropriate files.
 #
@@ -90,7 +93,7 @@ LoadConfig();
 #
 # Auto-detection Magic.
 #
-my($user) = getlogin();
+my($user) = getlogin() || getpwuid($<);
 my($dir) = cwd();
 my($hostname) = Sys::Hostname::hostname();
 #
@@ -107,11 +110,9 @@ $term->ornaments(0,0,0,0);
 #
 # Print a little intro.
 #
-print "Configuration loaded successfully from ../conf/staging/wlx.\n";
-print "Environments Found:  staging\n";
-print "Server Groups Found: wlx\n";
 print "\n";
-print "You Are On Server  : $hostname\n";
+print "You Are On Server               : $hostname\n";
+print "You Can Run Distributed Stuff In: $environment\n";
 print "\n";
 print "Prompt Description -- <user\@environment[current_group]:local_dir>\n";
 print "\n";
@@ -137,11 +138,10 @@ while (true)
 
 	$command = shift(@command_tokens);
 
-	print "Input:   $input\n";
-	print "Tokens:  @command_tokens\n";
-	print "Token Count: $command_tokens_count\n";
-	print "Command: $command\n";
-
+	print "Input:          $input\n";
+	print "Command Tokens: @command_tokens\n";
+	print "Token Count:    $command_tokens_count\n";
+	print "Command:        $command\n";
 	#
 	# Idea -- We should create a hashtable of command name and
 	# maximum number of args, would be good for validation.
@@ -152,6 +152,10 @@ while (true)
 	{
 		$current_group = shift(@command_tokens);
 	}
+    elsif ($command eq 'help')
+    {
+        PrintHelpFile();
+    }
 	elsif ($command eq 'run')
 	{
 		$remote_command = join(' ', @command_tokens);
@@ -181,53 +185,57 @@ while (true)
 }
 
 #
-# Validate incoming arguments.  Dump user out if in error.
-#
-sub ValidateArgs
-{
-    if ($env_arg)
-    {
-        # Validate arguments.
-	if ( !stat("../conf/$env_arg") )
-	{
-		die("Directory for environment $env_arg doesn't exist!");
-	}
-
-        $environment = $env_arg;
-    }
-    else
-    {
-        die ('Invalid arguments given.  See --help for required flags.');
-    }
-}
-
-#
 # Load server group configuration from files.
 #
 sub LoadConfig
 {
     my($MYDIR);
-	my($MYFILE);
+    my($filename);
 	my($line);
 
     # The idea here is to go into the environment directory,
     # and pull in -all- files within that directory.
+    opendir(MYDIR, "$CONF_DIR/$environment")
+        || die("Failed to open directory $CONF_DIR/$environment for reading.");
 
-	# Load the file in.
-	open(MYFILE, "<../conf/$environment/$current_group")
-		|| die("Failed to open file $! for reading.");
+    while( $filename = readdir(MYDIR) )
+    {
+        # Filter out . and .. -- we don't want those.
+        if ( !($filename =~ /\./) )
+        {
+            # Load the file in.
+            open(MYFILE, "<$CONF_DIR/$environment/$filename")
+                || die("Failed to open file $CONF_DIR/$environment/$filename for reading.");
 
-	while(<MYFILE>)
-	{
-		$line = $_;
+            print "Loading hostnames for $filename server group...";
 
-		chomp($line);
-		push(@current_servers, $line);
-	}
+            while(<MYFILE>)
+            {
+                $line = $_;
 
-	close(MYFILE);
+                chomp($line);
+                push(@{$servers_groups_hash{$filename}}, $line);
+            }
 
-	print "Current Servers: @current_servers\n";
+            close(MYFILE);
+
+            print "Done.\n";
+        }
+    }
+
+    closedir(MYDIR);
+
+    print "\n";
+
+    foreach my $group (sort keys(%servers_groups_hash) )
+    {
+        print "Group: $group\n";
+
+        foreach my $server ( @{$servers_groups_hash{$group}} )
+        {
+            print "     Server: $server\n";
+        }
+    }
 }
 
 #
@@ -235,7 +243,50 @@ sub LoadConfig
 #
 sub PingServer
 {
+#    use Net::Ping;
+
 	return 1;
+}
+
+#
+# Print the help file.
+#
+sub PrintHelpFile
+{
+        print "\n";
+
+        open(MYFILE, "<./doc/help.txt") ||
+            die("Cannot find the help file in ./doc!");
+
+        while(<MYFILE>)
+        {
+            print $_;
+        }
+
+        close(MYFILE);
+
+        print "\n";
+}
+
+#
+# Validate incoming arguments.  Dump user out if in error.
+#
+sub ValidateArgs
+{
+    if ($env_arg)
+    {
+        # Validate arguments.
+        if ( !stat("$CONF_DIR/$env_arg") )
+        {
+            die("Directory for environment $env_arg doesn't exist!");
+        }
+
+        $environment = $env_arg;
+    }
+    else
+    {
+        die ('Invalid arguments given.  See --help for required flags.');
+    }
 }
 
 #$group_servers{$current_group} = \@server_array;
@@ -273,8 +324,24 @@ tool written in Perl. If you have command execution priviledges on more than
 
 =item *
 
+B<--config>
+Allows people to manually specify where our configuration lives.
+
+=item *
+
+B<--env>
+Specifies which environment this session will be limited to.
+
+=item *
+
 B<--help>
 Displays this manual page and exits.
+
+=item *
+
+B<--shell>
+Specifies whether to use ssh or some other remote shell,
+such as BladeLogic's NetShell product.
 
 =item *
 
