@@ -95,12 +95,15 @@ class ListMode(Mode.Mode):
         # Step 3: If we found server name(s), then run with that.
         # Otherwise, do the same with the server group(s) given.
         #
+        myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
+
         if ( len(myServerNameList) > 0 ):
             for myNameStr in myServerNameList:
                 myServer = self._globalConfig.getServerByName(myNameStr)
 
-                myOutput = myOutput + myServer.getUsername() + "@" + \
-                    myServer.getName() + " "
+                if (myPinger.ping(myNameStr) == 0):
+                    myOutput = myOutput + myServer.getUsername() + "@" + \
+                        myServer.getName() + " "
         else:
             # If we found server group names, then run with that.
             #
@@ -111,8 +114,9 @@ class ListMode(Mode.Mode):
                 myServerList = myServerGroup.getServerList()
 
                 for myServer in myServerList:
-                    myOutput = myOutput + myServer.getUsername() + "@" + \
-                        myServer.getName() + " "
+                    if (myPinger.ping( myServer.getName() ) == 0):
+                        myOutput = myOutput + myServer.getUsername() + "@" + \
+                            myServer.getName() + " "
 
         myOutput = myOutput.strip()
         print myOutput

@@ -51,22 +51,26 @@ class HostPinger:
 
         except socket.error, myErrorInfo:
             myError = "OS Reports: [%s] during TCP ping attempt.\n" % (myErrorInfo)
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            if ( self._globalConfig.isListMode() == False ):
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
         except socket.herror, (errno, strerror):
             myError = "OS Reports: [Errno %s: %s] during TCP ping attempt." % (errno, strerror)
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            if ( self._globalConfig.isListMode() == False ):
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 2
 
         except socket.gaierror, (errno, strerror):
             myError = "OS Reports: [Errno %s: %s] during TCP ping attempt." % (errno, strerror)
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            if ( self._globalConfig.isListMode() == False ):
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 3
 
         except socket.timeout:
             myError = "OS Reports: [Socket timeout] during TCP ping attempt."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            if ( self._globalConfig.isListMode() == False ):
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 4
 
 #######################################################################
