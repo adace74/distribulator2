@@ -51,11 +51,11 @@ Command(s): help
 Test Case:       help
 Expected Result: Main Help Page.
 
+Test Case:       help bogus
+Expected Result: Error.
+
 Test Case:       help <value>, where value is each command supported.
 Expected Result: Detailed help page.
-
-Test Case:       help jfjfjf
-Expected Result: Error.
 
 ######################################################################
 
@@ -64,14 +64,14 @@ Command(s): login
 Test Case:       login
 Expected Result: Error.
 
+Test Case:       login bogus
+Expected Result: Error.
+
 Test Case:       login www0
 Expected Result: Error.
 
 Test Case:       login www01
 Expected Result: SSH Connection to a server matching 'www01'.
-
-Test Case:       login jfjfjf
-Expected Result: Error.
 
 ######################################################################
 
