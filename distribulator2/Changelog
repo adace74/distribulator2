@@ -209,10 +209,10 @@ Change List For v0.7.4 (Language: Python / Status: In Progress)
 ---------------------------------------------------------------
 * Ability to specify per-servergroup SSH version for use with both
   "copy" and "run" commands.  If no version is specified, no extra flags are added.
-* Cleanup: Made the batch mode header and footer output more concise.
 * Cleanup: Moved CTRL-C state info into GlobalConfig.py.
-  This allows us to completely dump out of bactch mode on CTRL-C.
-- Cleanup: Added code to batch mode to close STDIN, can be backgrounded more easily now.
+  This allows us to quickly dump out of batch mode when one hits CTRL-C.
+* Cleanup: Added code to batch mode to close STDIN, should help with backgrounding.
+* Cleanup: Made the batch mode header and footer output more concise.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
