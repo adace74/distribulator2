@@ -251,8 +251,6 @@ class BatchMode(Mode.Mode):
         #
         # Output our "footer" for batch mode.
         #
-        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
-
         if (self._globalConfig.isBreakState()):
             myInfo = "Summary: Batch run successfully aborted.  No statistics available."
         else:
