@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# Name: GlobalConfig.py
+# Name: ExternalCommand.py
 #
 ######################################################################
 
@@ -17,21 +17,21 @@ import sys
 
 ######################################################################
 
-class GlobalConfig:
+class ExternalCommand:
 
     #
-    # Global settings.
+    # Unix command line string.
     #
-    #
-    # Unix command "pass through" list.
-    #
-    def getPassThruList(self):
-        return self.thisPassThruList
+    def getCommandLine(self):
+        return self.thisCommandLine
     
-    def setPassThruList(self, PassedPassThruList):
-        self.thisPassThruList = PassedPassThruList
+    def setCommandLine(self, PassedCommandLine):
+        self.thisCommandLine = PassedCommandLine
     #
-    # Servers and ServerGroups
+    # Other options.  What else should go here?
+    #
+    # isLogged()
+    # setLogged()
     #
 
 ######################################################################

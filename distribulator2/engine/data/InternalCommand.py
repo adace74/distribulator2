@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# Name: GlobalConfig.py
+# Name: SysLogger.py
 #
 ######################################################################
 
@@ -16,22 +16,5 @@ import string
 import sys
 
 ######################################################################
-
-class GlobalConfig:
-
-    #
-    # Global settings.
-    #
-    #
-    # Unix command "pass through" list.
-    #
-    def getPassThruList(self):
-        return self.thisPassThruList
-    
-    def setPassThruList(self, PassedPassThruList):
-        self.thisPassThruList = PassedPassThruList
-    #
-    # Servers and ServerGroups
-    #
 
 ######################################################################
