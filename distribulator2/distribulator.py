@@ -138,8 +138,6 @@ The available options are:
 
         # Load up our GlobalConfig object.
         thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
-        thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
-        thisGlobalConfig.setSysLogger(thisLogger)
 
         if ( len(thisBatchFile) > 0 ):
             thisGlobalConfig.setBatchMode(True)
@@ -159,6 +157,10 @@ The available options are:
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
         thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
+
+        # Setup syslog.
+        thisLogger = generic.SysLogger.SysLogger(thisGlobalConfig.getSyslogFacility())
+        thisGlobalConfig.setSysLogger(thisLogger)
 
         # Log our startup.
         thisStatus, thisOutput = commands.getstatusoutput( \

@@ -14,6 +14,7 @@ import os
 import os.path
 import string
 import sys
+import syslog
 import xml.dom.minidom
 
 # Custom modules
@@ -96,7 +97,7 @@ class XMLFileParser:
     # Logging options.
     def handleLogging(self, PassedLogging):
         self._globalConfig.setSyslogFacility(
-            PassedLogging.getAttribute('facility').strip() )
+            eval("syslog.LOG_" + PassedLogging.getAttribute('facility').strip()) )
 
     # Server environments, groups, and individual servers.
     def handleEnvironments(self, PassedEnvironments):
