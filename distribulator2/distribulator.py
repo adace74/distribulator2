@@ -134,50 +134,55 @@ The available options are:
         sys.stderr.write(usage)
         sys.exit(1)
 
-    thisConfigDir = os.path.join(os.getcwd(), 'conf')
-    thisHelpDir = os.path.join(os.getcwd(), 'doc')
+    try:
+        thisConfigDir = os.path.join(os.getcwd(), 'conf')
+        thisHelpDir = os.path.join(os.getcwd(), 'doc')
 
-    # Load up our GlobalConfig object.
-    thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
-    if ( len(thisBatchFile) > 0 ):
-        thisGlobalConfig.setBatchMode(True)
-    else:
-        thisGlobalConfig.setBatchMode(False)
-    thisGlobalConfig.setConfigDir(thisConfigDir)
-    thisGlobalConfig.setHelpDir(thisHelpDir)
-    thisGlobalConfig.setServerEnv(thisServerEnv)
+        # Load up our GlobalConfig object.
+        thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+        if ( len(thisBatchFile) > 0 ):
+            thisGlobalConfig.setBatchMode(True)
+        else:
+            thisGlobalConfig.setBatchMode(False)
+        thisGlobalConfig.setConfigDir(thisConfigDir)
+        thisGlobalConfig.setHelpDir(thisHelpDir)
+        thisGlobalConfig.setServerEnv(thisServerEnv)
 
-    if ( thisGlobalConfig.isBatchMode() == False):
-        printTitleHeader()
-        printInfoHeader(thisServerEnv, thisConfigDir)
+        if ( thisGlobalConfig.isBatchMode() == False):
+            printTitleHeader()
+            printInfoHeader(thisServerEnv, thisConfigDir)
 
-    thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
-    thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
-    thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
+        thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
+        thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
+        thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
 
-    # Log our startup.
-    thisStatus, thisOutput = commands.getstatusoutput( \
-        thisGlobalConfig.getLognameBinary())
+        # Log our startup.
+        thisStatus, thisOutput = commands.getstatusoutput( \
+            thisGlobalConfig.getLognameBinary())
 
-    if ( thisStatus == 0 ):
-        thisGlobalConfig.setRealUsername(thisOutput)
-        thisGlobalConfig.setUsername( getpass.getuser() )
-    else:
-        thisGlobalConfig.setRealUsername( getpass.getuser() )
-        thisGlobalConfig.setUsername( getpass.getuser() )
+        if ( thisStatus == 0 ):
+            thisGlobalConfig.setRealUsername(thisOutput)
+            thisGlobalConfig.setUsername( getpass.getuser() )
+        else:
+            thisGlobalConfig.setRealUsername( getpass.getuser() )
+            thisGlobalConfig.setUsername( getpass.getuser() )
 
-    thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
-    thisGlobalConfig.setSysLogger(thisLogger)
+        thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
+        thisGlobalConfig.setSysLogger(thisLogger)
 
-    if (thisGlobalConfig.isBatchMode()):
-        thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- batch mode.")
-    else:
-        thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- console mode.")
+        if (thisGlobalConfig.isBatchMode()):
+            thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- batch mode.")
+        else:
+            thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- console mode.")
 
-    thisLogger.LogMsgInfo("INFO: Real UID:      " +
-                          thisGlobalConfig.getRealUsername())
-    thisLogger.LogMsgInfo("INFO: Effective UID: " + \
-                          thisGlobalConfig.getUsername())
+        thisLogger.LogMsgInfo("INFO: Real UID:      " +
+                              thisGlobalConfig.getRealUsername())
+        thisLogger.LogMsgInfo("INFO: Effective UID: " + \
+                              thisGlobalConfig.getUsername())
+
+    except (EOFError, KeyboardInterrupt):
+            print "ERROR:  Caught CTRL-C / CTRL-D keystroke.  Exiting..."
+            sys.ext(1)
 
     # Try to chdir() to thisStartDir if possible.
     try:

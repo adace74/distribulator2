@@ -12,6 +12,7 @@ __version__= '$Revision$'[11:-2]
 # Standard modules
 import os
 import os.path
+import stat
 import string
 import sys
 
@@ -53,13 +54,13 @@ class CommandRunner:
                   "'.")
 
 ######################################################################
-            
+
     def doAreYouSure(self):
         try:
             thisInput = raw_input("Yes / No> ")
 
-        except KeyboardInterrupt:
-            print "INFO:  Caught CTRL-C keystroke."
+        except (EOFError, KeyboardInterrupt):
+            print "INFO:  Caught CTRL-C / CTRL-D keystroke."
             return False
 
         if (thisInput.lower() == 'yes'):
@@ -81,8 +82,75 @@ class CommandRunner:
 ######################################################################
 
     def doCopy(self):
-        # copy /tmp/blah www:/usr/local/tmp/
-        print("ERROR: This command not yet implemented.")
+        thisServerGroupList = []
+        
+        # Sanity check.
+        if (len(self._commTokens) != 3):
+            print("ERROR:  Command Syntax Error.  Try 'help copy' for more information.")
+            return False
+
+        # copy /tmp/blah.txt /tmp/
+        if ( self._commString.find(':') == -1 ):
+            try:
+                if ( stat.S_ISREG(os.stat(
+                    self._commTokens[1])[stat.ST_MODE]) == False):
+                    print("ERROR: File '" + self._commTokens[1] +
+                    "' is accessible, but not regular.")
+                    return False
+            except OSError, (errno, strerror):
+                print( "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+                                                     self._commTokens[1]) )
+                return False
+
+            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            print("Copy local file '" + self._commTokens[1] +
+            "' to remote directory '" + self._commTokens[2] + "'")
+            print("on server group " + thisGroupStr + "?")
+
+            if (self.doAreYouSure() == False):
+                print("INFO:  Aborting command.")
+                return False
+            else:
+                thisServerGroupList.append( thisGroupStr )
+        else:
+            print("ERROR: Syntax not yet implemented!")
+            return False
+
+        # Just Do It.
+        for thisGroupStr in thisServerGroupList:
+            thisServerGroup = self._globalConfig.getServerGroupByName(
+                thisGroupStr)
+
+            try:
+                for thisServer in thisServerGroup.getServerList():
+                    thisPinger = generic.HostPinger.HostPinger(
+                        self._globalConfig.getPingBinary() )
+
+                    if (thisPinger.ping(thisServer.getName()) == 0):
+                        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                        thisExternalCommand.setCommand( \
+                            self._globalConfig.getScpBinary() + " " + \
+                            self._commTokens[1] + " " + \
+                            thisServer.getUsername() + "@" + \
+                            thisServer.getName() + ":" + \
+                            self._commTokens[2] )
+                        # Log It.
+                        self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                                     thisExternalCommand.getCommand())
+                        # Run It.
+                        thisExternalCommand.run()
+                    else:
+                        print("ERROR: Server '" + thisServer.getName() + \
+                              "' appears to be down.  Continuing...")
+                        self._globalConfig.getSysLogger().LogMsgInfo(
+                            "ERROR: Server '" + thisServer.getName() + \
+                            "' appears to be down.  Continuing.." )
+
+            except (EOFError, KeyboardInterrupt):
+                    print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
+                    return False
+
+        return True
 
 ######################################################################
 
@@ -122,8 +190,8 @@ class CommandRunner:
                                                              thisExternalCommand.getCommand())
                 try:
                     thisExternalCommand.run()
-                except KeyboardInterrupt:
-                    print("INFO:  Caught CTRL-C keystroke.  Returning to command prompt...")
+                except (EOFError, KeyboardInterrupt):
+                    print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
             else:
                 print("ERROR: No matching server '" + \
                       self._commTokens[1] + "'.")
@@ -241,8 +309,8 @@ class CommandRunner:
                             "ERROR: Server '" + thisServer.getName() + \
                             "' appears to be down.  Continuing.." )
 
-            except KeyboardInterrupt:
-                print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+            except (EOFError, KeyboardInterrupt):
+                print "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
 
         return True
 

@@ -7,17 +7,18 @@ Description: Copies files to/from various servers within our
              working environment.
 
 Examples:
-    copy patch20020822.tar.gz /tmp/
-    - Copies local file patch20020822.tar.gz to directory
-      /tmp/ on current server group.
-    copy patch20020822.tar.gz www:/tmp/
-    - Copies local file patch20020822.tar.gz to directory
-      /usr/local/tmp/ on the 'www' server group.
-    copy patch20020822.tar.gz www01:/tmp/
-    - Copies local file patch20020822.tar.gz to directory
-      /tmp/ on the server 'www01'.
+    copy /tmp/blah.txt /tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/ 
+      on the current server group.
+    copy /tmp/blah.txt www:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on the 'www' server group.
 
 TODO:
+    copy /tmp/blah.txt www01:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on the server 'www01'.
+
     copy www01:/tmp/patch20020822.tar.gz /usr/local/weblogic/
     - Copies file patch20020822.tar.gz on server www01
       to directory /usr/local/weblogic/ on current server group.

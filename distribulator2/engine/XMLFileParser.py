@@ -91,7 +91,7 @@ class XMLFileParser:
     # Logging options.
     def handleLogging(self, PassedLogging):
         self._globalConfig.setSyslogFacility(
-            PassedLogging.getAttribute('facility') )
+            PassedLogging.getAttribute('facility').strip() )
 
     # Server environments, groups, and individual servers.
     def handleEnvironments(self, PassedEnvironments):
@@ -114,9 +114,10 @@ class XMLFileParser:
 
     def handleServerGroup(self, PassedServerGroup):
         thisServerGroup = engine.data.ServerGroup.ServerGroup()
-        thisServerGroup.setName( PassedServerGroup.getAttribute('name') )
+        thisServerGroup.setName(
+            PassedServerGroup.getAttribute('name').strip() )
         thisServerGroup.setUsername(
-            PassedServerGroup.getAttribute('username') )
+            PassedServerGroup.getAttribute('username').strip() )
         thisServerGroup = self.handleServers( thisServerGroup,
                                               PassedServerGroup.getElementsByTagName('server') )
 
@@ -135,7 +136,7 @@ class XMLFileParser:
 
     def handleServer(self, PassedServer):
         thisServer = engine.data.Server.Server()
-        thisServer.setName( self.getText(PassedServer.childNodes) )
+        thisServer.setName( self.getText(PassedServer.childNodes).strip() )
 
         return thisServer
 

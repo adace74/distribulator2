@@ -1,7 +1,7 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run "command" on [server_group,server_group...]
+Syntax: run [ssh_flags] "command" on [server_group,server_group...]
 
 Description: Runs a given command across multiple servers,
              or on a particular server.
@@ -9,6 +9,13 @@ Description: Runs a given command across multiple servers,
 Examples:
     run "uptime"            -- Runs uptime on current server group.
     run "uptime" on app,www -- Runs uptime on app and www server groups.
+    run -t "vi"             -- Runs vi on current server group,
+                               also force a ssh tty.
+    run -t "vi" on app,www  -- Runs vi on app and www server groups,
+                               also force a ssh tty.
+
+TODO:
+    run "uptime" on www01   -- Runs uptime on server named 'www01'.
 
 ----------------------------------------------------------------------
 $Id$
