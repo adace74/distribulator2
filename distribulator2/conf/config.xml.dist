@@ -17,7 +17,7 @@
 
 <!DOCTYPE config PUBLIC
     "-//Orbitz, Inc.//DTD CML 1.0 Strict//EN"
-    "http://www.turing.com/adam/config.dtd">
+    "config.dtd">
 
 <!-- Start Global Config -->
 

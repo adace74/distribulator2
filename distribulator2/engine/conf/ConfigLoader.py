@@ -21,6 +21,7 @@ import os
 import stat
 
 # Custom modules
+import engine.conf.XMLFileChecker
 import engine.conf.XMLFileParser
 import engine.data.GlobalConfig
 
@@ -138,7 +139,13 @@ class ConfigLoader:
             print( "- Logging configuration:       %d lines loaded." % myConfigLines )
 
         #
-        # Step 3: Load the main XML configuration file.
+        # Step 3: Pre-check the main XML configuration file.
+        #
+        myChecker = engine.conf.XMLFileChecker.XMLFileChecker()
+        myChecker.check(self._globalConfig)
+
+        #
+        # Step 4: Load the main XML configuration file.
         #
         myParser = engine.conf.XMLFileParser.XMLFileParser()
         self._globalConfig.setCurrentServerGroup(False)

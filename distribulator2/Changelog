@@ -247,8 +247,8 @@ Change List For v0.8.6 (Language: Python / Status: In Progress)
   or where Python is, we'll run with it.
 * Cleanup: Replaced all highly unreadable "&" "|" characters with keyword equivalents.
 * Cleanup: replaced all less readable "foo == FALSE" clauses with "not foo" equivalents.
-- Cleanup: Added logic to check config.xml for well-formedness before actual parsing.
-- Ability to load all environments at startup, then switch environments at runtime.
+* Cleanup: Added logic to pre-check config.xml for well-formedness before actual parsing.
+- Ability to load all environments at startup, then switch environments at runtime via "set environment".
 
 Change List For v0.9.0 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------

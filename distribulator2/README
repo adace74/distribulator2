@@ -58,11 +58,16 @@ The software also comes with a some "training wheel"-style features:
 
 What Will It Do?
 ----------------
-Please see the "Changelog" file located in this directory.
+Many things.  Please see the "Changelog" file located in this directory.
 
 How do I install it?
 --------------------
 Please see the "INSTALL" file located in this directory.
+
+How stable is it?
+-----------------
+By the time releases are posted on SourceForge, they've typically been in multiple test environments
+for roughly 2 weeks performing real-world tasks.  As they say, however, Your Milage May Vary.
 
 What are the known bugs?
 ------------------------
