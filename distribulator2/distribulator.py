@@ -262,8 +262,7 @@ The available options are:
         # Setup console and logging output handles.
         myLogger = logging.getLogger('dist')
         myHandler = logging.FileHandler( myGlobalConfig.getLogFilename() )
-        myFormatter = logging.Formatter('%(asctime)s|%(process)s|%(levelname)s|%(message)s', \
-                                        '%Y%m%d %H:%M:%S')
+        myFormatter = logging.Formatter( myGlobalConfig.getLogMask(), myGlobalConfig.getLogDateMask() )
         myHandler.setFormatter(myFormatter)
         myLogger.addHandler(myHandler) 
         myLogger.setLevel( myGlobalConfig.getLogLevel() )

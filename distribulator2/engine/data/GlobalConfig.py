@@ -349,6 +349,35 @@ class GlobalConfig:
 
         self._logLevel = PassedLogLevel
 
+
+######################################################################
+
+    def getLogDateMask(self): 
+        """This is a typical accessor method."""
+        
+        return self._logDateMask 
+        
+######################################################################
+
+    def setLogDateMask(self, PassedLogDateMask):
+        """This is a typical accessor method."""
+        
+        self._logDateMask = PassedLogDateMask  
+
+######################################################################
+
+    def getLogMask(self): 
+        """This is a typical accessor method."""
+        
+        return self._logMask 
+        
+######################################################################
+
+    def setLogMask(self, PassedLogMask):
+        """This is a typical accessor method."""
+        
+        self._logMask = PassedLogMask  
+
 ######################################################################
 
     def getLogger(self):

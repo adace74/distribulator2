@@ -94,7 +94,7 @@ class XMLFileParser:
 
         try:
             self.handleBinaries(PassedConfig.getElementsByTagName('binary'))
-            self.handleLogging(PassedConfig.getElementsByTagName('logging')[0])
+            self.handleLoggings(PassedConfig.getElementsByTagName('logging'))
             self.handlePing(PassedConfig.getElementsByTagName('ping')[0])
             self.handleEnvironments(PassedConfig.getElementsByTagName('environment'))
 
@@ -118,8 +118,10 @@ class XMLFileParser:
     def handleBinary(self, PassedBinary):
         """This method handles a single <Binary> tag."""
 
+        # Get our name/value pair.
         myName = PassedBinary.getAttribute('name')
         myValue = PassedBinary.getAttribute('value')
+
         if (myName == 'logname'):
             self._globalConfig.setLognameBinary(myValue)
         elif (myName == 'scp'):
@@ -131,19 +133,34 @@ class XMLFileParser:
 # Logging options.
 ######################################################################
 
+    def handleLoggings(self, PassedLoggings):
+        """This method branches processing off into sub-methods."""
+
+        for Logging in PassedLoggings:
+            self.handleLogging(Logging)
+    
+######################################################################
+
     def handleLogging(self, PassedLogging):
         """This method handles a single <Logging> tag."""
 
-        if (PassedLogging.getAttribute('filename')):
-            self._globalConfig.setLogFilename(PassedLogging.getAttribute('filename'))
-        else:
-            self._globalConfig.setLogFilename("/var/log/command.log")
+        # Get our name/value pair.
+        myName = PassedLogging.getAttribute('name')
+        myValue = PassedLogging.getAttribute('value').strip()
 
-        if (PassedLogging.getAttribute('level')):
-            self._globalConfig.setLogLevel(
-                eval("logging." + PassedLogging.getAttribute('level').strip()) )         
-        else:
-            self._globalConfig.setLogLevel(logging.DEBUG)
+        # Load custom settings.
+        if (myName == 'filename'):
+            print "FILENAME"
+            self._globalConfig.setLogFilename(myValue)
+        elif (myName == 'level'):
+            print "LEVEL"
+            self._globalConfig.setLogLevel( eval('logging.' + myValue) )
+        elif (myName == 'date_mask'):
+            print "DATE"
+            self._globalConfig.setLogDateMask(myValue)
+        elif (myName == 'log_mask'):
+            print "MASK"
+            self._globalConfig.setLogMask(myValue)
 
 ######################################################################
 # Ping options.
