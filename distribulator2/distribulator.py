@@ -70,6 +70,7 @@ def printInfoHeader(PassedServerEnv, PassedConfigFile):
 def main(argv):
     """Good old main."""
 
+    short_options = ['']
     long_options = ['batch=',
                     'config=',
                     'directory=',
@@ -79,7 +80,8 @@ def main(argv):
                     'var1=',
                     'var2=',
                     'var3=',
-                    'version']
+                    'version',
+                    '?']
 
     usage = """
 Usage: %s [options] --env=environment
@@ -137,7 +139,7 @@ The available options are:
             print("ERROR: I need to know which environment I am to use!")
             raise "CommandLineError"
 
-        optlist, args = getopt.getopt(sys.argv[1:], None, long_options)
+        optlist, args = getopt.getopt(sys.argv[1:], short_options, long_options)
 
         if len(optlist) > 0:
             for opt in optlist:
@@ -150,6 +152,9 @@ The available options are:
                 elif (opt[0] == '--env'):
                     thisServerEnv = opt[1]
                 elif (opt[0] == '--help'):
+                    print(usage)
+                    sys.exit(False)
+                elif (opt[0] == '--?'):
                     print(usage)
                     sys.exit(False)
                 elif (opt[0] == '--quiet'):
