@@ -36,7 +36,7 @@
     <!-- Server environments, groups, etc. -->
 
     <!-- Demo Environment: Default servergroup set to "www" -->
-    <environment default="www" name="demo">
+    <environment name="demo" default="www">
         <!-- SSH v1 Group -->
         <servergroup name="app" username="tomcat" flags="-1">
             <server>app01.somewhere.com</server>

@@ -24,17 +24,20 @@
 <config>
     <!-- System Binaries -->
     <binary name="logname" value="/usr/bin/logname"/>
-    <binary name="ping" value="/bin/ping -c 1"/>
-    <binary name="scp" value="/usr/bin/scp -c blowfish"/>
-    <binary name="ssh" value="/usr/bin/ssh -c blowfish"/>
+    <binary name="scp" value="/usr/bin/scp"/>
+    <binary name="ssh" value="/usr/bin/ssh"/>
 
     <!-- Logging Options -->
     <logging facility="LOCAL0"/>
 
+    <!-- Ping Options -->
+    <ping banner="OpenSSH" port="22" timeout="10"/>
+
     <!-- Server environments, groups, etc. -->
 
     <!-- Demo Environment: Default servergroup set to "www" -->
-    <environment default="www" name="demo">
+    <environment name="demo" default="www">
+        <!-- SSH v1 Group -->
         <servergroup name="app">
             <server>app01.somewhere.com</server>
             <server>app02.somewhere.com</server>
@@ -43,6 +46,7 @@
             <server>app05.somewhere.com</server>
         </servergroup>
 
+        <!-- SSH v2 Group -->
         <servergroup name="db">
             <server>db01.somewhere.com</server>
             <server>db02.somewhere.com</server>
@@ -51,6 +55,7 @@
             <server>db05.somewhere.com</server>
         </servergroup>
 
+        <!-- SSH v1 Group -->
         <servergroup name="www">
             <server>www01.somewhere.com</server>
             <server>www02.somewhere.com</server>
