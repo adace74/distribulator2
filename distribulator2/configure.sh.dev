@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# $Id$
+#
+# Description:  This script acts as a wrapper for calling autoconf.
+#
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# Please see the accompanying LICENSE file for license information.
+#
+./configure --prefix=/home/$USER/cvswork-sf/distribulator2 --with-python=/usr/bin/python2.3
