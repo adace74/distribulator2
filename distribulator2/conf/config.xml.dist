@@ -1,0 +1,23 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+#
+# Binary locations.
+#
+<Binary SCP_BIN="/usr/bin/scp -c blowfish"/>
+<Binary SSH_BIN="/usr/bin/ssh -c blowfish"/>
+#
+# Logging options.
+#
+<Logging FACILITY="LOCAL0"/>
+#
+# Server groups
+#
+<Environment name="at">
+    <ServerGroup name="wlx" username="orbitz">
+        <Server name="wlx01at.eg.orbitz.com"/>
+        <Server name="wlx02at.eg.orbitz.com"/>
+    </ServerGroup>
+</Environment>
