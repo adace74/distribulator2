@@ -54,9 +54,9 @@ use vars @EXPORT, @EXPORT_OK;
 # USER CONFIGURABLE SETTINGS
 #
 # Where the configuration files are located.
-$CONFIG_DIR =  '/usr/local/novo/distribulator/conf';
+$CONFIG_DIR =  '/promo/distribulator/conf';
 # Where distribulator is installed, required for help files.
-$INSTALL_DIR = '/usr/local/novo/distribulator';
+$INSTALL_DIR = '/promo/distribulator';
 ######################################################################
 
 #

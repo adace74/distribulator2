@@ -22,7 +22,7 @@ Quick-Hack Install Directions
 
 1) Install any required modules via CPAN or by hand.
 2) Pick a place you wish to install the distribution
-   (the default is /usr/local/novo/distribulator).
+   (the default is /promo/distribulator).
 3) Untar/gzip the distribution into the directory above your target dir.
 4) If not using the default settings, edit wrappers/distribulator
    and Global/Config.pm to specify where the distribution is installed,
