@@ -26,12 +26,12 @@ class SysLogger:
 
     def LogMsgWarn(self, PassedMessage):
         syslog.openlog('distribulator.py', syslog.LOG_PID, self._facility)
-        syslog.syslog(syslog.LOG_WARN, PassedMessage)
+        syslog.syslog(syslog.LOG_WARNING, PassedMessage)
         syslog.closelog()
 
     def LogMsgError(self, PassedMessage):
         syslog.openlog('distribulator.py', syslog.LOG_PID, self._facility)
-        syslog.syslog(LOG_ERROR, PassedMessage)
+        syslog.syslog(syslog.LOG_ERR, PassedMessage)
         syslog.closelog()
 
 ######################################################################

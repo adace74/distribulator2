@@ -46,7 +46,10 @@ class XMLFileParser:
             thisDom = xml.dom.minidom.parse(thisFilename)
 
         except IOError, (errno, strerror):
-            print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename))
+            thisError = "ERROR:[Errno %s] %s: %s" % \
+                        (errno, strerror, thisFilename)
+            print(thisError)
+            self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
         self.handleConfig(thisDom)
@@ -54,8 +57,10 @@ class XMLFileParser:
         if (self._isEnvFound):
             return self._globalConfig
         else:
-            print("ERROR: No matching tags found for environment '" +
-                  self._globalConfig.getServerEnv() + "' in config.xml!")
+            thisError = "ERROR: No matching tags found for environment '" + \
+                        self._globalConfig.getServerEnv() + "' in config.xml!"
+            print(thisError)
+            self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
     # Gotta clean this up some day...

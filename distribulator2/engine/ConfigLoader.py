@@ -38,7 +38,8 @@ class ConfigLoader:
         # more accurate.
         #
         if (self._globalConfig.isBatchMode() == False):
-            print("- GNU Readline history:        %d lines loaded." % thisLinesLoaded)
+            print("- GNU Readline history:        %d lines loaded." % \
+                  (thisLinesLoaded))
         #
         # Unix "pass through" commands.
         #
@@ -56,7 +57,10 @@ class ConfigLoader:
             thisFile.close()
 
         except IOError, (errno, strerror):
-            print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisFilename))
+            thisError = "ERROR:[Errno %s] %s: %s" % \
+                        (errno, strerror, thisFilename)
+            print(thisError)
+            self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
 
         self._globalConfig.setPassThruList(thisPassThruList)
@@ -64,16 +68,18 @@ class ConfigLoader:
         # Status.
         if (self._globalConfig.isBatchMode() == False):
             print( "- Unix pass-through commands:  %d lines loaded." \
-                   % len(thisPassThruList) )
+                   % (len(thisPassThruList)) )
 
         # Parse XML...ouchies.
         thisParser = engine.XMLFileParser.XMLFileParser()
         self._globalConfig = thisParser.parse(self._globalConfig)
 
         if (self._globalConfig.isBatchMode() == False):
-            print("- Global options and settings: %d lines loaded." % self._globalConfig.getConfigLines())
+            print( "- Global options and settings: %d lines loaded." %
+                   (self._globalConfig.getConfigLines()) )
 
-        self._globalConfig.setCurrentServerGroup( self._globalConfig.getServerGroupList()[0] )
+        self._globalConfig.setCurrentServerGroup(
+            self._globalConfig.getServerGroupList()[0] )
 
         thisServerGroupStr = '- '
         thisTotalServerCount = 0
@@ -81,8 +87,10 @@ class ConfigLoader:
 
         for thisServerGroup in self._globalConfig.getServerGroupList():
             thisColumnCount = thisColumnCount + 1
-            thisTotalServerCount = thisTotalServerCount + thisServerGroup.getServerCount()
-            thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % (thisServerGroup.getName(), thisServerGroup.getServerCount())
+            thisTotalServerCount = thisTotalServerCount + \
+                                   thisServerGroup.getServerCount()
+            thisServerGroupStr = thisServerGroupStr + '%10s (%2d) ' % \
+                                 (thisServerGroup.getName(), thisServerGroup.getServerCount())
 
             if (thisColumnCount == 4):
                 thisColumnCount = 0

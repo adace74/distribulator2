@@ -98,7 +98,7 @@ class CommandLine:
                 print("INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying...")
                 print
 
-                return
+                return True
 
             except KeyboardInterrupt:
                 print
@@ -115,7 +115,7 @@ class CommandLine:
                     print("Received exit command.  Wrote history.  Dying...")
                     print
 
-                    return
+                    return True
                 #
                 # Step 2 - Check for Unix "pass through" commands.
                 #

@@ -36,6 +36,7 @@ import sys
 import syslog
 
 # Custom modules
+import engine.BatchRunner
 import engine.CommandLine
 import engine.ConfigLoader
 import engine.data.GlobalConfig
@@ -73,7 +74,6 @@ The available options are:
 
     -b / --batch=filename
     Enables batch mode processing, requires a readable input file.
-    Not yet implemented.
     OPTIONAL
 
     -d / --directory=start_dir
@@ -140,10 +140,15 @@ The available options are:
 
         # Load up our GlobalConfig object.
         thisGlobalConfig = engine.data.GlobalConfig.GlobalConfig()
+        thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
+        thisGlobalConfig.setSysLogger(thisLogger)
+
         if ( len(thisBatchFile) > 0 ):
             thisGlobalConfig.setBatchMode(True)
+            thisGlobalConfig.setBatchFile(thisBatchFile)
         else:
             thisGlobalConfig.setBatchMode(False)
+
         thisGlobalConfig.setConfigDir(thisConfigDir)
         thisGlobalConfig.setHelpDir(thisHelpDir)
         thisGlobalConfig.setServerEnv(thisServerEnv)
@@ -152,6 +157,7 @@ The available options are:
             printTitleHeader()
             printInfoHeader(thisServerEnv, thisConfigDir)
 
+        thisBatchRunner = engine.BatchRunner.BatchRunner(thisGlobalConfig)
         thisCommLine = engine.CommandLine.CommandLine(thisGlobalConfig)
         thisLoader = engine.ConfigLoader.ConfigLoader(thisGlobalConfig)
         thisGlobalConfig = thisLoader.loadGlobalConfig(thisCommLine)
@@ -167,9 +173,6 @@ The available options are:
             thisGlobalConfig.setRealUsername( getpass.getuser() )
             thisGlobalConfig.setUsername( getpass.getuser() )
 
-        thisLogger = generic.SysLogger.SysLogger(syslog.LOG_LOCAL1)
-        thisGlobalConfig.setSysLogger(thisLogger)
-
         if (thisGlobalConfig.isBatchMode()):
             thisLogger.LogMsgInfo("INFO: Starting The Distribulator v0.50 -- batch mode.")
         else:
@@ -181,26 +184,38 @@ The available options are:
                               thisGlobalConfig.getUsername())
 
     except (EOFError, KeyboardInterrupt):
-            print "ERROR:  Caught CTRL-C / CTRL-D keystroke.  Exiting..."
-            sys.ext(1)
+            thisError = "ERROR:Caught CTRL-C / CTRL-D keystroke.  Exiting..."
+            print(thisError)
+            thisLogger.LogMsgError(thisError)
+            sys.exit(1)
 
     # Try to chdir() to thisStartDir if possible.
     try:
         os.chdir(thisStartDir)
 
     except OSError, (errno, strerror):
-        print("ERROR: [Errno %s] %s: %s" % (errno, strerror, thisTokens[1]))
+        thisError = "ERROR:[Errno %s] %s: %s" % (errno, strerror, thisTokens[1])
+        print(thisError)
+        thisLogger.LogMsgError(thisError)
 
     # The main readline loop.
-    if (thisGlobalConfig.isBatchMode()):
-        print("ERROR: Batch mode not yet implemented!")
-        sys.exit(1)
+    if ( thisGlobalConfig.isBatchMode() ):
+        if ( thisBatchRunner.invoke() ):
+            thisLogger.LogMsgInfo(
+                "INFO: Batch command set completed successfully.  Shutting down.")
+            sys.exit(0)
+        else:
+            thisLogger.LogMsgError(
+                "ERROR:Shutting down as a result of a previous error.")
+            sys.exit(1)
     else:
-        thisCommLine.invoke()
-
-    # Once it returns, we're done!
-    thisLogger.LogMsgInfo("INFO: User requested exit, shutting down.")
-    sys.exit(0)
+        if ( thisCommLine.invoke() ):
+            thisLogger.LogMsgInfo("INFO: Console user requested exit.  Shutting down.")
+            sys.exit(0)
+        else:
+            thisLogger.LogMsgError(
+                "ERROR:Shutting down as a result of a previous error.")
+            sys.exit(1)
 
 ######################################################################
 #

@@ -22,11 +22,20 @@ class GlobalConfig:
     # Global settings.
     #
     # Which mode we're operating in.
+    #
     def isBatchMode(self):
         return self._isbatchflag
 
-    def setBatchMode(self, PassedBatchFlag):
-        self._isbatchflag = PassedBatchFlag
+    def setBatchMode(self, PassedBatchMode):
+        self._isbatchflag = PassedBatchMode
+    #
+    # Which mode we're operating in.
+    #
+    def getBatchFile(self):
+        return self._batchFile
+
+    def setBatchFile(self, PassedBatchFile):
+        self._batchFile = PassedBatchFile
     #
     # Our configuration directory path.
     #
