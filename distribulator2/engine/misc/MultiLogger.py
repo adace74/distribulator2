@@ -36,7 +36,7 @@ class MultiLogger:
             self._globalConfig.getSeperator() )
 
         if (self._globalConfig.isQuietMode() == False):
-            print(mySeperator)
+            print( self._globalConfig.getSeperator() )
 
     def LogMsgInfo(self, PassedMessage):
         """Logs and possibly prints a given message with the syslog level INFO."""
