@@ -52,16 +52,13 @@ class HostPinger:
 
         # Add a debug mode someday!
         except timeoutsocket.Timeout:
-            myError = "ERROR: Timed out connecting to server '" + PassedHostname + "'."
+            myError = "ERROR: Socket timed out while connecting to server."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
-        except socket.error, myException:
-            myError = "ERROR: Socket error found while connecting to server '" + \
-                          PassedHostname + ":%d'." % self._globalConfig.getPingPort()
+        except socket.error, (errno, strerror):
+            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedHostname)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
-            #myError = "ERROR: %s" % myException
-            #self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 2
 
 #######################################################################

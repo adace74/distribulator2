@@ -159,7 +159,7 @@ class ConsoleMode(Mode.Mode):
                     del myInternalCommand
                     del myDispatcher
 
-                except InterruptException:
+                except KeyboardInterrupt:
                     myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                     self.handleInfo(myInfo)
 
