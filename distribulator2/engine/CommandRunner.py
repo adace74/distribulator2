@@ -133,8 +133,9 @@ class CommandRunner:
             self.handleError(thisError)
             return False
 
-        # copy /tmp/blah.txt /tmp/
         if ( self._commString.find(':') == -1 ):
+            # copy /tmp/blah.txt /tmp/
+            # TODO:  Check remote path for ending slash!
             try:
                 if ( stat.S_ISREG(os.stat(
                     self._commTokens[1])[stat.ST_MODE]) == False):
@@ -149,8 +150,9 @@ class CommandRunner:
                 return False
 
             thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+            thisRemotePath = self._commTokens[2]
             print("Copy local file '" + self._commTokens[1] +
-            "' to remote directory '" + self._commTokens[2] + "'")
+            "' to remote directory '" + thisRemotePath + "'")
             print("on server group " + thisGroupStr + "?")
 
             if (self.doAreYouSure() == False):
@@ -159,10 +161,45 @@ class CommandRunner:
                 return False
             else:
                 thisServerGroupList.append( thisGroupStr )
-        else:
-            thisError = "ERROR: Syntax not yet implemented!"
-            self.handleError(thisError)
-            return False
+        elif (self._commTokens[1].find(':') == -1):
+            # copy /tmp/blah.txt www:/tmp/
+            # TODO:  Check remote path for ending slash!
+            try:
+                if ( stat.S_ISREG(os.stat(
+                    self._commTokens[1])[stat.ST_MODE]) == False):
+                    thisError = "ERROR: File '" + self._commTokens[1] + \
+                                "' is accessible, but not regular."
+                    self.handleError(thisError)
+                    return False
+            except OSError, (errno, strerror):
+                thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+                                                         self._commTokens[1])
+                self.handleError(thisError)
+                return False
+
+            thisGroupStr = self._commTokens[2]
+            thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
+            thisRemotePath = self._commTokens[2]
+            thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
+            thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+
+            # Validate.
+            if (thisServerGroup == False):
+                thisError = "ERROR: No matching server group '" + \
+                            thisGroupStr + "'."
+                self.handleError(thisError)
+                return False
+
+            print("Copy local file '" + self._commTokens[1] +
+            "' to remote directory '" + thisRemotePath + "'")
+            print("on server group " + thisGroupStr + "?")
+
+            if (self.doAreYouSure() == False):
+                thisInfo = "INFO:  Aborting command."
+                self.handleInfo(thisInfo)
+                return False
+            else:
+                thisServerGroupList.append( thisGroupStr.strip() )
 
         # Just Do It.
         for thisGroupStr in thisServerGroupList:
@@ -181,7 +218,7 @@ class CommandRunner:
                             self._commTokens[1] + " " + \
                             thisServer.getUsername() + "@" + \
                             thisServer.getName() + ":" + \
-                            self._commTokens[2] )
+                            thisRemotePath )
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
                             thisExternalCommand.runAtomic()
