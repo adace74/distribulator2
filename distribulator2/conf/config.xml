@@ -26,11 +26,12 @@ $Id$
         <name>at</name>
         <servergroup>
             <name>dc</name>
-            <username>orbitz</username>
+            <username>dc</username>
             <server>bels01at.eg.orbitz.com</server>
             <server>beoneg01at.eg.orbitz.com</server>
             <server>dcls01at.eg.orbitz.com</server>
             <server>dconeg01at.eg.orbitz.com</server>
+            <server>beoneg00at.eg.orbitz.com</server>
         </servergroup>
         <servergroup>
             <name>wlx</name>
@@ -59,12 +60,12 @@ $Id$
         </servergroup>
         <servergroup>
             <name>aqua_www</name>
-            <username>orbitz</username>
+            <username>weblogic</username>
             <server>aquagw01st.eg.orbitz.com</server>
         </servergroup>
         <servergroup>
             <name>burst</name>
-            <username>orbitz</username>
+            <username>hburst</username>
             <server>burst01st.eg.orbitz.com</server>
             <server>burst02st.eg.orbitz.com</server>
             <server>honeg01st.eg.orbitz.com</server>
@@ -72,7 +73,7 @@ $Id$
         </servergroup>
         <servergroup>
             <name>dc</name>
-            <username>orbitz</username>
+            <username>dc</username>
             <server>bels01st.eg.orbitz.com</server>
             <server>bels02st.eg.orbitz.com</server>
             <server>beoneg01st.eg.orbitz.com</server>
@@ -122,7 +123,7 @@ $Id$
         </servergroup>
         <servergroup>
             <name>www</name>
-            <username>orbitz</username>
+            <username>weblogic</username>
             <server>www01st.eg.orbitz.com</server>
             <server>www02st.eg.orbitz.com</server>
             <server>www03st.eg.orbitz.com</server>
