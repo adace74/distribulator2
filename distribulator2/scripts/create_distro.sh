@@ -47,7 +47,8 @@ fi
 # Step 4: Create the distribution tar/gzip archive.
 #
 cd $CVSWORK_DIR
-$TAR_BIN --create --gzip --exclude CVS* --file $CVSWORK_DIR/archive/$PROJECT_NAME-$1.tar.gz \
+$TAR_BIN --create --gzip --exclude CVS* --exclude .cvsignore \
+	--file $CVSWORK_DIR/archive/$PROJECT_NAME-$1.tar.gz \
 	$PROJECT_DIR
 #
 #
