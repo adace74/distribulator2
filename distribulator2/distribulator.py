@@ -285,7 +285,7 @@ The available options are:
         mySeperator = '----------------------------------------------------------------------'
         myLogger.info(mySeperator)
         if (myVerboseMode):
-            print(mySeperator)
+            print("INFO: " + mySeperator)
 
         if (myGlobalConfig.isBatchMode()):
             myInfo = __appversion__ + " (batch mode) START"
@@ -320,7 +320,7 @@ The available options are:
 
         myLogger.info(mySeperator)
         if (myVerboseMode):
-            print(mySeperator)
+            print("INFO: " + mySeperator)
     # List mode.
     elif ( myGlobalConfig.isListMode() ):
         myListModeer.invoke()
