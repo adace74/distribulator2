@@ -220,6 +220,7 @@ Change List For v0.7.5 (Language: Python / Status: In Progress)
 * Cleanup: Changed readline code to filename-only tab completion.
 * Cleanup: Disabled "copy" command local filesystem check so regular expressions can be used.
 * Cleanup: Converted logging from ever-so-slow syslog to the new logging module.
+* Cleanup: Added ping checks to ListMode.  All servers now returned are guaranteed up.
 * Ability to set and show a global delay for sleep()ing between remote commands.
   Basically this allows one to "slow things down" if desired.
 
