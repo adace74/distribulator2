@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+# (c) Copyright 2004 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################

@@ -31,16 +31,19 @@ The Distribulator is a longer-term project whose goal is to provide
 "the rest of us" not running advanced cluster-oriented OS-level software --
 but still need to maintain a server cluster.
 
-Currently, the Distribulator has two modes:
+Currently, the Distribulator has three modes:
+
+* Batch: A batch mode suitable to allow one set of personnel create a batch file
+  ala shell-script that can be tested in one environment, then handed off
+  to a seperate group for implementation in another environment.
 
 * Console: A console interface designed to "wrap" around SSH,
   but will also allow local commands to be run.  The idea here is to provide
   people who have to do "fire fights" in a production environment with the best
   common toolset available.
 
-* Batch: A batch mode suitable to allow one set of personnel create a batch file
-  ala shell-script that can be tested in one environment, then handed off
-  to a seperate group for implementation in another environment. 
+* List: A list mode suitable to retrieving set lists of servers or server groups,
+  quite useful for shell or Perl integration.
 
 This program shell also attempts to impose some sanity-oriented restrictions,
 such as environment isolation, in the hopes of avoiding problems that result

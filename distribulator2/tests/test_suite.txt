@@ -10,7 +10,20 @@
 #
 ######################################################################
 
-Command(s): copy
+Command: External Unix commands
+
+Test Case:       ls -l
+Expected Result: Runs "ls -l" as you'd expect.
+
+Test Case:       df -k
+Expected Result: Runs "df -k" as you'd expect.
+
+Test Case:       top
+Expected Result: Runs "top" as you'd expect.
+
+######################################################################
+
+Command: copy
 
 Test Case:       copy
 Expected Result: Error.
@@ -46,7 +59,17 @@ Expected Result: Copies local file /tmp/test.out out to servers matching
 
 ######################################################################
 
-Command(s): help
+Command: exit
+
+Test Case:       exit
+Expected Result: Exits program cleanly.
+
+Test Case:       CTRL-D
+Expected Result: Exits program cleanly.
+
+######################################################################
+
+Command: help
 
 Test Case:       help
 Expected Result: Main Help Page.
@@ -59,7 +82,7 @@ Expected Result: Detailed help page.
 
 ######################################################################
 
-Command(s): login
+Command: login
 
 Test Case:       login
 Expected Result: Error.
@@ -75,7 +98,7 @@ Expected Result: SSH Connection to a server matching 'www01'.
 
 ######################################################################
 
-Command(s): run
+Command: run
 
 Test Case:       run
 Expected Result: Error.
@@ -113,7 +136,7 @@ Expected Result: Runs the "uptime" command on servers matching 'www01'
 
 ######################################################################
 
-Command(s): server-group and server-list
+Commands: server-group and server-list
 
 Test Case:       server-group
 Expected Result: Listing of available server groups.
