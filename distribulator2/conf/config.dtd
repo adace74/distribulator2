@@ -1,0 +1,42 @@
+<!--
+   *
+   * $Id$
+   *
+   * Name: config.dtd
+   *
+   * Description:  XML configuration schema definition.
+   *
+   * (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+   * Please see the accompanying LICENSE file for license information.
+   *
+  -->
+
+<?xml version="1.0" encoding="us-ascii"?>
+
+<!-- The "config" tag. -->
+<!ELEMENT config (binary+, logging?, environment+)>
+
+<!-- The "binary" tag. -->
+<!ELEMENT binary>
+<!ATTLIST binary
+    name CDATA #IMPLIED
+    value CDATA #IMPLIED>
+
+<!-- The "logging" tag. -->
+<!ELEMENT logging>
+<!ATTLIST logging
+    facility CDATA #IMPLIED>
+
+<!-- The "environment" tag. -->
+<!ELEMENT environment (servergroup+)>
+<!ATTLIST environment
+    name CDATA #IMPLIED>
+
+<!-- The "servergroup" tag. -->
+<!ELEMENT servergroup (server+)>
+<!ATTLIST servergroup
+    name CDATA #IMPLIED
+    username CDATA #IMPLIED>
+
+<!-- The "server" tag. -->
+<!ELEMENT server #PCDATA>
