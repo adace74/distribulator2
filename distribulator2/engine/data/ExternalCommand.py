@@ -65,7 +65,7 @@ class ExternalCommand:
         print("EXEC: " + self._command)
 
         myStatus = os.system(self._command)
-        print( self._globalConfig.getSeperator() )
+        print( "INFO: " + self._globalConfig.getSeperator() )
 
         if (myStatus != 0):
             print("Local shell returned error state.")
@@ -102,7 +102,7 @@ class ExternalCommand:
             self._globalConfig.setExitSuccess(False)
 
         if (self._globalConfig.isQuietMode() == False):
-            print( self._globalConfig.getSeperator() )
+            print( "INFO: " + self._globalConfig.getSeperator() )
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
