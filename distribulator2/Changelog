@@ -143,17 +143,17 @@ Change List For v0.61 (Language Python / Status: Shipped)
 * Finally got around to parameterizing the application version info.
 * Added source-level documentation to the codebase(pydoc compatible).
 * Various clean-up across the codebase.
-- Addition of the ability to specify a config file via the --config
+* Addition of the ability to specify a config file via the --config
   flag.
-- Addition of the ability to use the local username remotely,
-  when there are no User tags found in config.xml.
+* Addition of the ability to use the local username remotely,
+  when there are no "username" attributes found in config.xml.
 * SourceForge bug #776079 fixed.
 * SourceForge bug #787445 fixed.
 * SourceForge bug #776080 fixed.
 * SourceForge bug #774953 fixed.
 * Both batch and console mode have been tested pretty extensively.
 
-Change List For v0.62 (Language Python / Status: In Progress)     
+Change List For v0.62 (Language Python / Status: On Hold)     
 ---------------------------------------------------------
 - Replace the HostPinger's functionality with a real timeout-capable socket test.
 
