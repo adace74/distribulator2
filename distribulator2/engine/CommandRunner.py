@@ -87,7 +87,9 @@ class CommandRunner:
 
     def doAreYouSure(self):
         try:
-            thisInput = raw_input("Yes / No> ")
+            sys.stdout.write("Yes / No> ")
+            thisInput = sys.stdin.readline()
+            thisInput = thisInput.strip()
 
         except (EOFError, KeyboardInterrupt):
             thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke."
