@@ -184,7 +184,23 @@ class GlobalConfig:
         self._passThruFile = PassedPassThruFile
 
 ######################################################################
-# Should we be quiet?
+# Our print-username-or-not boolean flag.
+######################################################################
+
+    def isPrintUsername(self):
+        """This is a typical accessor method."""
+
+        return self._isPrintUsername
+
+######################################################################
+
+    def setPrintUsername(self, PassedPrintUsername):
+        """This is a typical accessor method."""
+
+        self._isPrintUsername = PassedPrintUsername
+
+######################################################################
+# Our quiet-or-not boolean flag.
 ######################################################################
 
     def isQuietMode(self):

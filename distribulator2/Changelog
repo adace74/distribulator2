@@ -224,6 +224,8 @@ Change List For v0.7.5 (Language: Python / Status: In Progress)
   All parameters such as filename, level, date format, and log format are now configurable.
 * Ability to set and show a global delay for sleep()ing between remote commands.
   Basically this allows one to "slow things down" if desired.
+* Ability to have two permutations of list mode.
+  The first returns only hostnames, the second returns username@hostname pairs.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------

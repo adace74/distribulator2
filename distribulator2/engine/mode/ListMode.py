@@ -102,9 +102,12 @@ class ListMode(Mode.Mode):
                 myServer = self._globalConfig.getServerByName(myNameStr)
 
                 if (myPinger.ping(myNameStr) == 0):
-                    myOutput = myOutput + myServer.getUsername() + "@" + \
-                        myServer.getName() + " "
+                    if ( self._globalConfig.isPrintUsername() ):
+                        myOutput = myOutput + myServer.getUsername() + "@"
+
+                    myOutput = myOutput + myServer.getName() + " "
         else:
+            #
             # If we found server group names, then run with that.
             #
             for myGroupStr in myServerGroupList:
@@ -115,8 +118,10 @@ class ListMode(Mode.Mode):
 
                 for myServer in myServerList:
                     if (myPinger.ping( myServer.getName() ) == 0):
-                        myOutput = myOutput + myServer.getUsername() + "@" + \
-                            myServer.getName() + " "
+                        if ( self._globalConfig.isPrintUsername() ):
+                            myOutput = myOutput + myServer.getUsername() + "@"
+
+                        myOutput = myOutput + myServer.getName() + " "
 
         myOutput = myOutput.strip()
         print myOutput

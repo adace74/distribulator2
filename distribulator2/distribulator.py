@@ -78,6 +78,7 @@ def main(argv):
                     'env=',
                     'help',
                     'list=',
+                    'list2=',
                     'quiet',
                     'var1=',
                     'var2=',
@@ -113,6 +114,18 @@ The available options are:
     OPTIONAL
 
     --list=[host1, host2, ...] | [servergroup1, servergroup2, ...]
+    Enables serer list mode, requires a valid set of hosts or server groups.
+    This version pings all servers, then returns a space-delimited list of hostnames.
+    One can then iterate over this list from within a perl, shell or other script.
+    OPTIONAL
+
+    --list2=[host1, host2, ...] | [servergroup1, servergroup2, ...]
+    Enables serer list mode, requires a valid set of hosts or server groups.
+    This version pings all servers, then returns a space-delimited list of
+    username@hostname pairs(if username is applicable).
+    One can then iterate over this list from within a perl, shell or other script. 
+    OPTIONAL
+
     Enables serer "listing", outputs all given username@hostname pairs
     for a given set of hosts or server groups.
     OPTIONAL
@@ -136,6 +149,7 @@ The available options are:
     myBatchFile = 'None'
     myConfigFile = ''
     myInstallDir = '/tmp'
+    myPrintUsername = False
     myQuietMode = False
     myRequestedList = ''
     myServerEnv = 'demo'
@@ -168,6 +182,9 @@ The available options are:
                     print(usage)
                     sys.exit(False)
                 elif (opt[0] == '--list'):
+                    myRequestedList = opt[1]
+                elif (opt[0] == '--list2'):
+                    myPrintUsername = True
                     myRequestedList = opt[1]
                 elif (opt[0] == '--quiet'):
                     myQuietMode = True
@@ -213,6 +230,7 @@ The available options are:
 
         if ( len(myRequestedList) > 0 ):
             myGlobalConfig.setListMode(True)
+            myGlobalConfig.setPrintUsername(myPrintUsername)
             myGlobalConfig.setRequestedList(myRequestedList)
         else:
             myGlobalConfig.setListMode(False)
