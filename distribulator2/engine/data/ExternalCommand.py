@@ -46,57 +46,44 @@ class ExternalCommand:
         self._command = PassedCommand
 
 ######################################################################
-# Only to be used in console mode.
+# Go go go!!!
 ######################################################################
 
-    def runConsole(self, isLoggable=False):
-        """This method is responsible for running a given command in console mode."""
+    def run(self, PassedIsInteractive=False):
+        """This method is responsible for running a given command in various ways."""
 
-        if ( self._globalConfig.isBatchMode() ):
+        myStatus = 0
+
+        # A little validation never hurt anyone...
+        if ( self._globalConfig.isBatchMode() & PassedIsInteractive ):
             self._globalConfig.getMultiLogger().LogMsgError(
-                "ExternalCommand.run() called in batch mode." )
+                "ExternalCommand.run(True) called in batch mode." )
             return False
-
-        # This could be a pass-through command, no need to log that.
-        if (isLoggable):
-            self._globalConfig.getMultiLogger().LogMsgDebug(
-                "EXEC: " + self._command )
-
-        myStatus = os.system(self._command)
-        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
-
-        if (myStatus != 0):
-            self._globalConfig.getMultiLogger().LogMsgWarn("Local shell returned error state.")
-
-        # If we have a global deley set, wait for that long.
-        # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's
-        time.sleep( self._globalConfig.getDelaySecs() )
-
-        return myStatus
-
-######################################################################
-# Only to be used for batch mode.
-######################################################################
-
-    def runBatch(self):
-        """This method is responsible for running a given command in batch mode."""
 
         self._globalConfig.getMultiLogger().LogMsgDebug(
             "EXEC: " + self._command )
 
-        myStatus, myOutput = commands.getstatusoutput(self._command)
+        #
+        # Here we branch pased on the PassedIsInteractive flag.
+        # If true, this indicates we're running a non-interactive command.
+        # If false, this indicates we're running a local pass-through or remote interactive command.
+        #
+        if (PassedIsInteractive):
+            myStatus = os.system(self._command)
+        else:
+            myStatus, myOutput = commands.getstatusoutput(self._command)
 
-        for myLine in myOutput.split('\n'):
-            self._globalConfig.getMultiLogger().LogMsgInfo(
-                "OUT:  " + myLine )
+            for myLine in myOutput.split('\n'):
+                self._globalConfig.getMultiLogger().LogMsgInfo(
+                    "OUT:  " + myLine )
 
-        if (myStatus != 0):
-            myWarn = "Local shell returned error state."
-            self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
-
-            self._globalConfig.setExitSuccess(False)
+            if (myStatus != 0):
+                self._globalConfig.setExitSuccess(False)
 
         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
+
+        if (myStatus != 0):
+            self._globalConfig.getMultiLogger().LogMsgWarn("Local shell returned error state.")
 
         # If we have a global deley set, wait for that long.
         # Otherwise, sleep just a -little- bit to allow for catching CTRL-C's

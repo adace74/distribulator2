@@ -265,9 +265,12 @@ class RunCommand(Command.Command):
 
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
-                            myExternalCommand.runBatch()
+                            myExternalCommand.run()
+                        elif ( len(myFlagStr) > 0 ):
+                            myExternalCommand.run(True)
                         else:
-                            myExternalCommand.runConsole(True)
+                            myExternalCommand.run()
+
                         myCommandCount = myCommandCount + 1
 
                         if (myIsSingle):
@@ -331,9 +334,12 @@ class RunCommand(Command.Command):
 
                             # Run It.
                             if ( self._globalConfig.isBatchMode() ):
-                                myExternalCommand.runBatch()
+                                myExternalCommand.run()
+                            elif ( len(myFlagStr) > 0 ):
+                                myExternalCommand.run(True)
                             else:
-                                myExternalCommand.runConsole(True)
+                                myExternalCommand.run()
+
                             myCommandCount = myCommandCount + 1
 
                             if (myIsSingle):

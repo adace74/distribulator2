@@ -202,7 +202,7 @@ class BatchMode(Mode.Mode):
                         myExternalCommand.setCommand(myLine)
                         # Wrap it just in case.
                         try:
-                            myExternalCommand.runBatch()
+                            myExternalCommand.run()
 
                         except KeyboardInterrupt:
                             myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."

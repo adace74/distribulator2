@@ -78,7 +78,7 @@ class LoginCommand(Command.Command):
                 " -l " + \
                 myServer.getUsername() + " " + myServer.getName() )
         try:
-            myExternalCommand.runConsole(True)
+            myExternalCommand.run(True)
         except (EOFError, KeyboardInterrupt):
             myInfo = "Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)

@@ -114,7 +114,7 @@ class ConsoleMode(Mode.Mode):
                         myExternalCommand.setCommand(myInput)
                         # Wrap it just in case.
                         try:
-                            myExternalCommand.runConsole()
+                            myExternalCommand.run(True)
                         except KeyboardInterrupt:
                             myInfo = "Caught CTRL-C keystroke.  Returning to command prompt..."
                             self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
