@@ -22,23 +22,32 @@
 # ServerGroup object -- contains many Server objects
 ######################################################################
 
-# Import modules we'll need.
+# Version tag
+__version__ = '$Revision$'[11:-2]
+
+# Import modules
 try:
+    # Standard modules
     import getopt
     import os
     import os.path
     import socket
     import sys
 
+    # Custom modules
+    import engine.CommandLine
+
 except ImportError:
     print "An error occured while loading Python modules, exiting..."
-    exit(1)
+    sys.exit(1)
+
+# Handy constants.
+false = 0
+true = 1
 
 # Define global variables(how global are they?)
 install_dir = os.getcwd()
 install_conf = os.path.join(os.getcwd(), 'conf')
-
-server_shell = 'ssh'
 
 # Display a nice pretty header.
 def title_header():
@@ -91,6 +100,10 @@ The available options are:
 
     title_header()
 
+    server_env = 'sample'
+    server_shell = 'ssh'
+    start_dir = '/tmp/'
+
     try:
         if len(argv) < 2:
             print "ERROR: I need to know which environment I am to use!"
@@ -109,13 +122,6 @@ The available options are:
                     server_env = opt[1]
                 elif (opt[0] == '-s') or (opt[0] == '--shell'):
                     server_shell = opt[1]
-
-            # Verify that we got what we need
-            if not server_env:
-                print "ERROR: I need to know which environment I am to use!"
-                print
-                raise "CommandLineError"
-
         else:
             print "ERROR: getopt failure!  This shouldn't even happen!"
             print
@@ -126,6 +132,9 @@ The available options are:
         sys.exit(1)
 
     info_header(server_env, start_dir)
+
+    engine.CommandLine.initHistory()
+    engine.CommandLine.processInput()
 #
 # If called from the command line, invoke thyself!
 #
