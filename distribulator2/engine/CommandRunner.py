@@ -60,7 +60,7 @@ class CommandRunner:
             thisInput = raw_input("Yes / No> ")
 
         except (EOFError, KeyboardInterrupt):
-            print "INFO:  Caught CTRL-C / CTRL-D keystroke."
+            print("INFO:  Caught CTRL-C / CTRL-D keystroke.")
             return False
 
         if (thisInput.lower() == 'yes'):
@@ -154,9 +154,11 @@ class CommandRunner:
                             "ERROR: Server '" + thisServer.getName() + \
                             "' appears to be down.  Continuing.." )
 
-            except (EOFError, KeyboardInterrupt):
-                    print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
-                    return False
+            except EOFError:
+                noop
+            except KeyboardInterrupt:
+                print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
+                return False
 
         return True
 
@@ -173,8 +175,8 @@ class CommandRunner:
         thisFilePrinter = generic.FilePrinter.FilePrinter()
 
         if (thisFilePrinter.printFile(thisFileName) == False):
-            print "ERROR: Cannot find help for specified command '" + \
-            self._commTokens[1] + "'."
+            print("ERROR: Cannot find help for specified command '" + \
+            self._commTokens[1] + "'.")
 
 ######################################################################
             
@@ -290,8 +292,8 @@ class CommandRunner:
                 thisDisplayStr = thisDisplayStr + thisGroupStr + ','
             thisDisplayStr = thisDisplayStr.rstrip(',')
 
-            print "Run command " + thisBodyStr + " on server group(s) " + \
-                  thisDisplayStr + "?"
+            print("Run command " + thisBodyStr + " on server group(s) " + \
+                  thisDisplayStr + "?")
             if (self.doAreYouSure() == False):
                 print("INFO:  Aborting command.")
                 return False
@@ -325,8 +327,10 @@ class CommandRunner:
                             "ERROR: Server '" + thisServer.getName() + \
                             "' appears to be down.  Continuing.." )
 
-            except (EOFError, KeyboardInterrupt):
-                print "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+            except EOFError:
+                noop
+            except KeyboardInterrupt:
+                print("INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt...")
 
         return True
 
