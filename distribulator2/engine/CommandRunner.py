@@ -132,32 +132,68 @@ class CommandRunner:
 
     def doCopy(self):
         thisServerGroupList = []
+        thisServerNameList = []
+        thisCopyTarget = '';
 
-        # Sanity check.
-        if (len(self._commTokens) != 3):
+        #
+        # Step 1: Common validation and variable-setting.
+        #
+        # Validate token count.
+        if (len(self._commTokens) < 3):
             thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
             self.handleError(thisError)
             return False
-
-        if ( self._commString.find(':') == -1 ):
-            # copy /tmp/blah.txt /tmp/
-            # Validate local file.
-            try:
-                if ( stat.S_ISREG(os.stat(
-                    self._commTokens[1])[stat.ST_MODE]) == False):
-                    thisError = "ERROR: File '" + self._commTokens[1] + \
-                                "' is accessible, but not regular."
-                    self.handleError(thisError)
-                    return False
-            except OSError, (errno, strerror):
-                thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
-                                                         self._commTokens[1])
-                self.handleError(thisError)
-                return False
-
-            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
+        elif (self._commTokens[2].find('/') == -1):
+            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self.handleError(thisError)
+            return False            
+        else:
             thisLocalPath = self._commTokens[1]
             thisRemotePath = self._commTokens[2]
+
+        # Validate local file.
+        try:
+            if ( stat.S_ISREG(os.stat(
+                thisLocalPath)[stat.ST_MODE]) == False):
+                thisError = "ERROR: File '" + thisLocalPath + \
+                            "' is accessible, but not regular."
+                self.handleError(thisError)
+                return False
+        except OSError, (errno, strerror):
+            thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
+                                                      thisLocalPath)
+            self.handleError(thisError)
+            return False
+
+        #
+        # Step 2: Try to determine what the target of the command is,
+        #         and set a state-tracking variable accordingly.
+        # 
+        if (self._commString.find(':') == -1):
+            # copy /tmp/blah /tmp/
+            thisCopyTarget = 'current_server_group'
+        elif (self._commTokens[1].find(':') > 0):
+            # copy www:/tmp/blah /tmp/
+            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+            self.handleError(thisError)
+            return False
+        elif (self._commString.find(',') == -1):
+            # copy /tmp/blah.txt www:/tmp/
+            thisCopyTarget = 'single_server_group'
+        else:
+            # copy /tmp/blah.txt app,www:/tmp/
+            thisCopyTarget = 'multiple_server_group'
+
+        #
+        # Step 3: Assemble two lists based on command syntax.
+        #
+        # thisServerNameList will contain a list of server names.
+        # -or-
+        # thisServerGroupList will contain a list of server groups.
+        #
+        if (thisCopyTarget == 'current_server_group'):
+            # copy /tmp/blah /tmp/
+            thisGroupStr = self._globalConfig.getCurrentServerGroup().getName()
 
             # Validate remote path.
             if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
@@ -166,38 +202,14 @@ class CommandRunner:
                 self.handleError(thisError)
                 return False
 
-            print("Copy local file '" + thisLocalPath + \
-            "' to remote directory '" + thisRemotePath + "'")
-            print("on server group " + thisGroupStr + "?")
+            thisServerGroupList.append(thisGroupStr)
 
-            if (self.doAreYouSure() == False):
-                thisInfo = "INFO:  Aborting command."
-                self.handleInfo(thisInfo)
-                return False
-            else:
-                thisServerGroupList.append( thisGroupStr )
-        elif (self._commTokens[1].find(':') == -1):
-            # copy /tmp/blah.txt www:/tmp/
-            # Validate local file.
-            try:
-                if ( stat.S_ISREG(os.stat(
-                    self._commTokens[1])[stat.ST_MODE]) == False):
-                    thisError = "ERROR: File '" + self._commTokens[1] + \
-                                "' is accessible, but not regular."
-                    self.handleError(thisError)
-                    return False
-            except OSError, (errno, strerror):
-                thisError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, \
-                                                         self._commTokens[1])
-                self.handleError(thisError)
-                return False
-
+        elif (thisCopyTarget == 'single_server_group'):
+            # copy /tmp/blah www:/tmp/
             thisGroupStr = self._commTokens[2]
             thisGroupStr = thisGroupStr[:thisGroupStr.find(':')]
-            thisLocalPath = self._commTokens[1]
             thisRemotePath = self._commTokens[2]
             thisRemotePath = thisRemotePath[thisRemotePath.find(':') + 1:]
-            thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
 
             # Validate remote path.
             if (thisRemotePath[len(thisRemotePath) - 1] != '/'):
@@ -206,43 +218,89 @@ class CommandRunner:
                 self.handleError(thisError)
                 return False
 
-            # Validate server group.
-            if (thisServerGroup == False):
-                thisError = "ERROR: No matching server group '" + \
-                            thisGroupStr + "'."
-                self.handleError(thisError)
-                return False
+            # Check for server name match.
+            thisServer = self._globalConfig.getServerByName(thisGroupStr)
 
-            print("Copy local file '" + thisLocalPath + \
-            "' to remote directory '" + thisRemotePath + "'")
-            print("on server group " + thisGroupStr + "?")
-
-            if (self.doAreYouSure() == False):
-                thisInfo = "INFO:  Aborting command."
-                self.handleInfo(thisInfo)
-                return False
+            if (thisServer):
+                thisServerNameList.append(thisServer.getName())
             else:
-                thisServerGroupList.append( thisGroupStr.strip() )
-        else:
-            thisError = "ERROR: Command Syntax Error.  Try 'help copy' for more information."
+                # Check for server group match.
+                thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+                # Validate.
+                if (thisServerGroup == False):
+                    thisError = "ERROR: No matching server name or group '" + \
+                                thisGroupStr + "'."
+                    self.handleError(thisError)
+                    return False
+                else:
+                    thisServerGroupList.append(thisGroupStr)
+        elif (thisCopyTarget == 'multiple_server_group'):
+            print("ERROR: This feature not implemented...today.")
+            return False
+
+        #
+        # Step 4: Make sure noone's trying to mix
+        # server hostnames and server group names together.
+        #
+        if ( (len(thisServerNameList) > 0) & (len(thisServerGroupList) > 0) ):
+            thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
             self.handleError(thisError)
             return False
 
-        # Run the expanded shell command(s).
-        for thisGroupStr in thisServerGroupList:
-            thisServerGroup = self._globalConfig.getServerGroupByName(
-                thisGroupStr)
+        #
+        # Step 5: Must make sure...are you sure you're sure?
+        #
+        if (self._globalConfig.isBatchMode() == False):
+            thisDisplayStr = ''
 
+            if ( len(thisServerNameList) > 0):
+                for thisNameStr in thisServerNameList:
+                    thisDisplayStr = thisDisplayStr + thisNameStr + ','
+
+                thisDisplayStr = thisDisplayStr.rstrip(',')
+
+                # Are you sure?
+                print("Copy local file '" + thisLocalPath + \
+                      "' to remote directory '" + thisRemotePath + "'")
+                print("on server(s) " + thisDisplayStr + "?")
+
+                if (self.doAreYouSure() == False):
+                    thisInfo = "INFO:  Aborting command."
+                    self.handleInfo(thisInfo)
+                    return False
+            else:
+                for thisGroupStr in thisServerGroupList:
+                    thisDisplayStr = thisDisplayStr + thisGroupStr + ','
+
+                thisDisplayStr = thisDisplayStr.rstrip(',')
+
+                # Are you sure?
+                print("Copy local file '" + thisLocalPath + \
+                      "' to remote directory '" + thisRemotePath + "'")
+                print("on server group(s) " + thisDisplayStr + "?")
+
+                if (self.doAreYouSure() == False):
+                    thisInfo = "INFO:  Aborting command."
+                    self.handleInfo(thisInfo)
+                    return False
+
+        #
+        # Step 6: If we found server name(s), then run with that.
+        # Otherwise, do the same with the server group(s) given.
+        #
+        if ( len(thisServerNameList) > 0 ):
             try:
-                for thisServer in thisServerGroup.getServerList():
+                for thisNameStr in thisServerNameList:
                     thisPinger = generic.HostPinger.HostPinger(
                         self._globalConfig.getPingBinary() )
 
-                    if (thisPinger.ping(thisServer.getName()) == 0):
+                    thisServer = self._globalConfig.getServerByName(thisNameStr)
+
+                    if (thisPinger.ping(thisNameStr) == 0):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
                         thisExternalCommand.setCommand( \
                             self._globalConfig.getScpBinary() + " " + \
-                            self._commTokens[1] + " " + \
+                            thisLocalPath + " " + \
                             thisServer.getUsername() + "@" + \
                             thisServer.getName() + ":" + \
                             thisRemotePath )
@@ -251,16 +309,55 @@ class CommandRunner:
                             thisExternalCommand.runAtomic()
                         else:
                             thisExternalCommand.run(True)
-                    else:
-                        thisError = "ERROR: Server '" + thisServer.getName() + \
-                                    "' appears to be down.  Continuing..."
-                        self.handleError(thisError)
+                else:
+                    thisError = "ERROR: Server '" + \
+                                thisServer.getName() + \
+                                "' appears to be down.  Continuing..."
+                    self.handleError(thisError)
 
             except EOFError:
-                noop
+                pass
             except KeyboardInterrupt:
                 thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
+        else:
+            #
+            # Server group version of the above.
+            #
+            for thisGroupStr in thisServerGroupList:
+                thisServerGroup = self._globalConfig.getServerGroupByName(
+                    thisGroupStr)
+                thisServerList = thisServerGroup.getServerList()
+
+                try:
+                    for thisServer in thisServerList:
+                        thisPinger = generic.HostPinger.HostPinger(
+                            self._globalConfig.getPingBinary() )
+
+                        if (thisPinger.ping(thisServer.getName()) == 0):
+                            thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+                            thisExternalCommand.setCommand( \
+                            self._globalConfig.getScpBinary() + " " + \
+                            thisLocalPath + " " + \
+                            thisServer.getUsername() + "@" + \
+                            thisServer.getName() + ":" + \
+                            thisRemotePath )
+                            # Run It.
+                            if ( self._globalConfig.isBatchMode() ):
+                                thisExternalCommand.runAtomic()
+                            else:
+                                thisExternalCommand.run(True)
+                        else:
+                            thisError = "ERROR: Server '" + \
+                                        thisServer.getName() + \
+                                        "' appears to be down.  Continuing..."
+                            self.handleError(thisError)
+
+                except EOFError:
+                    pass
+                except KeyboardInterrupt:
+                    thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    self.handleInfo(thisInfo)
 
         return True
 
@@ -377,9 +474,10 @@ class CommandRunner:
             thisSuffixStr = thisSuffixStr[:thisSuffixStr.find(' reverse')]
         else:
             isReverse = False
+
         #
-        # Step 2: Try to determine what the target of the run command
-        #         truly is, and set a state-tracking variable accordingly.
+        # Step 2: Try to determine what the target of the command is
+        #         and set a state-tracking variable accordingly.
         # 
         if (len(thisSuffixStr) == 0):
             # run "uptime"
@@ -458,6 +556,7 @@ class CommandRunner:
                                 thisLoopStr + "'."
                     self.handleError(thisError)
                     return False
+
         #
         # Step 4: Make sure noone's trying to mix
         # server hostnames and server group names together.
@@ -466,6 +565,7 @@ class CommandRunner:
             thisError = "ERROR: Mixing of server name(s) and server group(s) is unsupported."
             self.handleError(thisError)
             return False
+
         #
         # Step 5: Must make sure...are you sure you're sure?
         #
@@ -481,6 +581,7 @@ class CommandRunner:
                 # Are you sure?
                 print("Run command " + thisBodyStr + " on server(s) " + \
                       thisDisplayStr + "?")
+
                 if (self.doAreYouSure() == False):
                     thisInfo = "INFO:  Aborting command."
                     self.handleInfo(thisInfo)
@@ -494,10 +595,12 @@ class CommandRunner:
                 # Are you sure?
                 print("Run command " + thisBodyStr + " on server group(s) " + \
                       thisDisplayStr + "?")
+
                 if (self.doAreYouSure() == False):
                     thisInfo = "INFO:  Aborting command."
                     self.handleInfo(thisInfo)
                     return False
+
         #
         # Step 6: If we found server name(s), then run with that.
         # Otherwise, do the same with the server group(s) given.
@@ -523,7 +626,7 @@ class CommandRunner:
                         thisExternalCommand.setCommand( \
                             self._globalConfig.getSshBinary() + thisFlagStr + \
                             " -l " + thisServer.getUsername() + " " + \
-                            thisNameStr + " " + \
+                            thisServer.getName() + " " + \
                             thisBodyStr )
                         # Run It.
                         if ( self._globalConfig.isBatchMode() ):
@@ -532,12 +635,12 @@ class CommandRunner:
                             thisExternalCommand.run(True)
                     else:
                         thisError = "ERROR: Server '" + \
-                                    thisNameStr + \
+                                    thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self.handleError(thisError)
 
             except EOFError:
-                noop
+                pass
             except KeyboardInterrupt:
                 thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                 self.handleInfo(thisInfo)
@@ -587,7 +690,7 @@ class CommandRunner:
                             self.handleError(thisError)
 
                 except EOFError:
-                    noop
+                    pass
                 except KeyboardInterrupt:
                     thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                     self.handleInfo(thisInfo)
