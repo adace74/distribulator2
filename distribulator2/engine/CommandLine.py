@@ -95,7 +95,9 @@ class CommandLine:
             except EOFError:
                 print
                 print
-                print("INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying...")
+                thisInfo = "INFO:  Caught CTRL-D keystroke.  Wrote history.  Dying..."
+                print(thisInfo)
+                self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
                 print
 
                 return True
@@ -127,7 +129,9 @@ class CommandLine:
                         try:
                             thisExternalCommand.run()
                         except KeyboardInterrupt:
-                            print "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            print(thisInfo)
+                            self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
                         del thisExternalCommand
                         thisFoundIt = True
                         break

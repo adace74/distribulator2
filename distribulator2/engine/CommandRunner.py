@@ -264,7 +264,8 @@ class CommandRunner:
         # Attempt to retokenize our command based on appropriate syntax.
         #
         if ( self._commString.find('"') == -1 ):
-            print("ERROR:Command Syntax Error.  Try 'help run' for more information.")
+            thisError = "ERROR:Command Syntax Error.  Try 'help run' for more information."
+            self.handleError(thisError)
             return False
 
         # Get substr indexes.
@@ -290,7 +291,8 @@ class CommandRunner:
         else:
             # Sanity syntax check.
             if (thisSuffixStr.find(' on ') == -1):
-                print("ERROR:Command Syntax Error.  Try 'help run' for more information.")
+                thisError = "ERROR:Command Syntax Error.  Try 'help run' for more information."
+                self.handleErorr(thisError)
                 return False
 
             thisSuffixStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
@@ -305,8 +307,9 @@ class CommandRunner:
 
                 # Validate.
                 if (thisServerGroup == False):
-                    print("ERROR:No matching server group '" + \
-                          thisGroupStr + "'.")
+                    thisError = "ERROR:No matching server group '" + \
+                                thisGroupStr + "'."
+                    self.handleError(thisError)
                     return False
                 else:
                     thisServerGroupList.append( thisGroupStr.strip() )
@@ -335,7 +338,8 @@ class CommandRunner:
             print("Run command " + thisBodyStr + " on server group(s) " + \
                   thisDisplayStr + "?")
             if (self.doAreYouSure() == False):
-                print("INFO:  Aborting command.")
+                thisInfo = "INFO:  Aborting command."
+                self.handleInfo(thisInfo)
                 return False
 
         # Just Do It.
@@ -364,9 +368,7 @@ class CommandRunner:
                         thisError = "ERROR:Server '" + \
                                     thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
-                        print(thisError)
-                        self._globalConfig.getSysLogger().LogMsgError(
-                            thisError)
+                        self.handleError(thisError)
 
             except EOFError:
                 noop
