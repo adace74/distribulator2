@@ -34,7 +34,10 @@ use Term::ReadLine;
 
 #
 # Custom Perl Modules:
-# * Global Configuration
+# * Global configuration.
+# * Command execution.
+# * Command parsing.
+# * Server tracking.
 #
 use Global::Config;
 use Global::Run;
@@ -44,7 +47,7 @@ use Parse::Servers;
 #
 # Arg Temp Storage
 #
-my($env_arg, $help_arg, $noping_arg, $shell_arg, $version_arg) = '';
+my($env_arg, $help_arg, $shell_arg, $version_arg) = '';
 
 #
 # Generic Temp Storage
@@ -59,7 +62,6 @@ my($prompt_env, $prompt_hostname, $promp_user);
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
-           "noping" => \$noping_arg,
            "shell=s" => \$shell_arg,
            "version" => \$version_arg) ||
     pod2usage(-exitstatus => 0, -verbose => 2);
@@ -145,7 +147,6 @@ while ($TRUE)
     $command = '';
     setReadLinePrompt("<$prompt_user\@$prompt_env\[wlx\]:" .
         cwd() . "> ");
-    setUserAborting($FALSE);
 
     $input = $term->readline( getReadLinePrompt() );
 
@@ -283,7 +284,7 @@ sub catchSigInt
     $term->initialize();
     $term->redisplay();
 
-    # Internal flag to stop runaway statements.
+    # Internal flag to try and stop runaway commands.
     setUserAborting($TRUE);
 }
 
@@ -341,18 +342,6 @@ B<--env>=I<environment>
 
 Specifies which environment this session will be limited to.
 NOTE: This is a required option.
-
-=back
-
-=item *
-
-B<--noping>
-
-=over 3
-
-Indicates that we do not wish to "Ping" servers before talking
-to them via our remote shell.  This is handy when the local version
-of Net::Ping is broken, or firewalls are blocking us, etc.
 
 =back
 

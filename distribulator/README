@@ -75,6 +75,19 @@ Feature List For v0.4-v0.45 (Shipped):
 * Addition of the ability to distinguish those commands as external and
   simply pass them through to the underlying shell via perl's system() call.
 
+Spontaneous Feature List For v0.47 (Coming Soon!):
+* Modularized codebase.  Still not all that generic, but at least
+  broken out by functionality.  Too many inter-dependancies,
+  will ponder how do things The Best Way.
+* Various fixes, including that of the Net::Ping code,
+  no CPAN module addon required.  Removed --noping as the underlying
+  assumption behind it is not valid.
+* Tons of GNU libreadline functionality, including history fixes,
+  auto-load/save history, and tab-completion of commands.
+* Experimental ability to stop a command while executing on X servers.
+  (Hold down CTRL-C)
+* Improved testing process, thus improved stability.
+
 Feature List For v0.5 (Coming Soon!):
 
 * Single local server file to single remote server file copy.

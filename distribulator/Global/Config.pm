@@ -207,7 +207,6 @@ sub getReadLineVersion
 }
 
 ######################################################################
-
 #
 # Let the loading script know we've loaded successfully.
 #

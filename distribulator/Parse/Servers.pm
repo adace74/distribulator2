@@ -5,8 +5,8 @@
 #
 # Name: Servers.pm
 #
-# Description:  Perl module containing global configuration information
-# such as where specific binaries live.
+# Description:  Perl module containing data & subroutines
+# to track internal server lists.
 #
 ######################################################################
 
@@ -64,7 +64,7 @@ my(@server_user);
 my($server_user_temp);
 
 ######################################################################
-# Various Startup Subroutines
+# Initialization
 ######################################################################
 
 sub LoadServers
@@ -127,6 +127,10 @@ sub LoadServers
     push(@server_groups, 'all');
     @server_groups = sort(@server_groups);
 }
+
+######################################################################
+# Sorting / Matching
+######################################################################
 
 #
 # Take the passed-in string, and do exact matching with
@@ -307,6 +311,7 @@ sub getServerUser
     }
 }
 
+######################################################################
 #
 # Let the loading script know we've loaded successfully.
 #

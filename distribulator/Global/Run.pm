@@ -5,8 +5,8 @@
 #
 # Name: Run.pm
 #
-# Description:  Perl module containing global configuration information
-# such as where specific binaries live.
+# Description:  Perl module containing functionality relating to
+# command exeuction, both locally and remotely.
 #
 ######################################################################
 
@@ -148,6 +148,7 @@ sub PingServer
     }
 }
 
+######################################################################
 #
 # Let the loading script know we've loaded successfully.
 #

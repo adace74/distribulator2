@@ -3,19 +3,19 @@
 #
 ######################################################################
 
-Required Perl Modules
----------------------
+Required Software
+-----------------
 
-This program does require certain Perl modules to run properly,
-and in some cases requires updating Perl's internal modules.
+* A flavor of Unix capable of running Perl 5.6.1.
+* Perl 5.6.1 (earlier versions may work, this is what I use)
+* GNU libreadline v4.3 (earlier versions may work, but not as well)
+* Term::ReadLine::GNU CPAN add-on perl module.
 
-* Cwd                 -- Perl Built-in Module
-* Getopt::Long        -- Perl Built-in Module
-* Net::Ping           -- Perl Built-in Module
-* Pod::Usage          -- Perl Built-in Module
-* Sys::Hostname       -- Perl Built-in Module
-* Term::ReadLine::GNU -- No particular version required.
-                         It sure is necessary, though!
+Verified Platforms
+------------------
+* Various RedHat Linux distributions(v6.2 and v8.0 to be specific),
+  in conjunction with perl 5.6.1.  perl 5.8.x has behaved a bit strangely
+  for me so I've stuck with 5.6.1 for now.
 
 Quick-Hack Install Directions
 -----------------------------
@@ -24,9 +24,9 @@ Quick-Hack Install Directions
 2) Pick a place you wish to install the distribution
    (the default is /usr/local/novo/distribulator).
 3) Untar/gzip the distribution into the directory above your target dir.
-4) If not using the default settings, edit distribulator.pl
-   and specify where the distribution is installed, and where
-   the config files containing server group lists can be found.
+4) If not using the default settings, edit wrappers/distribulator
+   and Global/Config.pm to specify where the distribution is installed,
+   as well as where the config files containing server group lists can be found.
 5) Fire it up!
 6) Type "help" for help.  :-)
 
@@ -34,7 +34,7 @@ Quick-Hack Install Shell Commands
 ---------------------------------
 
 cd /usr/local/novo/
-tar xfz distribulator-0.3.tar.gz
+tar xfz distribulator-0.x.tar.gz
 cd distribulator
 ./distribulator --env=sample
 help

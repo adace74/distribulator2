@@ -3,10 +3,9 @@
 #
 ######################################################################
 #
-# Name: Config.pm
+# Name: Commands.pm
 #
-# Description:  Perl module containing global configuration information
-# such as where specific binaries live.
+# Description:  Perl module containing command-parsing functionality.
 #
 ######################################################################
 
@@ -137,7 +136,9 @@ sub PrintHelpFile
 # Validation.
 ######################################################################
 
-# A little experiment...
+#
+# Set user_aborting variable.
+#
 sub setUserAborting
 {
     # Variable Scope Hack -- Not Sure Why?
@@ -146,6 +147,9 @@ sub setUserAborting
     $user_aborting = $TempVar;
 }
 
+#
+# Get user_aborting variable.
+#
 sub isUserAborting
 {
     if ($user_aborting)
@@ -386,8 +390,8 @@ sub ParseRun
                 {
                     RunCommandRemote($run_server,$1);
 
-                    # Sleep 1/10 second.
-                    sleep(0.10);
+                    # Sleep 1/4 second.
+                    sleep(0.25);
                 }
                 else
                 {
@@ -419,8 +423,8 @@ sub ParseRun
                     {
                         RunCommandRemote($run_server,$1);
 
-                        # Sleep 1/10 second.
-                        sleep(0.10);
+                        # Sleep 1/4 second.
+                        sleep(0.25);
                     }
                     else
                     {
@@ -518,6 +522,7 @@ sub ParseServerList
     }
 }
 
+######################################################################
 #
 # Let the loading script know we've loaded successfully.
 #
