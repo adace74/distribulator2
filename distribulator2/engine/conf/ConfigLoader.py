@@ -35,18 +35,18 @@ class ConfigLoader:
         engine.data.GlobalConfig object.
         """
 
-        # Load GNU Readline history.
+        # Console Mode: Load GNU Readline history.
         if ( self._globalConfig.isConsoleMode() ):
             print('Loading configuration...')
 
-        myLinesLoaded = PassedCommLine.initHistory()
-        #
-        # Try to print status -after- actions so as to be
-        # more accurate.
-        #
-        if ( self._globalConfig.isConsoleMode() ):
+            myLinesLoaded = PassedCommLine.initHistory()
+            #
+            # Try to print status -after- actions so as to be
+            # more accurate.
+            #
             print("- GNU Readline history:        %d lines loaded." % \
                   (myLinesLoaded))
+
         #
         # Step 1: Unix "pass through" commands.
         #

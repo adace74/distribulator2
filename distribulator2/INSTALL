@@ -20,17 +20,19 @@ FYI, the author currently tests on both FreeBSD 4.x and Linux(RedHat) environmen
 
 - GNU Readline v4.3 (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
 
+Since the software uses the Python readline module pretty extensively,
+we need this.
+
 Nothing special here, readline just Makes Life Easier.
 
 - Python v2.3.X (http://www.python.org/) accessible via /usr/local/bin/python
 
-Code changes were required for the conversion to v2.3.3,
-so I'm not altogether sure if it'll run on an earlier version anymore.
+Some small changes were required to move from Python v2.2.3 / timeoutsocket.py
+to Python v2.3.3.  I give no guarantee this version will work with any other
+version of Python.
 
-Also, if you don't have a symlink for python in /usr/local/bin/,
-either put on there or hack the distribulator.py first line.
-
-Thankfully, PyXML is no longer required as an add-on package!
+If for some reason you don't have a symlink for python in /usr/local/bin/,
+either put one there or change the first line of distribulator.py.
 
 Installation
 ------------
@@ -46,7 +48,7 @@ Installation
 
 4) Edit the INSTALL_DIR variable in the scripts/distribulator shell script to
    reflect your installation directory(in this case /apps/distribulator2):
-   vi scripts/distribulator
+   vi scripts/distribulator.sh
 
 5) Create a symlink from /usr/local/bin/ to the wrapper script
    (or your path-happy location of choice):
@@ -58,8 +60,7 @@ Installation
 7) Fire it up:
    distribulator
 
-8) Test it out, tinker around, read the next section for how to
-   setup config.xml for your environments.
+8) Test it out, tinker around, read the next section for how to setup config.xml for your environments.
 
 Configuration Overview
 ----------------------

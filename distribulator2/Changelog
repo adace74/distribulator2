@@ -200,6 +200,7 @@ Change List For v0.7.2 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * Update all code to be functional with Python v2.3.X.
 * Cleanup: Updated the accompanying config.dtd with the "ping" XML tag.
+* Cleanup: Disable GNU readline history when running in batch mode.
 
 Change List For v0.8.0 (Language: Python / Status: Planning)
 ---------------------------------------------------------------
