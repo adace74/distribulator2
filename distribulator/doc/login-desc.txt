@@ -1,15 +1,13 @@
-Shell Command Syntax & Examples
+Login Command Syntax & Examples
 -------------------------------
 
-Syntax: shell remote_shellname
+Syntax: login server_name
 
-Description:  Sets the remote shell type.
+Description:  Logs in to the specified server remotely.
 
 Examples:
-	shell nsh	-- Sets the remote shell type to "nsh".
-
-Notes:
-	Defaults to 'ssh'.
+	login www01	-- Logs in to a server whose hostname starts
+			   with www01.
 
 ----------------------------------------------------------------------
 $Id$

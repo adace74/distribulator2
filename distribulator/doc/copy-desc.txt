@@ -1,7 +1,7 @@
 Copy Command Syntax & Examples
 -----------------------------
 
-Syntax: copy [source <server>:filepath] [destination <server>:filepath]
+Syntax: copy [[source [server]]:filepath1 [[destination [server]]:filepath2
 
 Description:  Copies files to/from various servers within our
 working environment.

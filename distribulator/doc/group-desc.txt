@@ -1,7 +1,7 @@
 Group Command Syntax & Examples
 -------------------------------
 
-Syntax: group <server_group>
+Syntax: group server_group
 
 Description:  Sets the current working server group.
 

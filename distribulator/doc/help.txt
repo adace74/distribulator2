@@ -7,6 +7,7 @@ Valid Commands:
 	* exit  -- Exits the Distribulator.
 	* group -- Sets current server group.
 	* help  -- This command.
+	* login -- Remotely logs into a given server.
 	* list  -- List servers in a given or current working server group.
 	* ls    -- Unix-style list directory.
 	* run   -- Run remote commands.

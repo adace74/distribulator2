@@ -1,7 +1,7 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run <command> [on] [local|group|server]
+Syntax: run "command_line" [local|server_group|server_name]
 
 Description: Runs a given command across multiple servers,
 or on a particular server.
@@ -10,7 +10,7 @@ Examples:
 	run "uptime"		-- Runs uptime on current server group.
 	run "uptime" local	-- Runs uptime on local server.
 	run "uptime" www	-- Runs uptime on www server group.
-	run "uptime" www01	-- Runs uptime on www01 server.
+	run "uptime" www01	-- Runs uptime on www01 string-matched server.
 
 Notes:
 	No does priority-based partial-string matching on

@@ -64,6 +64,10 @@ Feature List For v0.3 (Shipped!):
 * Pattern-based group and server name matching for the lazy sysadmin
   in all of us.
 
+Feature List For v0.4 (Coming Soon!):
+* Addition of the "login" command.  Basically allows the user to specify
+  a server to login to without having to exit the distribulator.
+
 Feature List For v0.5 (Coming Soon!):
 
 - Single local server file to single remote server file copy.

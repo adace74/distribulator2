@@ -71,7 +71,7 @@ my(@server_groups);
 my(%users_groups_hash);
 my(%servers_groups_hash);
 my(@valid_commands) = ( 'cat', 'cd', 'copy', 'exit', 'group',
-                        'help', 'list', 'ls', 'run', 'shell' );
+                        'help', 'login', 'list', 'ls', 'run', 'shell' );
 
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
@@ -86,13 +86,17 @@ if ($help_arg)
 	pod2usage(-exitstatus => 0, -verbose => 2);
 }
 #
+# Give the user a banner, no matter what.
+#
+print("+======================+\n");
+print("|The Distribulator v0.4|\n");
+print("+======================+\n");
+print("\n");
+#
 # Check for --version
 #
 if ($version_arg)
 {
-    print("\n");
-    print("The Distribulator v0.1\n");
-    print("\n");
     print("(c) Copyright 2002 Adam W. Dace.\n");
     print("The Distribulator may be copied only under the terms of the BSD License,\n");
     print("a copy of which can be found with The Distribulator distribution kit.\n");
@@ -102,13 +106,6 @@ if ($version_arg)
 
     exit(0);
 }
-#
-# Give the user a banner, no matter what.
-#
-print("\n");
-print("The Distribulator v0.1\n");
-print("----------------------\n");
-print("\n");
 #
 # Validate our command-line arguments.
 #
@@ -262,6 +259,21 @@ while ($TRUE)
             }
         }
 	}
+
+    # Login
+    if ($command eq 'login')
+    {
+        $temp_str = shift(@command_tokens);
+
+        if ($server = getMatchingServer($temp_str))
+        {
+            RunCommandRemote($server, '');
+        }
+        else
+        {
+            print("ERROR: No matching server hostname found.\n");
+        }
+    }
 
 	# List
 	if ($command eq 'list')
@@ -610,7 +622,7 @@ sub ParseRun
         else
         {
             # If no match, then print a sane error.
-            print("ERROR: No matching group or server found.\n");
+            print("ERROR: No matching group or server hostname found.\n");
         }
     }
     else
@@ -701,10 +713,18 @@ sub RunCommandRemote
 
     if ( PingServer($remote_server) )
     {
-        # Super magic.
-        $exec_line = "ssh " .
-            getServerUser($remote_server) .
-                "\@$remote_server $remote_command";
+        if ($remote_command)
+        {
+            $exec_line = "ssh " .
+                getServerUser($remote_server) .
+                    "\@$remote_server $remote_command";
+        }
+        else
+        {
+            $exec_line = "ssh " .
+                getServerUser($remote_server) .
+                    "\@$remote_server";
+        }
 
         print "EXEC:  $exec_line\n";
 
@@ -752,11 +772,11 @@ __END__
 
 =head1 NAME
 
-B<distribulator.pl> - The Distribulator.
+B<distribulator.pl> - Remote command execution and file transfer utility.
 
 =head1 SYNOPSIS
 
-B<distribulator.pl> [ I<options> ] I<argument>
+B<distribulator.pl> --env=I<environment>
 
 =head1 DESCRIPTION
 
@@ -770,24 +790,45 @@ tool written in Perl. If you have command execution priviledges on more than
 
 =item *
 
-B<--env>
+B<--env>=I<environment>
+
+=over 3
+
 Specifies which environment this session will be limited to.
+NOTE: This is a required option.
+
+=back
 
 =item *
 
 B<--help>
+
+=over 3
+
 Displays this manual page and exits.
+
+=back
 
 =item *
 
-B<--shell>
+B<--shell>=[ I<nsh> | I<ssh> ]
+
+=over 3
+
 Specifies whether to use ssh or some other remote shell,
 such as BladeLogic's NetShell product.
+
+=back
 
 =item *
 
 B<--version>
+
+=over 3
+
 Displays version information and exits.
+
+=back
 
 =back
 

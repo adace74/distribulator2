@@ -1,7 +1,7 @@
 List Command Syntax & Examples
 ------------------------------
 
-Syntax: list <server_group>
+Syntax: list [server_group]
 
 Description:  Lists known servers in a given group,
               or the current working group if none is specified.
