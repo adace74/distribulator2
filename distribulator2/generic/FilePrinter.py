@@ -21,7 +21,7 @@ class FilePrinter:
             thisFile = open(PassedFilename, 'r')
             
             for thisLine in thisFile:
-                thisLine = thisLine.strip()
+                thisLine = thisLine.rstrip()
                 print(thisLine)
 
             thisFile.close()
