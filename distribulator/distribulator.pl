@@ -38,6 +38,10 @@ my($HOME_DIR) =   '/usr/local/novo/distribulator';
 # Where the configuration files are located.
 my($CONFIG_DIR) = '/usr/local/novo/distribulator/conf';
 #
+# Binary Locations - These are defined further on in the file.
+# ------------------------------------------------------------
+my($SSH_BIN);
+my($SCP_BIN);
 ######################################################################
 
 ######################################################################
@@ -93,7 +97,7 @@ if ($help_arg)
 # Give the user a banner, no matter what.
 #
 print("+======================+\n");
-print("|The Distribulator v0.4|\n");
+print("|The Distribulator v0.5|\n");
 print("+======================+\n");
 print("\n");
 #
@@ -119,7 +123,9 @@ ValidateArgs();
 #
 LoadConfig();
 #
-# Should I use Text::ParseWords to parse?  On maybe just split?
+# Find out where our binaries are located.
+#
+getBinaryLocations();
 #
 # Preparing to launch the shell.
 #
@@ -210,9 +216,7 @@ while ($TRUE)
     # Copy
     if ($command eq 'copy')
     {
-        #ParseCopy();
-
-        print("ERROR: This command is not yet implemented.\n");
+        ParseCopy();
     }
 
     # Exit
@@ -270,15 +274,18 @@ while ($TRUE)
     {
         $temp_str = shift(@command_tokens);
 
-        if ($server = getMatchingServer($temp_str))
+        if ( $server = getMatchingServer($temp_str) )
         {
-            $temp_str = "ssh " .
-                getServerUser($server) .
-                    "\@$server";
+            if ( PingServer($server) )
+            {
+                $temp_str = "$SSH_BIN " .
+                    getServerUser($server) .
+                        "\@$server";
 
-            print "EXEC:  $temp_str\n";
+                print "EXEC:  $temp_str\n";
 
-	    system($temp_str);
+                system($temp_str);
+            }
         }
         else
         {
@@ -385,6 +392,47 @@ sub catchSigQuit
     print "Caught SIGQUIT signal(probably CTRL-D).  Dying...\n\n";
 
     exit(0);
+}
+
+#
+# Attempt to guess where our binaries are located.
+#
+sub getBinaryLocations
+{
+	my($uname1_bin) = '/bin/uname';
+	my($uname2_bin) = '/usr/bin/uname';
+	my($os_name) = '';
+
+	if ( stat($uname1_bin) )
+	{
+		$os_name = qx/$uname1_bin/;
+	}
+	elsif ( stat($uname2_bin) )
+	{
+		$os_name = qx/$uname2_bin/;
+	}
+	else
+	{
+		die("Unable to determine platform.  Can't find uname!");
+	}
+
+	chomp($os_name);
+
+	#
+	# Binary utility locations, setup based on platform.
+	#
+	# NOTE: Blowfish is chosen because of its low CPU overhead.
+	#
+	if ($os_name eq 'Linux')
+	{
+		$SCP_BIN = '/usr/bin/scp -c blowfish';
+		$SSH_BIN = '/usr/bin/ssh -c blowfish';
+	}
+	elsif ($os_name eq 'SunOS')
+	{
+		$SCP_BIN = '/usr/local/bin/scp -c blowfish';
+		$SSH_BIN = '/usr/local/bin/ssh -c blowfish';
+	}
 }
 
 #
@@ -580,9 +628,31 @@ sub isValidCommand
 #
 # Parse & execute the "copy" command.
 #
-#sub ParseCopy
-#{
-#}
+sub ParseCopy
+{
+    # NEED SOME KIND OF GENERIC VALIDATION SUCH THAT ALL REMOTE FILEPATHS
+    # END IN A SLASH!!!
+    #
+    # Copy from a local file to a single server.
+    if ($input =~ /^copy (.*) (.*):(.*)$/)
+    {
+        print("You wish to copy localhost:$1 to server $2:$3?\n");
+
+        if ( AreYouSure() )
+        {
+            if ( PingServer($3) )
+            {
+#		RunCommand
+                print ("Blah\n");
+            }
+        }
+    }
+    else
+    {
+        # Invalid syntax.
+        print("ERROR: Invalid run command syntax.\n");
+    }
+}
 
 #
 # Parse & execute the "run" command.
@@ -741,7 +811,7 @@ sub RunCommandRemote
 
     if ( PingServer($remote_server) )
     {
-        $exec_line = "ssh " .
+        $exec_line = "$SSH_BIN " .
             getServerUser($remote_server) .
                 "\@$remote_server $remote_command";
 
