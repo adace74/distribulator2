@@ -6,7 +6,7 @@
 
 This package contains action classes responsible for storing runtime data.
 
-Package Overview:
+Class Overview:
 
 engine.data.ExternalCommand - External command shell integration.
 engine.data.GlobalConfig    - Responsible for containing our global config.
