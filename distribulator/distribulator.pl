@@ -277,7 +277,7 @@ while ($TRUE)
 #
 sub catchSigInt
 {
-    print "\nNOTICE: Caught SIGINT, continuing.  To exit the shell, type \"exit\".\n";
+    print("\n");
 
     # Trying to have ReadLine hit the reset button.
     $term->initialize();
