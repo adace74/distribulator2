@@ -14,7 +14,7 @@ $Id$
     <binary name="ssh" value="/usr/bin/ssh -c blowfish"/>
 
     <!-- Logging Options -->
-    <logging facility="LOCAL1"/>
+    <logging facility="LOCAL0"/>
 
     <!-- Server environments, groups, etc. -->
 
