@@ -169,7 +169,7 @@ The available options are:
     thisStatus, thisOutput = commands.getstatusoutput( \
         thisGlobalConfig.getLognameBinary())
 
-    if ( len(thisOutput) > 1 ):
+    if ( thisStatus == 0 ):
         thisGlobalConfig.setRealUsername(thisOutput)
         thisGlobalConfig.setUsername( getpass.getuser() )
     else:
