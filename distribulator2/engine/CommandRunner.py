@@ -311,7 +311,7 @@ class CommandRunner:
             # Sanity syntax check.
             if (thisSuffixStr.find(' on ') == -1):
                 thisError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
-                self.handleErorr(thisError)
+                self.handleError(thisError)
                 return False
 
             thisSuffixStr = thisSuffixStr[thisSuffixStr.find(' on ') + 4:]
