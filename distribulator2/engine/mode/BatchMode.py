@@ -251,7 +251,7 @@ class BatchMode(Mode.Mode):
         #
         self._globalConfig.getSysLogger().LogMsgInfo(self._globalConfig.getSeperator())
 
-        myInfo = "INFO:  Summary: %d commands run / " % \
+        myInfo = "INFO:  Stats: %d commands run / " % \
               myCommandCount
 
         myTimeFinished = time.time()
