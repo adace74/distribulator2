@@ -183,6 +183,13 @@ class GlobalConfig:
     def addServerGroup(self, PassedServerGroup):
         self._serverGroupList.append(PassedServerGroup)
 
+    def getServerByName(self, PassedServerName):
+        for thisServerGroup in self._serverGroupList:
+            if ( thisServerGroup.getServerByName(PassedServerName) ):
+                return thisServerGroup.getServerByName(PassedServerName)
+
+        return False
+
     def getServerGroupByName(self, PassedServerGroupName):
         for thisServerGroup in self._serverGroupList:
             if (PassedServerGroupName == thisServerGroup.getName()):

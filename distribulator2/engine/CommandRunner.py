@@ -308,8 +308,6 @@ class CommandRunner:
 ######################################################################
 
     def doLogin(self):
-        thisFoundIt = False
-
         # Check for batch mode.
         if ( self._globalConfig.isBatchMode() ):
             thisError = "ERROR: Invalid command for batch mode."
@@ -317,23 +315,8 @@ class CommandRunner:
             return False
 
         if ( len(self._commTokens) > 1):
-            thisServerGroupList = self._globalConfig.getServerGroupList()
-
-            for thisServerGroup in thisServerGroupList:
-                if ( thisServerGroup.getServerByName(self._commTokens[1]) ):
-                    thisServer = thisServerGroup.getServerByName(self._commTokens[1])
-                    thisFoundIt = True
-
-            if (thisFoundIt):
-                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-                thisExternalCommand.setCommand( \
-                    self._globalConfig.getSshBinary() + " -l " + \
-                    thisServer.getUsername() + " " + thisServer.getName() )
-                try:
-                    thisExternalCommand.run(True)
-                except (EOFError, KeyboardInterrupt):
-                    thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
-                    self.handleInfo(thisInfo)
+            if ( self._globalConfig.getServerByName(self._commTokens[1]) ):
+                thisServer = self._globalConfig.getServerByName(self._commTokens[1])
             else:
                 thisError = "ERROR: No matching server '" + \
                             self._commTokens[1] + "'."
@@ -343,6 +326,16 @@ class CommandRunner:
             thisError = "ERROR: No server name given."
             self.handleError(thisError)
             return False
+
+        thisExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
+        thisExternalCommand.setCommand( \
+            self._globalConfig.getSshBinary() + " -l " + \
+            thisServer.getUsername() + " " + thisServer.getName() )
+        try:
+            thisExternalCommand.run(True)
+        except (EOFError, KeyboardInterrupt):
+            thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
+            self.handleInfo(thisInfo)
 
         return True
 
@@ -398,6 +391,7 @@ class CommandRunner:
             if (thisSuffixStr.find(',') == -1):
                 # run "uptime" on app
                 # run -t "uptime" on app
+
                 thisSpaceIndex = thisSuffixStr.rfind(' ')
                 thisGroupStr = thisSuffixStr[thisSpaceIndex + 1:]
                 
