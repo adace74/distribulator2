@@ -29,8 +29,8 @@ class CommandRunner:
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
 
-        for thisToken in self._commTokens:
-            print("DEBUG: Token |" + thisToken + "|")
+        #for thisToken in self._commTokens:
+        #    print("DEBUG: Token |" + thisToken + "|")
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
@@ -116,45 +116,107 @@ class CommandRunner:
                 print("ERROR: No matching server '" + \
                       self._commTokens[1] + "'.")
         else:
-            print("ERROR: No server name given.");
+            print("ERROR: No server name given.")
 
     def doRun(self):
         thisFoundIt = False
 
-        # Attempt to retokenize based on syntax and quotes.
         #
+        # Attempt to retokenize our command based on appropriate syntax.
         #
-        if ( len(self._commTokens) < 2 ):
-            print("ERROR: Syntax error.  Try 'help run' for usage information.")
-            return False
-        # run "uname -a" [wlx]
+        # Examples: run "uptime" on app
         #
-        # Attempt to retokenize based on syntax and quotes
-        elif ( len(self._commTokens) == 2 ):
-            self._commTokens.append(self._globalConfig.getCurrentServerGroup().getName())
-        # run "uname -a" wlx
-        if (self._globalConfig.getServerGroupByName(self._commTokens[2]) == False):
-            print("ERROR: No matching server group '" + \
-                  self._commTokens[2] + "' found.")
+        if ( self._commString.find('"') == -1 ):
+            print("ERROR:  Command Syntax Error.  Try 'help run' for more information.")
             return False
 
-        # Found it...
-        print("Run " + self._commTokens[1] + " on server group '" +
-              self._commTokens[2] + "'?")
+        # Get substr indexes.
+        thisFirstQuoteIndex = self._commString.find('"')
+        thisLastQuoteIndex = self._commString.rfind('"')
 
+        thisPrefixStr = self._commString[0:thisFirstQuoteIndex]
+        thisBodyStr = self._commString[thisFirstQuoteIndex:(thisLastQuoteIndex + 1)]
+        thisSuffixStr = self._commString[thisLastQuoteIndex + 1:]
+
+        #print("DEBUG: Prefix |" + thisPrefixStr + '|')
+        #print("DEBUG: Body: |" + thisBodyStr + '|')
+        #print("DEBUG: Suffix: |" + thisSuffixStr + '|')
+
+        # Check for pass-through SSH flags
+        if (thisPrefixStr.find('-') != -1):
+            thisFlagStr = ' ' + thisPrefixStr[thisPrefixStr.find('-'):]
+            thisFlagStr = thisFlagStr.rstrip()
+        else:
+            thisFlagStr = ''
+
+        # run "uptime"
+        # run -t "uptime"
+        if (len(thisSuffixStr) == 0):
+            # Verify.
+            print "Run command " + thisBodyStr + " on server group " + \
+                  self._globalConfig.getCurrentServerGroup().getName() + "?"
+            if (self.doAreYouSure() == False):
+                print("INFO:  Aborting command.")
+                return False
+
+            thisServerGroup = self._globalConfig.getCurrentServerGroup()
+
+            # Just Do It.
+            for thisServer in thisServerGroup.getServerList():
+                thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
+                thisExternalCommand.setCommand( \
+                    self._globalConfig.getSshBinary() + thisFlagStr + \
+                    " -l " + thisServer.getUsername() + " " + \
+                    thisServer.getName() + " " + \
+                    thisBodyStr )
+                # Log It.
+                self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
+                                                             thisExternalCommand.getCommand())
+                # Run It.
+                thisExternalCommand.run()
+
+            return True
+
+        # Sanity check.
+        if (thisSuffixStr.find(' on ') == -1):
+            print("ERROR:  Command Syntax Error.  Try 'help run' for more information.")
+            return False
+
+        # run "uptime" on www, app
+        if (thisSuffixStr.find(',') != -1):
+            print("ERROR: Multiple groups not implemented yet!")
+            return False
+
+        # run "uptime" on www
+        thisSpaceIndex = thisSuffixStr.rfind(' ')
+        thisGroupStr = thisSuffixStr[thisSpaceIndex + 1:]
+
+        thisServerGroup = self._globalConfig.getServerGroupByName(thisGroupStr)
+
+        # Validate.
+        if (thisServerGroup == False):
+            print("ERROR: No matching server group '" + thisGroupStr + "'.")
+            return False
+
+        # Verify.
+        print "Run command " + thisBodyStr + " on server group " + \
+              thisGroupStr + "?"
         if (self.doAreYouSure() == False):
             print("INFO:  Aborting command.")
             return False
 
-        thisServerGroup = self._globalConfig.getServerGroupByName(self._commTokens[2])
+        # Just Do It.
         for thisServer in thisServerGroup.getServerList():
             thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
             thisExternalCommand.setCommand( \
-                    self._globalConfig.getSshBinary() + " -l " + \
-                    thisServer.getUsername() + " " + \
-                    thisServer.getName() + " " + self._commTokens[1] )
+                    self._globalConfig.getSshBinary() + thisFlagStr + \
+                    " -l " + thisServer.getUsername() + " " + \
+                    thisServer.getName() + " " + \
+                    thisBodyStr )
+            # Log It.
             self._globalConfig.getSysLogger().LogMsgInfo("EXEC: " + \
                                                          thisExternalCommand.getCommand())
+            # Run It.
             thisExternalCommand.run()
 
     def doServerGroup(self):
