@@ -5,7 +5,7 @@
 # Name: distribulator.pl
 #
 # Description: The Distribulator.
-# A detailed description can be found in the ../README file.
+# A detailed description can be found in the README file.
 #
 ######################################################################
 #
@@ -47,7 +47,7 @@ use Parse::Servers;
 #
 # Arg Temp Storage
 #
-my($env_arg, $help_arg, $shell_arg, $version_arg) = '';
+my($env_arg, $help_arg, $shell_arg, $startdir_arg, $version_arg) = '';
 
 #
 # Generic Temp Storage
@@ -63,6 +63,7 @@ my($prompt_env, $prompt_hostname, $promp_user);
 GetOptions("env=s" => \$env_arg,
            "help" => \$help_arg,
            "shell=s" => \$shell_arg,
+           "startdir=s" => \$startdir_arg,
            "version" => \$version_arg) ||
     pod2usage(-exitstatus => 0, -verbose => 2);
 #
@@ -299,7 +300,7 @@ sub ValidateArgs
 {
     if ($env_arg)
     {
-        # Validate arguments.
+        # Validate environment.
         if ( !stat("$CONFIG_DIR/$env_arg") )
         {
             die("Directory for environment $env_arg doesn't exist!");
@@ -311,6 +312,19 @@ sub ValidateArgs
     {
         print("Invalid arguments given.\n");
         die('See --help for required flags.');
+    }
+
+    if ($startdir_arg)
+    {
+        if ( !stat($startdir_arg) )
+        {
+            die("Directory for start-up $startdir_arg doesn't exist!");
+        }
+
+        if ( !chdir($startdir_arg) )
+        {
+            die("Can't change dir to $startdir_arg!");
+        }
     }
 }
 
@@ -355,6 +369,17 @@ B<--shell>=[ I<nsh> | I<ssh> ]
 
 Specifies whether to use ssh or some other remote shell,
 such as BladeLogic's NetShell product.
+
+=back
+
+=item *
+
+B<--startdir>=[ I<startup_directory> ]
+
+=over 3
+
+Silly hack to get around languages' need to load modules from cwd.
+Will change directory to specified directory on startup.
 
 =back
 

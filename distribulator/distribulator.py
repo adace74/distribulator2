@@ -15,8 +15,14 @@
 ######################################################################
 
 # Import modules we'll need.
-import getopt
-import sys
+try:
+    import getopt
+    import socket
+    import sys
+
+except ImportError:
+    print "An error occured while loading Python modules, exiting..."
+    exit(1)
 
 # Display a nice pretty header.
 def title_header():
@@ -25,7 +31,8 @@ def title_header():
     print
 
 def info_header():
-    print ""
+    print "Python Version: " + sys.version
+    print "Local Hostname: " + socket.gethostname()
 
 # Good old main...
 def main(argv):
@@ -44,7 +51,6 @@ The available options are:
     Sets the remote shell type we wish to use.  Defaults to ssh.
     Not fully implemented.  OPTIONAL
 
-Copyright (C) 2002 Adam W. Dace
 """ % argv[0]
 
     title_header()
@@ -83,7 +89,7 @@ Copyright (C) 2002 Adam W. Dace
         sys.stderr.write(usage)
         sys.exit(1)
 
-    print "Made it to the end!"
+    info_header()
 #
 # If called from the command line, invoke thyself!
 #
