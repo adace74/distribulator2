@@ -26,7 +26,8 @@ class CommandRunner:
         self._globalConfig = PassedGlobalConfig
 
     def run(self, PassedInternalCommand):
-        self._commTokens = PassedInternalCommand.getCommand().split()
+        self._commString = PassedInternalCommand.getCommand()
+        self._commTokens = self._commString.split()
 
         #for thisToken in self._commTokens:
         #    print("DEBUG: Token |" + thisToken + "|")
@@ -53,10 +54,10 @@ class CommandRunner:
     def doAreYouSure(self):
         thisInput = raw_input("Yes / No> ")
 
-        if (string.find(thisInput.lower(), 'yes') == -1):
-            return False
-        else:
+        if (thisInput.lower() == 'yes'):
             return True
+        else:
+            return False
 
     def doChdir(self):
         try:

@@ -105,7 +105,14 @@ class CommandLine:
                     if (thisTokens[0] == thisCommand):
                         thisExternalCommand = engine.data.ExternalCommand.ExternalCommand()
                         thisExternalCommand.setCommand(thisInput)
-                        thisExternalCommand.run()
+
+                        # Wrap it just in case.
+                        try:
+                            thisExternalCommand.run()
+
+                        except KeyboardInterrupt:
+                            print "Caught CTRL-C keystroke.  Back to command prompt..."
+
                         del thisExternalCommand
                         thisFoundIt = True
                         break

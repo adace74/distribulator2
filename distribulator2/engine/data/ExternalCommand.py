@@ -10,7 +10,6 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import commands
 import os
 import os.path
 import string
@@ -40,8 +39,7 @@ class ExternalCommand:
     def run(self):
         print("EXEC:  " + self._command)
 
-        thisStatus, thisOutput = commands.getstatusoutput(self._command)
-        print(thisOutput)
+        thisStatus = os.system(self._command)
         print(self._seperator)
 
         if (thisStatus != 0):
