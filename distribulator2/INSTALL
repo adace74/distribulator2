@@ -57,8 +57,11 @@ Installation
    cd /apps/distribulator2/
    ./configure --prefix=/apps/distribulator2 --with-python=/usr/bin/python2.3
 
-5) Create a symlink from any directory in your path(/usr/local/bin, etc) to the wrapper script
+5) Create a symlink from any directory in your path(/usr/local/bin, etc) to the wrapper script:
    cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh distribulator
+
+   NOTE: Another option would be to make sure "distribulator2/scripts/" is in your path
+         and simply call the program "distribulator.sh" instead.
 
 6) Fire it up:
    distribulator
@@ -109,4 +112,3 @@ Directory Layout Overview
 	/scripts		- Wrapper shell scripts.
 	/tests			- Manual test suite location,
 				  future automated regression tests.
-
