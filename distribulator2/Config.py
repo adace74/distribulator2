@@ -2,9 +2,8 @@
 #
 # $Id$
 #
+# Name: Config.py
+#
+# Description: Template.
+#
 ######################################################################
-
-Credits
--------
-
-Thank the peoples.
