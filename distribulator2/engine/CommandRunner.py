@@ -469,7 +469,18 @@ class CommandRunner:
                     return False
 
         # If we found server hostnames, then run with that.
+        #
+        # Slightly nasty hack.  Since lists can only be sorted in-place,
+        # and copying objects in Python isn't super-easy, we do the
+        # following:
+        #
+        # 1) Reverse sort the list
+        # 2) Run the commands
+        #
         if ( len(thisServerNameList) > 0 ):
+            if (isReverse):
+                thisServerNameList.reverse()
+
             try:
                 for thisNameStr in thisServerNameList:
                     thisPinger = generic.HostPinger.HostPinger(
@@ -502,19 +513,21 @@ class CommandRunner:
             return True
 
         # If we found server group names, then run with that.
+        #
+        # Slightly nasty hack.  Since lists can only be sorted in-place,
+        # and copying objects in Python isn't super-easy, we do the
+        # following:
+        #
+        # 1) Reverse sort the list
+        # 2) Run the commands
+        # 3) Forward-sort the list, hopefully back to its original state.
+        #
         for thisGroupStr in thisServerGroupList:
             thisServerGroup = self._globalConfig.getServerGroupByName(
                 thisGroupStr)
 
             thisServerList = thisServerGroup.getServerList()
 
-            #
-            # Slightly nasty hack.  Since lists can only be sorted in-place,
-            # and Python doesn't support object copying, we do the following:
-            # 1) Reverse sort the list
-            # 2) Run the commands
-            # 3) Forward-sort the list, hopefully back to its original state.
-            #
             if (isReverse):
                 thisServerList.reverse()
 
@@ -550,7 +563,7 @@ class CommandRunner:
             if (isReverse):
                 thisServerList.sort()
 
-        return True
+            return True
 
 ######################################################################
 
