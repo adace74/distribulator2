@@ -42,11 +42,15 @@ class ExternalCommand:
     # run() -- Only to be used in console mode.
     # runAtomic() -- Only to be used for non-interactive sessions.
     #
-    def run(self):
+    def run(self, isLoggable=False):
         if ( self._globalConfig.isBatchMode() ):
             self._globalConfig.getSysLogger().LogMsgError(
                 "ERROR:ExternalCommand.run() called in batch mode." )
             return False
+
+        if (isLoggable):
+            self._globalConfig.getSysLogger().LogMsgInfo(
+                "EXEC:  " + self._command )
 
         print("EXEC:  " + self._command)
 
@@ -72,7 +76,7 @@ class ExternalCommand:
 
         thisStatus, thisOutput = commands.getstatusoutput(self._command)
 
-        for thisLine in thisOutput:
+        for thisLine in thisOutput.split('\n'):
             if ( self._globalConfig.isBatchMode() ):
                 self._globalConfig.getSysLogger().LogMsgInfo(
                     "EXECO: " + thisLine )

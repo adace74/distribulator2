@@ -186,7 +186,7 @@ class CommandRunner:
                         if ( self._globalConfig.isBatchMode() ):
                             thisExternalCommand.runAtomic()
                         else:
-                            thisExternalCommand.run()
+                            thisExternalCommand.run(True)
                     else:
                         thisError = "ERROR: Server '" + thisServer.getName() + \
                                     "' appears to be down.  Continuing..."
@@ -251,7 +251,7 @@ class CommandRunner:
                     self._globalConfig.getSshBinary() + " -l " + \
                     thisServer.getUsername() + " " + thisServer.getName() )
                 try:
-                    thisExternalCommand.run()
+                    thisExternalCommand.run(True)
                 except (EOFError, KeyboardInterrupt):
                     thisInfo = "INFO:  Caught CTRL-C / CTRL-D keystroke.  Returning to command prompt..."
                     self.handleInfo(thisInfo)
@@ -375,7 +375,7 @@ class CommandRunner:
                         if ( self._globalConfig.isBatchMode() ):
                             thisExternalCommand.runAtomic()
                         else:
-                            thisExternalCommand.run()
+                            thisExternalCommand.run(True)
                     else:
                         thisError = "ERROR: Server '" + \
                                     thisServer.getName() + \
