@@ -29,6 +29,17 @@ class MultiLogger:
 
         self._globalConfig = PassedGlobalConfig
 
+    def LogMsgInfoSeperator(self):
+        """Logs and possibly prints a seperator with the syslog level INFO."""
+
+        # Define a pretty seperator.
+        mySeperator = '----------------------------------------------------------------------'
+
+        self._globalConfig.getSysLogger().LogMsgInfo(mySeperator)
+
+        if (self._globalConfig.isQuietMode() == False):
+            print(mySeperator)
+
     def LogMsgInfo(self, PassedMessage):
         """Logs and possibly prints a given message with the syslog level INFO."""
 

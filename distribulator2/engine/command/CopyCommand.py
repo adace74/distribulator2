@@ -262,6 +262,7 @@ class CopyCommand(Command.Command):
                                     myServer.getName() + \
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
 
             except EOFError:
                 pass
@@ -300,6 +301,7 @@ class CopyCommand(Command.Command):
                                         myServer.getName() + \
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
+                            self._globalConfig.getMultiLogger().LogMsgInfoSeperator()
 
                 except EOFError:
                     pass
