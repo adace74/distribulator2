@@ -177,8 +177,10 @@ Change List For v0.7.0 (Language: Python / Status: In Progress)
 * Cleanup: Restructured and "split up" code such that it adheres to a more
   OO way of thinking.  No real definition of dynamic versus static classes,
   but at least there are less monolithic classfiles now.
-* Add $hostname as a built-in variable, referencing the local hostname of the server
-  this software is running on.
+- Cleanup: Examine all source files, eliminate extraneous imports
+  where possible.
+* Add $hostname as a built-in variable, referencing the local hostname
+  of the server this software is running on.
 
 Change List For v0.7.5 (Language: Python / Status: Not Started)
 ---------------------------------------------------------------
