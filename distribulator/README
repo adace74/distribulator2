@@ -88,7 +88,7 @@ Spontaneous Feature List For v0.47 (Shipped):
   (Hold down CTRL-C, or just hit it a number of times)
 * Improved testing process, thus improved stability.
 
-Spontaneous Feature List For v0.48 (Shipping Soon):
+Spontaneous Feature List For v0.48 (Shipped):
 
 * Fixed a silly bug where the command-line prompt wasn't being updated with
   the current server group. --Perl
