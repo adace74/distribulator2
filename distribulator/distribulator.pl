@@ -132,9 +132,9 @@ getBinaryLocations();
 my($user) = getlogin() || getpwuid($<);
 my($hostname) = Sys::Hostname::hostname();
 #
-# Setup signal handler for SIGQUIT, aka CTRL-D.
-# This doesn't appear compatible with ReadLine.
+# Setup signal handler for SIGINT & SIGQUIT.
 #
+$SIG{INT} = \&catchSigInt;
 $SIG{QUIT} = \&catchSigQuit;
 #
 # Setup ReadLine for input...
@@ -366,13 +366,19 @@ sub AreYouSure
 }
 
 #
-# Catch SIGQUIT signal, and cleanly exit the program.
+# Catch SIGINT signal.
+#
+sub catchSigInt
+{
+    print "NOTICE: Caught SIGINT, continuing...\n";
+}
+
+#
+# Catch the SIGQUIT signal.
 #
 sub catchSigQuit
 {
-    print "Caught SIGQUIT signal(probably CTRL-D).  Dying...\n\n";
-
-    exit(0);
+    print "NOTICE: Caught SIGQUIT, continuing...\n";
 }
 
 #
