@@ -116,7 +116,7 @@ Change List For v0.6 (Language: Python / Status: In Progress)
   This will only allow comments to be on a single line, by themselves.
 * Batch Mode: Addition of --var1, --var2, and --var3, which enable very
   simple string substitution such that batch files don't have to be
-  completely hard-coded.
+  completely hard-coded.  Also added $env as a built-in variable.
 * Batch Mode: Addition of command count tracking and
   a very simple time statistics summary.
 * Addition of the ability to run commands on a single server,
