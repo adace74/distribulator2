@@ -109,14 +109,6 @@ class CopyCommand(Command.Command):
         if (myCopyTarget == 'current_server_group'):
             # copy /tmp/blah /tmp/
             myGroupStr = self._globalConfig.getCurrentServerGroup().getName()
-
-            # Validate remote path.
-            if (myRemotePath[len(myRemotePath) - 1] != '/'):
-                myError = "Remote path '" + myRemotePath + \
-                            "' must end with a slash."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
-                return False
-
             myServerGroupList.append(myGroupStr)
 
         elif (myCopyTarget == 'single_server_group'):
@@ -125,13 +117,6 @@ class CopyCommand(Command.Command):
             myGroupStr = myGroupStr[:myGroupStr.find(':')]
             myRemotePath = self._commTokens[2]
             myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
-
-            # Validate remote path.
-            if (myRemotePath[len(myRemotePath) - 1] != '/'):
-                myError = "Remote path '" + myRemotePath + \
-                            "' must end with a slash."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
-                return False
 
             # Check for server name match.
             myServer = self._globalConfig.getServerByName(myGroupStr)
@@ -178,9 +163,15 @@ class CopyCommand(Command.Command):
                     return False
 
         #
-        # Step 5: Make sure noone's trying to mix
-        #         server hostnames and server group names together.
+        # Step 5: Validation
+        #         - Verify the remote path ends with a slash.
+        #         - Verify server hostnames and group names are not being mixed.
         #
+        if (myRemotePath[len(myRemotePath) - 1] != '/'):
+            myError = "Remote path '" + myRemotePath + "' must end with a slash."
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            return False
+
         if ( (len(myServerNameList) > 0) & (len(myServerGroupList) > 0) ):
             myError = "Mixing of server name(s) and server group(s) is unsupported."
             self._globalConfig.getMultiLogger().LogMsgError(myError)
