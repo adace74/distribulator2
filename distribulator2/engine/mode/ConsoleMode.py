@@ -94,13 +94,13 @@ class ConsoleMode(Mode.Mode):
 
             except EOFError:
                 myInfo = "Caught CTRL-D keystroke.  Wrote history.  Dying..."
-                self._globalConfig.getMultiLogger().LogMsgInfo('')
+                print
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
                 return
 
             except KeyboardInterrupt:
-                pass
+                print
 
             if ( len(myInput.strip()) > 0 ):
                 myTokens = myInput.split()
