@@ -7,6 +7,8 @@
 #
 ######################################################################
 
+import re
+
 # Pydoc comments
 """
 This class is responsible for doing the actual work of
@@ -286,7 +288,7 @@ class RunCommand(Command.Command):
             except KeyboardInterrupt:
                 myInfo = "Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-                self._globalConfig.setBreakState(True)
+                self._globalConifg.setBreakState(True)
                 return False
 
             return True
@@ -305,7 +307,28 @@ class RunCommand(Command.Command):
                 myServerGroup = self._globalConfig.getServerGroupByName(
                     myGroupStr)
 
-                myServerList = myServerGroup.getServerList()
+		reggie=re.compile(r'(.*):r\'(.*)\'')
+		maggie=reggie.match(myGroupStr)
+		if (maggie != None):
+			myServerList = myServerGroup.getRegExServerList(maggie.group(2))
+
+			if ( (self._globalConfig.isBatchMode() == False) & (myIsNow == False) ):
+			    myDisplayStr = ''
+			    for servlist in myServerList:
+				myDisplayStr = myDisplayStr + servlist.getName() + ','
+			    myDisplayStr = myDisplayStr.rstrip(',')
+
+				# Are you sure?
+			    myInfo = "Run command " + myBodyStr + " on server(s) " + \
+				      myDisplayStr + "?"
+			    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+
+			    if (self.doAreYouSure() == False):
+				    myInfo = "Aborting command."
+				    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+				    continue
+		else:
+			myServerList = myServerGroup.getServerList()
 
                 if (myIsReverse):
                     myServerList.reverse()
