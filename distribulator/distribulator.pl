@@ -544,17 +544,12 @@ sub isValidCommand
     return $FALSE;
 }
 
-sub isValidServer
-{
-    return $TRUE;
-}
-
 #
 # Parse & execute the "copy" command.
 #
-sub ParseCopy
-{
-}
+#sub ParseCopy
+#{
+#}
 
 #
 # Parse & execute the "run" command.
@@ -730,6 +725,8 @@ sub RunCommandRemote
 
 #
 # Validate incoming arguments.  Dump user out if in error.
+#
+# This really needs some more work...
 #
 sub ValidateArgs
 {
