@@ -303,31 +303,30 @@ class RunCommand(Command.Command):
             # 3) Forward-sort the list, hopefully back to its original state.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(
-                    myGroupStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
 
-		reggie=re.compile(r'(.*):r\'(.*)\'')
-		maggie=reggie.match(myGroupStr)
-		if (maggie != None):
-			myServerList = myServerGroup.getRegExServerList(maggie.group(2))
+                reggie=re.compile(r'(.*):r\'(.*)\'')
+                maggie=reggie.match(myGroupStr)
+                if (maggie != None):
+                    myServerList = myServerGroup.getRegExServerList(maggie.group(2))
 
-			if ( (not self._globalConfig.isBatchMode()) and (not myIsNow) ):
-			    myDisplayStr = ''
-			    for servlist in myServerList:
-				myDisplayStr = myDisplayStr + servlist.getName() + ','
-			    myDisplayStr = myDisplayStr.rstrip(',')
+                    if ( (not self._globalConfig.isBatchMode()) and (not myIsNow) ):
+                        myDisplayStr = ''
+                        for servlist in myServerList:
+                            myDisplayStr = myDisplayStr + servlist.getName() + ','
+                            myDisplayStr = myDisplayStr.rstrip(',')
 
-				# Are you sure?
-			    myInfo = "Run command " + myBodyStr + " on server(s) " + \
-				      myDisplayStr + "?"
-			    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                            # Are you sure?
+                            myInfo = "Run command " + myBodyStr + " on server(s) " + \
+                                myDisplayStr + "?"
+                            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
-			    if (not self.doAreYouSure()):
-				    myInfo = "Aborting command."
-				    self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-				    continue
-		else:
-			myServerList = myServerGroup.getServerList()
+                            if (not self.doAreYouSure()):
+                                myInfo = "Aborting command."
+                                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                                continue
+                else:
+                    myServerList = myServerGroup.getServerList()
 
                 if (myIsReverse):
                     myServerList.reverse()
