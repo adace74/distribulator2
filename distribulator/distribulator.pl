@@ -295,6 +295,8 @@ while ($TRUE)
         }
 		elsif ( $servers_groups_hash{$temp_str} )
 		{
+            $counter = 0;
+
             print("Known servers in group $temp_str:\n");
 
             foreach $server ( @{$servers_groups_hash{$temp_str}} )
@@ -585,7 +587,7 @@ sub ParseRun
         return;
     }
     # Run command on ambiguous target -- run "uptime" on wlx01st
-    elsif ( $input =~ /^run (\".*\") on (\w*)$/ )
+    elsif ( $input =~ /^run (\".*\") (\w*)$/ )
     {
         # Check groups first, they get priority.
         if ( getMatchingGroup($2) )
