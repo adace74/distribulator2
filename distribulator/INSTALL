@@ -3,17 +3,44 @@
 #
 ######################################################################
 
+Required Perl Modules
+---------------------
+
+This program does require certain Perl modules to run properly,
+and in some cases requires updating Perl's internal modules.
+
+* Cwd            -- Perl Built-in Module
+* Getopt::Long   -- No particular version required.
+* Net::Ping      -- v2.25 or later REQUIRED.
+  If you're getting lots of errors that your servers are down
+  when they in fact are not, try installing this module version
+  "over" your existing Perl module.  Versions of this
+  module included with Perl v5.00x appear to be buggy.
+* Pod::Usage     -- No particular version required.
+* Sys::Hostname  -- Perl Built-in Module
+* Term::ReadLine -- Perl Built-in Module
+
 Quick-Hack Install Directions
 -----------------------------
 
-1) Pick a place you wish to install the distribution
-   (i.e. /usr/local/novo/distribulator).
-2) Untar/gzip the distribution into that directory.
-3) Edit distribulator.pl, and specify where the distribution
-is installed, and where the config files containing server group
-lists can be found.
-4) Fire it up!
-5) Try "help" for help.  :-)
+1) Install any required modules via CPAN or by hand.
+2) Pick a place you wish to install the distribution
+   (the default is /usr/local/novo/distribulator).
+3) Untar/gzip the distribution into the directory above your target dir.
+4) If not using the default settings, edit distribulator.pl
+   and specify where the distribution is installed, and where
+   the config files containing server group lists can be found.
+5) Fire it up!
+6) Type "help" for help.  :-)
+
+Quick-Hack Install Shell Commands
+---------------------------------
+
+cd /usr/local/novo/
+tar xfz distribulator-0.3.tar.gz
+cd distribulator
+./distribulator --env=sample
+help
 
 This document is more end-user oriented and as such has been placed at
 the absolute bottom of the priority list.
