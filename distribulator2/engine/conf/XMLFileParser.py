@@ -217,7 +217,7 @@ class XMLFileParser:
             myServerGroup.setUsername( self._globalConfig.getUsername() )
 
         if ( len(PassedServerGroup.getAttribute('version').strip()) > 0 ):
-            myServerGroup.setVersion( ' ' + \
+            myServerGroup.setVersion( \
                 PassedServerGroup.getAttribute('version').strip() )
         else:
             myServerGroup.setVersion(None)

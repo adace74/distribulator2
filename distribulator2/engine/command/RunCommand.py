@@ -247,7 +247,7 @@ class RunCommand(Command.Command):
                         if (myServer.getVersion()):
                             myExternalCommand.setCommand( \
                                 self._globalConfig.getSshBinary() + myFlagStr + \
-                                "-" + myServer.getVersion() + \
+                                " -" + myServer.getVersion() + \
                                 " -l " + myServer.getUsername() + " " + \
                                 myServer.getName() + " " + \
                                 myBodyStr )
@@ -312,7 +312,7 @@ class RunCommand(Command.Command):
                             if (myServer.getVersion()):
                                 myExternalCommand.setCommand( \
                                 self._globalConfig.getSshBinary() + myFlagStr + \
-                                "-" + myServer.getVersion() + \
+                                " -" + myServer.getVersion() + \
                                 " -l " + myServer.getUsername() + " " + \
                                 myServer.getName() + " " + \
                                 myBodyStr )
