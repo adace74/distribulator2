@@ -334,8 +334,6 @@ sub ParseLogin
     my($partial) = shift(@command_tokens);
     my($exec_str, $login_server, $found_user);
 
-    print("Attempt to match |$partial|\n");
-
     if ( $login_server = getMatchingServer($partial) )
     {
         if ( PingServer($login_server) )
