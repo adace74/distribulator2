@@ -241,28 +241,28 @@ Change List For v0.8.5 (Language: Python / Bloat Factor: 3983 lines / Status: Sh
 * Transfer of all copyright notices from personal to Orbitz corporate.
 * Ability to use regular expressions in the "run" command.
 
-Change List For v0.9.0 (Language: Python / Status: In Progress / Codename: Final Run)
--------------------------------------------------------------------------------------
+Change List For v0.9.0 (Codename: Final Run / Bloat Factor: 4327 lines / Status: Shipped)
+-----------------------------------------------------------------------------------------
 * Cleanup: Added an autoconf script such that no matter where the package is installed
   or where Python is, we'll run with it.
 * Cleanup: Replaced all highly unreadable "&" "|" characters with keyword equivalents.
-* Cleanup: replaced all less readable "foo == FALSE" clauses with "not foo" equivalents.
+* Cleanup: Replaced all less readable "foo == FALSE" clauses with "not foo" equivalents.
 * Cleanup: Added logic to pre-check config.xml for well-formedness before actual parsing.
 * SourceForge bug #1118162 fixed.
 * Ability to load all environments at startup, then switch environments at runtime via "set environment".
 * Ability to use regular expressions in the "copy" command.
-* Misc. output bug fixes.
+* Cleanup: Various console mode output tweaks.
 
-Change List For v1.0.0 (Language: Python / Status: Not Started / Codename: Optimator)
--------------------------------------------------------------------------------------
+Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
+------------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
 - Ability to use a "set concurrency X" command to set the concurrency
   for parallel run.  Also XML config directives for global defaults.
 
-Change List For v1.1.0 (Language: Python / Status: Not Started / Codename: Status???)
--------------------------------------------------------------------------------------
+Change List For v1.1.0 (Codename: Status / Status: Not Started)
+---------------------------------------------------------------
 ? Ability to have "pluggable" transports whereby one can at least use the "copy" and "run" commands
   via rsh, ssh, SSL, multicast, etc.  Will most likely use command-line as interface.
 
