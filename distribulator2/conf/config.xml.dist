@@ -1,14 +1,14 @@
 <!--
-  --
-  -- $Id$
-  --
-  -- Name: config.xml.dist
-  --
-  -- Description:  Example XML configuration.
-  --
-  -- (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
-  -- Please see the accompanying LICENSE file for license information.
-  --
+   *
+   * $Id$
+   *
+   * Name: config.xml.dist
+   *
+   * Description:  Example XML configuration.
+   *
+   * (c) Copyright 2003 Adam W. Dace <adam@turing.com>  All Rights Reserved. 
+   * Please see the accompanying LICENSE file for license information.
+   *
   -->
 
 <!-- Start Global Config -->
