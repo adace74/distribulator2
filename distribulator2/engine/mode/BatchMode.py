@@ -19,11 +19,11 @@ __version__= '$Revision$'[11:-2]
 
 # Standard modules
 import os
-import os.path
+#import os.path
 import socket
 import stat
 import string
-import sys
+#import sys
 import time
 
 # Custom modules

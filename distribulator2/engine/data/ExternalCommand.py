@@ -14,11 +14,8 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import commands
 import os
 import os.path
-import string
-import sys
 import time
 
 ######################################################################

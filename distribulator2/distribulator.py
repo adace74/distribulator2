@@ -33,12 +33,12 @@ import socket
 import sys
 
 # Custom modules
-import engine.mode.BatchMode
-import engine.mode.ConsoleMode
-import engine.mode.ListMode
 import engine.conf.ConfigLoader
 import engine.data.GlobalConfig
 import engine.misc.MultiLogger
+import engine.mode.BatchMode
+import engine.mode.ConsoleMode
+import engine.mode.ListMode
 import generic.SysLogger
 
 ######################################################################

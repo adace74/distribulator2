@@ -21,8 +21,6 @@ __version__= '$Revision$'[11:-2]
 import os
 import os.path
 import stat
-import string
-import sys
 
 # Custom modules
 import Command
