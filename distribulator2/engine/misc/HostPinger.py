@@ -50,15 +50,16 @@ class HostPinger:
             mySocket.close()
             return 0
 
+        # Add a debug mode someday!
         except timeoutsocket.Timeout:
-            myError = "ERROR: Timed out connecting to host '" + PassedHostname + "'."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            #myError = "ERROR: Timed out connecting to host '" + PassedHostname + "'."
+            #self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
         except socket.error, myException:
-            myError = "ERROR: Socket error while connecting to host '" + \
-                          PassedHostname + ":%d'." % self._globalConfig.getPingPort()
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            #myError = "ERROR: Socket error while connecting to host '" + \
+            #              PassedHostname + ":%d'." % self._globalConfig.getPingPort()
+            #self._globalConfig.getMultiLogger().LogMsgError(myError)
             #myError = "ERROR: %s" % myException
             #self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 2

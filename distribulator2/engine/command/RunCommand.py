@@ -59,7 +59,7 @@ class RunCommand(Command.Command):
 
         #
         # Step 1:  Create our own tokens, and check for SSH flags and
-        #          the 'reverse' keyword.
+        #          the 'reverse' and 'single' keywords.
         #
         if ( self._commString.find('"') == -1 ):
             myError = "ERROR: Command Syntax Error.  Try 'help run' for more information."
@@ -86,6 +86,13 @@ class RunCommand(Command.Command):
             mySuffixStr = mySuffixStr[:mySuffixStr.find(' reverse')]
         else:
             isReverse = False
+
+        # Check for the 'single' keyword.
+        if (mySuffixStr.find(' single') != -1):
+            isSingle = True
+            mySuffixStr = mySuffixStr[:mySuffixStr.find(' single')]
+        else:
+            isSingle = False
 
         #
         # Step 2: Try to determine what the target of the command is
@@ -246,6 +253,9 @@ class RunCommand(Command.Command):
                         else:
                             myExternalCommand.runConsole(True)
                         myCommandCount = myCommandCount + 1
+
+                        if (isSingle):
+                            break
                     else:
                         myError = "ERROR: Server '" + \
                                     myServer.getName() + \
@@ -296,6 +306,9 @@ class RunCommand(Command.Command):
                             else:
                                 myExternalCommand.runConsole(True)
                             myCommandCount = myCommandCount + 1
+
+                            if (isSingle):
+                                break
                         else:
                             myError = "ERROR: Server '" + \
                                         myServer.getName() + \
