@@ -81,7 +81,6 @@ Most likely this will be the file of most interest to you.
 
 Settings of interest:
 - Binary locations for logname, scp, and ssh.
-- Syslog logging facility.
 - Host Pinger options.
 - Server environment(s) and group(s) settings.
 
@@ -89,7 +88,7 @@ config/logging.conf -- Logging configuration file.
 
 This file contains all configuration relating to logging.
 Please keep in mind the fact that we consider STDOUT to be just another log destination.
-See the Python "logging" module documentation for more detailed documentation.
+See the Python "logging" module documentation for more details.
 
 config/pass_through_cmds.txt -- Pass-through commands list.
 
