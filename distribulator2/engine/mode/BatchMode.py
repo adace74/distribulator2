@@ -11,7 +11,7 @@
 """
 This class is responsible for doing the actual reading of a given
 batch file, and pre-processing the input before calling the
-CommandRunner for command expansion work.
+AllCommand for command expansion work.
 """
 
 # Version tag
@@ -26,15 +26,16 @@ import sys
 import time
 
 # Custom modules
-import engine.CommandRunner
+import engine.command.AllCommand
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
+import engine.mode.Mode
 
-class BatchRunner:
+class BatchMode(engine.mode.Mode.Mode):
     """
     This class is responsible for doing the actual reading of a given
     batch file, and pre-processing the input before calling the
-    CommandRunner for command expansion work.
+    AllCommand for command expansion work.
     """
 
     def __init__(self, PassedGlobalConfig):
@@ -221,11 +222,11 @@ class BatchRunner:
                 #
                 myInternalCommand = engine.data.InternalCommand.InternalCommand()
                 myInternalCommand.setCommand(myLine)
-                myCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
+                myAllCommand = engine.command.AllCommand.AllCommand(self._globalConfig)
                 myCommandCount = myCommandCount + \
-                                   myCommandRunner.run(myInternalCommand)
+                                   myAllCommand.run(myInternalCommand)
                 del myInternalCommand
-                del myCommandRunner
+                del myAllCommand
 
             myFile.close()
 

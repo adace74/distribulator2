@@ -20,8 +20,7 @@ import string
 import sys
 
 # Custom modules
-import engine.CommandLine
-import engine.XMLFileParser
+import engine.conf.XMLFileParser
 import engine.data.GlobalConfig
 
 ######################################################################
@@ -85,7 +84,7 @@ class ConfigLoader:
         #
         # Step 2: Load the main XML configuration file.
         #
-        myParser = engine.XMLFileParser.XMLFileParser()
+        myParser = engine.conf.XMLFileParser.XMLFileParser()
         self._globalConfig.setCurrentServerGroup(False)
         self._globalConfig = myParser.parse(self._globalConfig)
 

@@ -33,12 +33,12 @@ import socket
 import sys
 
 # Custom modules
-import engine.BatchRunner
-import engine.CommandLine
-import engine.ConfigLoader
-import engine.MultiLogger
-import engine.ServerLister
+import engine.mode.BatchMode
+import engine.mode.CommandMode
+import engine.mode.ListMode
+import engine.conf.ConfigLoader
 import engine.data.GlobalConfig
+import engine.misc.MultiLogger
 import generic.SysLogger
 
 ######################################################################
@@ -245,11 +245,11 @@ The available options are:
             printInfoHeader(myServerEnv, myGlobalConfig.getConfigFile())
 
         # These three really should be pinned to an interface.
-        myBatchRunner = engine.BatchRunner.BatchRunner(myGlobalConfig)
-        myCommLine = engine.CommandLine.CommandLine(myGlobalConfig)
-        myServerLister = engine.ServerLister.ServerLister(myGlobalConfig)
+        myBatchMode = engine.mode.BatchMode.BatchMode(myGlobalConfig)
+        myCommLine = engine.mode.CommandMode.CommandMode(myGlobalConfig)
+        myListModeer = engine.mode.ListMode.ListMode(myGlobalConfig)
 
-        myLoader = engine.ConfigLoader.ConfigLoader(myGlobalConfig)
+        myLoader = engine.conf.ConfigLoader.ConfigLoader(myGlobalConfig)
         myGlobalConfig = myLoader.load(myCommLine)
 
         # Currently not using the MultiLogger here as we log based on a different set of criteria
@@ -261,7 +261,7 @@ The available options are:
         # Setup syslog and console output handle.
         mySysLogger = generic.SysLogger.SysLogger(myGlobalConfig.getSyslogFacility(), 'distribulator.py')
         myGlobalConfig.setSysLogger(mySysLogger)
-        myMultiLogger = engine.MultiLogger.MultiLogger(myGlobalConfig)
+        myMultiLogger = engine.misc.MultiLogger.MultiLogger(myGlobalConfig)
         myGlobalConfig.setMultiLogger(myMultiLogger)
 
         # Log our startup.
@@ -309,7 +309,7 @@ The available options are:
 
     # Batch mode.
     if ( myGlobalConfig.isBatchMode() ):
-        myBatchRunner.invoke()
+        myBatchMode.invoke()
 
         myInfo = "INFO:  " + __appversion__ + " (batch mode) EXIT"
         mySysLogger.LogMsgInfo(myInfo)
@@ -321,7 +321,7 @@ The available options are:
             print(mySeperator)
     # List mode.
     elif ( myGlobalConfig.isListMode() ):
-        myServerLister.invoke()
+        myListModeer.invoke()
 
         myInfo = "INFO:  " + __appversion__ + " (list mode) EXIT"
         mySysLogger.LogMsgInfo(myInfo)

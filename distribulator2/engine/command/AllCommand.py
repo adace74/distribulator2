@@ -31,7 +31,7 @@ import generic.HostPinger
 
 ######################################################################
 
-class CommandRunner:
+class AllCommand:
     """
     This class is responsible for doing the actual work of
     expanding a given distribulator command into a set of 

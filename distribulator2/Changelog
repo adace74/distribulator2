@@ -162,7 +162,7 @@ Change List For v0.6.2 (Language: Python / Status: Shipped)
 * SourceForge bug #815788 fixed.
 * SourceForge bug #815877 fixed.
 
-Change List For v0.6.3 (Language: Python / Status: In Progress)
+Change List For v0.6.3 (Language: Python / Status: Shipped)
 ---------------------------------------------------------------
 * SourceForge bug #845634 fixed.
 * SourecForge bug #853052 fixed.
@@ -172,32 +172,34 @@ Change List For v0.6.3 (Language: Python / Status: In Progress)
 * Cleanup: Renaming instance variables with a naming convention less lame than
   thisThing, thisOtherThing, etc.
 
-Idea List For v0.7 (A little farther out)
------------------------------------------
-- Cleanup: Change classes that should be static to be so, also start thinking about
-  interfaces / subclassing.  A lot of the engine.* classes could use this...
+Change List For v0.7.0 (Language: Python / Status: In Progress)
+---------------------------------------------------------------
+* Cleanup: Restructured and "split up" code such that it adheres to a more
+  OO way of thinking.  No real definition of dynamic versus static classes,
+  but at least there are less monolithic classfiles now.
 - Cleanup: Take a look at the various modes the distribulator now supports
   and verify if the "VerboseMode" internal flags are still truly necessary.
-- Supplement the HostPinger's functionality with a better,
-  timeout-capable socket conneciton test.
 - Ability to use a new run command keyword: "parallel".
   This will run the given command in background threads in parallel.
   Output will be spooled to one file per server in a standard output directory.
+
+Idea List For v0.7.x (Language: Python / Status: Not Started)
+-------------------------------------------------------------
+- Supplement the HostPinger's functionality with a better,
+  timeout-capable socket conneciton test.
 - Ability to use regular expressions to match server names.
 - Single remote server file to single remote server file copy.
-(i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
+  (i.e. scp awd@www01:/tmp/blah awd@www02:/some/other/path/)
 - Single remote server file to multiple remote servers file copy.
-(i.e. scp awd@www01:/tmp/blah awd@www01,www02,www03:/some/other/path/)
+  (i.e. scp awd@www01:/tmp/blah awd@www01,www02,www03:/some/other/path/)
 - Multiple remote server file to local file copy.  This would have to somehow
   rename the files as it copies them down, perhaps based on hostname prefix.
-(i.e. scp awd@www01,www02,www03:/tmp/blah .)
+  (i.e. scp awd@www01,www02,www03:/tmp/blah .)
 
 Idea List For v1.0 (Will we ever get here?  Who knows!)
 -------------------------------------------------------
 Valid Ideas:
 - A decent install / setup system!  Check into python's distutils.
-- OO design sanity fixes.  Need to start using static methods
-  where appropriate.
 - Some sort of respectable regression test suite.
   Can be done using batch files and expect?
 - A server mode in which the distribulator will check an incoming command

@@ -24,13 +24,14 @@ import string
 import sys
 
 # Custom modules
-import engine.CommandRunner
+import engine.command.AllCommand
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
+import engine.mode.Mode
 
 ######################################################################
 
-class CommandLine:
+class CommandMode(engine.mode.Mode.Mode):
     """This class is responsible for handling the console mode of the application."""
 
     def __init__(self, PassedGlobalConfig):
@@ -151,12 +152,12 @@ class CommandLine:
                 #
                 myInternalCommand = engine.data.InternalCommand.InternalCommand()
                 myInternalCommand.setCommand(myInput)
-                myCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
-                myCommandRunner.run(myInternalCommand)
+                myAllCommand = engine.command.AllCommand.AllCommand(self._globalConfig)
+                myAllCommand.run(myInternalCommand)
 
                 # Free up some memory.
                 del myInternalCommand
-                del myCommandRunner
+                del myAllCommand
 
                 # Icky flow-control hack.
                 if (myTokens[0] == 'exit'):

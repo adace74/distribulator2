@@ -24,13 +24,13 @@ import string
 import sys
 
 # Custom modules
-import engine.CommandRunner
 import engine.data.ExternalCommand
 import engine.data.InternalCommand
+import engine.mode.Mode
 
 ######################################################################
 
-class ServerLister:
+class ListMode(engine.mode.Mode.Mode):
     """This class is responsible for handling the list mode of the application."""
 
     def __init__(self, PassedGlobalConfig):
@@ -57,7 +57,7 @@ class ServerLister:
         # -or-
         # myServerGroupList will contain a list of server groups.
         #
-        # If my works, back-patch me into CommandRunner.py
+        # If my works, back-patch me into AllCommand.py
         if (self._listString.find(',') == -1):
             myGroupList.append(self._listString)
         else:
