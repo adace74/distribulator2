@@ -277,8 +277,9 @@ class RunCommand(Command.Command):
             except EOFError:
                 pass
             except KeyboardInterrupt:
-                myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                 self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                break
 
             return True
         else:
@@ -342,8 +343,9 @@ class RunCommand(Command.Command):
                 except EOFError:
                     pass
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
+                    break
 
                 if (isReverse):
                     myServerList.sort()

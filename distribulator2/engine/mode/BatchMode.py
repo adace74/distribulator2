@@ -206,8 +206,9 @@ class BatchMode(Mode.Mode):
                             myExternalCommand.runBatch()
 
                         except KeyboardInterrupt:
-                            myInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
+                            myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                             self.handleInfo(myInfo)
+                            break
 
                         myCommandCount = myCommandCount + 1
                         del myExternalCommand
@@ -233,7 +234,7 @@ class BatchMode(Mode.Mode):
                     del myDispatcher
 
                 except KeyboardInterrupt:
-                    myInfo = "INFO:  Caught CTRL-C keystroke.  Exiting batch file..."
+                    myInfo = "INFO:  Caught CTRL-C keystroke.  Attempting to abort..."
                     self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
                     break
 
