@@ -66,10 +66,17 @@ class LoginCommand(Command.Command):
 
         # Run the expanded shell command.
         myExternalCommand = engine.data.ExternalCommand.ExternalCommand(self._globalConfig)
-        myExternalCommand.setCommand( \
-            self._globalConfig.getSshBinary() + \
-            myServer.getFlags() + " -l " + \
-            myServer.getUsername() + " " + myServer.getName() )
+
+        if (myServer.getVersion()):
+            myExternalCommand.setCommand( \
+                self._globalConfig.getSshBinary() + \
+                " -" + myServer.getVersion() + " -l " + \
+                myServer.getUsername() + " " + myServer.getName() )
+        else:
+            myExternalCommand.setCommand( \
+                self._globalConfig.getSshBinary() + \
+                " -l " + \
+                myServer.getUsername() + " " + myServer.getName() )
         try:
             myExternalCommand.runConsole(True)
         except (EOFError, KeyboardInterrupt):
