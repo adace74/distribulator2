@@ -69,8 +69,12 @@ class CommandRunner:
             return False
 
 ######################################################################
-        
+
     def doChdir(self):
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
+
         try:
             if (self._commTokens[0] == 'cd'):
                 os.chdir(self._commTokens[1])
@@ -83,6 +87,10 @@ class CommandRunner:
 
     def doCopy(self):
         thisServerGroupList = []
+
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
         
         # Sanity check.
         if (len(self._commTokens) != 3):
@@ -173,6 +181,10 @@ class CommandRunner:
     def doLogin(self):
         thisFoundIt = False
 
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
+
         if ( len(self._commTokens) > 1):
             thisServerGroupList = self._globalConfig.getServerGroupList()
 
@@ -202,6 +214,10 @@ class CommandRunner:
             
     def doRun(self):
         thisServerGroupList = []
+
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
 
         #
         # Attempt to retokenize our command based on appropriate syntax.
@@ -317,6 +333,10 @@ class CommandRunner:
 ######################################################################
     
     def doServerGroup(self):
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
+
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( self._commTokens[1] )
 
@@ -330,6 +350,10 @@ class CommandRunner:
             print("ERROR: No server group name given.")
 
     def doServerList(self):
+        # Log It.
+        self._globalConfig.getSysLogger().LogMsgInfo("COMMAND: " + \
+                                                     self._commString)
+
         if ( len(self._commTokens) > 1 ):
             thisServerGroup = self._globalConfig.getServerGroupByName( \
                 self._commTokens[1] )
