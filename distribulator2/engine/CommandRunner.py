@@ -57,6 +57,7 @@ class CommandRunner:
     def run(self, PassedInternalCommand):
         self._commString = PassedInternalCommand.getCommand()
         self._commTokens = self._commString.split()
+        thisCommandCount = 0
 
         if (self._commTokens[0] != 'cd'):
             # Log it.
@@ -68,26 +69,28 @@ class CommandRunner:
 
         # Cheezy branching logic.  Works well, though.
         if (self._commTokens[0] == 'cd'):
-            thisStatus = self.doChdir()
+            thisCommandCount = self.doChdir()
         elif (self._commTokens[0] == 'copy'):
-            thisStatus = self.doCopy()
+            thisCommandCount = self.doCopy()
         elif (self._commTokens[0] == 'exit'):
-            thisStatus = self.doExit()
+            thisCommandCount = self.doExit()
         elif (self._commTokens[0] == 'help'):
-            thisStatus = self.doHelp()
+            thisCommandCount = self.doHelp()
         elif (self._commTokens[0] == 'login'):
-            thisStatus = self.doLogin()
+            thisCommandCount = self.doLogin()
         elif (self._commTokens[0] == 'run'):
-            thisStatus = self.doRun()
+            thisCommandCount = self.doRun()
         elif (self._commTokens[0] == 'server-group'):
-            thisStatus = self.doServerGroup()
+            thisCommandCount = self.doServerGroup()
         elif (self._commTokens[0] == 'server-list'):
-            thisStatus = self.doServerList()
+            thisCommandCount = self.doServerList()
         else:
             thisError = "ERROR: Unknown Command: '" + \
                             self._commTokens[0] + "'."
             self.handleError(thisError)
             return False
+
+        return thisCommandCount
 
 ######################################################################
 
@@ -131,9 +134,10 @@ class CommandRunner:
 ######################################################################
 
     def doCopy(self):
+        thisCommandCount = 0
+        thisCopyTarget = '';
         thisServerGroupList = []
         thisServerNameList = []
-        thisCopyTarget = '';
 
         #
         # Step 1: Common validation and variable-setting.
@@ -337,6 +341,7 @@ class CommandRunner:
                             thisExternalCommand.runAtomic()
                         else:
                             thisExternalCommand.run(True)
+                        thisCommandCount = thisCommandCount + 1
                     else:
                         thisError = "ERROR: Server '" + \
                                     thisServer.getName() + \
@@ -375,6 +380,7 @@ class CommandRunner:
                                 thisExternalCommand.runAtomic()
                             else:
                                 thisExternalCommand.run(True)
+                            thisCommandCount = thisCommandCount + 1
                         else:
                             thisError = "ERROR: Server '" + \
                                         thisServer.getName() + \
@@ -387,7 +393,7 @@ class CommandRunner:
                     thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                     self.handleInfo(thisInfo)
 
-        return True
+        return thisCommandCount
 
 ######################################################################
 
@@ -469,6 +475,7 @@ class CommandRunner:
 ######################################################################
 
     def doRun(self):
+        thisCommandCount = 0
         thisServerGroupList = []
         thisServerNameList = []
         thisRunTarget = '';
@@ -661,6 +668,7 @@ class CommandRunner:
                             thisExternalCommand.runAtomic()
                         else:
                             thisExternalCommand.run(True)
+                        thisCommandCount = thisCommandCount + 1
                     else:
                         thisError = "ERROR: Server '" + \
                                     thisServer.getName() + \
@@ -711,6 +719,7 @@ class CommandRunner:
                                 thisExternalCommand.runAtomic()
                             else:
                                 thisExternalCommand.run(True)
+                            thisCommandCount = thisCommandCount + 1
                         else:
                             thisError = "ERROR: Server '" + \
                                         thisServer.getName() + \
@@ -726,7 +735,7 @@ class CommandRunner:
                 if (isReverse):
                     thisServerList.sort()
 
-            return True
+            return thisCommandCount
 
 ######################################################################
 

@@ -108,21 +108,26 @@ Change List For v0.6 (Language: Python / Status: In Progress)
 -------------------------------------------------------------
 * Goal: The ongoing goal of this release is to provide a "good enough"
   featureset for real-world applications, and to implement a
-  feature freeze such that focus can be shifted to stability / correctness issues.
+  feature freeze such that focus can be shifted to stability
+  and correctness issues.
 * Batch Mode: Addition of --quiet flag to indicate we don't want output when
   run in batch mode.  The default now is to NOT be quiet.
 * Batch Mode: Addition of comment(#) and line(\) continuation compatability.
   This will only allow comments to be on a single line, by themselves.
-* Batch Mode: Addition of --var1, --var2, and --var3, which enable very simple string
-  substitution such that batch files don't have to be completely hard-coded.
-* Addition of the ability to run commands on a single server, list of multiple servers,
-  single server group, as well as multiple server groups.
-* Addition of the ability to copy files(one-way for right now) from a local server
-  out to a single server, list of multiple servers, single server group,
+* Batch Mode: Addition of --var1, --var2, and --var3, which enable very
+  simple string substitution such that batch files don't have to be
+  completely hard-coded.
+* Batch Mode: Addition of command count tracking and
+  a very simple time statistics summary.
+* Addition of the ability to run commands on a single server,
+  list of multiple servers, single server group,
   as well as multiple server groups.
+* Addition of the ability to copy files(one-way for right now) from
+  a local server out to a single server, list of multiple servers,
+  single server group, as well as multiple server groups.
 * Addition of a valid XML DTD, such that one can use readily-available
   XML validators to verify that config.xml has no syntax errors,
-  spelling mistakes(in tags anyways), etc.  Verified example config.xml
+  spelling mistakes(in tags), etc.  Verified example config.xml
   actually validates via a standard XML validator.
 * Removed short version of option flags.  They've outlived their
   usefullness and have become more effort than they're worth.

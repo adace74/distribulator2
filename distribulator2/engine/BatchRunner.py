@@ -18,6 +18,7 @@ import os.path
 import stat
 import string
 import sys
+import time
 
 # Custom modules
 import engine.CommandRunner
@@ -52,12 +53,17 @@ class BatchRunner:
             "INFO:  Attempting command run using file '" + \
             self._globalConfig.getBatchFile() + "'.")
 
+        thisCommandCount = 0
         thisIsMore = False
         thisLineBuffer = ''
+        thisTimeDuration = 0
+        thisTimeStarted = time.time()
+        thisTimeFinished = 0
 
         try:
             thisFile = open(self._globalConfig.getBatchFile(), 'r')
-            
+
+            # The Big Loop
             for thisLine in thisFile:
                 thisFoundIt = False
 
@@ -71,6 +77,7 @@ class BatchRunner:
                 thisLine = thisLine.strip()
                 thisLine = string.replace(thisLine, '\t', ' ')
 
+                # Variable substitution
                 if ( self._globalConfig.getVar1() ):
                     thisLine = string.replace( thisLine, '$var1',
                                                self._globalConfig.getVar1() )
@@ -137,9 +144,11 @@ class BatchRunner:
                         # Wrap it just in case.
                         try:
                             thisExternalCommand.run()
+
                         except KeyboardInterrupt:
                             thisInfo = "INFO:  Caught CTRL-C keystroke.  Returning to command prompt..."
                             self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+                        thisCommandCount = thisCommandCount + 1
                         del thisExternalCommand
                         thisFoundIt = True
                         break
@@ -155,7 +164,8 @@ class BatchRunner:
                 thisInternalCommand = engine.data.InternalCommand.InternalCommand()
                 thisInternalCommand.setCommand(thisLine)
                 thisCommandRunner = engine.CommandRunner.CommandRunner(self._globalConfig)
-                thisCommandRunner.run(thisInternalCommand)
+                thisCommandCount = thisCommandCount + \
+                                   thisCommandRunner.run(thisInternalCommand)
                 del thisInternalCommand
                 del thisCommandRunner
 
@@ -167,6 +177,24 @@ class BatchRunner:
             print(thisError)
             self._globalConfig.getSysLogger().LogMsgError(thisError)
             sys.exit(1)
+
+        thisInfo = "INFO:  Commands Run:     %d commands" % \
+              thisCommandCount
+        self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+
+        thisTimeFinished = time.time()
+        thisTimeDuration = thisTimeFinished - thisTimeStarted
+
+        thisInfo = "INFO:  Run Time:         %d seconds" % \
+              int(thisTimeDuration)
+        self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
+
+        if (int(thisTimeDuration) > 0):
+            thisInfo = "INFO:  Time Per Command: %d seconds" % \
+                  int((thisTimeDuration) / thisCommandCount)
+        else:
+            thisInfo = "INFO:  Time Per Command: 0 seconds"
+        self._globalConfig.getSysLogger().LogMsgInfo(thisInfo)
 
         return True
 
