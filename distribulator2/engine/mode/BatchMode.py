@@ -257,18 +257,21 @@ class BatchMode(Mode.Mode):
         #
         self._globalConfig.getSysLogger().LogMsgInfo(self._globalConfig.getSeperator())
 
-        myInfo = "INFO:  Summary: %d commands run / " % \
-              myCommandCount
-
-        myTimeFinished = time.time()
-        myTimeDuration = myTimeFinished - myTimeStarted
-
-        myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
-
-        if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
-            myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
+        if (self._globalConfig.isBreakState()):
+            myInfo = "INFO:  Summary: Not available due to aborted batch run."
         else:
-            myInfo = myInfo + "0s per command"
+            myInfo = "INFO:  Summary: %d commands run / " % \
+                  myCommandCount
+
+            myTimeFinished = time.time()
+            myTimeDuration = myTimeFinished - myTimeStarted
+
+            myInfo = myInfo + "%.2f" % myTimeDuration + "s total / "
+
+            if ( (int(myTimeDuration) > 0) & (int(myCommandCount) > 0) ):
+                myInfo = myInfo + "%.2f" % (myTimeDuration / myCommandCount) + "s avg. per command"
+            else:
+                myInfo = myInfo + "0s per command"
 
         self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
 
