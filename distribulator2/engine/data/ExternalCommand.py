@@ -94,8 +94,8 @@ class ExternalCommand:
                 print(thisError)
                 self._globalConfig.getSysLogger().LogMsgError(thisError)
 
-        # Sleep 1/4 second to allow for CTRL-C's
-        time.sleep(0.25)
+        # Sleep just a -little- bit to allow for catching CTRL-C's
+        time.sleep(0.05)
 
         return thisStatus
 
