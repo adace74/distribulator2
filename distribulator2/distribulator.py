@@ -140,7 +140,7 @@ The available options are:
                     thisServerEnv = opt[1]
                 elif (opt[0] == '--help'):
                     print(usage)
-                    sys.exit(0)
+                    sys.exit(False)
                 elif (opt[0] == '--quiet'):
                     thisQuietMode = True
                 elif (opt[0] == '--var1'):
@@ -152,7 +152,7 @@ The available options are:
                 elif (opt[0] == '--version'):
                     print(__appversion__)
                     print("Please see the LICENSE file for accompanying legalese.")
-                    sys.exit(0)
+                    sys.exit(False)
         else:
             print("ERROR: getopt failure!  This shouldn't ever happen!")
             print
@@ -160,12 +160,12 @@ The available options are:
 
     except "CommandLineError":
         print(usage)
-        sys.exit(1)
+        sys.exit(True)
 
     except getopt.GetoptError:
         print("ERROR: Erroneous flag(s) given.  Please check your syntax.")
         print(usage)
-        sys.exit(1)
+        sys.exit(True)
 
     try:
         thisConfigDir = os.path.join(os.getcwd(), 'conf')
@@ -248,7 +248,7 @@ The available options are:
             if (thisVerboseMode):
                 print(thisError)
 
-            sys.exit(-1)
+            sys.exit(True)
 
     # Try to chdir() to thisStartDir if possible.
     try:
@@ -285,9 +285,9 @@ The available options are:
             print(thisSeperator)
 
     if ( thisGlobalConfig.isExitSuccess() ):
-        sys.exit(0)
+        sys.exit(False)
     else:
-        sys.exit(-1)
+        sys.exit(True)
 
 ######################################################################
 # If called from the command line, invoke thyself!
