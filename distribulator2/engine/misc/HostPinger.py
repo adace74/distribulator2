@@ -50,8 +50,8 @@ class HostPinger:
             return 0
 
         # Add a debug mode someday!
-        except socket.error, (errno, strerror):
-            myError = "ERROR: [Errno %s] %s: %s" % (errno, strerror, PassedHostname)
+        except socket.error:
+            myError = "ERROR: [Errno N/A] N/A: %s" % (PassedHostname)
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return 1
 
