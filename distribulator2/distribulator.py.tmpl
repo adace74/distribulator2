@@ -34,6 +34,10 @@ import os.path
 import socket
 import sys
 
+# Module path hackage
+myInstall = "@DIST_HOME@"
+sys.path.append(myInstall)
+
 # Custom modules
 import engine.conf.ConfigLoader
 import engine.data.GlobalConfig
@@ -75,7 +79,6 @@ def main(argv):
     short_options = ['']
     long_options = ['batch=',
                     'config=',
-                    'directory=',
                     'env=',
                     'help',
                     'list=',
@@ -100,12 +103,6 @@ The available options are:
     --config=config_filename
     Specifies the location of the global XML-based configuraiton file.
     OPTIONAL
-
-    --directory=install_dir
-    Allows the wrapper script to pass in the install location.
-    This is a simple workaround to avoid installing our application
-    into the Python system class path.
-    REQUIRED
 
     --env=env_name
     The server environment we wish to operate in.
@@ -154,7 +151,7 @@ The available options are:
 
     myBatchFile = ''
     myAppConfigFile = ''
-    myInstallDir = '/tmp'
+    myInstallDir = myInstall
     myLoadUsername = True
     myPrintUsername = False
     myRequestedList = ''
@@ -177,8 +174,6 @@ The available options are:
                     myBatchFile = opt[1]
                 elif (opt[0] == '--config'):
                     myAppConfigFile = opt[1]
-                elif (opt[0] == '--directory'):
-                    myInstallDir = opt[1]
                 elif (opt[0] == '--env'):
                     myServerEnv = opt[1]
                 elif (opt[0] == '--help'):
