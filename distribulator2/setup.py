@@ -1,4 +1,3 @@
-#!@PYTHON_BIN@
 ######################################################################
 #
 # $Id$
@@ -30,13 +29,13 @@ setup(name = "Distribulator",
         ('doc', docs),
         ('log', []),
         ('examples', examples),
-      ]
+      ],
       packages = [
         'engine', 'engine.command', 'engine.conf',
         'engine.data', 'engine.misc', 'engine.mode',
         'generic'
       ],
-      scripts = ['distribulator.py'],
-      url='http://www.sf.net/projects/distribulator/',
-      version = '0.9.1',
+      scripts = [ 'distribulator.py' ],
+      url = 'http://www.sf.net/projects/distribulator/',
+      version = '0.9.1'
 )
