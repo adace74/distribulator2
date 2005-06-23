@@ -22,7 +22,6 @@ import DelayCommand
 import EnvCommand
 import LoginCommand
 import MiscCommand
-import PasswordCommand
 import RunCommand
 import ServerCommand
 import engine.data.ExternalCommand
@@ -93,13 +92,6 @@ class Dispatcher:
                 elif (self._commTokens[0] == 'show'):
                     myCommand = engine.command.EnvCommand.EnvCommand(self._globalConfig)
                     myCommandCount = myCommand.doShowEnvironment(self._commString)
-            elif (self._commTokens[1] == 'password'):
-                if (self._commTokens[0] == 'set'):
-                    myCommand = engine.command.PasswordCommand.PasswordCommand(self._globalConfig)
-                    myCommandCount = myCommand.doSetPassword(self._commString)
-                elif (self._commTokens[0] == 'show'):
-                    myCommand = engine.command.PasswordCommand.PasswordCommand(self._globalConfig)
-                    myCommandCount = myCommand.doShowPassword(self._commString)
             elif (self._commTokens[1] == 'server-group'):
                 if (self._commTokens[0] == 'set'):
                     myCommand = engine.command.ServerCommand.ServerCommand(self._globalConfig)

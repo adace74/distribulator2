@@ -255,8 +255,8 @@ Change List For v0.9.0 (Codename: Final Run / Bloat Factor: 4327 lines / Status:
 
 Change List For v0.9.1 (Codename: One More Time / Bloat Factor: ???? lines / Status: In Progress)
 -------------------------------------------------------------------------------------------------
-+ Ability to specify a password via "set password"(show password is too...evil)
-  and have it echo'ed to the remote ssh session for either login or sudo use.
+* Cleanup: Dynamically adding to Python's module path instead of using directory flag sillyness.
+- Cleanup: Replaceming GNU autoconf-based installer with Python's distutils setup.py.
 
 Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------

@@ -221,20 +221,6 @@ class GlobalConfig:
         self._delaySecs = PassedDelaySecs
 
 ######################################################################
-
-    def getRemotePassword(self):
-        """This is a typical accessor method."""
-
-        return self._remotePassword
-
-######################################################################
-
-    def setRemotePassword(self, PassedRemotePassword):
-        """This is a typical accessor method."""
-
-        self._remotePassword = PassedRemotePassword
-
-######################################################################
 # Requested server or server group list, if applicable.
 ######################################################################
 
