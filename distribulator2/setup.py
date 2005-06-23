@@ -23,17 +23,20 @@ examples = [x for x in glob.glob('examples/**') if os.path.isfile(x)]
 
 # Uhhh...this is more code...
 setup(name = "Distribulator",
-      version = "0.9.1",
-      packages = [
-        'engine', 'engine.command', 'engine.conf',
-        'engine.data', 'engine.misc', 'engine.mode',
-        'generic'
-      ],
-      scripts = ['distribulator.py'],
+      author = 'Adam W. Dace',
+      author_email = 'adam@turing.com',
       data_files = [
         ('conf', confs),
         ('doc', docs),
         ('log', []),
         ('examples', examples),
       ]
+      packages = [
+        'engine', 'engine.command', 'engine.conf',
+        'engine.data', 'engine.misc', 'engine.mode',
+        'generic'
+      ],
+      scripts = ['distribulator.py'],
+      url='http://www.sf.net/projects/distribulator/',
+      version = '0.9.1',
 )
