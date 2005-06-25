@@ -41,7 +41,7 @@ import sys
 #
 myInstallDir = os.path.split(os.path.split(os.path.abspath(__file__))[0])[0]
 myModuleDir = os.path.join(myInstallDir, "lib")
-myModuleDir = glob.glob(myModuleDir + "**/**/**")[0]
+myModuleDir = glob.glob(myModuleDir + "**/**/**/**")[0]
 sys.path.append(myModuleDir)
 
 #print "I appear to be: " + os.path.abspath(__file__)
