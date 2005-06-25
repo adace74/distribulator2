@@ -35,11 +35,11 @@ setup(name = "Distribulator",
       description = 'Distributed Computing For The Rest Of Us',
       long_description = 'This is an SSH-based command execution and file transfer utility that includes support for batch, console, and shell integration modes, multiple server enviornments, and full audit logs.',
       packages = [
-        'distribulator', 'distribulator.engine', 'distribulator.engine.command',
+        'distribulator.engine', 'distribulator.engine.command',
         'distribulator.engine.conf', 'distribulator.engine.data', 'distribulator.engine.misc',
         'distribulator.engine.mode', 'distribulator.generic'
       ],
-      scripts = [ 'distribulator/scripts/distribulator.sh' ],
+      scripts = [ 'scripts/distribulator.py' ],
       url = 'http://sourceforge.net/projects/distribulator/',
       version = '0.9.1'
 )
