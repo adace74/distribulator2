@@ -15,11 +15,6 @@ Before installing the distribulator, one must have already installed a copy of t
 
 The usual suspects.  *BSD, Linux, Solaris, etc.
 
-- Recommended: GNU autoconf v2.13 (http://www.gnu.org/software/autoconf/)
-
-Currently, autoconf is being used to morph the software based on install dir
-and the location of Python v2.3.X in on the filesystem.  Later revs of autoconf should work, too.
-
 - Recommended: GNU Readline v4.3 (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
 
 Since the software uses the Python readline module pretty extensively, we need this.
@@ -29,42 +24,35 @@ Since the software uses the Python readline module pretty extensively, we need t
 Taking the lead from the FreeBSD project, this is the version of SSH that the software has been tested with.
 It handles SSH v1/v2 very well, and there have been no major problems found so far.
 
-- Recommended: Python v2.3.4 (http://www.python.org/) accessible via /usr/local/bin/python
+- Recommended: Python v2.3.4 (http://www.python.org/) accessible in your shell path.
 
 I give no guarantee this software will work with earlier versions.
 This also provides a sane yardstick to measure by in the case of problems.
 
-Defaults (autoconf will use these if one just runs "./configure")
------------------------------------------------------------------
-Install Path: /usr/local/distribulator2
-Python Path:  /usr/local/bin/python
-Script Path:  /usr/local/bin
-
 Installation
 ------------
-1) Pick a place you'd like to install the program.  The default is /usr/local/distribulator2
+1) Pick a place you'd like to install the program.
+   Please don't use the "setup.py" default path...that hasn't been tested!
 
    For the sake of example, let's say you have Python installed as /usr/bin/python2.3
    and you want to install this software into /apps/distribulator2
 
-2) Go to the subdir of where you'd like it to be:
-   cd /apps/
+2) Go to the subdir of where you typically keep source code:
+   cd ~/src/
 
 3) Unpack the distribution:
    tar xfz distribulator-X.X.X.tar.gz
 
-4) Run autoconf:
-   cd /apps/distribulator2/
-   ./configure --prefix=/apps/distribulator2 --with-python=/usr/bin/python2.3
+4) Run setup.py:
+   cd distribulator-X.X.X
+   python setup.py install --prefix=/apps/distribulator2
 
-5) Create a symlink from any directory in your path(/usr/local/bin, etc) to the wrapper script:
-   cd /usr/local/bin; ln -s /apps/distribulator2/scripts/distribulator.sh distribulator
+   NOTE: Developers take note, you can specify "--prefix=." and it will install in-place.  Handy!
 
-   NOTE: Another option would be to make sure "distribulator2/scripts/" is in your path
-         and simply call the program "distribulator.sh" instead.
+5) Add the directory /apps/distribulator2/bin/ to your path.  (optional)
 
 6) Fire it up:
-   distribulator --env=demo
+   distribulator.py --env=demo
 
 7) Test it out, tinker around, read the next section for how to setup config.xml for your environments.
 
@@ -84,13 +72,13 @@ Settings of interest:
 - Host Pinger options.
 - Server environment(s) and group(s) settings.
 
-config/logging.conf -- Logging configuration file.
+conf/logging.conf -- Logging configuration file.
 
 This file contains all configuration relating to logging.
 Please keep in mind the fact that we consider STDOUT to be just another log destination.
 See the Python "logging" module documentation for more details.
 
-config/pass_through_cmds.txt -- Pass-through commands list.
+conf/pass_through_cmds.txt -- Pass-through commands list.
 
 This file contains a simple list of Unix common commands for the command-line interface to "pass through",
 that is to simply run locally as a good shell should.
@@ -100,14 +88,14 @@ examples/ -- Directory containing example batch files that should work if config
 Directory Layout Overview
 -------------------------
 
-/distribulator2			- Main install dir.
-	/build			- Autoconf required dir.
-	/conf			- Configuration dir.
-	/doc			- Help file dir.
-	/engine			- Core engine Python classes.
+/distribulator2			- Main source package root.
+	/build			- Python Distutils build.
+	/conf			- Configuration files.
+	/doc			- Help files.
+	/distribulator		- Python classes.
 	/examples		- Example batch files.
-	/generic		- Generic Python classes.
 	/log			- Default audit log destination directory.
+	/lib			- Python Distutils install.
 	/scripts		- Wrapper shell scripts.
 	/tests			- Manual test suite location,
 				  future automated regression tests.
