@@ -15,12 +15,12 @@ import os
 import glob
 from distutils.core import setup
 
-# Uhhh...this is code...
+# Glob magic courtesy of Brian Zimmer.
 docs =  [x for x in glob.glob('doc/**') if os.path.isfile(x)]
 confs = [x for x in glob.glob('conf/**') if os.path.isfile(x)]
 examples = [x for x in glob.glob('examples/**') if os.path.isfile(x)]
 
-# Uhhh...this is more code...
+# Setup magic courtesy of a combo of Brian Zimmer, Karl D'adamo, and Adace Dace.
 setup(name = "Distribulator",
       author = 'Adam W. Dace',
       author_email = 'adam@turing.com',
@@ -41,3 +41,6 @@ setup(name = "Distribulator",
       url = 'http://sourceforge.net/projects/distribulator/',
       version = '0.9.1'
 )
+
+# Sed-style magic to de-templatize a few files.
+print "Boo"

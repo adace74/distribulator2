@@ -64,7 +64,7 @@ Installation
          and simply call the program "distribulator.sh" instead.
 
 6) Fire it up:
-   distribulator
+   distribulator --env=demo
 
 7) Test it out, tinker around, read the next section for how to setup config.xml for your environments.
 
