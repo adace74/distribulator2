@@ -39,7 +39,7 @@ setup(name = "Distribulator",
         'distribulator.engine.conf', 'distribulator.engine.data', 'distribulator.engine.misc',
         'distribulator.engine.mode', 'distribulator.generic'
       ],
-      scripts = [ 'scripts/distribulator.py' ],
+      scripts = [ 'bin/distribulator.py' ],
       url = 'http://sourceforge.net/projects/distribulator/',
       version = '0.9.1'
 )
