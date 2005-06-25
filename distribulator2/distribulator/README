@@ -1,0 +1,18 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+This package contains the top-level script that runs our application.
+
+Package Overview:
+
+engine - Contains action classes responsible for processing meta commands.
+engine.conf    - Contains action classes responsible for loading configuration data.
+engine.data    - Contains data classes that hold data for every aspect of the application.
+engine.misc    - Contains action classes that don't quite fit anywhere else.
+engine.mode    - Contains action classes responsible for the various "modes" in which
+                 the application operates.
+
+######################################################################
