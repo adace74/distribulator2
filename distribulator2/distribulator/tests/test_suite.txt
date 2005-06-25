@@ -1,0 +1,225 @@
+######################################################################
+# $Id$
+#
+# Name: The Distribulator Manual Test Suite
+#
+# Description: The idea here is try and verify that all syntax checking,
+# and logical execution is in fact working properly.  In the future
+# this should be replaced with an autoamted regression test system.
+# Until then, this test suite is to be run by-hand.
+#
+######################################################################
+
+Command: External Unix commands
+
+Test Case:       ls -l
+Expected Result: Runs "ls -l" as you'd expect.
+
+Test Case:       df -k
+Expected Result: Runs "df -k" as you'd expect.
+
+Test Case:       top
+Expected Result: Runs "top" as you'd expect.
+
+######################################################################
+
+Command: copy
+
+Test Case:       copy
+Expected Result: Error.
+
+Test Case:       copy /tmp/test.out /tmp/
+Expected Result: Copies local file /tmp/test.out out to current server group, 
+                 remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out /tmp/ now
+Expected Result: Copies local file /tmp/test.out out to current server group,
+                 remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out www
+Expected Result: Error.
+
+Test Case:       copy /tmp/test.out bogus:/tmp/
+Expected Result: Error.
+
+Test Case:       copy /tmp/test.out www:/tmp/
+Expected Result: Copies local file /tmp/test.out out to all 'www' servers,
+                 remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out app,db,www:/tmp/
+Expected Result: Copies local file /tmp/test.out out to all 'app', 'db', and 'www'
+                 server group servers, remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out app,db,www:/tmp/ now
+Expected Result: Copies local file /tmp/test.out out to all 'app', 'db', and 'www'
+                 server group servers, remote directory /tmp/.
+
+Test Case:       copy /tmp/test.out www01:/tmp/
+Expected Result: Copies local file /tmp/test.out out to a server matching
+                 'www01'.
+
+Test Case:       copy /tmp/test.out www01,www02,www03:/tmp/
+Expected Result: Copies local file /tmp/test.out out to servers matching
+                 'www01', 'www02', and 'www03'.
+
+Test Case:       copy /tmp/test.out www01,www02,www03:/tmp/ now
+Expected Result: Copies local file /tmp/test.out out to servers matching
+                 'www01', 'www02', and 'www03'.
+
+######################################################################
+
+Command: exit
+
+Test Case:       exit
+Expected Result: Exits program cleanly.
+
+Test Case:       CTRL-D
+Expected Result: Exits program cleanly.
+
+######################################################################
+
+Command: help
+
+Test Case:       help
+Expected Result: Main Help Page.
+
+Test Case:       help bogus
+Expected Result: Error.
+
+Test Case:       help <value>, where value is each command supported.
+Expected Result: Detailed help page.
+
+######################################################################
+
+Command: login
+
+Test Case:       login
+Expected Result: Error.
+
+Test Case:       login bogus
+Expected Result: Error.
+
+Test Case:       login www0
+Expected Result: Error.
+
+Test Case:       login www01
+Expected Result: SSH Connection to a server matching 'www01'.
+
+######################################################################
+
+Command: run
+
+Test Case:       run
+Expected Result: Error.
+
+Test Case:       run "uptime"
+Expected Result: Runs the "uptime" command on current server group.
+
+Test Case:       run "uptime" on bogus
+Expected Result: Error.
+
+Test Case:       run "uptime" on www
+Expected Result: Runs the "uptime" command on 'www' server group.
+
+Test Case:       run "uptime" on www now
+Expected Result: Runs the "uptime" command on 'www' server group.
+
+Test Case:       run "uptime" on www reverse
+Expected Result: Runs the "uptime" command on 'www' server group,
+                 in reverse sort order.
+
+Test Case:       run "uptime" on www single
+Expected Result: Runs the "uptime" command on a single server in the 'www' server group,  
+
+Test Case:       run "uptime" on app,db,www
+Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups.
+
+Test Case:       run "uptime" on app,db,www now
+Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups.
+
+Test Case:       run "uptime" on app,db,www reverse
+Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups,
+                 in reverse sort order.
+
+Test Case:       run "uptime" on app,db,www single
+Expected Result: Runs the "uptime" command on a single server in each of the 'app', 'db', and 'www' server groups.
+
+Test Case:       run "uptime" on www01
+Expected Result: Runs the "uptime" command on a server matching 'www01'.
+
+Test Case:       run "uptime" on www01,www02,www03
+Expected Result: Runs the "uptime" command on servers matching 'www01'
+                 and 'www02'.
+
+Test Case:       run "uptime" on www01,www02,www03 now
+Expected Result: Runs the "uptime" command on servers matching 'www01'
+                 and 'www02'.
+
+Test Case:       run "uptime" on www01,www02,www03 reverse
+Expected Result: Runs the "uptime" command on servers matching 'www01'
+                 and 'www02' in reverse sort order.
+
+Test Case:       run "uptime" on www01,www02,www03 single
+Expected Result: Runs the "uptime" command on a single server.
+
+######################################################################
+
+Commands: set server-group and show server-group
+
+Test Case:       set server-group
+Expected Result: Error.
+
+Test Case:       set server-group bogus
+Expected Result: Error.
+
+Test Case:       set server-group www
+Expected Result: Sets current group to 'www'.
+
+Test Case:       show server-group
+Expected Result: Listing of server groups in current environment.
+
+Test Case:       show server-group bogus
+Expected Result: Error.
+
+Test Case:       show server-group www
+Expected Result: Listing of servers in 'www' server group.   
+
+######################################################################
+
+Commands: set delay and show delay
+
+Test Case:       set delay
+Expected Result: Error.
+
+Test Case:       set delay foo
+Expected Result: Error.
+
+Test Case:       set delay 5
+Expected Result: Sets current delay to 5 seconds.
+
+Test Case:       show delay
+Expected Result: Listing of server groups in current environment.
+
+######################################################################
+
+Commands: set environment and show environment
+
+Test Case:       set environment
+Expected Result: Error.
+
+Test Case:       set environment bogus
+Expected Result: Error.
+
+Test Case:       set environment demo2
+Expected Result: Sets current environment to 'demo2'.
+
+Test Case:       show environment
+Expected Result: Listing of server groups in current environment.
+
+Test Case:       show environment bogus
+Expected Result: Error.
+
+Test Case:       show environment demo
+Expected Result: Listing of server groups in 'demo' environment.
+
+######################################################################
