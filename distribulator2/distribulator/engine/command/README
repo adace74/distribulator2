@@ -1,0 +1,20 @@
+######################################################################
+#
+# $Id$
+#
+######################################################################
+
+This package contains action classes responsible for processing meta commands.
+
+Class Overview:
+
+engine.command.Command       - Base abstract class for all meta commands.
+engine.command.CopyCommand   - Implementation class representing the "copy" command.
+engine.command.Dispatcher    - Responsible for dispatching the a given command's processing
+                               to the appropriate subclass.
+engine.command.LoginCommand  - Implementation class representing the "login" command.
+engine.command.MiscCommand   - Implementation class representing the "cd", "exit" and "help" commands.
+engine.command.RunCommand    - Implementation class representing the "run" command.
+engine.command.ServerCommand - Implementation class representing the "set server-group" and "show server-group" commands.
+
+######################################################################
