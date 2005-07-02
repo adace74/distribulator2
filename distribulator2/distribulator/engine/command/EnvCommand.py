@@ -102,8 +102,8 @@ class EnvCommand(Command.Command):
             return False
         else:
             # Otherwise, display the server group list given at startup.
-            myTempStr = "Known server groups for environment '" + myEnvironment.getName() + "'\n"
-            myTempStr = myTempStr + "--------------------------------------------------\n"
+            myServerGroupStr = "Known server groups for environment '" + myEnvironment.getName() + "'\n"
+            myServerGroupStr = myServerGroupStr + "--------------------------------------------------\n"
 
             for myServerGroup in myEnvironment.getServerGroupList():
                 myColumnCount = myColumnCount + 1
