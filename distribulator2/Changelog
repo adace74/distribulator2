@@ -253,10 +253,11 @@ Change List For v0.9.0 (Codename: Final Run / Bloat Factor: 4327 lines / Status:
 * Ability to use regular expressions in the "copy" command.
 * Cleanup: Various console mode output tweaks.
 
-Change List For v0.9.1 (Codename: One More Time / Bloat Factor: ???? lines / Status: In Progress)
+Change List For v0.9.1 (Codename: One More Time / Bloat Factor: 4457 lines / Status: Shipped)
 -------------------------------------------------------------------------------------------------
-* Cleanup: Dynamically adding to Python's module path instead of using directory flag sillyness.
-* Cleanup: Replaceming GNU autoconf-based installer with Python's distutils setup.py.
+* Cleanup: Removed a needless directory flag and replaced this with a more elegant solution.
+* Cleanup: Replaced GNU autoconf-based installer with Python's distutils setup.py.
+* SourceForge bug #1231297 fixed.
 
 Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------

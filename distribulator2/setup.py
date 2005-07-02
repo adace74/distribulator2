@@ -43,6 +43,3 @@ setup(name = "Distribulator",
       url = 'http://sourceforge.net/projects/distribulator/',
       version = '0.9.1'
 )
-
-# Sed-style magic to de-templatize a few files.
-print "Boo"

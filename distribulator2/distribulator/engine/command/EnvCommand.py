@@ -107,15 +107,15 @@ class EnvCommand(Command.Command):
 
             for myServerGroup in myEnvironment.getServerGroupList():
                 myColumnCount = myColumnCount + 1
-                myTempStr = myTempStr + "%10s (%2d) " % \
+                myServerGroupStr = myServerGroupStr + '%16s (%3d) ' % \
                             (myServerGroup.getName(), myServerGroup.getServerCount())
 
                 if (myColumnCount == 4):
                     myColumnCount = 0
-                    myTempStr = myTempStr + '\n'
+                    myServerGroupStr = myServerGroupStr + '\n'
 
-        if ( len(myTempStr) > 0 ):
-            for myLine in myTempStr.split('\n'):
+        if ( len(myServerGroupStr) > 0 ):
+            for myLine in myServerGroupStr.split('\n'):
                 if ( len(myLine) > 0 ):
                     self._globalConfig.getMultiLogger().LogMsgInfo(
                         "OUT:  " + myLine )
