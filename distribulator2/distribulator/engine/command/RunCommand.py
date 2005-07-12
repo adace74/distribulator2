@@ -24,11 +24,18 @@ import os.path
 import stat
 import string
 import sys
+import threading
+import time
 
 # Custom modules
 import Command
 import engine.data.ExternalCommand
 import engine.misc.HostPinger
+
+
+# pull these into config
+maxThreads = 2
+threadTimeout = 1000
 
 ######################################################################
 
@@ -61,6 +68,7 @@ class RunCommand(Command.Command):
         myIsNow = False
         myIsReverse = False
         myIsSingle = False
+        myIsRunInThreads = False
 
         #
         # Step 1:  Create our own tokens, and check for SSH flags and
@@ -97,6 +105,10 @@ class RunCommand(Command.Command):
         if (mySuffixStr.find(' single') != -1):
             myIsSingle = True
             mySuffixStr = string.replace(mySuffixStr, ' single' , '') 
+
+        if (mySuffixStr.find(' threads') != -1):
+            myIsRunInThreads = True
+            mySuffixStr = string.replace(mySuffixStr, ' threads' , '')
 
         #
         # Step 2: Try to determine what the target of the command is
@@ -237,6 +249,8 @@ class RunCommand(Command.Command):
         # 1) Reverse sort the list
         # 2) Run the commands
         #
+        threadList = {}
+        threadCounter = 0
         if ( len(myServerNameList) > 0 ):
             if (myIsReverse):
                 myServerNameList.reverse()
@@ -264,15 +278,40 @@ class RunCommand(Command.Command):
                                 myServer.getName() + " " + \
                                 myBodyStr )
 
-                        # Run It.
-                        if ( self._globalConfig.isBatchMode() ):
-                            myExternalCommand.run()
-                        elif ( len(myFlagStr) > 0 ):
-                            myExternalCommand.run(True)
+                        # Run in threads
+                        if myIsRunInThreads:
+                            # set to true to prompt user before running
+                            if ( self._globalConfig.isBatchMode() ):
+                                PassedIsInteractive = False
+                            elif ( len(myFlagStr) > 0 ):
+                                myExternalCommand.run(True)
+                            else:
+                                myExternalCommand.run()
+                            PassedIsInteractive = False
+
+                            # create the thread object
+                            externalCommandThread = threading.Thread(target=myExternalCommand.run, kwargs={'PassedIsInteractive': PassedIsInteractive}, name=myNameStr)
+
+                            # dictionary containing thread objects and their count from 0 to ... the key is the machine name
+                            threadCounter += 1
+                            threadList[myNameStr] = {'thread': externalCommandThread, 'number': threadCounter}
+
+                            # join thread n to thread n - maxThreads
+                            if threadList[myNameStr]['number'] >= maxThreads:
+                                threadNumberToJoin = threadList[myNameStr]['number'] - maxThreads
+                                threadToJoin = [ threadList[ns] for ns in threadList.keys() if threadList[ns]['number'] == threadNumberToJoin ][0]['thread']
+                                threadToJoin.join()
+                            externalCommandThread.start()
                         else:
-                            myExternalCommand.run()
+                            if ( self._globalConfig.isBatchMode() ):
+                                myExternalCommand.run()
+                            elif ( len(myFlagStr) > 0 ):
+                                myExternalCommand.run(True)
+                            else:
+                                myExternalCommand.run()
 
                         myCommandCount = myCommandCount + 1
+                        threadCounter += 1
 
                         if (myIsSingle):
                             break
@@ -281,6 +320,13 @@ class RunCommand(Command.Command):
                                     "' appears to be down.  Continuing..."
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
+
+                # join the controlling thread to all the running threads so it can't exit until they are all finished
+                def masterThreadJoiner():
+                    pass
+                masterThread = threading.Thread(target=masterThreadJoiner )
+                [ t['thread'].join(threadTimeout) for t in threadList.values() ]
+                masterThread.start()
 
             except EOFError:
                 pass
@@ -353,15 +399,40 @@ class RunCommand(Command.Command):
                                 myServer.getName() + " " + \
                                 myBodyStr )
 
-                            # Run It.
-                            if ( self._globalConfig.isBatchMode() ):
-                                myExternalCommand.run()
-                            elif ( len(myFlagStr) > 0 ):
-                                myExternalCommand.run(True)
+                            # Run in threads
+                            if myIsRunInThreads:
+                                # set to true to prompt user before running
+                                if ( self._globalConfig.isBatchMode() ):
+                                    PassedIsInteractive = False
+                                elif ( len(myFlagStr) > 0 ):
+                                    myExternalCommand.run(True)
+                                else:
+                                    myExternalCommand.run()
+                                PassedIsInteractive = False
+
+                                # create the thread object
+                                externalCommandThread = threading.Thread(target=myExternalCommand.run, kwargs={'PassedIsInteractive': PassedIsInteractive}, name=myServer)
+
+                                # dictionary containing thread objects and their count from 0 to ... the key is the machine name
+                                threadList[myServer] = {'thread': externalCommandThread, 'number': threadCounter}
+
+                                # join thread n to thread n - maxThreads
+                                if threadList[myServer]['number'] >= maxThreads:
+                                    threadNumberToJoin = threadList[myServer]['number'] - maxThreads
+                                    threadToJoin = [ threadList[ns] for ns in threadList.keys() if threadList[ns]['number'] == threadNumberToJoin ][0]['thread']
+                                    threadToJoin.join()
+                                externalCommandThread.start()
                             else:
-                                myExternalCommand.run()
+                                if ( self._globalConfig.isBatchMode() ):
+                                    myExternalCommand.run()
+                                elif ( len(myFlagStr) > 0 ):
+                                    myExternalCommand.run(True)
+                                else:
+                                    myExternalCommand.run()
+
 
                             myCommandCount = myCommandCount + 1
+                            threadCounter += 1
 
                             if (myIsSingle):
                                 break
@@ -370,6 +441,14 @@ class RunCommand(Command.Command):
                                         "' appears to be down.  Continuing..."
                             self._globalConfig.getMultiLogger().LogMsgError(myError)
                             self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
+
+                    # join the controlling thread to all the running threads so it can't exit until they are all finished
+                    def masterThreadJoiner():
+                        pass
+                    masterThread = threading.Thread(target=masterThreadJoiner )
+                    [ t['thread'].join(threadTimeout) for t in threadList.values() ]
+                    masterThread.start()
+
 
                 except EOFError:
                     pass

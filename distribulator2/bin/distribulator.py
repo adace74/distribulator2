@@ -42,11 +42,11 @@ import sys
 myInstallDir = os.path.split(os.path.split(os.path.abspath(__file__))[0])[0]
 myModuleDir = os.path.join(myInstallDir, "lib")
 myModuleDir = glob.glob(myModuleDir + "**/**/**/**")[0]
-sys.path.append(myModuleDir)
+sys.path.append(os.path.join(myModuleDir, 'distribulator'))
 
 #print "I appear to be: " + os.path.abspath(__file__)
 #print "myInstallDir: " + myInstallDir
-#print "myModuleDir: " + myModuleDir
+#print "myModuleDir: ", myModuleDir
 
 # Custom modules
 import engine.conf.ConfigLoader
