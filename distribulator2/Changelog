@@ -259,6 +259,12 @@ Change List For v0.9.1 (Codename: One More Time / Bloat Factor: 4457 lines / Sta
 * Cleanup: Replaced GNU autoconf-based installer with Python's distutils setup.py.
 * SourceForge bug #1231297 fixed.
 
+Change List For v0.9.2 (Codename: Two More Times / Bloat Factor: 4457 lines / Status: Shipped)
+-------------------------------------------------------------------------------------------------
+* Cleanup: Updated the new setup.py scheme to be more developer-friendly.
+* Cleanup: Changed the logging of downed nodes from an "error" to a "warning".
+* Preliminary threading support added, but not active by default.
+
 Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".

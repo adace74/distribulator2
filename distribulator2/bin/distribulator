@@ -22,7 +22,7 @@
 __version__ = '$Revision$'[11:-2]
 
 # Application version tag
-__appversion__ = 'The Distribulator v0.9.1'
+__appversion__ = 'The Distribulator v0.9.2'
 
 # Standard modules
 import commands
@@ -42,11 +42,11 @@ import sys
 myInstallDir = os.path.split(os.path.split(os.path.abspath(__file__))[0])[0]
 myModuleDir = os.path.join(myInstallDir, "lib")
 myModuleDir = glob.glob(myModuleDir + "**/**/**/**")[0]
-sys.path.append(os.path.join(myModuleDir, 'distribulator'))
+sys.path.append(os.path.join(myModuleDir))
 
-#print "I appear to be: " + os.path.abspath(__file__)
-#print "myInstallDir: " + myInstallDir
-#print "myModuleDir: ", myModuleDir
+print "I appear to be: " + os.path.abspath(__file__)
+print "myInstallDir: " + myInstallDir
+print "myModuleDir: ", myModuleDir
 
 # Custom modules
 import engine.conf.ConfigLoader

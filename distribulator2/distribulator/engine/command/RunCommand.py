@@ -318,7 +318,7 @@ class RunCommand(Command.Command):
                     else:
                         myError = "Server '" + myServer.getName() + \
                                     "' appears to be down.  Continuing..."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        self._globalConfig.getMultiLogger().LogMsgWarn(myError)
                         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
                 # join the controlling thread to all the running threads so it can't exit until they are all finished
@@ -439,7 +439,7 @@ class RunCommand(Command.Command):
                         else:
                             myError = "Server '" + myServer.getName() + \
                                         "' appears to be down.  Continuing..."
-                            self._globalConfig.getMultiLogger().LogMsgError(myError)
+                            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
                             self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
                     # join the controlling thread to all the running threads so it can't exit until they are all finished

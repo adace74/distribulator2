@@ -29,8 +29,14 @@ It handles SSH v1/v2 very well, and there have been no major problems found so f
 I give no guarantee this software will work with earlier versions.
 This also provides a sane yardstick to measure by in the case of problems.
 
-Installation
-------------
+Developer Installation
+----------------------
+1) CVS checkout the source, via anonymous or secured means.
+2) make symlink
+3) ./bin/distribulator
+
+User Installation
+-----------------
 1) Pick a place you'd like to install the program.
    Please don't use the "setup.py" default path...that hasn't been tested!
 
@@ -46,8 +52,6 @@ Installation
 4) Run setup.py:
    cd distribulator-X.X.X
    python setup.py install --prefix=/apps/distribulator2
-
-   NOTE: Developers take note, you can specify "--prefix=." and it will install in-place.  Handy!
 
 5) Add the directory /apps/distribulator2/bin/ to your path.  (optional)
 

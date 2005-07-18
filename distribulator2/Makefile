@@ -14,5 +14,6 @@ clean:
 count:
 	find . -name '*.py' | xargs cat | wc -l
 
-install:
-	python setup.py install --prefix=.
+symlink:
+	cd conf/; ln -s config.xml.dist config.xml
+	cd lib/python2.4/site-packages/; ln -s ../../../distribulator
