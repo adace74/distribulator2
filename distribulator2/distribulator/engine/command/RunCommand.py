@@ -76,7 +76,7 @@ class RunCommand(Command.Command):
         #
         if ( self._commString.find('"') == -1 ):
             myError = "Command Syntax Error.  Try 'help run' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False
 
         # Get substr indexes.
@@ -121,7 +121,7 @@ class RunCommand(Command.Command):
         # Check for syntax errors.
         elif (mySuffixStr.find(' on ') == -1):
             myError = "Command Syntax Error.  Try 'help run' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False
         elif (mySuffixStr.find(',') == -1):
             # run "uptime" on app

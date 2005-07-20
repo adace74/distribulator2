@@ -63,11 +63,11 @@ class CopyCommand(Command.Command):
         # Validate token count.
         if (len(self._commTokens) < 3):
             myError = "Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False
         elif (self._commTokens[2].find('/') == -1):
             myError = "Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False            
         else:
             myLocalPath = self._commTokens[1]
@@ -90,7 +90,7 @@ class CopyCommand(Command.Command):
         elif (self._commTokens[1].find(':') > 0):
             # copy app:/tmp/blah /tmp/
             myError = "Command Syntax Error.  Try 'help copy' for more information."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False
         elif (self._commString.find(',') == -1):
             # copy /tmp/blah.txt app:/tmp/

@@ -50,7 +50,7 @@ class DelayCommand(Command.Command):
 
             except ValueError:
                 myError = "Invalid delay of '" + self._commTokens[2] + "' entered.  Please use an integer number."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                self._globalConfig.getMultiLogger().LogMsgWarn(myError)
                 return False
 
             myInfo = "Current delay between remote commands is %d seconds." % self._globalConfig.getDelaySecs()
@@ -58,7 +58,7 @@ class DelayCommand(Command.Command):
             return True
         else:
             myError = "No delay time specified."
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgWarn(myError)
             return False
 
 ######################################################################
