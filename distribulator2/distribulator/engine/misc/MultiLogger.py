@@ -29,6 +29,12 @@ class MultiLogger:
 
         self._globalConfig = PassedGlobalConfig
 
+    def LogMsgCrit(self, PassedMessage):
+        """Logs and possibly prints a given message with the log level CRITICAL."""
+
+        self._globalConfig.getAuditLogger().critical(PassedMessage)
+        self._globalConfig.getStdoutLogger().critical(PassedMessage)
+
     def LogMsgDebug(self, PassedMessage):
         """Logs and possibly prints a given message with the log level DEBUG."""
 

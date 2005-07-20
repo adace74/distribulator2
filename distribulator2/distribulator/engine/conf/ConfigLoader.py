@@ -73,7 +73,7 @@ class ConfigLoader:
         except IOError, (errno, strerror):
             myError = "[Errno %s] %s: %s" % \
                         (errno, strerror, myFilename)
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgCrit(myError)
             sys.exit(True)
 
         self._globalConfig.setPassThruList(myPassThruList)
@@ -95,7 +95,7 @@ class ConfigLoader:
                 myError = "File '" + \
                             self._globalConfig.getLoggingConfigFile() + \
                             "' is accessible, but not regular."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                self._globalConfig.getMultiLogger().LogMsgCrit(myError)
                 self._globalConfig.setExitSuccess(False)
                 return
 
@@ -108,7 +108,7 @@ class ConfigLoader:
         except OSError, (errno, strerror):
             myError = "[Errno %s] %s: %s" % ( errno, strerror, \
                                                        self._globalConfig.getBatchFile() )
-            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            self._globalConfig.getMultiLogger().LogMsgCrit(myError)
             self._globalConfig.setExitSuccess(False)
             return
 
