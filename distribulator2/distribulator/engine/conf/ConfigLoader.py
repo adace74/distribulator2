@@ -112,8 +112,14 @@ class ConfigLoader:
             self._globalConfig.setExitSuccess(False)
             return
 
-        # Load it!
+        # Setup logging configuration.
         logging.config.fileConfig( self._globalConfig.getLoggingConfigFile() )
+
+        # Override built-in text with something a little more brief.
+        logging.addLevelName(logging.CRITICAL, 'CRIT')
+        logging.addLevelName(logging.WARNING, 'WARN')
+
+        # Store loggers for later use.
         self._globalConfig.setAuditLogger( logging.getLogger('audit') )
         self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
 

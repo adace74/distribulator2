@@ -86,7 +86,7 @@ class ConsoleMode(Mode.Mode):
             myInput = ''
             myPromptEnv = self._globalConfig.getCurrentEnvName()
             myPromptGroup = self._globalConfig.getCurrentServerGroup().getName()
-            myPrompt = 'INPUT   |<' + myPromptUser + '@' + myPromptEnv + \
+            myPrompt = 'INPUT|<' + myPromptUser + '@' + myPromptEnv + \
             '[' + myPromptGroup + ']:' + os.getcwd() + '> '
 
             try:
