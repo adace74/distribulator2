@@ -119,6 +119,9 @@ class ConfigLoader:
         logging.addLevelName(logging.CRITICAL, 'CRIT')
         logging.addLevelName(logging.WARNING, 'WARN')
 
+        # Override exception handling to silently swallow I/O exceptions.
+        logging.raiseExceptions = False
+
         # Store loggers for later use.
         self._globalConfig.setAuditLogger( logging.getLogger('audit') )
         self._globalConfig.setStdoutLogger( logging.getLogger('stdout') )
