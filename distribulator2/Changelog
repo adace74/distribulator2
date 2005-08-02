@@ -266,6 +266,10 @@ Change List For v0.9.2 (Codename: Cleanliness / Bloat Factor: 4460 lines / Statu
 * Clenaup: Various small logging changes to make output more readable.
 * Preliminary threading support added, but not active by default.
 
+Change List For v0.9.3 (Codename: Cleanliness / Python Bloat Factor: 4460 lines / Status: Shipped)
+--------------------------------------------------------------------------------------------------
+* SourceForge Bug #1250465 fixed.
+
 Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
 - Ability to use a new run command keyword: "parallel".

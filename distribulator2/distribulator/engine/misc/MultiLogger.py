@@ -16,6 +16,9 @@ the standard logging module.
 # Version tag
 __version__= '$Revision$'[11:-2]
 
+# Standard modules
+import errno
+
 ######################################################################
 
 class MultiLogger:
@@ -32,43 +35,78 @@ class MultiLogger:
     def LogMsgCrit(self, PassedMessage):
         """Logs and possibly prints a given message with the log level CRITICAL."""
 
-        self._globalConfig.getAuditLogger().critical(PassedMessage)
-        self._globalConfig.getStdoutLogger().critical(PassedMessage)
+        try:
+            self._globalConfig.getAuditLogger().critical(PassedMessage)
+            self._globalConfig.getStdoutLogger().critical(PassedMessage)
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise 
 
     def LogMsgDebug(self, PassedMessage):
         """Logs and possibly prints a given message with the log level DEBUG."""
 
-        self._globalConfig.getAuditLogger().debug(PassedMessage)
-        self._globalConfig.getStdoutLogger().debug(PassedMessage)
+        try:
+            self._globalConfig.getAuditLogger().debug(PassedMessage)
+            self._globalConfig.getStdoutLogger().debug(PassedMessage)
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
     def LogMsgDebugSeperator(self):
         """Logs and possibly prints a seperator with the log level DEBUG."""
 
-        self._globalConfig.getAuditLogger().debug( self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().debug( self._globalConfig.getSeperator() )
+        try:
+            self._globalConfig.getAuditLogger().debug( self._globalConfig.getSeperator() )
+            self._globalConfig.getStdoutLogger().debug( self._globalConfig.getSeperator() )
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
     def LogMsgInfo(self, PassedMessage):
         """Logs and possibly prints a given message with the log level INFO."""
 
-        self._globalConfig.getAuditLogger().info(PassedMessage)
-        self._globalConfig.getStdoutLogger().info(PassedMessage)
+        try:
+            self._globalConfig.getAuditLogger().info(PassedMessage)
+            self._globalConfig.getStdoutLogger().info(PassedMessage)
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
     def LogMsgInfoSeperator(self):
         """Logs and possibly prints a seperator with the log level INFO."""
 
-        self._globalConfig.getAuditLogger().info( self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().info( self._globalConfig.getSeperator() )
+        try:
+            self._globalConfig.getAuditLogger().info( self._globalConfig.getSeperator() )
+            self._globalConfig.getStdoutLogger().info( self._globalConfig.getSeperator() )
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
     def LogMsgWarn(self, PassedMessage):
         """Logs and possibly prints given message with the log level WARNING."""
 
-        self._globalConfig.getAuditLogger().warning(PassedMessage)
-        self._globalConfig.getStdoutLogger().warning(PassedMessage)
+        try:
+            self._globalConfig.getAuditLogger().warning(PassedMessage)
+            self._globalConfig.getStdoutLogger().warning(PassedMessage)
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
     def LogMsgError(self, PassedMessage):
         """Logs and possibly prints a given message with the log level ERROR."""
 
-        self._globalConfig.getAuditLogger().error(PassedMessage)
-        self._globalConfig.getStdoutLogger().error(PassedMessage)
+        try:
+            self._globalConfig.getAuditLogger().error(PassedMessage)
+            self._globalConfig.getStdoutLogger().error(PassedMessage)
+
+        except IOError, e:
+            if e.errno != errno.EPIPE:
+                raise
 
 ######################################################################

@@ -15,16 +15,16 @@ Before installing the distribulator, one must have already installed a copy of t
 
 The usual suspects.  *BSD, Linux, Solaris, etc.
 
-- Recommended: GNU Readline v4.3 (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
+- Recommended: GNU Readline v4.3 or later (http://cnswww.cns.cwru.edu/~chet/readline/rltop.html)
 
 Since the software uses the Python readline module pretty extensively, we need this.
 
-- Recommended: OpenSSH v3.4p1 (http://www.openssh.org/)
+- Recommended: OpenSSH v3.4p1 or later (http://www.openssh.org/)
 
 Taking the lead from the FreeBSD project, this is the version of SSH that the software has been tested with.
 It handles SSH v1/v2 very well, and there have been no major problems found so far.
 
-- Recommended: Python v2.3.4 (http://www.python.org/) accessible in your shell path.
+- Recommended: Python v2.3.4 or later (http://www.python.org/) accessible in your shell path.
 
 I give no guarantee this software will work with earlier versions.
 This also provides a sane yardstick to measure by in the case of problems.
