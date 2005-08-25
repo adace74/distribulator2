@@ -183,7 +183,8 @@ class RunCommand(Command.Command):
 
                     # Validate attribute value match.
                     if (not myServerList):
-                        myWarn = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
+                        myWarn = "No matching attribute value '" + \
+                            myGroupStr[myGroupStr.find(':') + 1:] + "' for server group '" + myServerGroup.getName() + "'."
                         self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
                         #return False
                     else:
@@ -226,9 +227,10 @@ class RunCommand(Command.Command):
 
                     # Validate attribute value match.
                     if (not myServerList):
-                        myWarn = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
+                        myWarn = "No matching attribute value '" + \
+                            myLoopStr[myLoopStr.find(':') + 1:] + "' for server group '" + myServerGroup.getName() + "'."
                         self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
-                        return False
+                        #return False
 
                     myServerGroupList.append(myLoopStr)
 
