@@ -183,11 +183,11 @@ class RunCommand(Command.Command):
 
                     # Validate attribute value match.
                     if (not myServerList):
-                        myError = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-
-                    myServerGroupList.append(myGroupStr)
+                        myWarn = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
+                        #return False
+                    else:
+                        myServerGroupList.append(myGroupStr)
         #
         elif (myRunTarget == 'multiple_server_group'):
             myGroupList = myGroupStr.split(',')
@@ -226,8 +226,8 @@ class RunCommand(Command.Command):
 
                     # Validate attribute value match.
                     if (not myServerList):
-                        myError = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        myWarn = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgWarn(myWarn)
                         return False
 
                     myServerGroupList.append(myLoopStr)
