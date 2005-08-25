@@ -22,7 +22,7 @@
 __version__ = '$Revision$'[11:-2]
 
 # Application version tag
-__appversion__ = 'The Distribulator v0.9.3'
+__appversion__ = 'The Distribulator v1.0.0'
 
 # Standard modules
 import commands
@@ -208,7 +208,7 @@ The available options are:
                     myVerboseLevel = opt[1]
                 elif (opt[0] == '--version'):
                     print(__appversion__)
-                    print("(c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.")
+                    print("(c) Copyright 2005 Orbitz, Inc.  All Rights Reserved.")
                     print
                     print("Please see the LICENSE file for accompanying legalese.")
                     print

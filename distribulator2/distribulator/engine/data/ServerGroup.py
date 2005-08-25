@@ -93,7 +93,21 @@ class ServerGroup:
 
 ######################################################################
 
-    def getRegExServerList(self,regex):
+    def getAttribValueServerList(self, PassedAttribValue):
+        """This is a typical accessor method."""
+
+        myTempList=[]
+
+        for myServer in self._serverList:
+             for myValue in myServer.getAttributes().values():
+                 if (myValue == PassedAttribValue):
+                     myTempList.append(myServer)
+
+        return myTempList
+
+######################################################################
+
+    def getRegExServerList(self, regex):
         """This is a typical accessor method."""
 
 	newlist=[]

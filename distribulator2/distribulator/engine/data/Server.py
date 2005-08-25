@@ -21,7 +21,28 @@ class Server:
     def __init__(self):
         """Constructor."""
 
-        pass
+        self._attributes = {}
+
+######################################################################
+# Attributes.
+######################################################################
+
+    def getAttributes(self):
+        return self._attributes
+
+######################################################################
+
+    def getAttribValue(self, PassedAttributeName):
+        """This is a typical accessor method."""
+
+        return self._attributes[PassedAttributeName]
+
+######################################################################
+
+    def setAttribute(self, PassedAttributeName, PassedAttributeValue):
+        """This is a typical accessor method."""
+
+        self._attributes[PassedAttributeName] = PassedAttributeValue
 
 ######################################################################
 # Name.

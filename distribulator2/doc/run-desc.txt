@@ -40,11 +40,20 @@ Examples:
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
                                in forward sort order, and forces an ssh tty.
 
-    run "uptime" on app:r'0[123]'
+    run "uptime" on app:strawberry
+                            -- Runs uptime on app servers with attribute
+                               flavor=strawberry
+
+TODO:
+
+    run "uptime" on app where flavor="strawberry"
+                            -- Runs uptime on app servers with attribute
+                               flavor=strawberry
+
+    run "uptime" on app where regex="0[123]"
 			    -- Runs uptime on app servers that match regex 0[123]
-    run "uptime" on app:r'0[123]',dlfs:r'1A'
-			    -- Runs uptime on app servers that match regex 0[123]
-			       and on dlfs servers that match regex 1A
+
+
 
 Notes:
     The hostname search algorithm has been tweaked in such a way that

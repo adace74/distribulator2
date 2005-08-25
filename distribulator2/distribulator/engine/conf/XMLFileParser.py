@@ -248,7 +248,12 @@ class XMLFileParser:
         """This method handles a single <Server> tag."""
 
         myServer = engine.data.Server.Server()
-        myServer.setName( self.getText(PassedServer.childNodes).strip() )
+
+        for myKey in PassedServer.attributes.keys():
+            if (myKey == 'name'):
+                myServer.setName(PassedServer.attributes[myKey].value)
+            else:
+                myServer.setAttribute(myKey, PassedServer.attributes[myKey].value)
 
         return myServer
 

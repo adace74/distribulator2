@@ -270,15 +270,26 @@ Change List For v0.9.3 (Codename: Cleanliness / Bloat Factor: 4102 lines / Statu
 -------------------------------------------------------------------------------------------
 * SourceForge Bug #1250465 fixed.
 
-Change List For v1.0.0 (Codename: Optimator / Status: Not Started)
+Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: ? lines / Status: In Progress)
+-------------------------------------------------------------------------------------------------
+* Modified configuration XML schema to support more consistent attributes,
+  as well as dynamic attribute support.
+* Added preliminary support for dynamic attribute-based selction in "run" meta-command.
+
+Change List For v1.0.1 (Codename: ? / Bloat Factor: ? lines / Status: Not Started)
+----------------------------------------------------------------------------------
+? Cleanup: Updated various run syntax permutations to be more consistent.
+? Added support for dynamic attribute-based "blinders", similar to environment.
+
+Change List For v1.1.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
-- Ability to use a new run command keyword: "parallel".
+- Stable ability to use a new run command keyword: "threads".
   This will run the given command in background processes in parallel.
   Output will be spooled to one file per server in a standard output directory.
 - Ability to use a "set concurrency X" command to set the concurrency
   for parallel run.  Also XML config directives for global defaults.
 
-Change List For v1.1.0 (Codename: Status / Status: Not Started)
+Change List For v1.2.0 (Codename: Status / Status: Not Started)
 ---------------------------------------------------------------
 ? Ability to have "pluggable" transports whereby one can at least use the "copy" and "run" commands
   via rsh, ssh, SSL, multicast, etc.  Will most likely use command-line as interface.

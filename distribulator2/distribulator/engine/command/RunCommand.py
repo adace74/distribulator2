@@ -18,7 +18,6 @@ SSH commands and running them.
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import re
 import os
 import os.path
 import stat
@@ -159,16 +158,29 @@ class RunCommand(Command.Command):
             if (myServer):
                 myServerNameList.append(myServer.getName())
             else:
-                # Check for server group match.
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
-                # Validate.
-                if (not myServerGroup):
-                    myError = "No matching server name or group '" + \
-                                myGroupStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(myError)
-                    return False
+                # Check for server group match, with and without attributes.
+                if (myGroupStr.find(':') != -1):
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find(':')])
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find(':') + 1:])
+
+                    # Validate attribute value match.
+                    if (not myServerList):
+                        myError = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+                    else:
+                        myServerGroupList.append(myGroupStr)
                 else:
-                    myServerGroupList.append(myGroupStr)
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+
+                    # Validate.
+                    if (not myServerGroup):
+                        myError = "No matching server name or group '" + \
+                                    myGroupStr + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+                    else:
+                        myServerGroupList.append(myGroupStr)
         #
         elif (myRunTarget == 'multiple_server_group'):
             myGroupList = myGroupStr.split(',')
@@ -182,15 +194,30 @@ class RunCommand(Command.Command):
                     myServerNameList.append(myServer.getName())
                     continue
 
-                # Check for server group match.
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
-                if (myServerGroup):
-                    myServerGroupList.append(myLoopStr)
+                # Check for server group match, with and without attributes.
+                if (myLoopStr.find(':') != -1):
+                    print "Loop: " + myLoopStr
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find(':')])
+                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find(':') + 1:])
+
+                    # Validate attribute value match.
+                    if (not myServerList):
+                        myError = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+                    else:
+                        myServerGroupList.append(myLoopStr)
                 else:
-                    myError = "No matching server name or group '" + \
-                                myLoopStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(myError)
-                    return False
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
+
+                    # Validate.
+                    if (not myServerGroup):
+                        myError = "No matching server name or group '" + \
+                                    myLoopStr + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+                    else:
+                        myServerGroupList.append(myLoopStr)
 
         #
         # Step 4: Make sure noone's trying to mix
@@ -349,30 +376,16 @@ class RunCommand(Command.Command):
             # 3) Forward-sort the list, hopefully back to its original state.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
-
-                reggie=re.compile(r'(.*):r\'(.*)\'')
-                maggie=reggie.match(myGroupStr)
-                if (maggie != None):
-                    myServerList = myServerGroup.getRegExServerList(maggie.group(2))
-
-                    if ( (not self._globalConfig.isBatchMode()) and (not myIsNow) ):
-                        myDisplayStr = ''
-                        for servlist in myServerList:
-                            myDisplayStr = myDisplayStr + servlist.getName() + ','
-                            myDisplayStr = myDisplayStr.rstrip(',')
-
-                            # Are you sure?
-                            myInfo = "Run command " + myBodyStr + " on server(s) " + \
-                                myDisplayStr + "?"
-                            self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-
-                            if (not self.doAreYouSure()):
-                                myInfo = "Aborting command."
-                                self._globalConfig.getMultiLogger().LogMsgInfo(myInfo)
-                                continue
-                else:
+                # Search for a colon, act appropriately.
+                if (myGroupStr.find(':') == -1):
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                     myServerList = myServerGroup.getServerList()
+                else:
+                    myAttribValue = myGroupStr[myGroupStr.find(':') + 1:]
+                    myGroupStr = myGroupStr[:myGroupStr.find(':')]
+
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+                    myServerList = myServerGroup.getAttribValueServerList(myAttribValue)
 
                 if (myIsReverse):
                     myServerList.reverse()
