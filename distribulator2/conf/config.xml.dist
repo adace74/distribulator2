@@ -36,34 +36,34 @@
     <environment name="demo" default="www">
         <!-- SSH v1 Group -->
         <servergroup name="app" username="tomcat" version="1">
-            <server name="app01.somewhere.com" flavor="vanilla"/>
-            <server name="app02.somewhere.com" flavor="vanilla"/>
-            <server name="app03.somewhere.com" flavor="vanilla"/>
-            <server name="app04.somewhere.com" flavor="strawberry"/>
-            <server name="app05.somewhere.com" flavor="strawberry"/>
+            <server name="app01.somewhere.com" brand="fredco"/>
+            <server name="app02.somewhere.com" brand="fredco"/>
+            <server name="app03.somewhere.com" brand="fredco"/>
+            <server name="app04.somewhere.com" brand="suzieco"/>
+            <server name="app05.somewhere.com" brand="suzieco"/>
         </servergroup>
 
         <!-- SSH v2 Group -->
         <servergroup name="db" username="postgres" version="2">
-            <server name="db01.somewhere.com" flavor="vanilla"/>
-            <server name="db02.somewhere.com" flavor="vanilla"/>
-            <server name="db03.somewhere.com" flavor="vanilla"/>
-            <server name="db04.somewhere.com" flavor="strawberry"/>
-            <server name="db05.somewhere.com" flavor="strawberry"/>
+            <server name="db01.somewhere.com" brand="fredco"/>
+            <server name="db02.somewhere.com" brand="fredco"/>
+            <server name="db03.somewhere.com" brand="fredco"/>
+            <server name="db04.somewhere.com" brand="suzieco"/>
+            <server name="db05.somewhere.com" brand="suzieco"/>
         </servergroup>
 
         <!-- SSH v1 Group -->
         <servergroup name="www" username="apache" version="1">
-            <server name="www01.somewhere.com" flavor="vanilla"/>
-            <server name="www02.somewhere.com" flavor="vanilla"/>
-            <server name="www03.somewhere.com" flavor="vanilla"/>
-            <server name="www04.somewhere.com" flavor="vanilla"/>
-            <server name="www05.somewhere.com" flavor="vanilla"/>
-            <server name="www06.somewhere.com" flavor="strawberry"/>
-            <server name="www07.somewhere.com" flavor="strawberry"/>
-            <server name="www08.somewhere.com" flavor="strawberry"/>
-            <server name="www09.somewhere.com" flavor="strawberry"/>
-            <server name="www10.somewhere.com" flavor="strawberry"/>
+            <server name="www01.somewhere.com" brand="fredco"/>
+            <server name="www02.somewhere.com" brand="fredco"/>
+            <server name="www03.somewhere.com" brand="fredco"/>
+            <server name="www04.somewhere.com" brand="fredco"/>
+            <server name="www05.somewhere.com" brand="fredco"/>
+            <server name="www06.somewhere.com" brand="suzieco"/>
+            <server name="www07.somewhere.com" brand="suzieco"/>
+            <server name="www08.somewhere.com" brand="suzieco"/>
+            <server name="www09.somewhere.com" brand="suzieco"/>
+            <server name="www10.somewhere.com" brand="suzieco"/>
         </servergroup>
     </environment>
 
@@ -71,34 +71,34 @@
     <environment name="demo2" default="www">
         <!-- SSH v1 Group -->
         <servergroup name="app2" username="tomcat" version="1">
-            <server name="app01.somewhere2.com" flavor="vanilla"/>
-            <server name="app02.somewhere2.com" flavor="vanilla"/>
-            <server name="app03.somewhere2.com" flavor="vanilla"/>
-            <server name="app04.somewhere2.com" flavor="strawberry"/>
-            <server name="app05.somewhere2.com" flavor="strawberry"/>
+            <server name="app01.somewhere2.com" brand="fredco"/>
+            <server name="app02.somewhere2.com" brand="fredco"/>
+            <server name="app03.somewhere2.com" brand="fredco"/>
+            <server name="app04.somewhere2.com" brand="suzieco"/>
+            <server name="app05.somewhere2.com" brand="suzieco"/>
         </servergroup>
 
         <!-- SSH v2 Group -->
         <servergroup name="db2" username="postgres" version="2">
-            <server name="db01.somewhere2.com" flavor="vanilla"/>
-            <server name="db02.somewhere2.com" flavor="vanilla"/>
-            <server name="db03.somewhere2.com" flavor="vanilla"/>
-            <server name="db04.somewhere2.com" flavor="strawberry"/>
-            <server name="db05.somewhere2.com" flavor="strawberry"/>
+            <server name="db01.somewhere2.com" brand="fredco"/>
+            <server name="db02.somewhere2.com" brand="fredco"/>
+            <server name="db03.somewhere2.com" brand="fredco"/>
+            <server name="db04.somewhere2.com" brand="suzieco"/>
+            <server name="db05.somewhere2.com" brand="suzieco"/>
         </servergroup>
 
         <!-- SSH v1 Group -->
         <servergroup name="www2" username="apache" version="1">
-            <server name="www01.somewhere2.com" flavor="vanilla"/>
-            <server name="www02.somewhere2.com" flavor="vanilla"/>
-            <server name="www03.somewhere2.com" flavor="vanilla"/>
-            <server name="www04.somewhere2.com" flavor="vanilla"/>
-            <server name="www05.somewhere2.com" flavor="vanilla"/>
-            <server name="www06.somewhere2.com" flavor="strawberry"/>
-            <server name="www07.somewhere2.com" flavor="strawberry"/>
-            <server name="www08.somewhere2.com" flavor="strawberry"/>
-            <server name="www09.somewhere2.com" flavor="strawberry"/>
-            <server name="www10.somewhere2.com" flavor="strawberry"/>
+            <server name="www01.somewhere2.com" brand="fredco"/>
+            <server name="www02.somewhere2.com" brand="fredco"/>
+            <server name="www03.somewhere2.com" brand="fredco"/>
+            <server name="www04.somewhere2.com" brand="fredco"/>
+            <server name="www05.somewhere2.com" brand="fredco"/>
+            <server name="www06.somewhere2.com" brand="suzieco"/>
+            <server name="www07.somewhere2.com" brand="suzieco"/>
+            <server name="www08.somewhere2.com" brand="suzieco"/>
+            <server name="www09.somewhere2.com" brand="suzieco"/>
+            <server name="www10.somewhere2.com" brand="suzieco"/>
         </servergroup>
     </environment>
 

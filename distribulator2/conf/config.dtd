@@ -16,37 +16,42 @@
 <!-- Define the Configuration Markup Language "config" document type. -->
 
 <!-- The "config" tag. -->
+
 <!ELEMENT config (binary+, logging?, ping?, environment+)>
 
 <!-- The "binary" tag. -->
+
 <!ELEMENT binary EMPTY>
-<!ATTLIST binary
-    name CDATA #REQUIRED
-    value CDATA #REQUIRED>
+<!ATTLIST binary name CDATA #REQUIRED>
+<!ATTLIST binary value CDATA #REQUIRED>
 
 <!-- The "logging" tag. -->
+
 <!ELEMENT logging EMPTY>
-<!ATTLIST logging
-    facility CDATA #REQUIRED>
+<!ATTLIST logging facility CDATA #REQUIRED>
 
 <!-- The "ping" tag. -->
+
 <!ELEMENT ping EMPTY>
-<!ATTLIST ping
-    banner CDATA #IMPLIED
-    port CDATA #IMPLIED
-    timeout CDATA #IMPLIED>
+<!ATTLIST ping banner CDATA #IMPLIED>
+<!ATTLIST ping port CDATA #IMPLIED>
+<!ATTLIST ping timeout CDATA #IMPLIED>
 
 <!-- The "environment" tag. -->
+
 <!ELEMENT environment (servergroup+)>
-<!ATTLIST environment
-    name CDATA #REQUIRED>
+<!ATTLIST environment default CDATA #IMPLIED>
+<!ATTLIST environment name CDATA #REQUIRED>
 
 <!-- The "servergroup" tag. -->
+
 <!ELEMENT servergroup (server+)>
-<!ATTLIST servergroup
-    name CDATA #REQUIRED
-    username CDATA #IMPLIED
-    version CDATA #IMPLIED>
+<!ATTLIST servergroup name CDATA #REQUIRED>
+<!ATTLIST servergroup username CDATA #IMPLIED>
+<!ATTLIST servergroup version CDATA #IMPLIED>
 
 <!-- The "server" tag. -->
-<!ELEMENT server (#PCDATA)>
+
+<!ELEMENT server EMPTY>
+<!ATTLIST server name CDATA #REQUIRED>
+<!ATTLIST server brand CDATA #IMPLIED>
