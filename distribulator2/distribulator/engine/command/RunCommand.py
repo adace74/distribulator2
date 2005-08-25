@@ -159,18 +159,7 @@ class RunCommand(Command.Command):
                 myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match, with and without attributes.
-                if (myGroupStr.find(':') != -1):
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find(':')])
-                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find(':') + 1:])
-
-                    # Validate attribute value match.
-                    if (not myServerList):
-                        myError = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-                    else:
-                        myServerGroupList.append(myGroupStr)
-                else:
+                if (myGroupStr.find(':') == -1):
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
 
                     # Validate.
@@ -181,6 +170,24 @@ class RunCommand(Command.Command):
                         return False
                     else:
                         myServerGroupList.append(myGroupStr)
+                else:
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find(':')])
+
+                    # Validate servergroup match.
+                    if (not myServerGroup):
+                        myError = "No matching server name or group ''."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find(':') + 1:])
+
+                    # Validate attribute value match.
+                    if (not myServerList):
+                        myError = "No matching attribute value '" + myGroupStr[myGroupStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+
+                    myServerGroupList.append(myGroupStr)
         #
         elif (myRunTarget == 'multiple_server_group'):
             myGroupList = myGroupStr.split(',')
@@ -195,19 +202,7 @@ class RunCommand(Command.Command):
                     continue
 
                 # Check for server group match, with and without attributes.
-                if (myLoopStr.find(':') != -1):
-                    print "Loop: " + myLoopStr
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find(':')])
-                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find(':') + 1:])
-
-                    # Validate attribute value match.
-                    if (not myServerList):
-                        myError = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-                    else:
-                        myServerGroupList.append(myLoopStr)
-                else:
+                if (myLoopStr.find(':') == -1):
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
 
                     # Validate.
@@ -218,6 +213,24 @@ class RunCommand(Command.Command):
                         return False
                     else:
                         myServerGroupList.append(myLoopStr)
+                else:
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find(':')])
+
+                    # Validate servergroup name match.
+                    if (not myServerGroup):
+                        myError = "No matching server name or group ''."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+
+                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find(':') + 1:])
+
+                    # Validate attribute value match.
+                    if (not myServerList):
+                        myError = "No matching attribute value '" + myLoopStr[myLoopStr.find(':') + 1:] + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
+
+                    myServerGroupList.append(myLoopStr)
 
         #
         # Step 4: Make sure noone's trying to mix
