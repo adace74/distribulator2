@@ -159,7 +159,7 @@ class RunCommand(Command.Command):
                 myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match, with and without attributes.
-                if (myGroupStr.find(':') == -1):
+                if (myGroupStr.find('[') == -1):
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
 
                     # Validate.
@@ -171,7 +171,7 @@ class RunCommand(Command.Command):
                     else:
                         myServerGroupList.append(myGroupStr)
                 else:
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find(':')])
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find('[')])
 
                     # Validate servergroup match.
                     if (not myServerGroup):
@@ -179,7 +179,7 @@ class RunCommand(Command.Command):
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         return False
 
-                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find(':') + 1:])
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find('[') + 1:])
                     myServerGroupList.append(myGroupStr)
         #
         elif (myRunTarget == 'multiple_server_group'):
@@ -195,7 +195,7 @@ class RunCommand(Command.Command):
                     continue
 
                 # Check for server group match, with and without attributes.
-                if (myLoopStr.find(':') == -1):
+                if (myLoopStr.find('[') == -1):
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
 
                     # Validate.
@@ -207,7 +207,7 @@ class RunCommand(Command.Command):
                     else:
                         myServerGroupList.append(myLoopStr)
                 else:
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find(':')])
+                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find('[')])
 
                     # Validate servergroup name match.
                     if (not myServerGroup):
@@ -215,7 +215,7 @@ class RunCommand(Command.Command):
                         self._globalConfig.getMultiLogger().LogMsgError(myError)
                         return False
 
-                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find(':') + 1:])
+                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find('[') + 1:])
                     myServerGroupList.append(myLoopStr)
 
         #
@@ -376,12 +376,12 @@ class RunCommand(Command.Command):
             #
             for myGroupStr in myServerGroupList:
                 # Search for a colon, act appropriately.
-                if (myGroupStr.find(':') == -1):
+                if (myGroupStr.find('[') == -1):
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                     myServerList = myServerGroup.getServerList()
                 else:
-                    myAttribValue = myGroupStr[myGroupStr.find(':') + 1:]
-                    myGroupStr = myGroupStr[:myGroupStr.find(':')]
+                    myAttribValue = myGroupStr[myGroupStr.find('[') + 1:]
+                    myGroupStr = myGroupStr[:myGroupStr.find('[')]
 
                     myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                     myServerList = myServerGroup.getAttribValueServerList(myAttribValue)

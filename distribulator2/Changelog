@@ -274,7 +274,8 @@ Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4155 lines / 
 ---------------------------------------------------------------------------------------------
 * Modified configuration XML schema to support more consistent attributes,
   as well as dynamic attribute support.
-* Added preliminary support for dynamic attribute-based selction in "run" meta-command.
+* Added preliminary support for attribute-based selction in "copy", and "run" meta-commands
+  as well as list mode.
 
 Change List For v1.0.1 (Codename: ? / Bloat Factor: ? lines / Status: Not Started)
 ----------------------------------------------------------------------------------

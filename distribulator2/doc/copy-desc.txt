@@ -21,6 +21,11 @@ Examples:
     copy /tmp/blah.txt app,www:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
       on the app and www server groups.
+
+    copy /tmp/blah.txt app[fredco]:/tmp/      
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on servers matching the 'fredco' attribute.
+
     copy /tmp/blah.txt app01:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
       on a server matching app01.

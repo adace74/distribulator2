@@ -40,7 +40,7 @@ Examples:
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
                                in forward sort order, and forces an ssh tty.
 
-    run "uptime" on app:strawberry
+    run "uptime" on app[strawberry]
                             -- Runs uptime on app servers with attribute
                                flavor=strawberry
 

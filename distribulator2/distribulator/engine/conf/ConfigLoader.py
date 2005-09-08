@@ -132,12 +132,16 @@ class ConfigLoader:
 
         # Override the logging.conf loglevel for STDOUT if specified.
         if ( self._globalConfig.getVerboseLevel() != None ):
-            if (self._globalConfig.getVerboseLevel() == 'DEBUG'):
+            if (self._globalConfig.getVerboseLevel() == 'CRITICAL'):
+                self._globalConfig.getStdoutLogger().setLevel(logging.CRITICAL)
+            elif (self._globalConfig.getVerboseLevel() == 'DEBUG'):
                 self._globalConfig.getStdoutLogger().setLevel(logging.DEBUG)
             elif (self._globalConfig.getVerboseLevel() == 'INFO'):
                 self._globalConfig.getStdoutLogger().setLevel(logging.INFO)
             elif (self._globalConfig.getVerboseLevel() == 'ERROR'):
                 self._globalConfig.getStdoutLogger().setLevel(logging.ERROR)
+            elif (self._globalConfig.getVerboseLevel() == 'WARNING'):
+                self._globalConfig.getStdoutLogger().setLevel(logging.WARNING)
             else:
                 myError = "Standard output level setting '" + self._globalConfig.getVerboseLevel() + "' not supported.  Exiting..."
                 self._globalConfig.getMultiLogger().LogMsgError(myError)

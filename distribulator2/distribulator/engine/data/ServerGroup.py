@@ -15,6 +15,7 @@ __version__= '$Revision$'[11:-2]
 
 # Standard modules
 import re
+import string
 
 ######################################################################
 
@@ -97,6 +98,8 @@ class ServerGroup:
         """This is a typical accessor method."""
 
         myTempList=[]
+        PassedAttribValue = string.replace(PassedAttribValue, '[', '')
+        PassedAttribValue = string.replace(PassedAttribValue, ']', '')
 
         for myServer in self._serverList:
              for myValue in myServer.getAttributes().values():
