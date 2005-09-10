@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -29,7 +29,7 @@ import engine.data.ServerGroup
 ######################################################################
 
 class XMLFileParser:
-    """This class is responsible for loading in data from our XML configuration file.""" 
+    """This class is responsible for loading in data from our XML configuration file."""
 
     def __init__(self):
         """Constructor."""
@@ -57,7 +57,7 @@ class XMLFileParser:
             myFile.close()
 
             self._globalConfig.setConfigLines(myConfigLines)
-            
+
             myDom = xml.dom.minidom.parse(myFilename)
 
         except IOError, (errno, strerror):

@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -26,7 +26,7 @@ import engine.data.ExternalCommand
 class ServerCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
-    expanding a given distribulator command into a set of 
+    expanding a given distribulator command into a set of
     SSH commands and running them.
     """
 
@@ -115,7 +115,7 @@ class ServerCommand(Command.Command):
             myTempStr = "Known server groups for environment '" + \
                         self._globalConfig.getCurrentEnvName() + "'\n"
             myTempStr = myTempStr + "--------------------------------------------------\n"
-   
+
             for myServerGroup in self._globalConfig.getCurrentEnv().getServerGroupList():
                 myColumnCount = myColumnCount + 1
                 myTempStr = myTempStr + "%10s (%2d) " % \

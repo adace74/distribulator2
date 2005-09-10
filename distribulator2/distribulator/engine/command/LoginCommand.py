@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -27,7 +27,7 @@ import generic.FilePrinter
 class LoginCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
-    expanding a given distribulator command into a set of 
+    expanding a given distribulator command into a set of
     SSH commands and running them.
     """
 

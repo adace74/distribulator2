@@ -155,7 +155,7 @@ Change List For v0.6.1 (Language: Python / Bloat Factor: 2940 lines / Status: Sh
 * Standardized version numbering.
 * Added a small script to automate release packaging.
 
-Change List For v0.6.2 (Language: Python / Bloat Factor: 2951 lines / Status: Shipped)     
+Change List For v0.6.2 (Language: Python / Bloat Factor: 2951 lines / Status: Shipped)
 --------------------------------------------------------------------------------------
 * SourecForge bug #805371 fixed.
 * SourceForge bug #815787 fixed.

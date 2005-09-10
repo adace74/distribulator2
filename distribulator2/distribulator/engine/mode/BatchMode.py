@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -67,7 +67,7 @@ class BatchMode(Mode.Mode):
             self._globalConfig.setExitSuccess(False)
             return
 
-        # Let everyone know what we're doing.        
+        # Let everyone know what we're doing.
         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         myCommandCount = 0

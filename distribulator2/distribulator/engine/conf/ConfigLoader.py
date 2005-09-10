@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -59,11 +59,11 @@ class ConfigLoader:
         # Step 1: Unix "pass through" commands.
         #
         myPassThruList = []
-        
+
         try:
             myFilename = self._globalConfig.getPassThruFile()
             myFile = open(myFilename, 'r')
-            
+
             for myLine in myFile:
                 myLine = myLine.strip()
                 myPassThruList.append(myLine)
@@ -196,7 +196,7 @@ class ConfigLoader:
         if ( self._globalConfig.isConsoleMode() ):
             print("- Available Server Groups:")
             print("-")
-            print(myServerGroupStr)        
+            print(myServerGroupStr)
             print("-")
             print("- Total: %d server(s) in %d environment(s) loaded." % (myTotalServerCount, myTotalEnvironmentCount))
             print

@@ -7,7 +7,7 @@ Description: Copies files to/from various servers within our working environment
 
 Examples:
     copy /tmp/blah.txt /tmp/
-    - Copies local file /tmp/blah.txt to directory /tmp/ 
+    - Copies local file /tmp/blah.txt to directory /tmp/
       on the current server group.
     copy /tmp/blah.txt /tmp/ now
     - Copies local file /tmp/blah.txt to directory /tmp/
@@ -22,7 +22,7 @@ Examples:
     - Copies local file /tmp/blah.txt to directory /tmp/
       on the app and www server groups.
 
-    copy /tmp/blah.txt app[fredco]:/tmp/      
+    copy /tmp/blah.txt app[fredco]:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
       on servers matching the 'fredco' attribute.
 

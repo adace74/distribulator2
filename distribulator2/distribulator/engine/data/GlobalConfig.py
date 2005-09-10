@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -48,14 +48,14 @@ class GlobalConfig:
 
     def isBreakState(self):
         """This is a typical accessor method."""
-    
+
         return self._breakState
 
 ######################################################################
 
     def setBreakState(self, PassedBreakState):
         """This is a typical accessor method."""
-    
+
         self._breakState = PassedBreakState
 
 ######################################################################
@@ -178,14 +178,14 @@ class GlobalConfig:
 
     def getLoggingConfigFile(self):
         """This is a typical accessor method."""
-    
+
         return self._loggingConfigFile
 
 ######################################################################
 
     def setLoggingConfigFile(self, PassedLoggingConfigFile):
         """This is a typical accessor method."""
-    
+
         self._loggingConfigFile = PassedLoggingConfigFile
 
 ######################################################################
@@ -344,35 +344,35 @@ class GlobalConfig:
 
     def getStdoutLogger(self):
         """This is a typical accessor method."""
-    
+
         return self._stdoutLogger
 
 ######################################################################
 
     def setStdoutLogger(self, PassedStdoutLogger):
         """This is a typical accessor method."""
-    
+
         self._stdoutLogger = PassedStdoutLogger
 
 ######################################################################
 
     def getVerboseLevel(self):
         """This is a typical accessor method."""
-   
+
         return self._verboseLevel
 
 ######################################################################
-    
+
     def setVerboseLevel(self, PassedVerboseLevel):
         """This is a typical accessor method."""
-        
+
         self._verboseLevel = PassedVerboseLevel
 
 ######################################################################
 # Ping Options.
 ######################################################################
 
-    def getPingBanner(self):      
+    def getPingBanner(self):
         """This is a typical accessor method."""
 
         return self._pingBanner
@@ -400,7 +400,7 @@ class GlobalConfig:
 
 ######################################################################
 
-    def getPingTimeout(self):      
+    def getPingTimeout(self):
         """This is a typical accessor method."""
 
         return self._pingTimeout

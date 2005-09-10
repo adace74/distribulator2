@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -31,7 +31,7 @@ class Mode:
 
     def invoke(self):
         """This method is the main entry point into tons of custom logic."""
-        
+
         pass
 
 ######################################################################

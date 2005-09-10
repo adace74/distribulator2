@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -48,7 +48,7 @@ class ConsoleMode(Mode.Mode):
 
         myCounter = 0
         myHistory = os.path.join(os.environ['HOME'], ".dist_history")
-    
+
         try:
             myFile = open(myHistory, 'r')
             for myLine in myFile:
@@ -58,7 +58,7 @@ class ConsoleMode(Mode.Mode):
             # Load readline history.
             readline.set_history_length(256)
             readline.read_history_file(myHistory)
-        
+
         except IOError:
             pass
 

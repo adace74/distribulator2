@@ -29,7 +29,7 @@ Test Case:       copy
 Expected Result: Error.
 
 Test Case:       copy /tmp/test.out /tmp/
-Expected Result: Copies local file /tmp/test.out out to current server group, 
+Expected Result: Copies local file /tmp/test.out out to current server group,
                  remote directory /tmp/.
 
 Test Case:       copy /tmp/test.out /tmp/ now
@@ -129,7 +129,7 @@ Expected Result: Runs the "uptime" command on 'www' server group,
                  in reverse sort order.
 
 Test Case:       run "uptime" on www single
-Expected Result: Runs the "uptime" command on a single server in the 'www' server group,  
+Expected Result: Runs the "uptime" command on a single server in the 'www' server group,
 
 Test Case:       run "uptime" on app,db,www
 Expected Result: Runs the "uptime" command on the 'app', 'db', and 'www' server groups.
@@ -182,7 +182,7 @@ Test Case:       show server-group bogus
 Expected Result: Error.
 
 Test Case:       show server-group www
-Expected Result: Listing of servers in 'www' server group.   
+Expected Result: Listing of servers in 'www' server group.
 
 ######################################################################
 
