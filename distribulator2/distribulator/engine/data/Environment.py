@@ -88,6 +88,10 @@ class Environment:
 
         PassedServerGroupName = PassedServerGroupName.strip()
 
+        # Silly hack to make handling attributes a little easier.
+        if (PassedServerGroupName.find('[') != -1):
+            PassedServerGroupName = PassedServerGroupName[:PassedServerGroupName.find('[')]
+
         # Handle regex.
         reggie = re.compile(r'(.*):r\'(.*)\'')
         maggie = reggie.match(PassedServerGroupName)
@@ -102,6 +106,19 @@ class Environment:
                      return myServerGroup
 
         return False
+
+######################################################################
+
+    def getServerGroupName(self, PassedServerGroupName):
+        """This is a typical accessor method, including some search logic."""
+
+        PassedServerGroupName = PassedServerGroupName.strip()
+
+        # Silly hack to make handling attributes a little easier.
+        if (PassedServerGroupName.find('[') != -1):
+            PassedServerGroupName = PassedServerGroupName[:PassedServerGroupName.find('[')]
+
+        return PassedServerGroupName
 
 ######################################################################
 

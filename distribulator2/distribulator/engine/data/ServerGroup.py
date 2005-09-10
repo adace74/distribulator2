@@ -98,8 +98,10 @@ class ServerGroup:
         """This is a typical accessor method."""
 
         myTempList=[]
-        PassedAttribValue = string.replace(PassedAttribValue, '[', '')
-        PassedAttribValue = string.replace(PassedAttribValue, ']', '')
+
+        # Silly hack to make handling attributes a little easier.
+        if (PassedAttribValue.find('[') != -1):
+            PassedAttribValue = PassedAttribValue[PassedAttribValue.find('[') + 1:PassedAttribValue.find(']')]
 
         for myServer in self._serverList:
              for myValue in myServer.getAttributes().values():

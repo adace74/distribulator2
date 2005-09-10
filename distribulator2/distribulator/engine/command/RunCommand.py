@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -31,8 +31,7 @@ import Command
 import engine.data.ExternalCommand
 import engine.misc.HostPinger
 
-
-# pull these into config
+# TODO: Pull these into config
 maxThreads = 2
 threadTimeout = 1000
 
@@ -41,7 +40,7 @@ threadTimeout = 1000
 class RunCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
-    expanding a given distribulator command into a set of 
+    expanding a given distribulator command into a set of
     SSH commands and running them.
     """
 
@@ -103,7 +102,7 @@ class RunCommand(Command.Command):
 
         if (mySuffixStr.find(' single') != -1):
             myIsSingle = True
-            mySuffixStr = string.replace(mySuffixStr, ' single' , '') 
+            mySuffixStr = string.replace(mySuffixStr, ' single' , '')
 
         if (mySuffixStr.find(' threads') != -1):
             myIsRunInThreads = True
@@ -112,7 +111,7 @@ class RunCommand(Command.Command):
         #
         # Step 2: Try to determine what the target of the command is
         #         and set a state-tracking variable accordingly.
-        # 
+        #
         if (len(mySuffixStr) == 0):
             # run "uptime"
             # run -t "uptime"
@@ -150,7 +149,6 @@ class RunCommand(Command.Command):
         if (myRunTarget == 'current_server_group'):
             myGroupStr = self._globalConfig.getCurrentServerGroup().getName()
             myServerGroupList.append(myGroupStr)
-        #
         elif (myRunTarget == 'single_server_group'):
             # Check for server name match.
             myServer = self._globalConfig.getCurrentEnv().getServerByName(myGroupStr)
@@ -159,29 +157,16 @@ class RunCommand(Command.Command):
                 myServerNameList.append(myServer.getName())
             else:
                 # Check for server group match, with and without attributes.
-                if (myGroupStr.find('[') == -1):
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
 
-                    # Validate.
-                    if (not myServerGroup):
-                        myError = "No matching server name or group '" + \
-                                    myGroupStr + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-                    else:
-                        myServerGroupList.append(myGroupStr)
+                # Validate.
+                if (not myServerGroup):
+                    myError = "No matching server name or group '" + \
+                        self._globalConfig.getCurrentEnv().getServerGroupName(myGroupStr) + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
+                    return False
                 else:
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find('[')])
-
-                    # Validate servergroup match.
-                    if (not myServerGroup):
-                        myError = "No matching server name or group ''."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-
-                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find('[') + 1:])
                     myServerGroupList.append(myGroupStr)
-        #
         elif (myRunTarget == 'multiple_server_group'):
             myGroupList = myGroupStr.split(',')
 
@@ -195,27 +180,15 @@ class RunCommand(Command.Command):
                     continue
 
                 # Check for server group match, with and without attributes.
-                if (myLoopStr.find('[') == -1):
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
 
-                    # Validate.
-                    if (not myServerGroup):
-                        myError = "No matching server name or group '" + \
-                                    myLoopStr + "'."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-                    else:
-                        myServerGroupList.append(myLoopStr)
+                # Validate.
+                if (not myServerGroup):
+                    myError = "No matching server name or group '" + \
+                                self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
+                    self._globalConfig.getMultiLogger().LogMsgError(myError)
+                    return False
                 else:
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find('[')])
-
-                    # Validate servergroup name match.
-                    if (not myServerGroup):
-                        myError = "No matching server name or group ''."
-                        self._globalConfig.getMultiLogger().LogMsgError(myError)
-                        return False
-
-                    myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find('[') + 1:])
                     myServerGroupList.append(myLoopStr)
 
         #
@@ -268,15 +241,9 @@ class RunCommand(Command.Command):
         # Step 6: If we found server name(s), then run with that.
         # Otherwise, do the same with the server group(s) given.
         #
-        # Slightly nasty hack.  Since lists can only be sorted in-place,
-        # and copying objects in Python isn't super-easy, we do the
-        # following:
-        #
-        # 1) Reverse sort the list
-        # 2) Run the commands
-        #
         threadList = {}
         threadCounter = 0
+
         if ( len(myServerNameList) > 0 ):
             if (myIsReverse):
                 myServerNameList.reverse()
@@ -364,27 +331,17 @@ class RunCommand(Command.Command):
 
             return True
         else:
+            #
             # If we found server group names, then run with that.
             #
-            # Slightly nasty hack.  Since lists can only be sorted in-place,
-            # and copying objects in Python isn't super-easy, we do the
-            # following:
-            #
-            # 1) Reverse sort the list
-            # 2) Run the commands
-            # 3) Forward-sort the list, hopefully back to its original state.
-            #
             for myGroupStr in myServerGroupList:
-                # Search for a colon, act appropriately.
+                # Check for server group match, with and without attributes.
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+
                 if (myGroupStr.find('[') == -1):
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                     myServerList = myServerGroup.getServerList()
                 else:
-                    myAttribValue = myGroupStr[myGroupStr.find('[') + 1:]
-                    myGroupStr = myGroupStr[:myGroupStr.find('[')]
-
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
-                    myServerList = myServerGroup.getAttribValueServerList(myAttribValue)
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr)
 
                 if (myIsReverse):
                     myServerList.reverse()

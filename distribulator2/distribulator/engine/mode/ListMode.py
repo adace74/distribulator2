@@ -73,26 +73,15 @@ class ListMode(Mode.Mode):
                 continue
 
             # Check for server group match, with and without attributes.
-            if (myLoopStr.find('[') == -1):
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
+            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
 
-                if (myServerGroup):
-                    myServerGroupList.append(myLoopStr)
-                else:
-                    myError = "No matching server name or group '" + \
-                                myLoopStr + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(myError)
-                    return False
+            # Validate.
+            if (not myServerGroup):
+                myError = "No matching server name or group '" + \
+                            self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
+                self._globalConfig.getMultiLogger().LogMsgError(myError)
+                return False
             else:
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr[:myLoopStr.find('[')])
-
-                # Validate servergroup match.
-                if (not myServerGroup):
-                    myError = "No matching server name or group ''."
-                    self._globalConfig.getMultiLogger().LogMsgError(myError)
-                    return False
-
-                myServerList = myServerGroup.getAttribValueServerList(myLoopStr[myLoopStr.find('[') + 1:])
                 myServerGroupList.append(myLoopStr)
 
         #
@@ -110,6 +99,7 @@ class ListMode(Mode.Mode):
         #
         myPinger = engine.misc.HostPinger.HostPinger(self._globalConfig)
 
+        # Server name(s)
         if ( len(myServerNameList) > 0 ):
             for myNameStr in myServerNameList:
                 myServer = self._globalConfig.getCurrentEnv().getServerByName(myNameStr)
@@ -119,18 +109,16 @@ class ListMode(Mode.Mode):
                         myOutput = myOutput + myServer.getUsername() + "@"
 
                     myOutput = myOutput + myServer.getName() + " "
+        # Server group(s)
         else:
-            #
-            # If we found server group names, then run with that.
-            #
             for myGroupStr in myServerGroupList:
                 # Check for server group match, with and without attributes.
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+
                 if (myLoopStr.find('[') == -1):
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
                     myServerList = myServerGroup.getServerList()
                 else:
-                    myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr[:myGroupStr.find('[')])
-                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr[myGroupStr.find('[') + 1:])
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr)
 
                 for myServer in myServerList:
                     if (myPinger.ping( myServer.getName() ) == 0):

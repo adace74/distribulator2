@@ -2,7 +2,7 @@
 #
 # $Id$
 #
-# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved. 
+# (c) Copyright 2004 Orbitz, Inc.  All Rights Reserved.
 # Please see the accompanying LICENSE file for license information.
 #
 ######################################################################
@@ -33,7 +33,7 @@ import engine.misc.HostPinger
 class CopyCommand(Command.Command):
     """
     This class is responsible for doing the actual work of
-    expanding a given distribulator command into a set of 
+    expanding a given distribulator command into a set of
     SSH commands and running them.
     """
 
@@ -68,7 +68,7 @@ class CopyCommand(Command.Command):
         elif (self._commTokens[2].find('/') == -1):
             myError = "Command Syntax Error.  Try 'help copy' for more information."
             self._globalConfig.getMultiLogger().LogMsgWarn(myError)
-            return False            
+            return False
         else:
             myLocalPath = self._commTokens[1]
             myRemotePath = self._commTokens[2]
@@ -83,7 +83,7 @@ class CopyCommand(Command.Command):
         #
         # Step 3: Try to determine what the target of the command is,
         #         and set a state-tracking variable accordingly.
-        # 
+        #
         if (self._commString.find(':') == -1):
             # copy /tmp/blah /tmp/
             myCopyTarget = 'current_server_group'
@@ -124,16 +124,18 @@ class CopyCommand(Command.Command):
             if (myServer):
                 myServerNameList.append(myServer.getName())
             else:
-                # Check for server group match.
+                # Check for server group match, with and without attributes.
                 myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+
                 # Validate.
                 if (not myServerGroup):
                     myError = "No matching server name or group '" + \
-                                myGroupStr + "'."
+                                self._globalConfig.getCurrentEnv().getServerGroupName(myGroupStr) + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
                 else:
                     myServerGroupList.append(myGroupStr)
+
         elif (myCopyTarget == 'multiple_server_group'):
             # copy /tmp/blah app,www:/tmp/
             myGroupStr = self._commTokens[2]
@@ -141,6 +143,8 @@ class CopyCommand(Command.Command):
             myGroupList = myGroupStr.split(',')
             myRemotePath = self._commTokens[2]
             myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
+
+            print "DEBUG: |" + myGroupStr + "| |" + myRemotePath + "|"
 
             for myLoopStr in myGroupList:
                 myLoopStr = myLoopStr.strip()
@@ -152,15 +156,17 @@ class CopyCommand(Command.Command):
                     myServerNameList.append(myServer.getName())
                     continue
 
-                # Check for server group match.
+                # Check for server group match, with and without attributes.
                 myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
-                if (myServerGroup):
-                    myServerGroupList.append(myLoopStr)
-                else:
+
+                # Validate.
+                if (not myServerGroup):
                     myError = "No matching server name or group '" + \
-                                myLoopStr + "'."
+                        self._globalConfig.getCurrentEnv().getServerGroupName(myGroupStr) + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
+                else:
+                    myServerGroupList.append(myGroupStr)
 
         #
         # Step 5: Validation
