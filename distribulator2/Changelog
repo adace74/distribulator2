@@ -270,13 +270,13 @@ Change List For v0.9.3 (Codename: Cleanliness / Bloat Factor: 4102 lines / Statu
 -------------------------------------------------------------------------------------------
 * SourceForge Bug #1250465 fixed.
 
-Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4149 lines / Status: Shipped)
+Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4154 lines / Status: Shipped)
 ------------------------------------------------------------------------------------------------
 * Cleanup: Remove trailing whitespaces for almost all files.
 * Modified configuration XML schema to support more consistent attributes,
   as well as dynamic attribute support.
-* Added preliminary support for attribute-based selction in "copy", and "run" meta-commands
-  as well as list mode.
+* Added preliminary support for attribute-based selction in "copy", "run", and "show" meta-commands.
+* Added preliminary support for attribute-based selection in list mode.
 
 Change List For v1.0.1 (Codename: ? / Bloat Factor: ? lines / Status: Not Started)
 ----------------------------------------------------------------------------------

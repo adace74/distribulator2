@@ -1,7 +1,7 @@
 Run Command Syntax & Examples
 -----------------------------
 
-Syntax: run [ssh_flags] "command" on [server|server_group,server|server_group...] [now|reverse|single]
+Syntax: run [ssh_flags] "command" on [server|server_group,server|server_group...] [now|reverse|single|threads]
 
 Description: Runs a given command across multiple servers, in either normal or reverse sort order.
 
@@ -40,15 +40,21 @@ Examples:
     run -t "vi" on app,www  -- Runs vi on app and www server groups,
                                in forward sort order, and forces an ssh tty.
 
-    run "uptime" on app[strawberry]
-                            -- Runs uptime on app servers with attribute
-                               flavor=strawberry
+    run "uptime" on app[bobco]
+                            -- Runs uptime on app servers matching 'bobco' attribute value.
+
+    run "uptime" on app[bobco],db[fredco]
+                            -- Runs uptime on app servers matching 'bobco' attribute value
+                               and db servers matching the 'bobco' attribute value.
 
 TODO:
 
-    run "uptime" on app where flavor="strawberry"
-                            -- Runs uptime on app servers with attribute
-                               flavor=strawberry
+    run "uptime" on app threads
+                            -- Runs uptime on app servers in parallel, using threads.
+
+    run "uptime" on app where brand="strawberry"
+                            -- Runs uptime on app servers with
+                               attribute name "brand" and attribute value "bobco".
 
     run "uptime" on app where regex="0[123]"
 			    -- Runs uptime on app servers that match regex 0[123]

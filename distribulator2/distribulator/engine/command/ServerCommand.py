@@ -89,8 +89,8 @@ class ServerCommand(Command.Command):
 
         # If given a server group name, display servers in that group.
         if ( len(self._commTokens) > 2 ):
-            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName( \
-                self._commTokens[2] )
+            # Check for server group match, with and without attributes.
+            myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(self._commTokens[2])
 
             # Check for errors.
             if (not myServerGroup):
@@ -98,18 +98,23 @@ class ServerCommand(Command.Command):
                 self._globalConfig.getMultiLogger().LogMsgError(myError)
 
                 return False
-            else:
-                myTempStr = "Known servers for group '" + myServerGroup.getName() + "'\n"
-                myTempStr = myTempStr = "--------------------------------------------------\n"
 
-                for myServer in myServerGroup.getServerList():
-                    myColumnCount = myColumnCount + 1
+            myTempStr = "Known servers for group '" + myServerGroup.getName() + "'\n"
+            myTempStr = myTempStr = "--------------------------------------------------\n"
 
-                    if (myColumnCount == 2):
-                        myColumnCount = 0
-                        myTempStr = myTempStr + myServer.getName() + '\n'
-                    else:
-                        myTempStr = myTempStr + myServer.getName() + '\t\t'
+            if (self._commTokens[2].find('[') == -1):    
+                myServerList = myServerGroup.getServerList()    
+            else:    
+                myServerList = myServerGroup.getAttribValueServerList(self._commTokens[2])
+
+            for myServer in myServerList:
+                myColumnCount = myColumnCount + 1
+
+                if (myColumnCount == 2):
+                    myColumnCount = 0
+                    myTempStr = myTempStr + myServer.getName() + '\n'
+                else:
+                    myTempStr = myTempStr + myServer.getName() + '\t\t'
         else:
             # Otherwise, display the server group list given at startup.
             myTempStr = "Known server groups for environment '" + \

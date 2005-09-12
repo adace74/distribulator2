@@ -22,9 +22,13 @@ Examples:
     - Copies local file /tmp/blah.txt to directory /tmp/
       on the app and www server groups.
 
-    copy /tmp/blah.txt app[fredco]:/tmp/
+    copy /tmp/blah.txt app[bobco]:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
-      on servers matching the 'fredco' attribute.
+      on servers matching the 'bobco' attribute value.
+    copy /tmp/blah.txt app[fredco],db[bobco]:/tmp/
+    - Copies local file /tmp/blah.txt to directory /tmp/
+      on app servers matching the 'fredco' attribute value
+      and db servers matching the 'bobco' attribute value.
 
     copy /tmp/blah.txt app01:/tmp/
     - Copies local file /tmp/blah.txt to directory /tmp/
