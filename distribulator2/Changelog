@@ -270,7 +270,7 @@ Change List For v0.9.3 (Codename: Cleanliness / Bloat Factor: 4102 lines / Statu
 -------------------------------------------------------------------------------------------
 * SourceForge Bug #1250465 fixed.
 
-Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4147 lines / Status: Shipped)
+Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4151 lines / Status: Shipped)
 ------------------------------------------------------------------------------------------------
 * Cleanup: Remove trailing whitespaces for almost all files.
 * Modified configuration XML schema to support more consistent attributes,
