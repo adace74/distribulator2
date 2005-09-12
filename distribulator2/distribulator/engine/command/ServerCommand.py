@@ -102,9 +102,9 @@ class ServerCommand(Command.Command):
             myTempStr = "Known servers for group '" + myServerGroup.getName() + "'\n"
             myTempStr = myTempStr = "--------------------------------------------------\n"
 
-            if (self._commTokens[2].find('[') == -1):    
-                myServerList = myServerGroup.getServerList()    
-            else:    
+            if (self._commTokens[2].find('[') == -1):
+                myServerList = myServerGroup.getServerList()
+            else:
                 myServerList = myServerGroup.getAttribValueServerList(self._commTokens[2])
 
             for myServer in myServerList:
