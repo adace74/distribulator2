@@ -144,8 +144,6 @@ class CopyCommand(Command.Command):
             myRemotePath = self._commTokens[2]
             myRemotePath = myRemotePath[myRemotePath.find(':') + 1:]
 
-            print "DEBUG: |" + myGroupStr + "| |" + myRemotePath + "|"
-
             for myLoopStr in myGroupList:
                 myLoopStr = myLoopStr.strip()
 
