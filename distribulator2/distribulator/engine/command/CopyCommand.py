@@ -162,11 +162,11 @@ class CopyCommand(Command.Command):
                 # Validate.
                 if (not myServerGroup):
                     myError = "No matching server name or group '" + \
-                        self._globalConfig.getCurrentEnv().getServerGroupName(myGroupStr) + "'."
+                        self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
                     self._globalConfig.getMultiLogger().LogMsgError(myError)
                     return False
                 else:
-                    myServerGroupList.append(myGroupStr)
+                    myServerGroupList.append(myLoopStr)
 
         #
         # Step 5: Validation
@@ -276,9 +276,13 @@ class CopyCommand(Command.Command):
             # Server group version of the above.
             #
             for myGroupStr in myServerGroupList:
-                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(
-                    myGroupStr)
-                myServerList = myServerGroup.getServerList()
+                # Check for server group match, with and without attributes.
+                myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myGroupStr)
+
+                if (myGroupStr.find('[') == -1):
+                    myServerList = myServerGroup.getServerList()
+                else:
+                    myServerList = myServerGroup.getAttribValueServerList(myGroupStr)
 
                 try:
                     for myServer in myServerList:
