@@ -1,9 +1,3 @@
-######################################################################
-#
-# $Id$
-#
-######################################################################
-
 This package contains action classes that simply don't fit anywhere else.
 
 Class Overview:
@@ -12,5 +6,3 @@ engine.misc.HostPinger  - Implementation of a socket-based TCP connect
                           test, typically to see if a server is alive or not.
 engine.misc.MultiLogger - Implementation of a simple API to allow for
                           logging to either console, syslog, or both.
-
-######################################################################

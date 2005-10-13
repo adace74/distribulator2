@@ -1,7 +1,8 @@
+######################################################################
 #
 # $Id$
 #
-PYTHON=/usr/local/bin/python
+######################################################################
 
 all:
 	echo "Not implemented."
@@ -14,6 +15,11 @@ clean:
 
 count:
 	find . -name '*.py' | xargs cat | wc -l
+
+docgen:
+	rm -rf epydoc/*
+	cd epydoc
+	epydoc --html --name "The Distribulator API Documentation" --url "http://distribulator.sourceforge.net/" --output epydoc distribulator/engine/ distribulator/generic/
 
 symlink:
 	cd conf/; ln -s config.xml.dist config.xml

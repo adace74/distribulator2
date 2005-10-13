@@ -1,9 +1,3 @@
-######################################################################
-#
-# $Id$
-#
-######################################################################
-
 The Distribulator contains several classes for various functionality.
 
 This package contains classes considered generic enough for reuse
@@ -17,5 +11,3 @@ generic.SysLogger   - Simple class to interface with the syslog module.
 
 NOTE: The generic.HostPinger class has been depricated in favor of
       the new-and-improved engine.misc.HostPinger.
-
-######################################################################

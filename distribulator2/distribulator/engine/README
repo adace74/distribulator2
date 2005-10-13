@@ -1,9 +1,3 @@
-######################################################################
-#
-# $Id$
-#
-######################################################################
-
 This package contains application-specific packages that handle
 the "heavy lifting" of the application.
 
@@ -15,5 +9,3 @@ engine.data    - Contains data classes that hold data for every aspect of the ap
 engine.misc    - Contains action classes that don't quite fit anywhere else.
 engine.mode    - Contains action classes responsible for the various "modes" in which
                  the application operates.
-
-######################################################################

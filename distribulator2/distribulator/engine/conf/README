@@ -1,14 +1,6 @@
-######################################################################
-#
-# $Id$
-#
-######################################################################
-
 This package contains action classes responsible for loading configuration data.
 
 Class Overview:
 
 engine.conf.ConfigLoader  - Implementation of global configuration loader.
 engine.conf.XMLFileParser - Implementation of XML-based configuration parser.
-
-######################################################################
