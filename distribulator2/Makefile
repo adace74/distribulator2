@@ -9,6 +9,7 @@ all:
 
 clean:
 	rm -rf build
+	rm -rf epydoc
 	rm -rf lib
 	rm conf/config.xml
 	find . -name '*.pyc' | xargs rm > /dev/null 2>&1
