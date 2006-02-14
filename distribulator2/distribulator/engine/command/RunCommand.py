@@ -184,10 +184,11 @@ class RunCommand(Command.Command):
 
                 # Validate.
                 if (not myServerGroup):
-                    myError = "No matching server name or group '" + \
-                                self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
-                    self._globalConfig.getMultiLogger().LogMsgError(myError)
-                    return False
+                    if (not self._globalConfig.isBatchMode()):
+                        myError = "No matching server name or group '" + \
+                                    self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
+                        self._globalConfig.getMultiLogger().LogMsgError(myError)
+                        return False
                 else:
                     myServerGroupList.append(myLoopStr)
 

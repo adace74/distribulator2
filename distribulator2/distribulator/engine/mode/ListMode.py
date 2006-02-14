@@ -76,12 +76,7 @@ class ListMode(Mode.Mode):
             myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName(myLoopStr)
 
             # Validate.
-            if (not myServerGroup):
-                myError = "No matching server name or group '" + \
-                            self._globalConfig.getCurrentEnv().getServerGroupName(myLoopStr) + "'."
-                self._globalConfig.getMultiLogger().LogMsgError(myError)
-                return False
-            else:
+            if (myServerGroup):
                 myServerGroupList.append(myLoopStr)
 
         #

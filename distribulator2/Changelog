@@ -278,10 +278,12 @@ Change List For v1.0.0 (Codename: Porcine Catapult / Bloat Factor: 4154 lines / 
 * Added preliminary support for attribute-based selction in "copy", "run", and "show" meta-commands.
 * Added preliminary support for attribute-based selection in list mode.
 
-Change List For v1.0.1 (Codename: ? / Bloat Factor: ? lines / Status: Not Started)
-----------------------------------------------------------------------------------
-? Cleanup: Updated various run syntax permutations to be more consistent.
-? Added support for dynamic attribute-based "blinders", similar to environment.
+Change List For v1.0.1 (Codename: Tranquility / Bloat Factor: 4567 lines / Status: Shipped)
+-------------------------------------------------------------------------------------------
+* Cleanup: Changed batch and list modes to not throw ERRORs when a non-existant server group is specified.
+           This makes it easier to maintain shared code across environments of varied size.
+* Added pingtcp.py script, a very handy tool for checking whether servers are alive...or not.
+* Added sniper.py script, a very handy tool for selectively killing processes in a mission critical environment.
 
 Change List For v1.1.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
