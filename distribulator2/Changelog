@@ -282,6 +282,8 @@ Change List For v1.0.1 (Codename: Tranquility / Bloat Factor: 4567 lines / Statu
 -------------------------------------------------------------------------------------------
 * Cleanup: Changed batch and list modes to not throw ERRORs when a non-existant server group is specified.
            This makes it easier to maintain shared code across environments of varied size.
+* Cleanup: Changed the 'set server-group' command to simply reject attribute specifications.
+           This was acting oddly prevously, resulting in confusing / potentially dangerous behavoir. 
 * Added pingtcp.py script, a very handy tool for checking whether servers are alive...or not.
 * Added sniper.py script, a very handy tool for selectively killing processes in a mission critical environment.
 

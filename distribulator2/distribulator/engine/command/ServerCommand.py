@@ -49,6 +49,12 @@ class ServerCommand(Command.Command):
             self._globalConfig.getMultiLogger().LogMsgError(myError)
             return False
 
+        # Check for attributes.
+        if (self._commTokens[2].find('[') != -1):
+            myError = "Attributes are currently unsupported for the 'set server-group' command.  Doheth!"
+            self._globalConfig.getMultiLogger().LogMsgError(myError)
+            return False
+
         # If given a group name, set it.
         if ( len(self._commTokens) > 2 ):
             myServerGroup = self._globalConfig.getCurrentEnv().getServerGroupByName( self._commTokens[2] )
