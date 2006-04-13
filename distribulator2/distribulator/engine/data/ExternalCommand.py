@@ -14,7 +14,6 @@
 __version__= '$Revision$'[11:-2]
 
 # Standard modules
-import commands
 import os
 import os.path
 import time
@@ -71,13 +70,14 @@ class ExternalCommand:
         if (PassedIsInteractive):
             myStatus = os.system(self._command)
         else:
-            myStatus, myOutput = commands.getstatusoutput(self._command)
-
-            for myLine in myOutput.split('\n'):
+            f = os.popen(self._command, 'r', 1)
+            while True:
+                l = f.readline()
+                if len(l) == 0:
+                    break
                 self._globalConfig.getMultiLogger().LogMsgInfo(
-                    "OUT:  " + myLine )
-
-            if (myStatus != 0):
+                    "OUT:  " + l.strip() )
+            if (f.close() != None):
                 self._globalConfig.setExitSuccess(False)
 
         self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
@@ -92,3 +92,4 @@ class ExternalCommand:
         return myStatus
 
 ######################################################################
+
