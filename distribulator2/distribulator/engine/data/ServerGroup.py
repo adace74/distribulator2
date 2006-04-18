@@ -103,10 +103,13 @@ class ServerGroup:
         if (PassedAttribValue.find('[') != -1):
             PassedAttribValue = PassedAttribValue[PassedAttribValue.find('[') + 1:PassedAttribValue.find(']')]
 
+        # Must handle values in the form "foo,bar,baz,bat".
         for myServer in self._serverList:
              for myValue in myServer.getAttributes().values():
-                 if (myValue == PassedAttribValue):
-                     myTempList.append(myServer)
+                 if (myValue.count(PassedAttribValue) != 0):
+                     for myAttribute in myValue.split(','):
+                         if (myAttribute == PassedAttribValue):
+                             myTempList.append(myServer)
 
         return myTempList
 

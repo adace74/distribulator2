@@ -287,6 +287,13 @@ Change List For v1.0.1 (Codename: Tranquility / Bloat Factor: 4567 lines / Statu
 * Added pingtcp.py script, a very handy tool for checking whether servers are alive...or not.
 * Added sniper.py script, a very handy tool for selectively killing processes in a mission critical environment.
 
+Change List For v1.0.2 (Codename: Hackage / Bloat Factor: 4567 lines / Status: Shipped)
+---------------------------------------------------------------------------------------
+* Cleanup: Modified command execution logic to better handle
+  remote commands that return large amounts of data.  Thanks to Karl D'adamo for this patch.
+* Added substring matching support for attribute-based selection.
+  Attribute lists are now supported, as long as they are comma delimited.
+	
 Change List For v1.1.0 (Codename: Optimator / Status: Not Started)
 ------------------------------------------------------------------
 - Stable ability to use a new run command keyword: "threads".
