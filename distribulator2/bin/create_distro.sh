@@ -12,7 +12,7 @@
 #
 # Sourcecode location.
 #
-CVSWORK_DIR="/home/awd/cvswork-sf"
+CVSWORK_DIR="."
 PROJECT_DIR="distribulator2"
 PROJECT_NAME="distribulator"
 #
