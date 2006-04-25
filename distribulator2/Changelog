@@ -291,6 +291,8 @@ Change List For v1.0.2 (Codename: Hackage / Bloat Factor: 4567 lines / Status: S
 ---------------------------------------------------------------------------------------
 * Cleanup: Modified command execution logic to better handle
   remote commands that return large amounts of data.  Thanks to Karl D'adamo for this patch.
+* Added wrapper script for those who prefer a quick CLI interface.
+  Thanks to Karl D'adamo for this script.
 * Added substring matching support for attribute-based selection.
   Attribute lists are now supported, as long as they are comma delimited.
 	
