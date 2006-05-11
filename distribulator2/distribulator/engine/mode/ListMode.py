@@ -1,4 +1,4 @@
-######################################################################
+#####################################################################
 #
 # $Id$
 #
@@ -104,6 +104,12 @@ class ListMode(Mode.Mode):
                         myOutput = myOutput + myServer.getUsername() + "@"
 
                     myOutput = myOutput + myServer.getName() + " "
+                else:
+                    myError = "Server '" + myServer.getName() + \
+                              "' appears to be down.  Continuing..."
+                    self._globalConfig.getMultiLogger().LogMsgWarn(myError)
+                    self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
+
         # Server group(s)
         else:
             for myGroupStr in myServerGroupList:
@@ -121,6 +127,11 @@ class ListMode(Mode.Mode):
                             myOutput = myOutput + myServer.getUsername() + "@"
 
                         myOutput = myOutput + myServer.getName() + " "
+                    else:
+                        myError = "Server '" + myServer.getName() + \
+                                  "' appears to be down.  Continuing..."
+                        self._globalConfig.getMultiLogger().LogMsgWarn(myError)
+                        self._globalConfig.getMultiLogger().LogMsgDebugSeperator()
 
         myOutput = myOutput.strip()
         print myOutput

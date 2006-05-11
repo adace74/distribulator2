@@ -33,42 +33,49 @@ class MultiLogger:
         """Logs and possibly prints a given message with the log level CRITICAL."""
 
         self._globalConfig.getAuditLogger().critical(PassedMessage)
-        self._globalConfig.getStdoutLogger().critical(PassedMessage)
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().critical(PassedMessage)
 
     def LogMsgDebug(self, PassedMessage):
         """Logs and possibly prints a given message with the log level DEBUG."""
 
         self._globalConfig.getAuditLogger().debug(PassedMessage)
-        self._globalConfig.getStdoutLogger().debug(PassedMessage)
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().debug(PassedMessage)
 
     def LogMsgDebugSeperator(self):
         """Logs and possibly prints a seperator with the log level DEBUG."""
 
         self._globalConfig.getAuditLogger().debug( self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().debug( self._globalConfig.getSeperator() )
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().debug( self._globalConfig.getSeperator() )
 
     def LogMsgInfo(self, PassedMessage):
         """Logs and possibly prints a given message with the log level INFO."""
 
         self._globalConfig.getAuditLogger().info(PassedMessage)
-        self._globalConfig.getStdoutLogger().info(PassedMessage)
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().info(PassedMessage)
 
     def LogMsgInfoSeperator(self):
         """Logs and possibly prints a seperator with the log level INFO."""
 
         self._globalConfig.getAuditLogger().info( self._globalConfig.getSeperator() )
-        self._globalConfig.getStdoutLogger().info( self._globalConfig.getSeperator() )
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().info( self._globalConfig.getSeperator() )
 
     def LogMsgWarn(self, PassedMessage):
         """Logs and possibly prints given message with the log level WARNING."""
 
         self._globalConfig.getAuditLogger().warning(PassedMessage)
-        self._globalConfig.getStdoutLogger().warning(PassedMessage)
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().warning(PassedMessage)
 
     def LogMsgError(self, PassedMessage):
         """Logs and possibly prints a given message with the log level ERROR."""
 
         self._globalConfig.getAuditLogger().error(PassedMessage)
-        self._globalConfig.getStdoutLogger().error(PassedMessage)
+        if (not self._globalConfig.isListMode()):
+            self._globalConfig.getStdoutLogger().error(PassedMessage)
 
 ######################################################################

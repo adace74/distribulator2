@@ -287,12 +287,13 @@ Change List For v1.0.1 (Codename: Tranquility / Bloat Factor: 4567 lines / Statu
 * Added pingtcp.py script, a very handy tool for checking whether servers are alive...or not.
 * Added sniper.py script, a very handy tool for selectively killing processes in a mission critical environment.
 
-Change List For v1.0.2 (Codename: Hackage / Bloat Factor: 4578 lines / Status: Shipped)
+Change List For v1.0.2 (Codename: Hackage / Bloat Factor: 4592 lines / Status: Shipped)
 ---------------------------------------------------------------------------------------
 * Cleanup: Modified command execution logic to better handle
   remote commands that return large amounts of data.  Thanks to Karl D'adamo for this patch.
+* Cleanup: Modified logging logic such that it is, by definition, impossible to log
+  to stdout while running in list mode.  Downed nodes will now be logged to audit log.
 * Added wrapper script for those who prefer a quick CLI interface.
   Thanks to Karl D'adamo for this script.
 * Added substring matching support for attribute-based selection.
-  Attribute lists are now supported, as long as they are comma delimited.
-
+  Comma-delimited attribute lists are now fully supported.
