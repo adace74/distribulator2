@@ -36,10 +36,10 @@
     <environment name="demo" default="www">
         <!-- SSH v1 Group -->
         <servergroup name="app" username="tomcat" version="1">
-            <server name="app01.somewhere.com" brand="bobco"/>
-            <server name="app02.somewhere.com" brand="bobco"/>
-            <server name="app03.somewhere.com" brand="fredco"/>
-            <server name="app04.somewhere.com" brand="fredco"/>
+            <server name="app01.somewhere.com" apps="custom1,custom2,custom3" brand="bobco"/>
+            <server name="app02.somewhere.com" apps="custom1,custom2,custom3" brand="bobco"/>
+            <server name="app03.somewhere.com" apps="custom4,custom5,custom6" brand="fredco"/>
+            <server name="app04.somewhere.com" apps="custom4,custom5,custom6" brand="fredco"/>
             <server name="app05.somewhere.com"/>
         </servergroup>
 
@@ -71,10 +71,10 @@
     <environment name="demo2" default="www">
         <!-- SSH v1 Group -->
         <servergroup name="app2" username="tomcat" version="1">
-            <server name="app01.somewhere2.com" brand="bobco"/>
-            <server name="app02.somewhere2.com" brand="bobco"/>
-            <server name="app03.somewhere2.com" brand="fredco"/>
-            <server name="app04.somewhere2.com" brand="fredco"/> 
+            <server name="app01.somewhere2.com" apps="custom1,custom2,custom3" brand="bobco"/>
+            <server name="app02.somewhere2.com" apps="custom1,custom2,custom3" brand="bobco"/>
+            <server name="app03.somewhere2.com" apps="custom4,custom5,custom6" brand="fredco"/>
+            <server name="app04.somewhere2.com" apps="custom4,custom5,custom6" brand="fredco"/> 
             <server name="app05.somewhere2.com"/> 
         </servergroup>
 
