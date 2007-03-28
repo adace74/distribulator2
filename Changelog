@@ -297,3 +297,9 @@ Change List For v1.0.2 (Codename: Hackage / Bloat Factor: 4592 lines / Status: S
   Thanks to Karl D'adamo for this script.
 * Added substring matching support for attribute-based selection.
   Comma-delimited attribute lists are now fully supported.
+
+Change List For v1.0.3
+Codename: ??? / Bloat Factor: ???? lines / Status: Under Development
+--------------------------------------------------------------------
+? Cleanup: Modified code to support remote command STDERR as well as STDOUT.
+

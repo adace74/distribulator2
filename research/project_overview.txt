@@ -1,0 +1,47 @@
+The Distribulator v2.0 Research Notes
+-------------------------------------
+
+High-Level Goals
+----------------
+* Functionality: An "order of magnitutude" leap in overall usefulness.
+* Functionality: Better online documentation, command-completion, etc.
+* Scaling: Ability to handle thousands of servers.
+* Scaling: Ability to "max out" control node's CPU.
+  i.e. the bottleneck is the hardware, not the software.
+
+Dependancies
+------------
+* Python v2.4.x:  This has changed from v2.3 primarily to take advantage of
+  platform-independant process control functionality.
+* epydoc: Provides beautiful documentation generation.
+* lxml: Provides XML schema / data loading and validation.
+* pyparsing: Provides syntatical validation, parse tree generation, etc.
+* PyChecker: Provides more advanced error-detection earlier on in development?
+* Beautiful Soup: Is it better than lxml?
+
+Required Design & Functionality
+-------------------------------
+* Improved XSLT/XML-based data / config model, validation, etc.
+* Pluggable Transport API: RSH / SSH / XML/RPC / etc.
+* More complete language implementation.
+* Many process-control & threading improvements.
+* Remote job control.
+* Regular expression support.
+* Macros / Hotkeys of some sort
+* Tab completion heaven, including remote?
+* Dynamic attributes, which can be updated real-time and by independent
+  code.
+
+Optional Design & Functionality
+-------------------------------
+* Job scheduling support?
+* Pluggable Other Things: Is there anything that'd make sense?
+* Sudo integration?
+
+TODO
+----
+* Recover already-written notes, grammar parser, etc. from old server
+  and upload to SourceForge.
+* Merge those notes with these.
+* Add other various thoughts that may be bouncing around.
+
