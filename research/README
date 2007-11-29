@@ -1,0 +1,31 @@
+######################################################################
+#
+# $Id: README 591 2007-11-29 21:51:47Z awd $
+#
+######################################################################
+
+Unfortunately, I'm no longer working at the company who originally
+sponsored the development of this software.  It also seems as though
+nobody there wishes to take over this project, even in terms of
+maintenance.
+
+Perhaps that's a compliment...it is extremely stable.  :)
+
+That said, if you're reading this and wish to continue development
+of distribulator...feel free!  In this directory, one can find all
+of my research and code for non-existent Distribulator v2.0.
+
+End Of Project Statistics
+---------------------------
+* Production Websites: 5
+* Production Nodes:    ~350
+* NOC Members Trained: Lots
+* Fried SysAdmins:     1
+
+Cheers,
+
+Adam W. Dace <adam@turing.com>
+11/29/2007
+
+P.S. There's a version or two in SVN that were never released as tarballs.
+Sorry about that...anyone care to fix it?  ;)

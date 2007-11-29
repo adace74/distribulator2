@@ -1,0 +1,7 @@
+This package contains action classes responsible for turning meta-commands into parse trees.
+
+Class Overview:
+
+engine.parser.Parser		- Base abstract class for all parser subclasses.
+engine.parser.CopyParser	- Parser implementation for the "copy" command.
+engine.parser.RunParser		- Parser implementation for the "run" command.
