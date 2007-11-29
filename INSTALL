@@ -95,11 +95,14 @@ Directory Layout Overview
 /distribulator2			- Main source package root.
 	/build			- Python Distutils build.
 	/conf			- Configuration files.
+	/contrib		- Various smaller, but useful, utilities.
 	/doc			- Help files.
 	/distribulator		- Python classes.
 	/examples		- Example batch files.
 	/log			- Default audit log destination directory.
 	/lib			- Python Distutils install.
+	/research		- Research code and notes
+				  for distribulator v2.0.
 	/scripts		- Wrapper shell scripts.
 	/tests			- Manual test suite location,
 				  future automated regression tests.
